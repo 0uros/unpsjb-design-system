@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prueba: logo minimalista</title>
+  <link rel="stylesheet" href="../../unpsjb.css">
+  <style>
+    .banda { position: static; margin-bottom: var(--space-2); }
+    .cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-6); }
+    .movil .banda__fila { gap: var(--space-3); }
+    .movil .banda__herramienta { font-size: 1rem; padding-left: var(--space-3); }
+    .papel { display: flex; gap: var(--space-8); flex-wrap: wrap; align-items: center; background: #fff; padding: var(--space-6); border: 1px solid var(--color-linea); border-radius: var(--radius-contenedor); }
+    .papel img { height: 96px; }
+    .iconos { display: flex; gap: var(--space-8); align-items: end; }
+    .iconos figure { margin: 0; text-align: center; font: var(--text-caption); color: var(--color-tinta-2); }
+    .iconos img { display: block; margin: 0 auto var(--space-1); }
+  </style>
+</head>
+<body>
+<main class="container">
+  <div class="encabezado"><h1>Prueba: logo minimalista</h1></div>
+  <p>La gaviota redibujada como vector con pocas formas. <strong>Foto</strong> es el logo adoptado (sin texto curvo); <strong>Plano</strong> tiene 3 colores; <strong>Monocromo</strong> es solo la silueta.</p>
+
+  <h2>Banda (48px)</h2>
+  <p class="text-label">Foto (adoptado)</p>
+  <header class="banda"><div class="container"><div class="banda__fila">
+    <img class="banda__logo" src="../../assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew"><p class="banda__herramienta">Gestión de Eventos</p></div></div></header>
+  <p class="text-label">Plano</p>
+  <header class="banda"><div class="container"><div class="banda__fila">
+    <img class="banda__logo" src="logo-plano-blanco.svg" alt="UNPSJB Sede Trelew"><p class="banda__herramienta">Gestión de Eventos</p></div></div></header>
+  <p class="text-label">Monocromo</p>
+  <header class="banda"><div class="container"><div class="banda__fila">
+    <img class="banda__logo" src="logo-mono-blanco.svg" alt="UNPSJB Sede Trelew"><p class="banda__herramienta">Gestión de Eventos</p></div></div></header>
+
+  <h2>Celular (36px)</h2>
+  <div class="cols movil">
+    <div><p class="text-label">Foto</p><header class="banda"><div class="container"><div class="banda__fila">
+      <img class="banda__logo" style="height:36px" src="../../assets/escudo-unpsjb-blanco.svg" alt="UNPSJB"><p class="banda__herramienta">Gestión de Eventos</p></div></div></header></div>
+    <div><p class="text-label">Plano</p><header class="banda"><div class="container"><div class="banda__fila">
+      <img class="banda__logo" style="height:36px" src="escudo-plano.svg" alt="UNPSJB"><p class="banda__herramienta">Gestión de Eventos</p></div></div></header></div>
+    <div><p class="text-label">Monocromo</p><header class="banda"><div class="container"><div class="banda__fila">
+      <img class="banda__logo" style="height:36px" src="escudo-mono.svg" alt="UNPSJB"><p class="banda__herramienta">Gestión de Eventos</p></div></div></header></div>
+  </div>
+
+  <h2>Ícono de pestaña (32 y 16px)</h2>
+  <div class="iconos">
+    <figure><img src="../../assets/escudo-unpsjb-blanco.svg" height="32" alt=""><img src="../../assets/escudo-unpsjb-blanco.svg" height="16" alt="">Foto</figure>
+    <figure><img src="escudo-plano.svg" height="32" alt=""><img src="escudo-plano.svg" height="16" alt="">Plano</figure>
+    <figure><img src="escudo-mono.svg" height="32" alt=""><img src="escudo-mono.svg" height="16" alt="">Monocromo</figure>
+  </div>
+
+  <h2>Sobre blanco (impresos)</h2>
+  <div class="papel">
+    <img src="../../assets/logo-unpsjb-trelew.svg" alt="Foto">
+    <img src="logo-plano-color.svg" alt="Plano">
+    <img src="logo-mono-color.svg" alt="Monocromo">
+  </div>
+</main>
+</body>
+</html>

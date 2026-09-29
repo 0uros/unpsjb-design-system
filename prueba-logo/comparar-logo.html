@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prueba: logo sin texto curvo</title>
+  <link rel="stylesheet" href="../unpsjb.css">
+  <style>
+    .banda { position: static; margin-bottom: var(--space-2); }
+    .movil { display: flex; gap: var(--space-6); flex-wrap: wrap; }
+    .movil .banda { width: 360px; }
+    .movil .banda__fila { gap: var(--space-3); }
+    .movil .banda__herramienta { font-size: 1rem; padding-left: var(--space-3); }
+    .papel { display: flex; gap: var(--space-8); flex-wrap: wrap; align-items: center; background: #fff; padding: var(--space-6); border: 1px solid var(--color-linea); border-radius: var(--radius-contenedor); }
+    .papel img { height: 96px; }
+  </style>
+</head>
+<body>
+<main class="container">
+  <div class="encabezado"><h1>Prueba: logo sin el texto curvo</h1></div>
+  <p>Comparación en la banda azul (logo de 48px). Los logos oficiales en <code>assets/</code> no se tocaron.</p>
+
+  <h2>Escritorio</h2>
+  <p class="text-label">Actual (con "Universidad Nacional de la Patagonia San Juan Bosco")</p>
+  <header class="banda"><div class="container"><div class="banda__fila">
+    <img class="banda__logo" src="../assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew">
+    <p class="banda__herramienta">Gestión de Eventos</p></div></div></header>
+
+  <p class="text-label">A · sin texto, todo en su lugar</p>
+  <header class="banda"><div class="container"><div class="banda__fila">
+    <img class="banda__logo" src="logo-a-blanco.svg" alt="UNPSJB Sede Trelew">
+    <p class="banda__herramienta">Gestión de Eventos</p></div></div></header>
+
+  <p class="text-label">B · sin texto, barra y "Sede Trelew" más cerca del óvalo</p>
+  <header class="banda"><div class="container"><div class="banda__fila">
+    <img class="banda__logo" src="logo-b-blanco.svg" alt="UNPSJB Sede Trelew">
+    <p class="banda__herramienta">Gestión de Eventos</p></div></div></header>
+
+  <h2>Celular (escudo de 36px)</h2>
+  <div class="movil">
+    <div><p class="text-label">Actual</p>
+      <header class="banda"><div class="container"><div class="banda__fila">
+        <img class="banda__logo" style="height:36px" src="../assets/escudo-unpsjb-blanco.svg" alt="UNPSJB">
+        <p class="banda__herramienta">Gestión de Eventos</p></div></div></header></div>
+    <div><p class="text-label">Sin texto</p>
+      <header class="banda"><div class="container"><div class="banda__fila">
+        <img class="banda__logo" style="height:36px" src="escudo-sin-texto.svg" alt="UNPSJB">
+        <p class="banda__herramienta">Gestión de Eventos</p></div></div></header></div>
+  </div>
+
+  <h2>Sobre blanco (impresos)</h2>
+  <div class="papel">
+    <img src="../assets/logo-unpsjb-trelew.svg" alt="Actual">
+    <img src="logo-a-color.svg" alt="A">
+    <img src="logo-b-color.svg" alt="B">
+  </div>
+</main>
+</body>
+</html>

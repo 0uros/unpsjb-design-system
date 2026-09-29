@@ -1,0 +1,38 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "montserrat",
+        "createdAt": "2026-09-29T17:01:53.925Z",
+        "reason": "brief: the user's pasted brief keeps Montserrat as the institutional heading face"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "muestra.html"
+        ],
+        "createdAt": "2026-09-29T17:01:53.930Z",
+        "reason": "false positive: Chrome computed h1 32px, h2 24px, h3 19px; detector does not resolve font shorthand with var()"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "muestra.html"
+        ],
+        "createdAt": "2026-09-29T17:01:53.934Z",
+        "reason": "false positive: table cells carry 16px padding inside .tabla-wrap; underline tabs sit on their rule by design"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "sans-serif\">charla con 184 inscriptos 🙌 en trelew 🌊. premio a los proyectos 🏆🥇 del año. emoji 17: 🫪 🫯 🫈</p>",
+        "createdAt": "2026-09-29T17:58:35.148Z",
+        "reason": "intentional demo fixture: comparison line that shows system emoji next to Twemoji"
+      }
+    ]
+  }
+}
