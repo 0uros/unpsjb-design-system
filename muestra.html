@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Muestra de componentes · UNPSJB</title>
+  <link rel="stylesheet" href="unpsjb.css">
+</head>
+<body>
+  <header class="app-header">
+    <!-- En producción: https://recursos.tw.unp.edu.ar/assets/logo-unpsjb.svg -->
+    <strong class="text-title" style="color:var(--color-primary-text)">UNPSJB</strong>
+    <h1 class="app-header__tool">📐 Muestra de componentes</h1>
+    <div class="app-header__actions">
+      <button class="btn btn-ghost btn-sm" id="tema" type="button">🌓 Tema</button>
+    </div>
+  </header>
+
+  <main class="container section stack">
+    <nav class="tabs tabs--responsive" role="tablist" aria-label="Secciones">
+      <button class="tabs__tab" role="tab" aria-selected="true">Componentes</button>
+      <button class="tabs__tab" role="tab" aria-selected="false">Estados</button>
+      <button class="tabs__tab" role="tab" aria-selected="false">IA</button>
+    </nav>
+
+    <section>
+      <h2>Tipografía</h2>
+      <p class="text-display">Display 32px</p>
+      <p class="text-headline">Headline 24px</p>
+      <p class="text-title">Title 20px</p>
+      <p class="text-body-lg">Body grande 18px, para textos de lectura larga.</p>
+      <p>Body 16px, el texto general. Con un <a href="#">link institucional</a>.</p>
+      <p class="text-label">Label 14px</p>
+      <p class="text-caption text-muted">Caption 12px, el mínimo permitido.</p>
+    </section>
+
+    <section>
+      <h2>Botones</h2>
+      <div class="row">
+        <button class="btn btn-primary" type="button">Guardar</button>
+        <button class="btn btn-secondary" type="button">Cancelar</button>
+        <button class="btn btn-danger" type="button" id="abrir-modal">Eliminar…</button>
+        <button class="btn btn-ghost" type="button">Más opciones</button>
+        <button class="btn btn-ai" type="button">✨ Resumir con IA</button>
+        <button class="btn btn-primary" type="button" disabled>Deshabilitado</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Formulario</h2>
+      <div class="card" style="max-width:480px">
+        <div class="field">
+          <label class="label" for="nombre">Nombre del evento</label>
+          <input class="input" id="nombre" placeholder="Ej.: Jornada de Informática">
+          <span class="hint">Aparece en la agenda pública.</span>
+        </div>
+        <div class="field">
+          <label class="label" for="mail">Correo de contacto</label>
+          <input class="input" id="mail" value="contacto@" aria-invalid="true" aria-describedby="mail-err">
+          <span class="field-error" id="mail-err">Falta el dominio del correo.</span>
+        </div>
+        <div class="field">
+          <label class="label" for="sede">Sede</label>
+          <select class="select" id="sede"><option>Trelew</option><option>Comodoro Rivadavia</option><option>Puerto Madryn</option><option>Esquel</option><option>Ushuaia</option></select>
+        </div>
+        <label class="check"><input type="checkbox" checked> Evento abierto al público</label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Tarjetas</h2>
+      <div class="grid">
+        <article class="card"><h3 class="card__title">📅 Eventos</h3><p class="text-muted">12 eventos este mes.</p></article>
+        <article class="card"><h3 class="card__title">📷 Cámaras</h3><p class="text-muted">8 de 9 en línea.</p> <span class="badge badge--success">✔ Operativo</span></article>
+        <article class="card card--accent"><h3 class="card__title">📌 Aviso clave</h3><p>Borde naranja: solo para señalética importante.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Tabla</h2>
+      <div class="table-wrap">
+        <table class="table table--sticky">
+          <thead><tr><th>Evento</th><th>Fecha</th><th>Sede</th><th>Inscriptos</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>Jornada de Informática</td><td>12/10/2026</td><td>Trelew</td><td>84</td><td><span class="badge badge--success">✔ Confirmado</span></td></tr>
+            <tr><td>Taller de Moodle</td><td>18/10/2026</td><td>Trelew</td><td>23</td><td><span class="badge badge--warning">⚠ Sin aula</span></td></tr>
+            <tr><td>Charla de Seguridad</td><td>25/10/2026</td><td>Puerto Madryn</td><td>0</td><td><span class="badge badge--error">✖ Suspendido</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Estados del sistema</h2>
+      <div class="banner"><div><p class="banner__title">ℹ Información</p><p>La inscripción cierra el viernes.</p></div></div>
+      <div class="banner banner--success"><div><p class="banner__title">✔ Guardado</p><p>El evento se publicó en la agenda.</p></div></div>
+      <div class="banner banner--warning"><div><p class="banner__title">⚠ Atención</p><p>El aula todavía no está asignada.</p></div></div>
+      <div class="banner banner--error"><div><p class="banner__title">✖ Error</p><p>No se pudo conectar con el servidor. Probá de nuevo en unos minutos.</p></div></div>
+      <button class="btn btn-secondary" type="button" id="toast-btn">Mostrar toast</button>
+      <div class="card">
+        <div class="empty-state">
+          <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <p class="empty-state__title">Todavía no hay eventos</p>
+          <p>Cuando crees uno, va a aparecer acá.</p>
+          <button class="btn btn-primary" type="button">Crear evento</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Inteligencia artificial</h2>
+      <div class="ai-card">
+        <span class="ai-badge">✨ Generado por IA</span>
+        <p>Resumen: la jornada tuvo 84 inscriptos, la mayoría estudiantes de primer año. Se sugiere repetirla en marzo.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    © 2026 UNPSJB - Soporte Informático | v0.1.0 · <button type="button">⚙️ API IA</button>
+  </footer>
+
+  <nav class="bottom-nav" aria-label="Secciones">
+    <a class="bottom-nav__item" href="#" aria-current="page">🧩<span>Componentes</span></a>
+    <a class="bottom-nav__item" href="#">🚦<span>Estados</span></a>
+    <a class="bottom-nav__item" href="#">✨<span>IA</span></a>
+  </nav>
+
+  <div class="toast-region" role="status" aria-live="polite"></div>
+
+  <dialog class="modal" id="modal" aria-labelledby="modal-titulo">
+    <h2 class="modal__title" id="modal-titulo">¿Eliminar el evento?</h2>
+    <p>Se va a borrar “Jornada de Informática” y sus 84 inscripciones. No se puede deshacer.</p>
+    <form method="dialog" class="modal__actions">
+      <button class="btn btn-secondary" value="cancelar">Cancelar</button>
+      <button class="btn btn-danger" value="eliminar">Eliminar</button>
+    </form>
+  </dialog>
+
+  <script>
+    const html = document.documentElement;
+    document.getElementById('tema').onclick = () => {
+      const oscuro = html.dataset.theme ? html.dataset.theme === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+      html.dataset.theme = oscuro ? 'light' : 'dark';
+    };
+    document.getElementById('abrir-modal').onclick = () => document.getElementById('modal').showModal();
+    document.getElementById('toast-btn').onclick = () => {
+      const t = document.createElement('div');
+      t.className = 'toast toast--success';
+      t.textContent = '✔ Cambios guardados';
+      document.querySelector('.toast-region').append(t);
+      setTimeout(() => t.remove(), 3000);
+    };
+  </script>
+</body>
+</html>

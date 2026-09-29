@@ -1,0 +1,569 @@
+/* ==========================================================================
+   unpsjb.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.1.0
+   Delegación Trelew · 2026
+   Fuente de verdad: DESIGN.md. Si algo de acá contradice DESIGN.md,
+   manda DESIGN.md y hay que corregir este archivo.
+
+   Índice
+   1. Fuentes
+   2. Tokens (claro y oscuro)
+   3. Base
+   4. Estructura: header, footer, navegación
+   5. Componentes: botones, inputs, tarjetas, tablas, insignias
+   6. Estados: banners, toasts, modales, estados vacíos
+   7. Inteligencia artificial
+   8. Utilidades
+   ========================================================================== */
+
+/* 1. Fuentes ---------------------------------------------------------------
+   Las rutas son relativas a este archivo: en el servidor de recursos,
+   las fuentes van en la carpeta fonts/ junto a unpsjb.css.
+   Si no están, el navegador usa la fuente del sistema. */
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* 2. Tokens ---------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* Colores */
+  --color-primary: #004992;
+  --color-primary-hover: #003a75;
+  --color-primary-text: #004992;      /* azul para texto y links */
+  --color-accent: #ff9900;            /* solo indicador, nunca texto ni relleno amplio */
+  --color-surface: #f8fafc;
+  --color-surface-container: #ffffff;
+  --color-on-surface: #0f172a;
+  --color-on-surface-muted: #64748b;
+  --color-border-subtle: #e2e8f0;
+  --color-success: #047857;
+  --color-success-text: #047857;
+  --color-warning: #ff9900;
+  --color-warning-text: #b45309;
+  --color-error: #e11d48;
+  --color-error-hover: #be123c;
+  --color-error-text: #e11d48;
+  --color-ai-surface: #eff6ff;
+  --color-ai-border: #bfdbfe;
+  --color-header-bg: #ffffff;
+  --color-backdrop: rgb(15 23 42 / 0.6);
+
+  /* Tipografía */
+  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --text-display: 700 2rem/1.2 var(--font-heading);     /* 32px */
+  --text-headline: 700 1.5rem/1.25 var(--font-heading); /* 24px */
+  --text-title: 600 1.25rem/1.3 var(--font-heading);    /* 20px */
+  --text-body-lg: 400 1.125rem/1.6 var(--font-body);    /* 18px */
+  --text-body-md: 400 1rem/1.5 var(--font-body);        /* 16px */
+  --text-label: 500 0.875rem/1.4 var(--font-body);      /* 14px */
+  --text-caption: 400 0.75rem/1.4 var(--font-body);     /* 12px: el mínimo */
+
+  /* Espaciado (escala de 4px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* Radios */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Foco: doble anillo, naranja adentro y azul afuera */
+  --focus-ring: 0 0 0 2px var(--color-accent), 0 0 0 4px var(--color-primary);
+
+  /* Breakpoints (solo de referencia: CSS no permite variables en @media)
+     sm 640px · md 768px · lg 1024px · xl 1280px */
+}
+
+/* Modo oscuro: se aplica solo si el sistema lo pide, salvo que la página
+   fuerce un tema con <html data-theme="light"> o <html data-theme="dark">. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-primary-text: #60a5fa;
+    --color-surface: #0f172a;
+    --color-surface-container: #1e293b;
+    --color-on-surface: #f1f5f9;
+    --color-on-surface-muted: #94a3b8;
+    --color-border-subtle: #334155;
+    --color-success-text: #34d399;
+    --color-warning-text: #fbbf24;
+    --color-error-text: #fb7185;
+    --color-ai-surface: rgb(96 165 250 / 0.1);
+    --color-ai-border: rgb(96 165 250 / 0.4);
+    --color-header-bg: rgb(30 41 59 / 0.8);
+    --color-backdrop: rgb(2 6 23 / 0.7);
+    --focus-ring: 0 0 0 2px var(--color-accent);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary-text: #60a5fa;
+  --color-surface: #0f172a;
+  --color-surface-container: #1e293b;
+  --color-on-surface: #f1f5f9;
+  --color-on-surface-muted: #94a3b8;
+  --color-border-subtle: #334155;
+  --color-success-text: #34d399;
+  --color-warning-text: #fbbf24;
+  --color-error-text: #fb7185;
+  --color-ai-surface: rgb(96 165 250 / 0.1);
+  --color-ai-border: rgb(96 165 250 / 0.4);
+  --color-header-bg: rgb(30 41 59 / 0.8);
+  --color-backdrop: rgb(2 6 23 / 0.7);
+  --focus-ring: 0 0 0 2px var(--color-accent);
+}
+
+/* 3. Base ------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font: var(--text-body-md);
+  color: var(--color-on-surface);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+}
+main { flex: 1; }
+
+h1, h2, h3, h4 { margin: 0 0 var(--space-4); color: var(--color-on-surface); }
+h1, .text-display { font: var(--text-display); }
+h2, .text-headline { font: var(--text-headline); }
+h3, .text-title { font: var(--text-title); }
+h4 { font: 600 1rem/1.4 var(--font-heading); }
+p { margin: 0 0 var(--space-4); }
+.text-body-lg { font: var(--text-body-lg); }
+.text-label { font: var(--text-label); }
+.text-caption { font: var(--text-caption); }
+.text-muted { color: var(--color-on-surface-muted); }
+
+a { color: var(--color-primary-text); text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+img, svg { max-width: 100%; }
+
+/* Foco visible solo al navegar con teclado.
+   El outline transparente aparece en el modo de alto contraste de Windows. */
+:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 4. Estructura ------------------------------------------------------------ */
+
+/* Contenedor centrado con márgenes laterales */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+@media (min-width: 768px) { .container { padding-inline: var(--space-6); } }
+
+/* Header: [Logo UNPSJB] | ícono + nombre de la herramienta */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-header-bg);
+  border-bottom: 1px solid var(--color-border-subtle);
+  backdrop-filter: blur(8px);
+}
+.app-header__logo { height: 36px; width: auto; display: block; }
+.app-header__tool {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-border-subtle);
+  font: var(--text-title);
+  color: var(--color-primary-text);
+  margin: 0;
+}
+.app-header__actions { margin-left: auto; display: flex; gap: var(--space-2); }
+@media (max-width: 639px) {
+  .app-header { gap: var(--space-3); }
+  .app-header__logo { height: 28px; }
+  .app-header__tool { padding-left: var(--space-3); font: 600 1rem/1.3 var(--font-heading); }
+}
+
+/* Footer minimalista */
+.app-footer {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  font: var(--text-caption);
+  color: var(--color-on-surface-muted);
+}
+.app-footer button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: var(--space-1);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Pestañas (escritorio). La pestaña activa lleva aria-selected="true". */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--color-border-subtle);
+  overflow-x: auto;
+}
+.tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font: var(--text-label);
+  color: var(--color-on-surface-muted);
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.tabs__tab:hover { color: var(--color-on-surface); }
+.tabs__tab[aria-selected="true"] {
+  color: var(--color-primary-text);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Menú inferior (móvil). Por debajo de 768px reemplaza a las pestañas. */
+.bottom-nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-around;
+  background: var(--color-surface-container);
+  border-top: 1px solid var(--color-border-subtle);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  font: var(--text-caption);
+  color: var(--color-on-surface-muted);
+  background: none;
+  border: 0;
+  border-top: 3px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+}
+.bottom-nav__item[aria-selected="true"],
+.bottom-nav__item[aria-current="page"] {
+  color: var(--color-primary-text);
+  border-top-color: var(--color-accent);
+}
+@media (max-width: 767px) {
+  .tabs.tabs--responsive { display: none; }
+  body:has(.bottom-nav) { padding-bottom: 72px; }
+}
+@media (min-width: 768px) { .bottom-nav { display: none; } }
+
+/* 5. Componentes ----------------------------------------------------------- */
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  font: 600 0.875rem/1.4 var(--font-body);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.btn-primary { background: var(--color-primary); color: #fff; }
+.btn-primary:hover { background: var(--color-primary-hover); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary-text);
+  border-color: currentColor;
+}
+.btn-secondary:hover { background: var(--color-ai-surface); }
+
+.btn-danger { background: var(--color-error); color: #fff; }
+.btn-danger:hover { background: var(--color-error-hover); }
+
+.btn-ghost { background: transparent; color: var(--color-on-surface); }
+.btn-ghost:hover { background: var(--color-border-subtle); }
+
+.btn:disabled, .btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn-sm { min-height: 32px; padding: var(--space-1) var(--space-3); }
+.btn-icon { padding: var(--space-2); min-width: 40px; }
+
+/* Campos de formulario: siempre con label visible encima */
+.field { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); }
+.label { font: var(--text-label); color: var(--color-on-surface); }
+.hint { font: var(--text-caption); color: var(--color-on-surface-muted); }
+
+.input, .select, .textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  font: var(--text-body-md);
+  color: var(--color-on-surface);
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+.textarea { min-height: 96px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--color-on-surface-muted); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible {
+  border-color: var(--color-primary-text);
+}
+.input:disabled, .select:disabled, .textarea:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Error: agregar aria-invalid="true" al input y un .field-error debajo */
+.input[aria-invalid="true"], .select[aria-invalid="true"], .textarea[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+.field-error { font: var(--text-label); color: var(--color-error-text); }
+.field-error::before { content: "⚠ "; }
+
+.check { display: flex; align-items: center; gap: var(--space-2); font: var(--text-body-md); }
+.check input { width: 18px; height: 18px; accent-color: var(--color-primary); }
+
+/* Tarjetas "bento box" */
+.card {
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+.card > :last-child { margin-bottom: 0; }
+.card--accent { border-left: 4px solid var(--color-accent); } /* solo señalética clave */
+.card__title { font: var(--text-title); margin: 0 0 var(--space-2); }
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+}
+
+/* Tablas. Envolver en .table-wrap para scroll horizontal en móvil.
+   .table--sticky fija la primera columna. */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-container);
+}
+.table { width: 100%; border-collapse: collapse; font: var(--text-body-md); }
+.table th, .table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+.table th { font: 600 0.875rem/1.4 var(--font-body); background: var(--color-primary); color: #fff; }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table tbody tr:hover td { background: var(--color-surface); }
+.table--sticky th:first-child, .table--sticky td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  border-right: 1px solid var(--color-border-subtle);
+}
+.table--sticky td:first-child { background: var(--color-surface-container); }
+
+/* Insignias */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  font: 500 0.75rem/1.4 var(--font-body);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  color: var(--color-on-surface-muted);
+}
+.badge--success { color: var(--color-success-text); }
+.badge--warning { color: var(--color-warning-text); }
+.badge--error { color: var(--color-error-text); }
+.badge--primary { color: var(--color-primary-text); }
+
+/* 6. Estados --------------------------------------------------------------- */
+
+/* Banners: no bloquean. El color nunca va solo: siempre título o ícono. */
+.banner {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-border-subtle);
+  border-left: 4px solid var(--color-primary-text);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+}
+.banner__title { font: 600 1rem/1.4 var(--font-body); margin: 0 0 var(--space-1); color: var(--color-primary-text); }
+.banner p { margin: 0; }
+.banner--success { border-left-color: var(--color-success); }
+.banner--success .banner__title { color: var(--color-success-text); }
+.banner--warning { border-left-color: var(--color-warning); }
+.banner--warning .banner__title { color: var(--color-warning-text); }
+.banner--error { border-left-color: var(--color-error); }
+.banner--error .banner__title { color: var(--color-error-text); }
+
+/* Toasts: abajo a la derecha, se van solos a los 3 s (lo maneja el JS).
+   El contenedor .toast-region debe tener role="status". */
+.toast-region {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: min(360px, calc(100vw - 2 * var(--space-4)));
+}
+body:has(.bottom-nav) .toast-region { bottom: 88px; }
+.toast {
+  padding: var(--space-3) var(--space-4);
+  font: var(--text-label);
+  color: var(--color-on-surface);
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-border-subtle);
+  border-left: 4px solid var(--color-primary-text);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgb(15 23 42 / 0.12); /* única sombra: flota sobre el contenido */
+  animation: toast-in 0.2s ease-out;
+}
+.toast--success { border-left-color: var(--color-success); }
+.toast--warning { border-left-color: var(--color-warning); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* Modales: usar <dialog class="modal"> y abrir con dialog.showModal().
+   Así el navegador ya cierra con Esc y atrapa el foco adentro. */
+.modal {
+  width: min(480px, calc(100vw - 2 * var(--space-4)));
+  padding: var(--space-6);
+  color: var(--color-on-surface);
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+}
+.modal::backdrop { background: var(--color-backdrop); backdrop-filter: blur(4px); }
+.modal__title { font: var(--text-title); margin: 0 0 var(--space-3); }
+.modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+/* Estado vacío */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-4);
+  color: var(--color-on-surface-muted);
+}
+.empty-state__icon { width: 64px; height: 64px; opacity: 0.4; }
+.empty-state__title { font: var(--text-title); color: var(--color-on-surface); margin: 0; }
+.empty-state p { margin: 0; max-width: 40ch; }
+
+/* 7. Inteligencia artificial ----------------------------------------------- */
+
+/* Botón de IA: azul institucional con delineado naranja y brillo al pasar */
+.btn-ai {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+.btn-ai:hover { background: var(--color-primary-hover); box-shadow: 0 4px 14px rgb(59 130 246 / 0.3); }
+.btn-ai:focus-visible { box-shadow: var(--focus-ring); }
+
+/* Tarjeta de respuesta de IA, con insignia "✨ Generado por IA" */
+.ai-card {
+  position: relative;
+  padding: var(--space-6);
+  padding-top: var(--space-12);
+  background: var(--color-ai-surface);
+  border: 1px solid var(--color-ai-border);
+  border-radius: var(--radius-xl);
+}
+.ai-card > :last-child { margin-bottom: 0; }
+.ai-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  font: 600 0.75rem/1.4 var(--font-body);
+  color: var(--color-primary-text);
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-ai-border);
+  border-radius: var(--radius-full);
+}
+
+/* 8. Utilidades ------------------------------------------------------------ */
+.stack > * + * { margin-top: var(--space-4); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.section { padding-block: var(--space-8); }
+
+/* Oculta visualmente pero lo siguen leyendo los lectores de pantalla */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

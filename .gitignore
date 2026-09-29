@@ -1,0 +1,15 @@
+# Caché de herramientas (se regenera sola)
+.impeccable/hook.cache.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+*~
+.directory
+
+# Carpetas de trabajo temporales de Claude Code
+.claude/worktrees/
