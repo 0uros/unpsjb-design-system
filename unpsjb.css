@@ -1,22 +1,25 @@
 /* ==========================================================================
-   unpsjb-v2.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.2.1 (borrador v2; antes numerada 2.1.0)
-   VERSIÓN ANTERIOR. La oficial es unpsjb.css (v0.3.1).
+   unpsjb-v3.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v3.0.0
    Dirección "Señalética". Delegación Trelew · 2026
-   Fuente de verdad: DESIGN-v2.md. La versión anterior quedó en unpsjb-v1.css.
+   PROPUESTA, no oficial. Fuente de verdad: DESIGN-v3.md. Cambios: CHANGELOG.md.
+   La versión oficial sigue siendo unpsjb.css (v2.1.0).
 
    La idea en dos líneas:
    - El azul es la placa: la banda del header es el único bloque grande de color.
-   - El naranja es "estás acá": sección actual, foco del teclado y advertencias.
+     Dice quién es; las secciones van en la sub-barra clara de abajo.
+   - El naranja es "estás acá": sección actual y foco del teclado. Nada más
+     (las advertencias pasan a ámbar).
 
    Índice
    1. Fuentes
    2. Tokens (claro, oscuro)
    3. Base y detalles del navegador
-   4. Estructura: contenedores, grilla, banda, migas, encabezado de pantalla,
-      menú inferior, pie
+   4. Estructura: contenedores, grilla, cabecera (banda + sub-barra), menú
+      lateral, migas, encabezado de pantalla, menú inferior, pie, selector de tema
    5. Componentes: botones, campos, opciones, interruptor, segmentado, buscador,
-      paneles, tablas, insignias, categorías, pestañas, paginación, carga
-   6. Estados: avisos, toasts, modales, vacíos
+      paneles, tablas (con tarjetas en celular), insignias, categorías, pestañas,
+      paginación, carga, filtros y chips, archivos, pasos y revisión
+   6. Estados: avisos, toasts, modales, vacíos, comprobante, páginas de error
    7. Inteligencia artificial
    8. Utilidades
    9. Impresión
@@ -36,6 +39,38 @@
   src: url("fonts/AtkinsonHyperlegibleNext-Variable.woff2") format("woff2");
   font-weight: 200 800;
   font-display: swap;
+}
+
+/* Respaldo ajustado: mientras cargan las fuentes, Arial (o Liberation Sans,
+   que mide igual) se agranda o achica para ocupar lo mismo que la fuente real.
+   Así el texto no salta de lugar cuando llega el woff2. Valores medidos sobre
+   los archivos actuales (Atkinson en 400, Montserrat en 700). */
+@font-face {
+  font-family: "Atkinson respaldo";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
+  font-weight: 200 500;
+  size-adjust: 99.16%;
+  ascent-override: 99.23%;
+  descent-override: 31.87%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Atkinson respaldo";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold");
+  font-weight: 600 800;
+  size-adjust: 99.16%;
+  ascent-override: 99.23%;
+  descent-override: 31.87%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Montserrat respaldo";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold");
+  font-weight: 100 900;
+  size-adjust: 109.52%;
+  ascent-override: 88.39%;
+  descent-override: 22.92%;
+  line-gap-override: 0%;
 }
 
 /* Emojis de Twitter (Twemoji 17.0.3, fork jdecked/twemoji) como fuente de color.
@@ -102,7 +137,7 @@
   /* Semáforo: marca (relleno, borde, ícono) y texto */
   --color-success: #047857;
   --color-success-text: #047857;
-  --color-warning: #ff9900;
+  --color-warning: #b45309;       /* v3: ámbar. El naranja ya no avisa problemas */
   --color-warning-text: #b45309;
   --color-error: #e11d48;
   --color-error-hover: #be123c;
@@ -129,10 +164,13 @@
 
   /* Tipografía */
   /* "Twemoji UNPSJB" va después de las fuentes de texto: solo dibuja emojis */
-  --font-titulo: "Montserrat", "Twemoji UNPSJB", system-ui, sans-serif;
-  --font-texto: "Atkinson Hyperlegible Next", "Twemoji UNPSJB", system-ui, sans-serif;
-  --text-display: 800 2rem/1.15 var(--font-titulo);        /* 32px */
-  --text-headline: 700 1.5rem/1.2 var(--font-titulo);      /* 24px */
+  --font-titulo: "Montserrat", "Twemoji UNPSJB", "Montserrat respaldo", system-ui, sans-serif;
+  --font-texto: "Atkinson Hyperlegible Next", "Twemoji UNPSJB", "Atkinson respaldo", system-ui, sans-serif;
+  /* Serif solo para vistas de documentos formales (resoluciones, certificados) */
+  --font-academica: "Times New Roman", "Liberation Serif", Georgia, serif;
+  /* v3: interlineado de títulos 1.25 como mínimo, por las tildes de las mayúsculas */
+  --text-display: 800 2rem/1.25 var(--font-titulo);        /* 32px */
+  --text-headline: 700 1.5rem/1.25 var(--font-titulo);     /* 24px */
   --text-title: 700 1.1875rem/1.3 var(--font-titulo);      /* 19px */
   --text-body-lg: 400 1.125rem/1.6 var(--font-texto);      /* 18px */
   --text-body-md: 400 1rem/1.55 var(--font-texto);         /* 16px */
@@ -156,7 +194,8 @@
   --radius-full: 9999px;
   --size-control: 44px;
   --size-control-compacto: 36px;
-  --size-banda: 56px;
+  --size-banda: 56px;             /* alto mínimo; con el logo de 48px queda en 64px */
+  --size-subbarra: 48px;
   --medida-lectura: 70ch;
 
   /* Profundidad: solo para lo que flota */
@@ -358,9 +397,21 @@ img, svg { max-width: 100%; }
 .grilla__completa { grid-column: 1 / -1; }
 .grilla > * { min-width: 0; }
 
-/* La banda institucional (header) */
-.banda {
+/* Cabecera = banda azul (quién es) + sub-barra clara (por dónde se va).
+   <header class="cabecera">
+     <div class="banda">…</div>
+     <nav class="secciones" aria-label="Secciones">…</nav>
+   </header>
+   Queda fija arriba al hacer scroll, sin transparencias. */
+.cabecera {
   position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/* La banda institucional */
+.banda {
+  position: sticky;   /* si se usa sola, sin .cabecera */
   top: 0;
   z-index: 20;
   background: var(--color-banda);
@@ -391,8 +442,70 @@ img, svg { max-width: 100%; }
 .banda__acciones { margin-left: auto; display: flex; gap: var(--space-1); }
 .banda .btn-icon { color: var(--color-sobre-banda); background: transparent; }
 .banda .btn-icon:hover { background: rgb(255 255 255 / 0.12); }
+.cabecera .banda { position: static; }
 
-/* Navegación sobre la banda: la sección actual lleva el marcador naranja */
+/* Sub-barra de secciones: la sección actual lleva el marcador naranja.
+   Sobre blanco el naranja da 2.1:1, así que no es la única señal: la actual
+   también cambia a tinta y lleva aria-current="page". Hasta 6 secciones. */
+.secciones {
+  background: var(--color-panel);
+  border-bottom: 1px solid var(--color-linea);
+}
+.secciones__lista {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+.secciones a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-subbarra);
+  padding: 4px var(--space-3) 0;
+  font: var(--text-label);
+  color: var(--color-tinta-2);
+  text-decoration: none;
+  border-bottom: 4px solid transparent;
+  white-space: nowrap;
+  transition: color var(--dur-rapido) var(--curva);
+}
+.secciones a:hover { color: var(--color-tinta); }
+.secciones a[aria-current="page"] {
+  color: var(--color-tinta);
+  border-bottom-color: var(--color-accent);
+}
+@media (forced-colors: active) {
+  .secciones a[aria-current="page"] { border-bottom-color: Highlight; }
+}
+
+/* Menú lateral: para más de 6 secciones o tableros que necesitan todo el alto.
+   Va como primera columna de .grilla--lateral.
+   <nav class="nav-lateral" aria-label="Secciones"><a href="…" aria-current="page">…</a>… */
+.nav-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-lateral a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--size-control);
+  padding: 0 var(--space-3);
+  font: var(--text-label);
+  color: var(--color-tinta-2);
+  text-decoration: none;
+  border-left: 4px solid transparent;
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+}
+.nav-lateral a:hover { color: var(--color-tinta); background: var(--color-tinte); }
+.nav-lateral a[aria-current="page"] {
+  color: var(--color-tinta);
+  background: var(--color-tinte);
+  border-left-color: var(--color-accent);
+}
+
+/* @deprecated v3.0.0 — Navegación sobre la banda. Se elimina en v4.
+   Reemplazo: <nav class="secciones"> debajo de la banda, dentro de .cabecera. */
 .banda__nav {
   display: flex;
   gap: var(--space-2);
@@ -432,6 +545,7 @@ img, svg { max-width: 100%; }
   .banda__herramienta .icono { display: none; }
   .banda__acciones { gap: 0; }
   .banda__nav { display: none; }
+  .secciones { display: none; }   /* en celular, las secciones van en .nav-inferior */
 }
 
 /* Migas de pan: dónde estoy dentro de una herramienta con varios niveles.
@@ -504,6 +618,17 @@ img, svg { max-width: 100%; }
 .pie p { margin: 0; }
 .pie__derecha { display: flex; align-items: center; gap: var(--space-4); }
 @media (max-width: 639px) { .pie { flex-direction: column; align-items: flex-start; } }
+@media (max-width: 639px) { .pie__derecha { flex-wrap: wrap; } }
+
+/* Selector de tema: Automático · Claro · Oscuro. Es un .segmentado compacto
+   con el texto "Tema" al lado. La elección se guarda en localStorage
+   ("unpsjb-tema"); ver DESIGN-v3.md 3.F.
+   <div class="selector-tema"><span aria-hidden="true">Tema</span>
+     <fieldset class="segmentado segmentado--compacto">
+       <legend class="visually-hidden">Tema</legend>
+       <label><input type="radio" name="tema" value="auto"> Automático</label> … */
+.selector-tema { display: flex; align-items: center; gap: var(--space-2); }
+.selector-tema label { font: 700 0.8125rem/1.3 var(--font-texto); padding: 0 var(--space-2); }
 
 /* 5. Componentes ----------------------------------------------------------- */
 
@@ -758,6 +883,43 @@ img, svg { max-width: 100%; }
 }
 .tabla--fija td:first-child { background: var(--color-panel); }
 
+/* Tarjetas en celular: para tablas donde cada fila es una cosa (eventos,
+   solicitudes, equipos). Cada celda lleva data-label con su columna; la
+   primera es el título de la tarjeta. Si la tarea es comparar celdas,
+   va .tabla--fija. <td data-label="Fecha">12/10/2026</td> */
+@media (max-width: 639px) {
+  .tabla-wrap:has(.tabla--tarjetas) { overflow: visible; background: none; border: 0; border-radius: 0; }
+  .tabla--tarjetas, .tabla--tarjetas tbody, .tabla--tarjetas tr, .tabla--tarjetas td { display: block; }
+  .tabla--tarjetas thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .tabla--tarjetas tr {
+    margin-bottom: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-panel);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-contenedor);
+  }
+  .tabla--tarjetas tbody tr:last-child { margin-bottom: 0; }
+  .tabla--tarjetas td {
+    display: grid;
+    grid-template-columns: minmax(96px, 35%) 1fr;
+    gap: var(--space-3);
+    align-items: center;
+    height: auto;
+    padding: var(--space-1) 0;
+    border: 0;
+    white-space: normal;
+    text-align: left;
+  }
+  .tabla--tarjetas td::before { content: attr(data-label); font: var(--text-meta); color: var(--color-tinta-2); }
+  .tabla--tarjetas td > * { justify-self: start; }   /* insignias y categorías no se estiran */
+  .tabla--tarjetas td:first-child { display: block; padding-bottom: var(--space-2); font: 700 1rem/1.4 var(--font-texto); }
+  .tabla--tarjetas td:first-child::before { content: none; }
+  .tabla--tarjetas .num { text-align: left; }
+  .tabla--tarjetas tbody tr:hover td { background: none; }
+  .tabla--tarjetas tbody tr[aria-selected="true"] { background: var(--color-tinte); }
+  .tabla--tarjetas tbody tr[aria-selected="true"] td { background: none; }
+}
+
 /* Insignias de estado: siempre ícono + palabra */
 .insignia {
   display: inline-flex;
@@ -771,7 +933,8 @@ img, svg { max-width: 100%; }
 }
 .insignia .icono { width: 14px; height: 14px; }
 .insignia--exito { color: var(--color-success-text); background: color-mix(in srgb, var(--color-success-text) 12%, var(--color-panel)); }
-.insignia--aviso { color: var(--color-warning-text); background: color-mix(in srgb, var(--color-warning) 12%, var(--color-panel)); }
+/* v3: con la marca en ámbar, el tinte baja a 6% para que el texto siga en 4.6:1 */
+.insignia--aviso { color: var(--color-warning-text); background: color-mix(in srgb, var(--color-warning) 6%, var(--color-panel)); }
 .insignia--error { color: var(--color-error-text); background: color-mix(in srgb, var(--color-error) 10%, var(--color-panel)); }
 .insignia--info { color: var(--color-primary-text); background: color-mix(in srgb, var(--color-info) 12%, var(--color-panel)); }
 
@@ -802,7 +965,9 @@ img, svg { max-width: 100%; }
 @media (forced-colors: active) { .categoria::before { forced-color-adjust: none; } }
 
 /* Pestañas dentro de la página (la navegación principal va en la banda) */
-.pestanas { display: flex; gap: var(--space-1); border-bottom: 1px solid var(--color-linea); overflow-x: auto; margin-bottom: var(--space-6); }
+/* v3: la línea de abajo es una sombra interna (antes, un borde con margen −1px
+   en los ítems, que hacía aparecer una barra de scroll vertical) */
+.pestanas { display: flex; gap: var(--space-1); box-shadow: inset 0 -1px 0 var(--color-linea); overflow-x: auto; overflow-y: hidden; margin-bottom: var(--space-6); }
 .pestanas__item {
   min-height: var(--size-control);
   padding: 0 var(--space-4);
@@ -811,7 +976,6 @@ img, svg { max-width: 100%; }
   background: none;
   border: 0;
   border-bottom: 3px solid transparent;
-  margin-bottom: -1px;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -871,6 +1035,119 @@ img, svg { max-width: 100%; }
 }
 @keyframes latir { 50% { opacity: 0.5; } }
 
+/* Filtros de tabla: fila arriba de la tabla + chips de filtros aplicados.
+   <div class="filtros"><div class="buscador">…</div><select class="select">…</select></div>
+   <div class="chips"><span class="chip">Sede: Trelew <button aria-label="Quitar filtro Sede">✕</button></span>
+   <button class="btn btn-quiet btn-compacto">Quitar filtros</button><p class="chips__total" role="status">12 eventos</p></div> */
+.filtros { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-3); margin-bottom: var(--space-3); }
+.filtros > * { margin-bottom: 0; }
+.filtros .buscador { flex: 1 1 240px; max-width: 360px; }
+.filtros .select { width: auto; min-width: 160px; }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 32px;
+  padding: 0 2px 0 var(--space-3);
+  font: 700 0.875rem/1.4 var(--font-texto);
+  color: var(--color-tinta);
+  background: var(--color-tinte);
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radius-control);
+}
+.chip button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: var(--color-tinta-2);
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.chip button:hover { color: var(--color-tinta); background: var(--color-capa); }
+.chip .icono { width: 14px; height: 14px; }
+.chips__total { margin: 0 0 0 auto; font: var(--text-meta); color: var(--color-tinta-2); }
+
+/* Carga de archivos: botón siempre; arrastrar y soltar es un extra.
+   <div class="campo"><span class="label" id="adj">Programa</span>
+   <span class="ayuda">PDF o JPG, hasta 10 MB</span>
+   <label class="btn btn-secondary archivo">Elegir archivo<input type="file" aria-labelledby="adj"></label>
+   <ul class="archivos">…</ul></div> */
+.archivo { position: relative; align-self: flex-start; }
+.archivo input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.archivo:has(input:focus-visible) { box-shadow: var(--focus-ring); }
+.archivos { display: flex; flex-direction: column; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; }
+.archivos li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radius-control);
+}
+.archivos li > .icono { color: var(--color-tinta-2); }
+.archivos__nombre { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.archivos__peso { font: var(--text-meta); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; }
+.archivos li > progress { grid-column: 2 / -1; }
+.archivos li .campo-error { grid-column: 2 / -1; }
+
+/* Barra de progreso nativa, con el porcentaje escrito al lado */
+progress {
+  width: 100%;
+  height: 8px;
+  appearance: none;
+  border: 0;
+  border-radius: 2px;
+  background: var(--color-capa);
+  color: var(--color-primary-text);
+  overflow: hidden;
+}
+progress::-webkit-progress-bar { background: var(--color-capa); }
+progress::-webkit-progress-value { background: var(--color-primary-text); }
+progress::-moz-progress-bar { background: var(--color-primary-text); }
+
+/* Pasos de un formulario largo. El texto siempre visible; la barra, desde 640px.
+   <nav class="pasos" aria-label="Progreso"><p class="pasos__texto">Paso 2 de 4: Aula y horario</p>
+   <ol class="pasos__barra"><li data-estado="hecho">Datos</li><li aria-current="step">Aula</li><li>…</li></ol></nav> */
+.pasos { margin-bottom: var(--space-6); }
+.pasos__texto { margin: 0 0 var(--space-2); font: var(--text-label); color: var(--color-tinta); }
+.pasos__barra { display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.pasos__barra li {
+  flex: 1;
+  padding-top: var(--space-2);
+  font: var(--text-meta);
+  color: var(--color-tinta-2);
+  border-top: 4px solid var(--color-linea);
+}
+.pasos__barra li[data-estado="hecho"] { border-top-color: var(--color-primary-text); }
+.pasos__barra li[aria-current="step"] {
+  color: var(--color-tinta);
+  font-weight: 700;
+  border-top-color: var(--color-accent);   /* "estás acá"; el texto en 700 es la otra señal */
+}
+@media (max-width: 639px) { .pasos__barra { display: none; } }
+
+/* "Revisá tus respuestas": lo cargado, agrupado, con "Cambiar" en cada grupo.
+   <section class="revision"><div class="revision__cabecera"><h3>Datos</h3><a href="…">Cambiar<span class="visually-hidden"> datos</span></a></div>
+   <dl><div><dt>Nombre</dt><dd>…</dd></div>…</dl></section> */
+.revision { padding: var(--space-4) 0; border-bottom: 1px solid var(--color-linea); }
+.revision:first-of-type { padding-top: 0; }
+.revision__cabecera { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-2); }
+.revision__cabecera h3 { margin: 0; font: var(--text-title); }
+.revision__cabecera a { font: var(--text-label); }
+.revision dl { margin: 0; }
+.revision dl > div { display: grid; grid-template-columns: minmax(120px, 30%) 1fr; gap: var(--space-4); padding: var(--space-1) 0; }
+.revision dt { color: var(--color-tinta-2); }
+.revision dd { margin: 0; }
+@media (max-width: 639px) { .revision dl > div { grid-template-columns: 1fr; gap: 0; padding: var(--space-2) 0; } }
+
 /* 6. Estados --------------------------------------------------------------- */
 
 /* Aviso = placa de estado: bloque de color con el ícono + mensaje */
@@ -898,7 +1175,7 @@ img, svg { max-width: 100%; }
 .aviso__cuerpo p { margin: 0; }
 .aviso__accion { margin-top: var(--space-2); margin-left: calc(-1 * var(--space-3)); }
 .aviso--exito { --aviso-color: var(--color-success); }
-.aviso--advertencia { --aviso-color: var(--color-warning); --aviso-icono: #0f2438; }
+.aviso--advertencia { --aviso-color: var(--color-warning); }   /* v3: ámbar con ícono blanco (5.0:1) */
 .aviso--error { --aviso-color: var(--color-error); }
 /* En oscuro, la placa azul institucional se lee poco sobre el fondo: se aclara */
 @media (prefers-color-scheme: dark) {
@@ -968,6 +1245,46 @@ img, svg { max-width: 100%; }
 .vacio__titulo { font: var(--text-title); margin: 0; }
 .vacio p { margin: 0 0 var(--space-2); color: var(--color-tinta-2); }
 
+/* Comprobante: la confirmación final de un trámite, con el número bien visible.
+   <section class="comprobante" role="status"><svg class="icono">circle-check</svg>
+   <h2 class="comprobante__titulo">Solicitud enviada</h2>
+   <p class="comprobante__numero"><span>Número de trámite</span> TW-2026-00418</p> … */
+.comprobante {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radius-contenedor);
+}
+.comprobante > .icono { width: 32px; height: 32px; color: var(--color-success); }
+.comprobante__titulo { margin: 0; font: var(--text-headline); }
+.comprobante__numero {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-2) 0;
+  padding: var(--space-3) var(--space-4);
+  font: 700 1.75rem/1.25 var(--font-texto);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--color-tinta);
+  background: var(--color-capa);
+  border-radius: var(--radius-control);
+  user-select: all;       /* un clic selecciona todo el número para copiarlo */
+}
+.comprobante__numero > span { font: var(--text-meta); letter-spacing: 0; color: var(--color-tinta-2); user-select: none; }
+.comprobante p { margin: 0; }
+
+/* Páginas de error (404, 403, 500): con banda y pie, lenguaje claro y una salida.
+   <main class="container pagina-error"><p class="pagina-error__codigo">Error 404</p>
+   <h1>No encontramos esta página</h1><p>…</p><div class="fila">…</div></main> */
+.pagina-error { padding-block: var(--space-16) var(--space-8); }
+.pagina-error__codigo { margin: 0 0 var(--space-2); font: 700 0.875rem/1.4 var(--font-texto); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; }
+.pagina-error h1 { margin-bottom: var(--space-3); }
+.pagina-error .fila { margin-top: var(--space-6); }
+
 /* 7. Inteligencia artificial ----------------------------------------------- */
 /* Botón de IA = .btn .btn-secondary + ícono sparkles. No hay clase aparte:
    la IA se distingue por el ícono, no por efectos. */
@@ -1005,6 +1322,10 @@ img, svg { max-width: 100%; }
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+/* Documentos formales (resoluciones, certificados): serif, solo en su contenedor */
+.font-academica { font-family: var(--font-academica); }
+.font-academica :is(h1, h2, h3, h4) { font-family: var(--font-academica); letter-spacing: 0; }
+
 /* Solo en papel / nunca en papel */
 .solo-impresion { display: none; }
 
@@ -1038,6 +1359,7 @@ img, svg { max-width: 100%; }
   }
   body { display: block; font-size: 11pt; background: #fff; }
 
+  .cabecera { position: static; }
   .banda {
     position: static;
     color: var(--color-tinta);
@@ -1050,8 +1372,9 @@ img, svg { max-width: 100%; }
   .banda__logo--movil { display: none; }
   .banda__herramienta { color: var(--color-tinta); border-left-color: var(--color-linea); }
 
-  .banda__nav, .banda__acciones, .nav-inferior, .toasts, .saltar, .migas,
-  .paginacion, .btn, .aviso__accion, .ia-panel__acciones, .no-imprimir { display: none !important; }
+  .banda__nav, .banda__acciones, .secciones, .nav-lateral, .nav-inferior, .toasts, .saltar,
+  .migas, .paginacion, .btn, .aviso__accion, .ia-panel__acciones, .filtros, .chips,
+  .selector-tema, .pasos, .revision__cabecera a, .no-imprimir { display: none !important; }
   .solo-impresion { display: block; }
 
   .container, .container--ancho { max-width: none; padding-inline: 0; }
@@ -1060,7 +1383,8 @@ img, svg { max-width: 100%; }
 
   /* Que las piezas no se corten entre páginas */
   h1, h2, h3, h4 { break-after: avoid; }
-  .panel, .aviso, .tabla tr, .grilla > * { break-inside: avoid; }
+  .panel, .aviso, .tabla tr, .grilla > *, .comprobante, .revision { break-inside: avoid; }
+  .comprobante__numero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .panel, .tabla-wrap { border-color: var(--color-linea); }
   .tabla-wrap { overflow: visible; }
   .tabla thead { display: table-header-group; }   /* se repite en cada hoja */

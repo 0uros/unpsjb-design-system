@@ -4,7 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#004992">
-  <title>Muestra v2 (anterior) · UNPSJB</title>
+  <title>Muestra 0.3.0 (antes) · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
   <link rel="stylesheet" href="unpsjb.css">
 </head>
 <body>
@@ -29,30 +34,46 @@
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M10 5H3"/><path d="M12 19H3"/><path d="M14 3v4"/><path d="M16 17v4"/><path d="M21 12h-9"/><path d="M21 19h-5"/><path d="M21 5h-7"/><path d="M8 10v4"/><path d="M8 12H3"/></symbol>
+    <symbol id="i-ellipsis" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></symbol>
     <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></symbol>
   </svg>
 
   <a class="saltar" href="#contenido">Ir al contenido</a>
 
-  <header class="banda">
-    <div class="container">
-      <div class="banda__fila">
-        <!-- En producción: https://recursos.tw.unp.edu.ar/assets/... -->
-        <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
-        <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
-        <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Gestión de Eventos</p>
-        <div class="banda__acciones">
-          <button class="btn btn-icon" type="button" id="tema" aria-label="Cambiar tema claro u oscuro"><svg class="icono" aria-hidden="true"><use href="#i-contrast"/></svg></button>
-          <button class="btn btn-icon" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
-          <button class="btn btn-icon" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+  <header class="cabecera">
+    <div class="banda">
+      <div class="container">
+        <div class="banda__fila">
+          <!-- En producción: https://recursos.tw.unp.edu.ar/assets/... -->
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Gestión de Eventos</p>
+          <div class="banda__acciones">
+            <button class="btn btn-icon" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="btn btn-icon" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
         </div>
       </div>
-      <nav class="banda__nav" aria-label="Secciones">
+    </div>
+    <nav class="secciones" aria-label="Secciones">
+      <div class="container secciones__lista">
         <a href="#" aria-current="page">Agenda</a>
         <a href="#">Inscripciones</a>
         <a href="#">Aulas</a>
-      </nav>
-    </div>
+        <a href="#">Certificados</a>
+        <a href="#">Informes</a>
+        <a href="#">Configuración</a>
+      </div>
+    </nav>
   </header>
 
   <main class="container" id="contenido">
@@ -73,14 +94,30 @@
       </div>
     </div>
 
+    <div class="filtros">
+      <div class="buscador">
+        <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
+        <input class="input" type="search" placeholder="Ej.: Moodle" aria-label="Buscar evento">
+      </div>
+      <select class="select" aria-label="Sede"><option>Todas las sedes</option><option selected>Trelew</option><option>Puerto Madryn</option></select>
+      <select class="select" aria-label="Tipo"><option selected>Todos los tipos</option><option>Jornada</option><option>Taller</option><option>Charla</option></select>
+      <button class="btn btn-quiet" type="button"><svg class="icono" aria-hidden="true"><use href="#i-sliders"/></svg>Más filtros</button>
+    </div>
+    <div class="chips">
+      <span class="chip">Sede: Trelew <button type="button" aria-label="Quitar filtro Sede: Trelew"><svg class="icono" aria-hidden="true"><use href="#i-x"/></svg></button></span>
+      <span class="chip">Octubre 2026 <button type="button" aria-label="Quitar filtro Octubre 2026"><svg class="icono" aria-hidden="true"><use href="#i-x"/></svg></button></span>
+      <button class="btn btn-quiet btn-compacto" type="button">Quitar filtros</button>
+      <p class="chips__total" role="status">4 eventos</p>
+    </div>
+
     <div class="tabla-wrap">
-      <table class="tabla tabla--fija">
-        <thead><tr><th scope="col">Evento</th><th scope="col">Tipo</th><th scope="col">Fecha</th><th scope="col">Sede</th><th scope="col" class="num">Inscriptos</th><th scope="col">Estado</th></tr></thead>
+      <table class="tabla tabla--tarjetas">
+        <thead><tr><th scope="col">Evento</th><th scope="col">Tipo</th><th scope="col">Fecha</th><th scope="col">Sede</th><th scope="col" class="num">Inscripciones</th><th scope="col">Estado</th></tr></thead>
         <tbody>
-          <tr><td>Jornada de Informática</td><td><span class="categoria cat-1">Jornada</span></td><td>12/10/2026</td><td>Trelew</td><td class="num">184</td><td><span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Confirmado</span></td></tr>
-          <tr aria-selected="true"><td>Taller de Moodle</td><td><span class="categoria cat-2">Taller</span></td><td>18/10/2026</td><td>Trelew</td><td class="num">23</td><td><span class="insignia insignia--aviso"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>Sin aula</span></td></tr>
-          <tr><td>Charla de Seguridad</td><td><span class="categoria cat-3">Charla</span></td><td>25/10/2026</td><td>Puerto Madryn</td><td class="num">0</td><td><span class="insignia insignia--error"><svg class="icono" aria-hidden="true"><use href="#i-circle-x"/></svg>Suspendido</span></td></tr>
-          <tr><td>Muestra de Proyectos</td><td><span class="categoria cat-5">Otros</span></td><td>02/11/2026</td><td>Trelew</td><td class="num">1.250</td><td><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg>Borrador</span></td></tr>
+          <tr><td>Jornada de Informática</td><td data-label="Tipo"><span class="categoria cat-1">Jornada</span></td><td data-label="Fecha">12/10/2026</td><td data-label="Sede">Trelew</td><td class="num" data-label="Inscripciones">184</td><td data-label="Estado"><span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Confirmado</span></td></tr>
+          <tr aria-selected="true"><td>Taller de Moodle</td><td data-label="Tipo"><span class="categoria cat-2">Taller</span></td><td data-label="Fecha">18/10/2026</td><td data-label="Sede">Trelew</td><td class="num" data-label="Inscripciones">23</td><td data-label="Estado"><span class="insignia insignia--aviso"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>Sin aula</span></td></tr>
+          <tr><td>Charla de Seguridad</td><td data-label="Tipo"><span class="categoria cat-3">Charla</span></td><td data-label="Fecha">25/10/2026</td><td data-label="Sede">Trelew</td><td class="num" data-label="Inscripciones">0</td><td data-label="Estado"><span class="insignia insignia--error"><svg class="icono" aria-hidden="true"><use href="#i-circle-x"/></svg>Suspendido</span></td></tr>
+          <tr><td>Muestra de Proyectos</td><td data-label="Tipo"><span class="categoria cat-5">Otros</span></td><td data-label="Fecha">02/11/2026</td><td data-label="Sede">Trelew</td><td class="num" data-label="Inscripciones">1.250</td><td data-label="Estado"><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg>Borrador</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -95,17 +132,42 @@
       <p class="paginacion__resumen">Eventos 21 a 40 de 230</p>
     </nav>
 
+    <h2 id="tablas-celular">Tablas en celular</h2>
+    <p>Achicá la ventana por debajo de 640px. La tabla de eventos de arriba se vuelve <strong>tarjetas</strong>, porque cada fila es una cosa. Esta otra conserva la forma de tabla, con scroll y la <strong>primera columna fija</strong>, porque acá lo que importa es comparar celdas.</p>
+    <div class="tabla-wrap">
+      <table class="tabla tabla--fija tabla--compacta">
+        <thead><tr><th scope="col">Asistencia</th><th scope="col" class="num">Lun 12</th><th scope="col" class="num">Mar 13</th><th scope="col" class="num">Mié 14</th><th scope="col" class="num">Jue 15</th><th scope="col" class="num">Vie 16</th><th scope="col" class="num">Total</th></tr></thead>
+        <tbody>
+          <tr><td>Mañana</td><td class="num">142</td><td class="num">138</td><td class="num">120</td><td class="num">131</td><td class="num">98</td><td class="num">629</td></tr>
+          <tr><td>Tarde</td><td class="num">87</td><td class="num">91</td><td class="num">64</td><td class="num">70</td><td class="num">45</td><td class="num">357</td></tr>
+          <tr><td>Virtual</td><td class="num">36</td><td class="num">41</td><td class="num">39</td><td class="num">52</td><td class="num">60</td><td class="num">228</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:var(--space-6)">Si la primera columna trae textos largos, en celular <strong>no pasa de 140px</strong> (ni del 40% de la pantalla) y el nombre sigue en otro renglón, para que quede lugar para comparar. En esta tabla se pidió además ese ancho como mínimo (<code>--tabla-fija-min</code>), para que los nombres no queden en una columna muy angosta. Si lo que identifica a la fila es siempre un texto largo, conviene pasarla a tarjetas.</p>
+    <div class="tabla-wrap">
+      <table class="tabla tabla--fija tabla--compacta" style="--tabla-fija-min: 140px">
+        <thead><tr><th scope="col">Estudiante</th><th scope="col" class="num">Parcial 1</th><th scope="col" class="num">Parcial 2</th><th scope="col" class="num">Trabajo final</th><th scope="col" class="num">Asistencia</th><th scope="col" class="num">Nota</th></tr></thead>
+        <tbody>
+          <tr><td>Fernández Quiroga, María de los Ángeles</td><td class="num">8</td><td class="num">7</td><td class="num">9</td><td class="num">92 %</td><td class="num">8</td></tr>
+          <tr><td>Antieco, Nahuel</td><td class="num">6</td><td class="num">9</td><td class="num">8</td><td class="num">85 %</td><td class="num">8</td></tr>
+          <tr><td>Williams Roberts, Gwenllian Aylén</td><td class="num">10</td><td class="num">9</td><td class="num">10</td><td class="num">100 %</td><td class="num">10</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <h2>Tipografía</h2>
-    <p class="text-display">Display 32 · Montserrat 800</p>
-    <p class="text-headline">Headline 24 · Montserrat 700</p>
+    <p class="text-display">Display 32 · Montserrat 800 · ÁÉÓ en dos líneas, para ver que las tildes no toquen la línea de arriba</p>
+    <p class="text-headline">Headline 24 · Montserrat 700 · Secretaría Académica</p>
     <p class="text-title">Title 19 · Montserrat 700</p>
     <p class="text-body-lg">Body 18 · Atkinson Hyperlegible Next. Legajo Il1-O0: se distinguen sin esfuerzo.</p>
     <p>Body 16. El texto general, con un <a href="#">link institucional</a> y un ancho máximo de 70 caracteres para que se lea cómodo.</p>
     <p class="text-label">Label 15 · botones y labels</p>
     <p class="text-meta text-secundario">Meta 14 · metadatos y ayudas</p>
     <p class="text-caption text-secundario">Caption 13 · el mínimo permitido</p>
+    <p class="text-meta">Cifras tabulares (verificadas en la 0.3): <span style="font-variant-numeric:tabular-nums">1.111,11 · 8.888,88</span> ocupan el mismo ancho.</p>
 
-    <h2>Botones</h2>
+    <h2 id="botones">Botones</h2>
     <div class="fila">
       <button class="btn btn-primary" type="button">Guardar cambios</button>
       <button class="btn btn-secondary" type="button">Cancelar</button>
@@ -164,21 +226,17 @@
         <label class="check"><input type="radio" name="modalidad"> Virtual</label>
         <label class="check"><input type="radio" name="modalidad"> Híbrida</label>
       </fieldset>
-      <label class="interruptor"><input type="checkbox" role="switch" checked> Avisar a los inscriptos por correo</label>
+      <label class="interruptor"><input type="checkbox" role="switch" checked> Avisar por correo a las personas inscriptas</label>
       <label class="interruptor"><input type="checkbox" role="switch" disabled> Transmitir en vivo (requiere aula con cámara)</label>
     </div>
 
-    <div class="fila" style="margin-top:var(--space-6); justify-content:space-between">
+    <div class="fila" style="margin-top:var(--space-6)">
       <fieldset class="segmentado">
         <legend class="visually-hidden">Vista de la agenda</legend>
         <label><input type="radio" name="vista"> Día</label>
         <label><input type="radio" name="vista" checked> Semana</label>
         <label><input type="radio" name="vista"> Mes</label>
       </fieldset>
-      <div class="buscador" style="flex:1; max-width:360px">
-        <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
-        <input class="input" type="search" placeholder="Ej.: Moodle" aria-label="Buscar evento">
-      </div>
     </div>
 
     <h2>Grilla</h2>
@@ -209,6 +267,10 @@
     <div class="aviso" role="status">
       <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg></div>
       <div class="aviso__cuerpo"><p class="aviso__titulo">La inscripción cierra el viernes</p><p>Después de esa fecha solo se puede anotar desde Alumnado.</p></div>
+    </div>
+    <div class="aviso aviso--advertencia" role="status">
+      <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg></div>
+      <div class="aviso__cuerpo"><p class="aviso__titulo">Advertencia en ámbar (nuevo en 0.3)</p><p>El naranja queda solo para "estás acá" y el foco. Compará con el marcador de la sub-barra de arriba.</p></div>
     </div>
     <div class="aviso aviso--exito" role="status">
       <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg></div>
@@ -258,15 +320,15 @@ Emoji 16: 🫩 🫆 🪾 🫜 🪉 · Emoji 17: 🫪 🫯 🫈 🧑‍🩰</text
         <input class="input" id="emoji-input" value="Jornada de Informática 🚀🇦🇷">
       </div>
       <p class="text-label">Texto mostrado</p>
-      <p>Charla con 184 inscriptos 🙌 en Trelew 🌊. Premio a los proyectos 🏆🥇 del año.</p>
+      <p>Charla con 184 inscripciones 🙌 en Trelew 🌊. Premio a los proyectos 🏆🥇 del año.</p>
       <p class="text-label">El mismo texto con los emojis del sistema (para comparar)</p>
-      <p style="font-family: system-ui, sans-serif">Charla con 184 inscriptos 🙌 en Trelew 🌊. Premio a los proyectos 🏆🥇 del año. Emoji 17: 🫪 🫯 🫈</p>
+      <p style="font-family: system-ui, sans-serif">Charla con 184 inscripciones 🙌 en Trelew 🌊. Premio a los proyectos 🏆🥇 del año. Emoji 17: 🫪 🫯 🫈</p>
     </div>
 
     <h2>Inteligencia artificial</h2>
     <div class="ia-panel">
       <p class="ia-panel__marca"><svg class="icono" aria-hidden="true"><use href="#i-sparkles"/></svg>Generado por IA</p>
-      <p>La Jornada de Informática tuvo 184 inscriptos, la mayoría de primer año. La asistencia bajó a la tarde: conviene concentrar las charlas en la mañana.</p>
+      <p>La Jornada de Informática tuvo 184 inscripciones, en su mayoría de primer año. La asistencia bajó a la tarde: conviene concentrar las charlas en la mañana.</p>
       <div class="ia-panel__acciones">
         <button class="btn btn-quiet btn-compacto" type="button">Usar este texto</button>
         <button class="btn btn-quiet btn-compacto" type="button">Copiar</button>
@@ -274,11 +336,151 @@ Emoji 16: 🫩 🫆 🪾 🫜 🪉 · Emoji 17: 🫪 🫯 🫈 🧑‍🩰</text
       </div>
     </div>
 
+    <h2 id="datos-cuenta">Datos que ya tenemos</h2>
+    <p>Lo que ya trae el ingreso único de la universidad no se vuelve a pedir: se muestra. Y lo que se cargó en un paso se ofrece en los siguientes, en lugar de pedirlo otra vez.</p>
+    <div class="panel" style="max-width:720px">
+      <nav class="pasos" aria-label="Progreso de la solicitud">
+        <p class="pasos__texto">Paso 1 de 4: Datos</p>
+        <ol class="pasos__barra">
+          <li aria-current="step">Datos</li>
+          <li>Aula y horario</li>
+          <li>Adjuntos</li>
+          <li>Revisión</li>
+        </ol>
+      </nav>
+      <section class="revision" aria-labelledby="cuenta-datos">
+        <div class="revision__cabecera"><h3 id="cuenta-datos">Quien solicita</h3></div>
+        <dl>
+          <div><dt>Nombre</dt><dd>Carla Ñancufil</dd></div>
+          <div><dt>Legajo</dt><dd>TW-10482</dd></div>
+          <div><dt>Correo</dt><dd>cnancufil@unp.edu.ar</dd></div>
+        </dl>
+        <p class="ayuda" style="margin:var(--space-2) 0 0">Son los datos de tu cuenta de la universidad. Si alguno está mal, <a href="#">avisá a Soporte Informático</a>.</p>
+      </section>
+      <div class="campo" style="margin-top:var(--space-6)">
+        <label class="label" for="aviso-mail">Correo para los avisos de esta solicitud</label>
+        <input class="input" id="aviso-mail" type="email" autocomplete="email" value="cnancufil@unp.edu.ar" aria-describedby="aviso-mail-ayuda">
+        <span class="ayuda" id="aviso-mail-ayuda">Pusimos el de tu cuenta. Cambialo solo si querés recibirlos en otro.</span>
+      </div>
+      <label class="check"><input type="checkbox" checked> Quien retira las llaves es la misma persona que solicita</label>
+      <div class="fila" style="margin-top:var(--space-6)">
+        <button class="btn btn-primary" type="button">Continuar</button>
+      </div>
+    </div>
+
+    <h2>Formulario de varios pasos</h2>
+    <div class="panel" style="max-width:720px">
+      <nav class="pasos" aria-label="Progreso de la solicitud">
+        <p class="pasos__texto">Paso 4 de 4: Revisá tus respuestas</p>
+        <ol class="pasos__barra">
+          <li data-estado="hecho">Datos</li>
+          <li data-estado="hecho">Aula y horario</li>
+          <li data-estado="hecho">Adjuntos</li>
+          <li aria-current="step">Revisión</li>
+        </ol>
+      </nav>
+      <section class="revision" aria-labelledby="rev-datos">
+        <div class="revision__cabecera"><h3 id="rev-datos">Datos</h3><a href="#">Cambiar<span class="visually-hidden"> datos</span></a></div>
+        <dl>
+          <div><dt>Evento</dt><dd>Jornada de Informática</dd></div>
+          <div><dt>Quien solicita</dt><dd>Secretaría Académica</dd></div>
+        </dl>
+      </section>
+      <section class="revision" aria-labelledby="rev-aula">
+        <div class="revision__cabecera"><h3 id="rev-aula">Aula y horario</h3><a href="#">Cambiar<span class="visually-hidden"> aula y horario</span></a></div>
+        <dl>
+          <div><dt>Aula</dt><dd>Auditorio</dd></div>
+          <div><dt>Fecha</dt><dd>12 de octubre de 2026, de 9:00 a 13:00 h</dd></div>
+        </dl>
+      </section>
+      <div class="fila" style="margin-top:var(--space-6)">
+        <button class="btn btn-secondary" type="button">Volver</button>
+        <button class="btn btn-primary" type="button">Enviar solicitud</button>
+      </div>
+    </div>
+
+    <h2>Carga de archivos</h2>
+    <div class="panel" style="max-width:640px">
+      <div class="campo" style="margin-bottom:0">
+        <span class="label" id="adjuntos">Programa del evento</span>
+        <span class="ayuda" id="adjuntos-ayuda">PDF o JPG, hasta 10 MB cada uno.</span>
+        <label class="btn btn-secondary archivo"><svg class="icono" aria-hidden="true"><use href="#i-upload"/></svg>Elegir archivo<input type="file" accept=".pdf,.jpg,.jpeg" multiple aria-labelledby="adjuntos" aria-describedby="adjuntos-ayuda"></label>
+        <ul class="archivos" aria-label="Archivos elegidos">
+          <li><svg class="icono" aria-hidden="true"><use href="#i-file"/></svg><span class="archivos__nombre">programa-jornada-2026.pdf <span class="archivos__peso">· 1,2 MB</span></span><button class="btn btn-quiet btn-compacto" type="button">Quitar<span class="visually-hidden"> programa-jornada-2026.pdf</span></button></li>
+          <li><svg class="icono" aria-hidden="true"><use href="#i-file"/></svg><span class="archivos__nombre">afiche.jpg <span class="archivos__peso">· Subiendo, 60 %</span></span><button class="btn btn-quiet btn-compacto" type="button">Cancelar<span class="visually-hidden"> afiche.jpg</span></button><progress value="60" max="100" aria-label="Subiendo afiche.jpg">60 %</progress></li>
+          <li><svg class="icono" aria-hidden="true"><use href="#i-file"/></svg><span class="archivos__nombre">cronograma.docx</span><button class="btn btn-quiet btn-compacto" type="button">Quitar<span class="visually-hidden"> cronograma.docx</span></button><span class="campo-error"><svg class="icono" aria-hidden="true"><use href="#i-circle-alert"/></svg>No es PDF ni JPG. Exportalo como PDF y probá de nuevo.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Confirmación final</h2>
+    <section class="comprobante" role="status" style="max-width:640px">
+      <svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>
+      <h3 class="comprobante__titulo">Solicitud enviada</h3>
+      <p class="comprobante__numero"><span>Número de trámite</span>TW-2026-00418</p>
+      <p>Soporte Informático la revisa en 48 horas hábiles. Te avisamos por correo.</p>
+      <div class="fila" style="margin-top:var(--space-2)">
+        <button class="btn btn-primary" type="button"><svg class="icono" aria-hidden="true"><use href="#i-download"/></svg>Descargar comprobante (PDF)</button>
+        <button class="btn btn-secondary" type="button" onclick="print()"><svg class="icono" aria-hidden="true"><use href="#i-printer"/></svg>Imprimir</button>
+      </div>
+    </section>
+
+    <h2>Página de error</h2>
+    <p>Así se ve el contenido de una página 403. En la herramienta real ocupa toda la pantalla, con la banda y el pie.</p>
+    <div class="panel pagina-error" style="padding-block:var(--space-8)">
+      <p class="pagina-error__codigo">Error 403</p>
+      <p class="text-display" style="margin-bottom:var(--space-3)">No tenés permiso para ver esta página</p>
+      <p>Tu usuario no tiene acceso a los informes de la Sede. Si lo necesitás para tu trabajo, pedilo a Soporte Informático.</p>
+      <div class="fila">
+        <button class="btn btn-primary" type="button">Pedir acceso a Soporte Informático</button>
+        <button class="btn btn-secondary" type="button">Volver</button>
+      </div>
+    </div>
+
+    <h2>Sesión por vencer</h2>
+    <p>Dos minutos antes de que se cierre la sesión aparece este aviso, para no perder lo cargado.</p>
+    <button class="btn btn-secondary" type="button" id="abrir-sesion"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>Simular sesión por vencer</button>
+
+    <h2>Menú lateral</h2>
+    <p>Para herramientas con más de 6 secciones, o tableros que necesitan todo el alto (cámaras, inventario). Reemplaza a la sub-barra, no se suma a ella.</p>
+    <div class="grilla grilla--lateral">
+      <nav class="nav-lateral" aria-label="Secciones del visor">
+        <a href="#" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg>Cámaras en vivo</a>
+        <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-list"/></svg>Grabaciones</a>
+        <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-chart"/></svg>Informes</a>
+        <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-settings"/></svg>Configuración</a>
+      </nav>
+      <div class="panel"><div class="panel__cabecera"><h3>Cámaras en vivo</h3></div><p class="text-secundario">Acá va el muro de cámaras.</p></div>
+    </div>
+
+    <h2>Documento formal</h2>
+    <p>La interfaz no usa serif. Solo el contenedor que reproduce un documento oficial lleva <code>.font-academica</code>.</p>
+    <article class="panel font-academica" style="max-width:640px">
+      <h3>Resolución N.º 123/2026</h3>
+      <p>Trelew, 30 de septiembre de 2026. VISTO la solicitud presentada por la Secretaría Académica, y CONSIDERANDO que el evento se ajusta a la normativa vigente, se autoriza el uso del Auditorio.</p>
+    </article>
+
+    <h2>Logo en tres tamaños</h2>
+    <div class="fila" style="gap:var(--space-8); align-items:flex-end">
+      <figure style="margin:0"><img src="assets/logo-unpsjb-trelew-completo.svg" alt="UNPSJB Sede Trelew, versión completa" height="96" style="height:96px;width:auto"><figcaption class="text-meta text-secundario">L · completo · 96px o más</figcaption></figure>
+      <figure style="margin:0"><div style="background:var(--color-banda);padding:8px 12px;border-radius:var(--radius-control)"><img src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew, versión para banda" height="48" style="height:48px;width:auto;display:block"></div><figcaption class="text-meta text-secundario">M · para pantalla · 32 a 95px</figcaption></figure>
+      <figure style="margin:0"><div class="fila" style="gap:var(--space-3);align-items:flex-end"><img src="assets/favicon-unpsjb.svg" alt="Favicon UNPSJB" width="16" height="16"><img src="assets/favicon-unpsjb.svg" alt="" width="32" height="32"><img src="assets/favicon-unpsjb.svg" alt="" width="64" height="64"></div><figcaption class="text-meta text-secundario">S · ícono · 16, 32 y 64px</figcaption></figure>
+    </div>
+
     <footer class="pie">
       <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
       <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="visually-hidden">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="light"> Claro</label>
+            <label><input type="radio" name="tema" value="dark"> Oscuro</label>
+          </fieldset>
+        </div>
         <button class="btn btn-quiet btn-compacto" type="button"><svg class="icono icono-sm" aria-hidden="true"><use href="#i-key"/></svg>Clave de IA</button>
-        <span>v2.1.0</span>
+        <span>v0.3.0 (antes de las correcciones)</span>
       </div>
     </footer>
   </main>
@@ -287,7 +489,11 @@ Emoji 16: 🫩 🫆 🪾 🫜 🪉 · Emoji 17: 🫪 🫯 🫈 🧑‍🩰</text
     <a href="#" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Agenda</a>
     <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-users"/></svg>Inscripciones</a>
     <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-building"/></svg>Aulas</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-award"/></svg>Certificados</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-chart"/></svg>Informes</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-settings"/></svg>Configuración</a>
   </nav>
+
 
   <div class="toasts" role="status" aria-live="polite"></div>
 
@@ -300,14 +506,59 @@ Emoji 16: 🫩 🫆 🪾 🫜 🪉 · Emoji 17: 🫪 🫯 🫈 🧑‍🩰</text
     </form>
   </dialog>
 
+  <dialog class="modal" id="sesion" aria-labelledby="sesion-titulo">
+    <h2 class="modal__titulo" id="sesion-titulo">Tu sesión está por cerrarse</h2>
+    <p>Se cierra en <strong id="cuenta" aria-hidden="true" style="font-variant-numeric:tabular-nums">2:00</strong> por inactividad. Si seguís, no se pierde nada de lo que cargaste.</p>
+    <p class="visually-hidden" role="status" id="cuenta-lector"></p>
+    <form method="dialog" class="modal__acciones">
+      <button class="btn btn-secondary" value="salir">Cerrar sesión</button>
+      <button class="btn btn-primary" value="seguir" autofocus>Seguir conectado</button>
+    </form>
+  </dialog>
+
   <script>
     const html = document.documentElement;
-    document.getElementById('tema').onclick = () => {
-      const oscuro = html.dataset.theme ? html.dataset.theme === 'dark'
-        : matchMedia('(prefers-color-scheme: dark)').matches;
-      html.dataset.theme = oscuro ? 'light' : 'dark';
+    // Solo para comparar-v3.1.html: cambia el tema o salta a una sección desde afuera
+    addEventListener('message', e => {
+      const d = e.data || {};
+      if (d.tema === 'auto') delete html.dataset.theme; else if (d.tema) html.dataset.theme = d.tema;
+      if (d.ir) { const el = document.getElementById(d.ir); if (el) el.scrollIntoView(); else scrollTo(0, 0); }
+    });
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado || 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.theme; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.theme = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.theme = r.value; }
+      };
+    });
+
+    // Sesión por vencer: cuenta regresiva visible; el lector de pantalla
+    // la escucha solo al abrir y cuando quedan 30 segundos
+    const sesion = document.getElementById('sesion');
+    let cuentaTimer;
+    document.getElementById('abrir-sesion').onclick = () => {
+      let quedan = 120;
+      const cuenta = document.getElementById('cuenta'), lector = document.getElementById('cuenta-lector');
+      const pintar = () => { cuenta.textContent = Math.floor(quedan / 60) + ':' + String(quedan % 60).padStart(2, '0'); };
+      pintar(); sesion.showModal();
+      lector.textContent = 'La sesión se cierra en 2 minutos.';
+      clearInterval(cuentaTimer);
+      cuentaTimer = setInterval(() => {
+        quedan--; pintar();
+        if (quedan === 30) lector.textContent = 'Quedan 30 segundos.';
+        if (quedan <= 0) { clearInterval(cuentaTimer); sesion.close(); }
+      }, 1000);
     };
+    sesion.addEventListener('close', () => clearInterval(cuentaTimer));
     document.getElementById('abrir-modal').onclick = () => document.getElementById('modal').showModal();
+    // "Más" del menú inferior: abre el resto de las secciones
+    const abrirMas = document.getElementById('abrir-mas');
+    if (abrirMas) abrirMas.onclick = () => document.getElementById('mas-secciones').showModal();
 
     // Toast: 5 s, se pausa con el mouse o el foco, tiene botón de cerrar
     document.getElementById('toast-btn').onclick = () => {
