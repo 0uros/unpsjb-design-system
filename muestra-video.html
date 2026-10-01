@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Visor de cámaras · muestra del módulo · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central -->
+  <link rel="stylesheet" href="unpsjb-video.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-video-off" viewBox="0 0 24 24"><path d="M10.66 6H14a2 2 0 0 1 2 2v2.5l5.248-3.062A.5.5 0 0 1 22 7.87v8.196"/><path d="M16 16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2"/><path d="m2 2 20 20"/></symbol>
+    <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-maximize" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-minimize" viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></symbol>
+    <symbol id="i-maximize-2" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/><path d="M9 21H3v-6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor contenedor--ancho">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg>Visor de Cámaras</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="boton boton--icono" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="secciones" aria-label="Secciones">
+      <div class="contenedor contenedor--ancho secciones__lista">
+        <a href="#" aria-current="page">En vivo</a>
+        <a href="#">Grabaciones</a>
+        <a href="#">Configuración</a>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la herramienta">
+    <div class="contenedor contenedor--ancho fase__fila">
+      <strong class="fase__nombre">Piloto</strong>
+      <p>Página de muestra del módulo <code>unpsjb-video.css</code>, con datos de ejemplo. <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor contenedor--ancho" id="contenido" data-densidad="compacta">
+    <div class="encabezado encabezado--visor">
+      <h1>Cámaras en vivo</h1>
+      <div class="fila">
+        <fieldset class="segmentado">
+          <legend class="solo-lector">Cámaras a la vez</legend>
+          <label><input type="radio" name="cantidad" value="1"> 1</label>
+          <label><input type="radio" name="cantidad" value="4" checked> 4</label>
+          <label><input type="radio" name="cantidad" value="9"> 9</label>
+        </fieldset>
+        <!-- Se muestra solo si el navegador permite la pantalla completa -->
+        <button class="boton boton--secundario" type="button" id="pantalla-completa" hidden><svg class="icono" aria-hidden="true"><use href="#i-maximize"/></svg><span>Pantalla completa</span></button>
+      </div>
+    </div>
+
+    <div class="grilla grilla--lateral">
+      <details class="acordeon camaras-panel" id="camaras-panel" open>
+        <summary>Cámaras (9)</summary>
+        <div class="camaras-panel__cuerpo">
+        <div class="buscador"><svg class="icono" aria-hidden="true"><use href="#i-search"/></svg><input class="input" type="search" placeholder="Ej.: biblioteca" aria-label="Buscar cámara"></div>
+        <ul class="camaras-lista" aria-label="Cámaras">
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span>01 · Acceso principal</span><span class="solo-lector">, en vivo</span></button></li>
+          <li><button type="button" aria-current="true"><svg class="icono" aria-hidden="true"><use href="#i-disc"/></svg><span>02 · Pasillo de aulas</span><span class="solo-lector">, grabando</span></button></li>
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span>03 · Laboratorio de Informática 1</span><span class="solo-lector">, en vivo</span></button></li>
+          <li><button type="button" class="camaras-lista__sin-senal"><svg class="icono" aria-hidden="true"><use href="#i-video-off"/></svg><span>04 · Estacionamiento</span><span class="solo-lector">, sin señal</span></button></li>
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span>05 · Biblioteca</span><span class="solo-lector">, en vivo</span></button></li>
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-disc"/></svg><span>06 · Sala de red</span><span class="solo-lector">, grabando</span></button></li>
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span>07 · Auditorio</span><span class="solo-lector">, en vivo</span></button></li>
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span>08 · Patio</span><span class="solo-lector">, en vivo</span></button></li>
+          <li><button type="button"><svg class="icono" aria-hidden="true"><use href="#i-disc"/></svg><span>09 · Depósito</span><span class="solo-lector">, grabando</span></button></li>
+        </ul>
+        </div>
+      </details>
+      <div>
+        <div class="muro" data-camaras="4" id="muro">
+        <figure class="camara" data-camara="01">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 01</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">01 · Acceso principal</span>
+            <span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span class="camara__estado">En vivo</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Acceso principal"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="02">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 02</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">02 · Pasillo de aulas</span>
+            <span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-disc"/></svg><span class="camara__estado">Grabando</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Pasillo de aulas"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="03">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 03</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">03 · Laboratorio de Informática 1</span>
+            <span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span class="camara__estado">En vivo</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Laboratorio de Informática 1"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="04">
+          <div class="camara__video camara__video--sin-senal"><svg class="icono" aria-hidden="true"><use href="#i-video-off"/></svg><p><strong>Sin señal</strong><span>Cámara 04 desconectada. Avisá a Soporte Informático.</span></p></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">04 · Estacionamiento</span>
+            <span class="insignia insignia--error"><svg class="icono" aria-hidden="true"><use href="#i-video-off"/></svg><span class="camara__estado">Sin señal</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Estacionamiento"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="05">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 05</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">05 · Biblioteca</span>
+            <span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span class="camara__estado">En vivo</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Biblioteca"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="06">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 06</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">06 · Sala de red</span>
+            <span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-disc"/></svg><span class="camara__estado">Grabando</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Sala de red"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="07">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 07</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">07 · Auditorio</span>
+            <span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span class="camara__estado">En vivo</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Auditorio"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="08">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 08</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">08 · Patio</span>
+            <span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg><span class="camara__estado">En vivo</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Patio"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        <figure class="camara" data-camara="09">
+          <div class="camara__video"><span class="texto-nota">Acá va el video de la cámara 09</span></div>
+          <figcaption class="camara__pie">
+            <span class="camara__nombre">09 · Depósito</span>
+            <span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-disc"/></svg><span class="camara__estado">Grabando</span></span>
+            <button class="boton boton--icono" type="button" aria-label="Ampliar Depósito"><svg class="icono" aria-hidden="true"><use href="#i-maximize-2"/></svg></button>
+          </figcaption>
+        </figure>
+        </div>
+
+        <h2 id="grabaciones">Grabaciones · 02 · Pasillo de aulas</h2>
+        <div class="panel">
+          <div class="fila" style="justify-content:space-between;margin-bottom:var(--espacio-3)">
+            <p class="linea-tiempo__hora" style="margin:0"><span class="solo-lector">Momento elegido: </span><span id="momento">10:15:00</span></p>
+            <div class="campo" style="margin:0;flex-direction:row;align-items:center;gap:var(--espacio-2)">
+              <label class="label" for="dia-grabacion">Día</label>
+              <input class="input" id="dia-grabacion" type="date" value="2026-10-13" style="width:auto">
+            </div>
+          </div>
+          <div class="linea-tiempo">
+            <div class="linea-tiempo__tramos" role="img" aria-label="Hay grabación de 6:00 a 12:30 y de 14:00 a 22:00">
+              <span style="--inicio: 0.25; --fin: 0.5208"></span><span style="--inicio: 0.5833; --fin: 0.9167"></span>
+            </div>
+            <input class="linea-tiempo__control" id="control" type="range" min="0" max="86399" step="1" value="36900" aria-label="Momento de la grabación" aria-valuetext="10:15:00">
+            <div class="linea-tiempo__escala" aria-hidden="true"><span>0:00</span><span>6:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+            <div class="linea-tiempo__saltos">
+              <button class="boton boton--secundario" type="button" data-salto="-900">−15 min</button>
+              <button class="boton boton--secundario" type="button" data-salto="-60">−1 min</button>
+              <button class="boton boton--primario" type="button" id="reproducir"><svg class="icono" aria-hidden="true"><use href="#i-play"/></svg><span>Reproducir</span></button>
+              <button class="boton boton--secundario" type="button" data-salto="60">+1 min</button>
+              <button class="boton boton--secundario" type="button" data-salto="900">+15 min</button>
+              <label for="ir-a">Ir a la hora</label>
+              <input class="input" id="ir-a" type="time" step="1" value="10:15:00">
+            </div>
+          </div>
+          <p class="texto-detalle texto-secundario" style="margin:var(--espacio-3) 0 0">La barra de arriba muestra en azul los tramos con grabación. Con Tab se llega a la línea y con las flechas se avanza de a un segundo.</p>
+        </div>
+
+        <details class="acordeon" style="margin-top:var(--espacio-8)">
+          <summary>Cuándo usarlo y cuándo no: visor de cámaras</summary>
+          <div class="acordeon__cuerpo">
+            <dl class="resumen" style="max-width:880px">
+              <div><dt>Usalo cuando</dt><dd>Hay que mirar varias cámaras a la vez o revisar una grabación.</dd></div>
+              <div><dt>No lo uses cuando</dt><dd>Es un video suelto dentro de una página (una charla grabada): alcanza la etiqueta de video con sus controles.</dd></div>
+              <div><dt>Accesibilidad</dt><dd>El estado de cada cámara va con ícono y texto (en celdas chicas queda el ícono, distinto en cada estado, y el texto sigue para el lector de pantalla). Nada parpadea. La línea de tiempo se maneja con botones, con un campo de hora o con las flechas: no hace falta arrastrar. El visor respeta el tema elegido; solo el fondo del video es negro.</dd></div>
+            </dl>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.2</span>
+      </div>
+    </footer>
+  </main>
+
+  <nav class="menu-inferior" aria-label="Secciones">
+    <a href="#" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-video"/></svg>En vivo</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-list"/></svg>Grabaciones</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-settings"/></svg>Configuración</a>
+  </nav>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+
+    // Muro: 1, 4 o 9 cámaras
+    const muro = document.getElementById('muro'), camaras = [...muro.children];
+    const mostrar = n => { muro.dataset.camaras = n; camaras.forEach((c, i) => { c.hidden = i >= n; }); };
+    document.querySelectorAll('input[name="cantidad"]').forEach(r => r.addEventListener('change', () => mostrar(Number(r.value))));
+    mostrar(4);
+
+    // El muro entra entero en la ventana: acá se mide dónde empieza y unpsjb-video.css
+    // calcula el tamaño de las cámaras con ese dato (--visor-arriba)
+    const medir = () => html.style.setProperty('--visor-arriba', Math.round(muro.getBoundingClientRect().top + scrollY) + 'px');
+    addEventListener('resize', medir);
+    if (document.fonts) document.fonts.ready.then(medir);
+    medir();
+
+    // En pantallas angostas la lista de cámaras arranca plegada: al entrar se ve el muro
+    const panel = document.getElementById('camaras-panel'), ancha = matchMedia('(min-width: 1024px)');
+    const plegar = () => { panel.open = ancha.matches; };
+    ancha.addEventListener('change', plegar);
+    panel.addEventListener('toggle', medir);
+    plegar();
+
+    // Pantalla completa: se van la cabecera y el banner, y el muro gana ese alto
+    const completa = document.getElementById('pantalla-completa');
+    if (document.fullscreenEnabled) {
+      completa.hidden = false;
+      completa.addEventListener('click', () => { document.fullscreenElement ? document.exitFullscreen() : html.requestFullscreen(); });
+      document.addEventListener('fullscreenchange', () => {
+        const si = Boolean(document.fullscreenElement);
+        completa.querySelector('span').textContent = si ? 'Salir de pantalla completa' : 'Pantalla completa';
+        completa.querySelector('use').setAttribute('href', si ? '#i-minimize' : '#i-maximize');
+        if (si) scrollTo(0, 0);
+        medir();
+      });
+    }
+
+    // Línea de tiempo: los botones, el campo de hora y el control mueven lo mismo
+    const control = document.getElementById('control'), irA = document.getElementById('ir-a'), momento = document.getElementById('momento');
+    const dos = n => String(n).padStart(2, '0');
+    const aTexto = s => Math.floor(s / 3600) + ':' + dos(Math.floor(s / 60) % 60) + ':' + dos(s % 60);
+    const mover = s => {
+      s = Math.max(0, Math.min(86399, s));
+      control.value = s; control.setAttribute('aria-valuetext', aTexto(s));
+      momento.textContent = aTexto(s); irA.value = dos(Math.floor(s / 3600)) + ':' + dos(Math.floor(s / 60) % 60) + ':' + dos(s % 60);
+    };
+    control.addEventListener('input', () => mover(Number(control.value)));
+    irA.addEventListener('change', () => { const p = irA.value.split(':').map(Number); if (p.length >= 2) mover(p[0] * 3600 + p[1] * 60 + (p[2] || 0)); });
+    document.querySelectorAll('[data-salto]').forEach(b => b.addEventListener('click', () => mover(Number(control.value) + Number(b.dataset.salto))));
+    const reproducir = document.getElementById('reproducir');
+    reproducir.addEventListener('click', () => {
+      const andando = reproducir.dataset.andando === 'si';
+      reproducir.dataset.andando = andando ? 'no' : 'si';
+      reproducir.querySelector('span').textContent = andando ? 'Reproducir' : 'Pausar';
+      reproducir.querySelector('use').setAttribute('href', andando ? '#i-play' : '#i-pause');
+    });
+  </script>
+</body>
+</html>

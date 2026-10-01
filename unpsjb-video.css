@@ -1,0 +1,242 @@
+/* ==========================================================================
+   unpsjb-video.css — Módulo de video (visor de cámaras) · v0.4.2
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 16.B.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens. El único color propio es el
+   negro detrás del video. Ejemplo completo: muestra-video.html.
+
+   La idea:
+   - El video va siempre sobre negro. El resto respeta el tema elegido: el
+     visor no fuerza el modo oscuro.
+   - Al entrar, el muro se ve entero sin hacer scroll: las cámaras se achican
+     o se agrandan según el alto de la ventana (0.4.2).
+   - El estado de cada cámara se dice con ícono y texto (insignias), nunca
+     solo con color, y sin nada que parpadee.
+   - La línea de tiempo no depende de arrastrar: hay botones de salto, un campo
+     de hora y un control que se mueve con las flechas.
+
+   Piezas
+   1. Muro de cámaras (.muro, .camara)
+   2. Lista de cámaras (.camaras-panel, .camaras-lista)
+   3. Línea de tiempo (.linea-tiempo)
+   4. Pantalla completa
+   5. Impresión
+   ========================================================================== */
+
+:root { --color-video-fondo: #000000; --color-video-texto: #c7d7ea; }
+
+/* 1. Muro ------------------------------------------------------------------ */
+/* <div class="muro" data-camaras="4"> <figure class="camara">…</figure> … </div>
+   data-camaras: 1, 4 o 9. En celular siempre va una por renglón.
+
+   Desde 768px el muro entra entero en la ventana (0.4.2). Las celdas siguen en
+   16:9: lo que cambia es el ancho del muro, que se calcula a partir del alto
+   libre. Si el alto sobra, manda el ancho de la columna.
+   El alto libre es el de la ventana menos lo que hay arriba del muro. Ese dato
+   lo pone la página en --visor-arriba (en píxeles), midiendo dónde empieza el
+   muro; ver el script de muestra-video.html. Sin ese dato se usa un valor
+   aproximado. Con ventanas muy bajas el muro no baja de 320px de alto: ahí
+   vuelve el scroll, en lugar de dejar cámaras ilegibles. */
+.muro {
+  --muro-lado: 1;                                               /* cámaras por lado */
+  --muro-pie: calc(var(--alto-control) + var(--espacio-2));     /* alto del pie de cada cámara */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacio-3);
+}
+@media (min-width: 640px) {
+  .muro[data-camaras="4"], .muro[data-camaras="9"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 768px) {
+  .muro {
+    --muro-alto: max(320px, calc(100dvh - var(--visor-arriba, calc(var(--alto-cabecera) + 72px)) - var(--espacio-4)));
+    /* Lo que no es video: el pie y el borde de cada fila, y los espacios entre filas */
+    --muro-fijo: calc(var(--muro-lado) * (var(--muro-pie) + 2px) + (var(--muro-lado) - 1) * var(--espacio-3));
+    width: min(100%, calc((var(--muro-alto) - var(--muro-fijo)) * 16 / 9 + (var(--muro-lado) - 1) * var(--espacio-3)));
+    margin-inline: auto;
+    grid-template-columns: repeat(var(--muro-lado), minmax(0, 1fr));
+  }
+  .muro[data-camaras="4"] { --muro-lado: 2; grid-template-columns: repeat(var(--muro-lado), minmax(0, 1fr)); }
+  .muro[data-camaras="9"] { --muro-lado: 3; grid-template-columns: repeat(var(--muro-lado), minmax(0, 1fr)); }
+  .muro .camara__pie { height: var(--muro-pie); }
+}
+/* La pantalla del visor gasta poco alto en su encabezado: lo que sobra va al muro.
+   <div class="encabezado encabezado--visor"> <h1>Cámaras en vivo</h1> <div class="fila">…</div> </div> */
+@media (min-width: 768px) {
+  .encabezado--visor { padding-block: var(--espacio-4) var(--espacio-3); }
+}
+
+/* Una cámara: el video arriba y, debajo, su nombre, su estado y sus acciones.
+   <figure class="camara">
+     <div class="camara__video"><video …></video></div>
+     <figcaption class="camara__pie"><span class="camara__nombre">01 · Acceso principal</span>
+       <span class="insignia insignia--exito">…<span class="camara__estado">En vivo</span></span>
+       <button class="boton boton--icono" aria-label="Ampliar Acceso principal">…</button></figcaption>
+   </figure> */
+.camara {
+  container: camara / inline-size;
+  margin: 0;
+  min-width: 0;
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+  overflow: hidden;
+}
+.camara__video {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--color-video-texto);
+  background: var(--color-video-fondo);
+}
+.camara__video > video, .camara__video > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.camara__pie {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--alto-control);
+  padding: var(--espacio-1) var(--espacio-1) var(--espacio-1) var(--espacio-3);
+}
+.camara__nombre { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font: var(--texto-label); color: var(--color-tinta); }
+
+/* Sin señal: no hay video. La celda lo dice y dice qué hacer.
+   <div class="camara__video camara__video--sin-senal"><svg class="icono">video-off</svg>
+   <p><strong>Sin señal</strong><span>Cámara 04 desconectada. Avisá a Soporte Informático.</span></p></div> */
+.camara__video--sin-senal {
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-4);
+  text-align: center;
+  color: var(--color-tinta-2);
+  background: var(--color-capa);
+}
+.camara__video--sin-senal .icono { width: 32px; height: 32px; }
+.camara__video--sin-senal p { margin: 0; max-width: 28ch; font: var(--texto-detalle); }
+.camara__video--sin-senal strong { display: block; font: var(--texto-label); color: var(--color-tinta); }
+
+/* Celdas chicas (un muro de 9 en una notebook): la insignia queda solo con su
+   ícono, que es distinto en cada estado, y "Sin señal" queda sin la explicación.
+   Los dos textos siguen estando para el lector de pantalla. */
+@container camara (max-width: 300px) {
+  .camara__estado, .camara__video--sin-senal p span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .camara__pie { gap: var(--espacio-1); padding-left: var(--espacio-2); }
+  .camara__pie .insignia { gap: 0; padding: var(--espacio-1); }
+  .camara__video--sin-senal { gap: var(--espacio-1); padding: var(--espacio-2); }
+  .camara__video--sin-senal .icono { width: 24px; height: 24px; }
+}
+
+/* 2. Lista de cámaras ------------------------------------------------------ */
+/* Va en la columna de 280px de .grilla--lateral, dentro de un panel que se
+   pliega (0.4.2):
+   <details class="acordeon camaras-panel" open><summary>Cámaras (9)</summary>
+     <div class="camaras-panel__cuerpo"> [buscador] <ul class="camaras-lista">…</ul> </div></details>
+   - Desde 1024px está siempre abierto y sin título: es la columna de la izquierda.
+     Si la lista es larga, tiene su propio scroll y no estira la primera pantalla.
+   - Con menos ancho va arriba del muro y arranca plegado (lo cierra la página al
+     cargar), para que al entrar se vean las cámaras y no la lista. */
+.camaras-panel__cuerpo { display: flex; flex-direction: column; gap: var(--espacio-3); }
+@media (max-width: 1023px) {
+  .camaras-panel__cuerpo { padding-bottom: var(--espacio-4); }
+}
+@media (min-width: 1024px) {
+  .camaras-panel { border: 0; }
+  .camaras-panel > summary { display: none; }
+  .camaras-panel__cuerpo { max-height: max(320px, calc(100dvh - var(--visor-arriba, calc(var(--alto-cabecera) + 72px)) - var(--espacio-4))); }
+  .camaras-panel .camaras-lista { min-height: 0; overflow-y: auto; }
+}
+
+/* Cada cámara es un botón con su nombre y el ícono de su estado; el estado
+   también va en texto, para el lector de pantalla. La elegida lleva aria-current="true".
+   <ul class="camaras-lista"><li><button type="button" aria-current="true">
+     <svg class="icono">video</svg><span>01 · Acceso principal</span>
+     <span class="solo-lector">, en vivo</span></button></li> … </ul> */
+.camaras-lista { margin: 0; padding: 0; list-style: none; }
+.camaras-lista button {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  width: 100%;
+  min-height: var(--alto-control);
+  padding: 0 var(--espacio-3);
+  font: var(--texto-base);
+  text-align: left;
+  color: var(--color-tinta);
+  background: none;
+  border: 0;
+  border-left: 4px solid transparent;
+  border-radius: 0 var(--radio-control) var(--radio-control) 0;
+  cursor: pointer;
+}
+.camaras-lista button > span:first-of-type { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.camaras-lista button .icono { color: var(--color-tinta-2); }
+.camaras-lista button:hover { background: var(--color-tinte); }
+/* La marca es azul, no naranja: elegir una cámara no es la navegación principal */
+.camaras-lista button[aria-current="true"] { font-weight: 700; background: var(--color-tinte); border-left-color: var(--color-primario-texto); }
+.camaras-lista__sin-senal { color: var(--color-tinta-2); }
+.camaras-lista__sin-senal .icono { color: var(--color-error-texto) !important; }
+
+/* 3. Línea de tiempo ------------------------------------------------------- */
+/* Para recorrer las grabaciones de una cámara. Tres formas de moverse, ninguna
+   obliga a arrastrar:
+   <div class="linea-tiempo">
+     <div class="linea-tiempo__tramos" role="img" aria-label="Hay grabación de 6:00 a 12:30 y de 14:00 a 22:00">
+       <span style="--inicio: 0.25; --fin: 0.5208"></span> … </div>
+     <input class="linea-tiempo__control" type="range" min="0" max="86399" step="1"
+            aria-label="Momento de la grabación" aria-valuetext="10:15:00">
+     <div class="linea-tiempo__escala" aria-hidden="true"><span>0:00</span> … <span>24:00</span></div>
+     <div class="linea-tiempo__saltos"> [−15 min] [−1 min] [Reproducir] [+1 min] [+15 min] [campo de hora] </div>
+   </div> */
+.linea-tiempo { display: flex; flex-direction: column; gap: var(--espacio-2); }
+.linea-tiempo__tramos { position: relative; height: 8px; background: var(--color-capa); border-radius: 2px; overflow: hidden; }
+.linea-tiempo__tramos span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--inicio) * 100%);
+  width: calc((var(--fin) - var(--inicio)) * 100%);
+  background: var(--color-primario-texto);
+}
+.linea-tiempo__control {
+  display: block;
+  width: 100%;
+  height: var(--alto-control);
+  margin: 0;
+  accent-color: var(--color-primario-texto);
+  cursor: pointer;
+}
+.linea-tiempo__escala { display: flex; justify-content: space-between; font: var(--texto-nota); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; }
+.linea-tiempo__saltos { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2); }
+.linea-tiempo__saltos .input { width: auto; }
+.linea-tiempo__saltos label { font: var(--texto-label); margin-left: auto; }
+.linea-tiempo__hora { font: 700 1.125rem/1.3 var(--fuente-texto); font-variant-numeric: tabular-nums; color: var(--color-tinta); }
+@media (max-width: 639px) { .linea-tiempo__saltos label { margin-left: 0; flex-basis: 100%; } }
+@media (forced-colors: active) { .linea-tiempo__tramos span { forced-color-adjust: none; background: Highlight; } }
+
+/* 4. Pantalla completa ----------------------------------------------------- */
+/* Un botón pone la página en pantalla completa (document.documentElement
+   .requestFullscreen()). Ahí se van la cabecera, el banner de fase y el menú
+   inferior: queda el visor solo, y el muro gana ese alto. Se sale con el mismo
+   botón o con Esc. El botón se muestra solo si el navegador lo permite (en
+   iPhone no hay pantalla completa para páginas).
+   <button class="boton boton--secundario" type="button" hidden>
+     <svg class="icono">maximize</svg><span>Pantalla completa</span></button> */
+:root:fullscreen :is(.cabecera, .fase, .menu-inferior) { display: none; }
+
+/* 5. Impresión ------------------------------------------------------------- */
+@media print {
+  .camaras-panel, .linea-tiempo__saltos, .linea-tiempo__control { display: none !important; }
+  .muro { width: auto; }
+  .camara__video { background: none; border-bottom: 1px solid var(--color-linea); color: var(--color-tinta-2); }
+  .linea-tiempo__tramos, .linea-tiempo__tramos span { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

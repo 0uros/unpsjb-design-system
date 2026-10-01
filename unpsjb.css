@@ -1,6 +1,5 @@
 /* ==========================================================================
-   unpsjb.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.3.2
-   VERSIÓN ANTERIOR, guardada para comparar. La oficial es unpsjb.css.
+   unpsjb.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.4.1
    Dirección "Señalética". Delegación Trelew · 2026
    Versión oficial. Fuente de verdad: DESIGN.md. Cambios: CHANGELOG.md.
    Los nombres del código van en español (regla y excepciones: DESIGN.md, 2.A).
@@ -17,15 +16,17 @@
    1. Fuentes
    2. Tokens (claro, oscuro)
    3. Base y detalles del navegador
-   4. Estructura: contenedores, grilla, cabecera (banda + sub-barra), menú
+   4. Estructura: contenedores, grilla, cabecera (banda + sub-barra), banner
+      de fase, menú
       lateral, migas, encabezado de pantalla, menú inferior, pie, selector de tema
    5. Componentes: botones, campos, opciones, interruptor, segmentado, buscador,
       paneles, tablas (con tarjetas en celular), insignias, categorías, pestañas,
       paginación, carga, filtros y chips, archivos, pasos y revisión
    6. Estados: avisos, toasts, modales, vacíos, comprobante, páginas de error
    7. Inteligencia artificial
-   8. Utilidades
-   9. Impresión
+   8. Gráficos e indicadores
+   9. Utilidades
+   10. Impresión
    ========================================================================== */
 
 /* 1. Fuentes ---------------------------------------------------------------
@@ -160,6 +161,17 @@
   --color-cat-4: #4d7c0f;   /* oliva */
   --color-cat-5: #475569;   /* pizarra: "otros" */
 
+  /* Series de gráficos (0.4). Otro trabajo que las categorías: acá lo que importa
+     es que dos series vecinas no se confundan, tampoco con daltonismo. El orden
+     es parte de la paleta: se asignan de la 1 a la 5, sin saltear. Validada en
+     claro y en oscuro (DESIGN.md, 3.I). El texto nunca lleva estos colores. */
+  --color-serie-1: #0b55a8;   /* azul */
+  --color-serie-2: #4d7c0f;   /* oliva */
+  --color-serie-3: #7c3aed;   /* violeta */
+  --color-serie-4: #0891b2;   /* cian */
+  --color-serie-5: #a21caf;   /* fucsia */
+  --color-serie-otros: #475569;
+
   /* Toast: se invierte respecto de la página */
   --color-toast-fondo: #0f2438;
   --color-toast-texto: #ffffff;
@@ -201,6 +213,7 @@
   --radio-completo: 9999px;
   --alto-control: 44px;
   --alto-control-compacto: 36px;
+  --alto-fila: 48px;              /* fila de tabla */
   --alto-banda-min: 56px;             /* alto mínimo; con el logo de 48px queda en 64px */
   --alto-subbarra: 48px;
   /* 0.3.1: alto real de lo que queda fijo, para que no tape el foco (ver base) */
@@ -248,6 +261,12 @@
     --color-cat-3: #e879f9;
     --color-cat-4: #a3e635;
     --color-cat-5: #94a3b8;
+    --color-serie-1: #3874cb;
+    --color-serie-2: #65a30d;
+    --color-serie-3: #8b5cf6;
+    --color-serie-4: #0ea5b7;
+    --color-serie-5: #c026d3;
+    --color-serie-otros: #94a3b8;
     --color-toast-fondo: #e9eff6;
     --color-toast-texto: #0f2438;
     --color-toast-exito: #047857;
@@ -280,6 +299,12 @@
   --color-cat-3: #e879f9;
   --color-cat-4: #a3e635;
   --color-cat-5: #94a3b8;
+  --color-serie-1: #3874cb;
+  --color-serie-2: #65a30d;
+  --color-serie-3: #8b5cf6;
+  --color-serie-4: #0ea5b7;
+  --color-serie-5: #c026d3;
+  --color-serie-otros: #94a3b8;
   --color-toast-fondo: #e9eff6;
   --color-toast-texto: #0f2438;
   --color-toast-exito: #047857;
@@ -292,6 +317,24 @@
 
 /* 3. Base ------------------------------------------------------------------ */
 *, *::before, *::after { box-sizing: border-box; }
+
+/* El atributo hidden esconde siempre, aunque el componente tenga su propio display */
+[hidden] { display: none !important; }
+
+/* Densidad compacta (0.4): para pantallas de trabajo con muchos datos (inventario,
+   visor de cámaras). Se pone en el contenedor y compacta todo lo que tiene adentro:
+     <main class="contenedor" data-densidad="compacta">
+   Solo desde 768px: en celular los controles siguen en 44px para el dedo.
+   La letra no se achica. */
+@media (min-width: 768px) {
+  [data-densidad="compacta"] {
+    --alto-control: var(--alto-control-compacto);
+    --alto-fila: 40px;
+  }
+  [data-densidad="compacta"] .boton:not(.boton--icono) { padding-inline: var(--espacio-3); }
+  [data-densidad="compacta"] :is(.input, .select) { padding-block: var(--espacio-1); }
+  [data-densidad="compacta"] .campo { margin-bottom: var(--espacio-4); }
+}
 
 /* 0.3.1 · El foco no queda tapado (WCAG 2.2, 2.4.11). La cabecera fija y el
    menú inferior ocupan lugar: al saltar con Tab o a un ancla, el navegador
@@ -557,6 +600,23 @@ img, svg { max-width: 100%; }
   .secciones { display: none; }   /* en celular, las secciones van en .menu-inferior */
 }
 
+/* Banner de fase (0.4): avisa que la herramienta está en prueba y pide opinión.
+   Va debajo de la cabecera, antes del contenido.
+   <aside class="fase" aria-label="Estado de la herramienta"><div class="contenedor fase__fila">
+   <strong class="fase__nombre">Piloto</strong>
+   <p>Esta herramienta es nueva. <a href="…">Contanos qué mejorarías</a>.</p></div></aside> */
+.fase { background: var(--color-capa); border-bottom: 1px solid var(--color-linea); font: var(--texto-detalle); color: var(--color-tinta); }
+.fase__fila { display: flex; align-items: center; gap: var(--espacio-3); padding-block: var(--espacio-2); }
+.fase__fila p { margin: 0; max-width: none; }
+.fase__nombre {
+  flex-shrink: 0;
+  padding: 1px var(--espacio-2);
+  font: 700 0.875rem/1.4 var(--fuente-texto);
+  color: var(--color-panel);
+  background: var(--color-primario-texto);
+  border-radius: var(--radio-control);
+}
+
 /* Migas de pan: dónde estoy dentro de una herramienta con varios niveles.
    <nav class="migas" aria-label="Ruta"><ol><li><a href="…">Agenda</a></li>
    <li aria-current="page">Jornada de Informática</li></ol></nav> */
@@ -640,6 +700,26 @@ img, svg { max-width: 100%; }
 .pie__derecha { display: flex; align-items: center; gap: var(--espacio-4); }
 @media (max-width: 639px) { .pie { flex-direction: column; align-items: flex-start; } }
 @media (max-width: 639px) { .pie__derecha { flex-wrap: wrap; } }
+
+/* Pie de las páginas públicas (0.4): quién es, dónde queda, cómo contactar y los
+   enlaces legales. Las herramientas internas usan el pie simple de arriba.
+   <footer class="pie pie--publico"><div class="pie__bloques">
+     <div><h2 class="pie__titulo">Delegación Trelew</h2><address>…</address></div> …
+   </div><p>© 2026 UNPSJB…</p><div class="pie__derecha">…</div></footer> */
+.pie__bloques {
+  flex-basis: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: var(--espacio-6);
+  padding-bottom: var(--espacio-4);
+  border-bottom: 1px solid var(--color-linea);
+  font: var(--texto-detalle);
+}
+.pie__titulo { margin: 0 0 var(--espacio-2); font: var(--texto-label); letter-spacing: 0; color: var(--color-tinta); }
+.pie__bloques address { font-style: normal; }
+.pie__bloques ul { margin: 0; padding: 0; list-style: none; }
+.pie__bloques li + li { margin-top: var(--espacio-1); }
+.pie__bloques a { display: inline-block; padding-block: 2px; }
 
 /* Selector de tema: Automático · Claro · Oscuro. Es un .segmentado compacto
    con el texto "Tema" al lado. La elección se guarda en localStorage
@@ -875,8 +955,9 @@ img, svg { max-width: 100%; }
 }
 .panel__cabecera h2, .panel__cabecera h3 { margin: 0; font: var(--texto-titulo-3); }
 
-/* Tablas. Si la tabla puede tener scroll horizontal (.tabla--fija), el contenedor
-   lleva tabindex="0" role="region" aria-label="…" para recorrerla con teclado. */
+/* Tablas. En una pantalla angosta cualquier tabla puede tener scroll horizontal:
+   el marco lleva tabindex="0" role="region" aria-label="…" para recorrerla con
+   teclado. La única excepción es .tabla--tarjetas, que en celular no tiene scroll. */
 .tabla-marco {
   overflow-x: auto;
   background: var(--color-panel);
@@ -885,7 +966,7 @@ img, svg { max-width: 100%; }
 }
 .tabla { width: 100%; border-collapse: collapse; font: var(--texto-base); font-variant-numeric: tabular-nums; }
 .tabla th, .tabla td {
-  height: 48px;
+  height: var(--alto-fila);
   padding: var(--espacio-2) var(--espacio-4);
   text-align: left;
   border-bottom: 1px solid var(--color-linea);
@@ -897,11 +978,14 @@ img, svg { max-width: 100%; }
   background: var(--color-capa);
   border-bottom: 2px solid var(--color-primario-texto);
 }
+/* Encabezado de fila (<th scope="row">): es un dato más, no una cabecera gris */
+.tabla tbody th { font: var(--texto-base); background: none; border-bottom: 1px solid var(--color-linea); }
+.tabla tbody tr:last-child th { border-bottom: 0; }
 .tabla .num { text-align: right; }
 .tabla tbody tr:last-child td { border-bottom: 0; }
 .tabla tbody tr:hover td { background: var(--color-fondo); }
 .tabla tbody tr[aria-selected="true"] td { background: var(--color-tinte); }
-.tabla--compacta th, .tabla--compacta td { height: 40px; }
+.tabla--compacta { --alto-fila: 40px; }
 .tabla--fija th:first-child, .tabla--fija td:first-child {
   position: sticky;
   left: 0;
@@ -1189,6 +1273,130 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
 .revision dd { margin: 0; }
 @media (max-width: 639px) { .revision dl > div { grid-template-columns: 1fr; gap: 0; padding: var(--espacio-2) 0; } }
 
+/* Lista de resumen (0.4): la ficha de UNA cosa (un aula, un equipo, una solicitud),
+   en pares de nombre y dato. Evita armar una tabla para un solo registro.
+   <dl class="resumen"><div><dt>Aula</dt><dd>Auditorio</dd>
+   <dd class="resumen__accion"><a href="…">Cambiar<span class="solo-lector"> aula</span></a></dd></div> … </dl> */
+.resumen { margin: 0; }
+.resumen > div {
+  display: grid;
+  grid-template-columns: minmax(120px, 30%) 1fr auto;
+  gap: var(--espacio-1) var(--espacio-4);
+  align-items: baseline;
+  padding: var(--espacio-3) 0;
+  border-bottom: 1px solid var(--color-linea);
+}
+.resumen > div:last-child { border-bottom: 0; }
+.resumen dt { color: var(--color-tinta-2); }
+.resumen dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.resumen__accion { font: var(--texto-label); }
+@media (max-width: 639px) {
+  .resumen > div { grid-template-columns: 1fr auto; }
+  .resumen dt { grid-column: 1 / -1; font: var(--texto-detalle); }
+}
+
+/* Acordeón (0.4): esconde lo secundario (preguntas frecuentes, historial, opciones
+   avanzadas). Nunca campos obligatorios ni información crítica. Es la etiqueta
+   nativa: funciona con teclado y sin JavaScript.
+   <details class="acordeon"><summary>¿Cómo reservo un aula?</summary>
+   <div class="acordeon__cuerpo"><p>…</p></div></details> */
+.acordeon { border-block: 1px solid var(--color-linea); }
+.acordeon + .acordeon { border-top: 0; }
+.acordeon > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--alto-control);
+  padding: var(--espacio-2) 0;
+  font: var(--texto-label);
+  color: var(--color-primario-texto);
+  cursor: pointer;
+  list-style: none;
+}
+.acordeon > summary::-webkit-details-marker { display: none; }
+.acordeon > summary::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  margin: 0 3px 0 2px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duracion-rapida) var(--curva);
+}
+.acordeon[open] > summary::before { transform: rotate(45deg); }
+.acordeon > summary:hover { color: var(--color-tinta); }
+.acordeon__cuerpo { padding: 0 0 var(--espacio-4) calc(var(--espacio-3) + 12px); }
+.acordeon__cuerpo > :last-child { margin-bottom: 0; }
+
+/* Contador de caracteres (0.4): debajo de un textarea con límite. Dice cuántos
+   quedan; si se pasa, cambia a error pero deja seguir escribiendo.
+   <textarea class="textarea" data-max="200" aria-describedby="d-cuenta"></textarea>
+   <span class="contador" id="d-cuenta">Quedan 200 caracteres</span>
+   El texto lo actualiza un script (ver muestra.html); al lector de pantalla se le
+   avisa cuando la persona deja de escribir, no en cada tecla. */
+.contador { font: var(--texto-detalle); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; }
+.contador[data-estado="excedido"] { font-weight: 700; color: var(--color-error-texto); }
+
+/* Combobox con autocompletado (0.4): para elegir entre muchas opciones (más de
+   15 o 20), escribiendo para filtrar. Con pocas, va un .select. El primer paso
+   barato es el nativo: <input class="input" list="…"> + <datalist>.
+   <div class="combo"><input class="input" role="combobox" aria-expanded="false"
+     aria-controls="aula-lista" aria-autocomplete="list" autocomplete="off">
+   <ul class="combo__lista" id="aula-lista" role="listbox" hidden>
+     <li role="option" id="aula-1">Aula 101</li> … </ul></div>
+   El comportamiento (flechas, Enter, Esc, anuncio de resultados) lo pone un script:
+   hay uno de referencia en muestra.html. */
+.combo { position: relative; }
+.combo__lista {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + var(--espacio-1));
+  left: 0;
+  right: 0;
+  max-height: 264px;
+  margin: 0;
+  padding: var(--espacio-1);
+  overflow-y: auto;
+  list-style: none;
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-control);
+  box-shadow: var(--sombra-flotante);
+}
+.combo__lista [role="option"] {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: var(--espacio-1) var(--espacio-3);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.combo__lista [role="option"]:hover { background: var(--color-capa); }
+.combo__lista [role="option"][aria-selected="true"] { background: var(--color-tinte); box-shadow: inset 3px 0 0 var(--color-primario-texto); }
+.combo__lista mark { font-weight: 700; color: inherit; background: none; }
+.combo__lista .combo__vacio, .combo__lista .combo__vacio:hover { color: var(--color-tinta-2); background: none; cursor: default; }
+@media (forced-colors: active) {
+  .combo__lista [role="option"][aria-selected="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
+
+/* Etiquetas (0.4): clasifican un registro (tipo de aula, tipo de cámara). No se
+   tocan. No son insignias (las insignias son ESTADOS y llevan ícono) ni chips
+   (los chips se quitan). Con color, va .categoria.
+   <ul class="etiquetas"><li class="etiqueta">Laboratorio</li><li class="etiqueta">Proyector</li></ul> */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px var(--espacio-2);
+  font: var(--texto-detalle);
+  color: var(--color-tinta);
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-control);
+  white-space: nowrap;
+}
+.etiquetas { display: flex; flex-wrap: wrap; gap: var(--espacio-1) var(--espacio-2); margin: 0; padding: 0; list-style: none; }
+
 /* 6. Estados --------------------------------------------------------------- */
 
 /* Aviso = placa de estado: bloque de color con el ícono + mensaje */
@@ -1286,6 +1494,23 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
   border-radius: var(--radio-contenedor) var(--radio-contenedor) 0 0;
 }
 .modal--inferior .modal__acciones { margin-top: var(--espacio-4); }
+/* 0.4 · Panel lateral: filtros avanzados o el detalle de algo sin salir de la
+   lista. Es un modal: atrapa el foco y Esc lo cierra.
+   <dialog class="modal modal--lateral" aria-labelledby="…">
+   <div class="modal__cabecera"><h2 class="modal__titulo">…</h2>
+   <form method="dialog"><button class="boton boton--icono" aria-label="Cerrar">✕</button></form></div> … */
+.modal--lateral {
+  width: min(420px, 100vw);
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  max-height: none;
+  margin: 0 0 0 auto;
+  border-radius: 0;
+  overflow-y: auto;
+}
+.modal__cabecera { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--espacio-4); margin-bottom: var(--espacio-4); }
+.modal__cabecera .modal__titulo { margin: 0; padding-top: var(--espacio-2); }
 .modal__titulo { font: var(--texto-titulo-3); margin: 0 0 var(--espacio-3); }
 .modal__acciones { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--espacio-2); margin-top: var(--espacio-6); }
 
@@ -1361,7 +1586,90 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
   margin: var(--espacio-3) 0 0 calc(-1 * var(--espacio-3));
 }
 
-/* 8. Utilidades ------------------------------------------------------------ */
+/* 8. Gráficos e indicadores (0.4) ------------------------------------------- */
+/* Reglas en DESIGN.md, sección 15. En corto: primero ver si hace falta un gráfico
+   (un número solo es un indicador); una serie, un color; el texto nunca lleva el
+   color de la serie; todo gráfico tiene su tabla. */
+
+/* Las clases .serie-N definen --serie, igual que .cat-N define --cat */
+.serie-1 { --serie: var(--color-serie-1); }
+.serie-2 { --serie: var(--color-serie-2); }
+.serie-3 { --serie: var(--color-serie-3); }
+.serie-4 { --serie: var(--color-serie-4); }
+.serie-5 { --serie: var(--color-serie-5); }
+.serie-otros { --serie: var(--color-serie-otros); }
+
+/* Indicador: un número que se mira solo. Nombre, valor y, si hay, el cambio
+   contra un período con ícono + signo + texto (nunca solo color).
+   <div class="indicador"><p class="indicador__nombre">Aulas ocupadas hoy</p>
+   <p class="indicador__valor">18 <span>de 24</span></p>
+   <p class="indicador__cambio indicador__cambio--bueno"><svg class="icono">trending-up</svg>
+   +3 <span>contra ayer</span></p></div>
+   --bueno y --malo dicen si el cambio conviene, no si subió: que bajen los
+   reclamos es bueno. */
+.indicadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: var(--espacio-6); }
+.indicador { min-width: 0; }
+.indicador p { margin: 0; }
+.indicador__nombre { font: var(--texto-detalle); color: var(--color-tinta-2); }
+.indicador__valor { font: 700 2rem/1.25 var(--fuente-texto); color: var(--color-tinta); }
+.indicador__valor span { font: var(--texto-base); color: var(--color-tinta-2); }
+.indicador__cambio { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-1); font: 700 0.875rem/1.4 var(--fuente-texto); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; }
+.indicador__cambio span { font-weight: 400; color: var(--color-tinta-2); }
+.indicador__cambio .icono { width: 16px; height: 16px; }
+.indicador__cambio--bueno { color: var(--color-exito-texto); }
+.indicador__cambio--malo { color: var(--color-error-texto); }
+
+/* Marco de un gráfico: título, el selector Gráfico | Tabla y una nota opcional.
+   <figure class="grafico"><figcaption class="grafico__cabecera">
+   <h3 class="grafico__titulo">Solicitudes por estado</h3> [segmentado Gráfico | Tabla]
+   </figcaption> … <p class="grafico__nota">Octubre de 2026.</p></figure> */
+.grafico { margin: 0; }
+.grafico__cabecera { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--espacio-2) var(--espacio-4); margin-bottom: var(--espacio-3); }
+.grafico__titulo { margin: 0; font: var(--texto-titulo-3); }
+.grafico__nota { margin: var(--espacio-3) 0 0; font: var(--texto-detalle); color: var(--color-tinta-2); }
+
+/* Barras horizontales: es una TABLA de verdad (nombre + valor) dibujada como
+   barras, así el lector de pantalla la lee sin nada extra. El valor va escrito
+   en la punta de cada barra. --valor va de 0 a 1 (la barra más larga, 1).
+   <table class="barras"><thead><tr><th scope="col">Estado</th><th scope="col">Solicitudes</th></tr></thead>
+   <tbody><tr><th scope="row">Resueltas</th><td style="--valor: 1">86</td></tr> … </tbody></table>
+   Una sola serie: todas las barras del mismo color. Para verla como tabla común,
+   se cambia la clase .barras por .tabla (ver muestra.html). */
+.barras { width: 100%; border-collapse: collapse; font: var(--texto-base); font-variant-numeric: tabular-nums; }
+.barras thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.barras th[scope="row"] { width: 1%; padding: 0 var(--espacio-4) 0 0; font-weight: 400; text-align: left; white-space: nowrap; color: var(--color-tinta); }
+.barras td { padding: 6px 0; border-left: 1px solid var(--color-linea-control); white-space: nowrap; }
+.barras td::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: calc((100% - 7ch) * var(--valor, 0));
+  min-width: 2px;
+  height: 16px;
+  margin-right: var(--espacio-2);
+  background: var(--serie, var(--color-serie-1));
+  border-radius: 0 4px 4px 0;      /* redondeada en la punta, recta en la base */
+}
+.barras tr:hover td::before { opacity: 0.8; }
+.barras .num { text-align: left; }   /* .num alinea a la derecha solo en la vista de tabla */
+
+/* Barra apilada: partes de un total (hasta 5 + "Otros"). Las partes se separan
+   con 2px del color del fondo, no con bordes. La leyenda dice nombre y valor.
+   <div class="apilada" role="img" aria-label="Uso de aulas: clases 52 %, …">
+   <span class="serie-1" style="--valor: 52"></span> … </div>
+   <ul class="leyenda"><li class="serie-1">Clases <b>52 %</b></li> … </ul> */
+.apilada { display: flex; gap: 2px; height: 24px; }
+.apilada > * { flex: var(--valor, 1) 1 0; min-width: 2px; background: var(--serie, var(--color-serie-otros)); }
+.apilada > :first-child { border-radius: 4px 0 0 4px; }
+.apilada > :last-child { border-radius: 0 4px 4px 0; }
+.leyenda { display: flex; flex-wrap: wrap; gap: var(--espacio-1) var(--espacio-6); margin: var(--espacio-3) 0 0; padding: 0; list-style: none; font: var(--texto-detalle); color: var(--color-tinta); font-variant-numeric: tabular-nums; }
+.leyenda li { display: inline-flex; align-items: center; gap: var(--espacio-2); }
+.leyenda li::before { content: ""; width: 10px; height: 10px; flex-shrink: 0; border-radius: 2px; background: var(--serie, var(--color-serie-otros)); }
+@media (forced-colors: active) {
+  .barras td::before, .apilada > *, .leyenda li::before { forced-color-adjust: none; }
+}
+
+/* 9. Utilidades ------------------------------------------------------------ */
 .fila { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2); }
 .grupo > * + * { margin-top: var(--espacio-3); }
 .solo-lector {
@@ -1379,7 +1687,7 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
 /* Solo en papel / nunca en papel */
 .solo-impresion { display: none; }
 
-/* 9. Impresión ------------------------------------------------------------- */
+/* 10. Impresión ------------------------------------------------------------ */
 /* Siempre en claro y sin tinta de más: la banda pasa a blanco con el logo
    a color y una línea azul. Se ocultan navegación, botones y toasts. */
 @media print {
@@ -1408,6 +1716,12 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
     --color-cat-3: #a21caf;
     --color-cat-4: #4d7c0f;
     --color-cat-5: #475569;
+    --color-serie-1: #0b55a8;
+    --color-serie-2: #4d7c0f;
+    --color-serie-3: #7c3aed;
+    --color-serie-4: #0891b2;
+    --color-serie-5: #a21caf;
+    --color-serie-otros: #475569;
   }
   body { display: block; font-size: 11pt; background: #fff; }
 
@@ -1445,7 +1759,9 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
   .tabla tbody tr:hover td, .tabla tbody tr[aria-selected="true"] td { background: none; }
 
   /* Colores que identifican (categorías, placas, insignias) sí se imprimen */
-  .categoria::before, .aviso__placa, .insignia, .tabla th { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .categoria::before, .aviso__placa, .insignia, .tabla th, .fase__nombre,
+  .barras td::before, .apilada > *, .leyenda li::before { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .fase a, .grafico .segmentado { display: none; }
 
   /* Links del contenido: se escribe la dirección, que en papel no se puede tocar */
   main a[href^="http"]::after { content: " (" attr(href) ")"; font: var(--texto-nota); color: var(--color-tinta-2); }

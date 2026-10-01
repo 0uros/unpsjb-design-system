@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Agenda de aulas · muestra del módulo · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central -->
+  <link rel="stylesheet" href="unpsjb-agenda.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Gestión de Eventos</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="boton boton--icono" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="secciones" aria-label="Secciones">
+      <div class="contenedor secciones__lista">
+        <a href="#" aria-current="page">Agenda</a>
+        <a href="#">Inscripciones</a>
+        <a href="#">Aulas</a>
+        <a href="#">Informes</a>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la herramienta">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Piloto</strong>
+      <p>Página de muestra del módulo <code>unpsjb-agenda.css</code>, con datos de ejemplo. <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido">
+    <div class="encabezado">
+      <h1>Agenda de aulas</h1>
+      <button class="boton boton--primario" type="button"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Reservar aula</button>
+    </div>
+
+    <div class="agenda-barra">
+      <div class="agenda-barra__fecha">
+        <button class="boton boton--icono" type="button" aria-label="Anterior"><svg class="icono" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+        <h2 id="agenda-titulo" aria-live="polite">Martes 13 de octubre <span class="agenda-hoy">Hoy</span></h2>
+        <button class="boton boton--icono" type="button" aria-label="Siguiente"><svg class="icono" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+      </div>
+      <div class="agenda-barra__vistas agenda-solo-grande">
+        <div id="elegir-aula" hidden>
+          <label class="solo-lector" for="aula">Aula</label>
+          <select class="select" id="aula"><option selected>Aula 101</option><option>Aula 102</option><option>Lab. Informática 1</option><option>Lab. Informática 2</option><option>Auditorio</option></select>
+        </div>
+        <fieldset class="segmentado">
+          <legend class="solo-lector">Período</legend>
+          <label><input type="radio" name="periodo" value="dia" checked> Día</label>
+          <label><input type="radio" name="periodo" value="semana"> Semana</label>
+          <label><input type="radio" name="periodo" value="mes"> Mes</label>
+        </fieldset>
+        <fieldset class="segmentado" id="elegir-forma">
+          <legend class="solo-lector">Ver como</legend>
+          <label><input type="radio" name="forma" value="grilla" checked> Grilla</label>
+          <label><input type="radio" name="forma" value="lista"> Lista</label>
+        </fieldset>
+      </div>
+    </div>
+
+    <nav class="agenda-dias" aria-label="Días de la semana">
+      <a href="#">Lun <b>12</b></a><a href="#" aria-current="date">Mar <b>13</b></a><a href="#">Mié <b>14</b></a><a href="#">Jue <b>15</b></a><a href="#">Vie <b>16</b></a><a href="#">Sáb <b>17</b></a>
+    </nav>
+
+    <ul class="fila" style="gap:var(--espacio-1) var(--espacio-4);margin:0 0 var(--espacio-4);padding:0;list-style:none;font:var(--texto-detalle)" aria-label="Tipos de actividad">
+      <li><span class="categoria cat-1">Clase</span></li> <li><span class="categoria cat-2">Examen</span></li> <li><span class="categoria cat-3">Evento</span></li> <li><span class="categoria cat-4">Reunión</span></li> <li><span class="categoria cat-5">Otros</span></li>
+    </ul>
+
+    <!-- Día, en grilla: aulas en columnas, horas en filas -->
+    <section id="vista-dia-grilla" class="agenda-solo-grande" aria-label="Martes 13 de octubre, en grilla">
+      <div class="tabla-marco agenda-marco" tabindex="0" role="region" aria-label="Agenda del martes 13 de octubre por aula">
+        <div class="agenda-marco__interior">
+        <table class="agenda-grilla">
+          <colgroup><col class="agenda-grilla__horas"><col><col><col><col><col></colgroup>
+          <thead><tr><th scope="col"><span class="solo-lector">Hora</span></th><th scope="col">Aula 101</th><th scope="col">Aula 102</th><th scope="col">Lab. Informática 1</th><th scope="col">Lab. Informática 2</th><th scope="col">Auditorio</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">8:00</th><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Álgebra I</span><span class="agenda-evento__dato">8:00 a 10:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 8:00">Reservar</button></td><td rowspan="4"><button type="button" class="agenda-evento cat-3"><span class="agenda-evento__nombre">Taller de Moodle</span><span class="agenda-evento__dato">8:00 a 12:00 · Evento</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 8:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Auditorio a las 8:00">Reservar</button></td></tr>
+            <tr><th scope="row">9:00</th><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Programación I</span><span class="agenda-evento__dato">9:00 a 11:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 9:00">Reservar</button></td><td rowspan="4"><button type="button" class="agenda-evento cat-3"><span class="agenda-evento__nombre">Jornada de Informática</span><span class="agenda-evento__dato">9:00 a 13:00 · Evento</span></button></td></tr>
+            <tr><th scope="row" class="agenda-grilla__ahora" style="--minutos: 15">10:00<span class="solo-lector"> (hora actual)</span></th><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Análisis Matemático</span><span class="agenda-evento__dato">10:00 a 12:00 · Clase</span></button></td><td rowspan="3"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Bases de Datos</span><span class="agenda-evento__dato">10:00 a 13:00 · Clase</span></button></td></tr>
+            <tr><th scope="row">11:00</th><td><div class="agenda-conflicto"><p class="agenda-conflicto__aviso"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>2 eventos a la misma hora</p><button type="button" class="agenda-evento cat-4"><span class="agenda-evento__nombre">Reunión de cátedra</span><span class="agenda-evento__dato">11:00 a 12:00 · Reunión</span></button><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Consulta de Química</span><span class="agenda-evento__dato">11:00 a 12:00 · Clase</span></button></div></td></tr>
+            <tr><th scope="row">12:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 1 a las 12:00">Reservar</button></td></tr>
+            <tr><th scope="row">13:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 1 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Auditorio a las 13:00">Reservar</button></td></tr>
+            <tr><th scope="row">14:00</th><td rowspan="2"><button type="button" class="agenda-evento cat-2"><span class="agenda-evento__nombre">Parcial de Física</span><span class="agenda-evento__dato">14:00 a 16:00 · Examen</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 14:00">Reservar</button></td><td rowspan="3"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Redes de Datos</span><span class="agenda-evento__dato">14:00 a 17:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 14:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Auditorio a las 14:00">Reservar</button></td></tr>
+            <tr><th scope="row">15:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 15:00">Reservar</button></td><td><button type="button" class="agenda-evento cat-5"><span class="agenda-evento__nombre">Mantenimiento de equipos</span><span class="agenda-evento__dato">15:00 a 16:00 · Otros</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Auditorio a las 15:00">Reservar</button></td></tr>
+            <tr><th scope="row">16:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 a las 16:00">Reservar</button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Historia Regional</span><span class="agenda-evento__dato">16:00 a 18:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 16:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Auditorio a las 16:00">Reservar</button></td></tr>
+            <tr><th scope="row">17:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 a las 17:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 1 a las 17:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 17:00">Reservar</button></td><td rowspan="2"><button type="button" class="agenda-evento cat-3"><span class="agenda-evento__nombre">Charla de Seguridad</span><span class="agenda-evento__dato">17:00 a 19:00 · Evento</span></button></td></tr>
+            <tr><th scope="row">18:00</th><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Inglés Técnico</span><span class="agenda-evento__dato">18:00 a 20:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 18:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 1 a las 18:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 18:00">Reservar</button></td></tr>
+            <tr><th scope="row">19:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 102 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 1 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Lab. Informática 2 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Auditorio a las 19:00">Reservar</button></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p class="texto-detalle texto-secundario" style="margin-top:var(--espacio-2)">La línea azul marca la hora actual (en este ejemplo, las 10:15).</p>
+    </section>
+
+    <!-- Día, en lista: es también la vista de celular -->
+    <section id="vista-dia-lista" class="agenda-en-celular" aria-label="Martes 13 de octubre, en lista" hidden>
+        <ol class="agenda-lista">
+          <li>
+            <p class="agenda-lista__hora">8:00 a 10:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Álgebra I</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">8:00 a 12:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Taller de Moodle</a></h3>
+              <p class="agenda-lista__dato"><span>Lab. Informática 1</span><span class="categoria cat-3">Evento</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">9:00 a 11:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Programación I</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 102</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">9:00 a 13:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Jornada de Informática</a></h3>
+              <p class="agenda-lista__dato"><span>Auditorio</span><span class="categoria cat-3">Evento</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">10:00 a 12:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Análisis Matemático</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">10:00 a 13:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Bases de Datos</a></h3>
+              <p class="agenda-lista__dato"><span>Lab. Informática 2</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">11:00 a 12:00</p>
+            <div>
+              <p class="agenda-conflicto__aviso"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>Se superpone con otro evento en la misma aula</p><h3 class="agenda-lista__nombre"><a href="#">Reunión de cátedra</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 102</span><span class="categoria cat-4">Reunión</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">11:00 a 12:00</p>
+            <div>
+              <p class="agenda-conflicto__aviso"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>Se superpone con otro evento en la misma aula</p><h3 class="agenda-lista__nombre"><a href="#">Consulta de Química</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 102</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">14:00 a 16:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Parcial de Física</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-2">Examen</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">14:00 a 17:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Redes de Datos</a></h3>
+              <p class="agenda-lista__dato"><span>Lab. Informática 1</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">15:00 a 16:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Mantenimiento de equipos</a></h3>
+              <p class="agenda-lista__dato"><span>Lab. Informática 2</span><span class="categoria cat-5">Otros</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">16:00 a 18:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Historia Regional</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 102</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">17:00 a 19:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Charla de Seguridad</a></h3>
+              <p class="agenda-lista__dato"><span>Auditorio</span><span class="categoria cat-3">Evento</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">18:00 a 20:00</p>
+            <div>
+              <h3 class="agenda-lista__nombre"><a href="#">Inglés Técnico</a></h3>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+        </ol>
+    </section>
+
+    <!-- Semana de un aula, en grilla -->
+    <section id="vista-semana-grilla" class="agenda-solo-grande" aria-label="Semana del 12 al 17 de octubre, Aula 101, en grilla" hidden>
+      <div class="tabla-marco agenda-marco" tabindex="0" role="region" aria-label="Agenda del Aula 101, semana del 12 al 17 de octubre">
+        <div class="agenda-marco__interior">
+        <table class="agenda-grilla">
+          <colgroup><col class="agenda-grilla__horas"><col><col class="agenda-grilla__col-hoy"><col><col><col><col></colgroup>
+          <thead><tr><th scope="col"><span class="solo-lector">Hora</span></th><th scope="col">Lunes 12</th><th scope="col">Martes 13 <span class="agenda-hoy">Hoy</span></th><th scope="col">Miércoles 14</th><th scope="col">Jueves 15</th><th scope="col">Viernes 16</th><th scope="col">Sábado 17</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">8:00</th><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Álgebra I</span><span class="agenda-evento__dato">8:00 a 10:00 · Clase</span></button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Álgebra I</span><span class="agenda-evento__dato">8:00 a 10:00 · Clase</span></button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Álgebra I</span><span class="agenda-evento__dato">8:00 a 10:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 8:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 8:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 8:00">Reservar</button></td></tr>
+            <tr><th scope="row">9:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 9:00">Reservar</button></td><td rowspan="3"><button type="button" class="agenda-evento cat-2"><span class="agenda-evento__nombre">Final de Álgebra I</span><span class="agenda-evento__dato">9:00 a 12:00 · Examen</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 9:00">Reservar</button></td></tr>
+            <tr><th scope="row" class="agenda-grilla__ahora" style="--minutos: 15">10:00<span class="solo-lector"> (hora actual)</span></th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 10:00">Reservar</button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Análisis Matemático</span><span class="agenda-evento__dato">10:00 a 12:00 · Clase</span></button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Análisis Matemático</span><span class="agenda-evento__dato">10:00 a 12:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 10:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 10:00">Reservar</button></td></tr>
+            <tr><th scope="row">11:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 11:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 11:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 11:00">Reservar</button></td></tr>
+            <tr><th scope="row">12:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el martes 13 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 12:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 12:00">Reservar</button></td></tr>
+            <tr><th scope="row">13:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el martes 13 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 13:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 13:00">Reservar</button></td></tr>
+            <tr><th scope="row">14:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 14:00">Reservar</button></td><td rowspan="2"><button type="button" class="agenda-evento cat-2"><span class="agenda-evento__nombre">Parcial de Física</span><span class="agenda-evento__dato">14:00 a 16:00 · Examen</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 14:00">Reservar</button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Química General</span><span class="agenda-evento__dato">14:00 a 16:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 14:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 14:00">Reservar</button></td></tr>
+            <tr><th scope="row">15:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 15:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 15:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 15:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 15:00">Reservar</button></td></tr>
+            <tr><th scope="row">16:00</th><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Estadística</span><span class="agenda-evento__dato">16:00 a 18:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el martes 13 a las 16:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 16:00">Reservar</button></td><td><button type="button" class="agenda-evento cat-4"><span class="agenda-evento__nombre">Reunión de departamento</span><span class="agenda-evento__dato">16:00 a 17:00 · Reunión</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 16:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 16:00">Reservar</button></td></tr>
+            <tr><th scope="row">17:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el martes 13 a las 17:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 17:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 17:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 17:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 17:00">Reservar</button></td></tr>
+            <tr><th scope="row">18:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 18:00">Reservar</button></td><td rowspan="2"><button type="button" class="agenda-evento cat-1"><span class="agenda-evento__nombre">Inglés Técnico</span><span class="agenda-evento__dato">18:00 a 20:00 · Clase</span></button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 18:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 18:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 18:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 18:00">Reservar</button></td></tr>
+            <tr><th scope="row">19:00</th><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el lunes 12 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el miércoles 14 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el jueves 15 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el viernes 16 a las 19:00">Reservar</button></td><td><button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 el sábado 17 a las 19:00">Reservar</button></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Semana de un aula, en lista -->
+    <section id="vista-semana-lista" class="agenda-solo-grande" aria-label="Semana del 12 al 17 de octubre, Aula 101, en lista" hidden>
+        <h3 class="agenda-lista__dia">Lunes 12 de octubre</h3>
+        <ol class="agenda-lista">
+          <li>
+            <p class="agenda-lista__hora">8:00 a 10:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Álgebra I</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">16:00 a 18:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Estadística</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+        </ol>
+        <h3 class="agenda-lista__dia">Martes 13 de octubre <span class="agenda-hoy">Hoy</span></h3>
+        <ol class="agenda-lista">
+          <li>
+            <p class="agenda-lista__hora">8:00 a 10:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Álgebra I</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">10:00 a 12:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Análisis Matemático</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">14:00 a 16:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Parcial de Física</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-2">Examen</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">18:00 a 20:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Inglés Técnico</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+        </ol>
+        <h3 class="agenda-lista__dia">Miércoles 14 de octubre</h3>
+        <ol class="agenda-lista">
+          <li>
+            <p class="agenda-lista__hora">8:00 a 10:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Álgebra I</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">10:00 a 12:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Análisis Matemático</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+        </ol>
+        <h3 class="agenda-lista__dia">Jueves 15 de octubre</h3>
+        <ol class="agenda-lista">
+          <li>
+            <p class="agenda-lista__hora">14:00 a 16:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Química General</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-1">Clase</span></p>
+            </div>
+          </li>
+          <li>
+            <p class="agenda-lista__hora">16:00 a 17:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Reunión de departamento</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-4">Reunión</span></p>
+            </div>
+          </li>
+        </ol>
+        <h3 class="agenda-lista__dia">Viernes 16 de octubre</h3>
+        <ol class="agenda-lista">
+          <li>
+            <p class="agenda-lista__hora">9:00 a 12:00</p>
+            <div>
+              <h4 class="agenda-lista__nombre"><a href="#">Final de Álgebra I</a></h4>
+              <p class="agenda-lista__dato"><span>Aula 101</span><span class="categoria cat-2">Examen</span></p>
+            </div>
+          </li>
+        </ol>
+    </section>
+
+    <!-- Mes -->
+    <section id="vista-mes" class="agenda-solo-grande" aria-label="Octubre de 2026" hidden>
+      <div class="tabla-marco" tabindex="0" role="region" aria-label="Agenda de octubre de 2026">
+        <table class="agenda-mes">
+          <thead><tr><th scope="col">Lunes</th><th scope="col">Martes</th><th scope="col">Miércoles</th><th scope="col">Jueves</th><th scope="col">Viernes</th><th scope="col">Sábado</th><th scope="col">Domingo</th></tr></thead>
+          <tbody>
+            <tr><td class="agenda-mes__otro"><a class="agenda-mes__dia" href="#" aria-label="28 de septiembre">28</a></td><td class="agenda-mes__otro"><a class="agenda-mes__dia" href="#" aria-label="29 de septiembre">29</a></td><td class="agenda-mes__otro"><a class="agenda-mes__dia" href="#" aria-label="30 de septiembre">30</a></td><td><a class="agenda-mes__dia" href="#" aria-label="1 de octubre">1</a><ul><li class="cat-1">Álgebra I</li><li class="cat-1">Programación I</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="2 de octubre">2</a><ul><li class="cat-2">Final de Química</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="3 de octubre">3</a></td><td><a class="agenda-mes__dia" href="#" aria-label="4 de octubre">4</a></td></tr>
+            <tr><td><a class="agenda-mes__dia" href="#" aria-label="5 de octubre">5</a><ul><li class="cat-1">Álgebra I</li><li class="cat-1">Redes de Datos</li></ul><a class="agenda-mes__mas" href="#">+1 más<span class="solo-lector"> el 5 de octubre</span></a></td><td><a class="agenda-mes__dia" href="#" aria-label="6 de octubre">6</a><ul><li class="cat-1">Programación I</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="7 de octubre">7</a><ul><li class="cat-1">Álgebra I</li><li class="cat-1">Bases de Datos</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="8 de octubre">8</a><ul><li class="cat-2">Parcial de Análisis</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="9 de octubre">9</a><ul><li class="cat-3">Charla de egresados</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="10 de octubre">10</a></td><td><a class="agenda-mes__dia" href="#" aria-label="11 de octubre">11</a></td></tr>
+            <tr><td><a class="agenda-mes__dia" href="#" aria-label="12 de octubre">12</a><ul><li class="cat-5">Feriado: sin actividad</li></ul></td><td class="agenda-mes__hoy"><a class="agenda-mes__dia" href="#" aria-label="13 de octubre">13</a> <span class="agenda-hoy">Hoy</span><ul><li class="cat-3">Jornada de Informática</li><li class="cat-3">Taller de Moodle</li></ul><a class="agenda-mes__mas" href="#">+9 más<span class="solo-lector"> el 13 de octubre</span></a></td><td><a class="agenda-mes__dia" href="#" aria-label="14 de octubre">14</a><ul><li class="cat-1">Álgebra I</li><li class="cat-1">Análisis Matemático</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="15 de octubre">15</a><ul><li class="cat-1">Química General</li><li class="cat-4">Reunión de departamento</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="16 de octubre">16</a><ul><li class="cat-2">Final de Álgebra I</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="17 de octubre">17</a></td><td><a class="agenda-mes__dia" href="#" aria-label="18 de octubre">18</a></td></tr>
+            <tr><td><a class="agenda-mes__dia" href="#" aria-label="19 de octubre">19</a><ul><li class="cat-1">Álgebra I</li><li class="cat-1">Redes de Datos</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="20 de octubre">20</a><ul><li class="cat-1">Programación I</li><li class="cat-2">Parcial de Física</li></ul><a class="agenda-mes__mas" href="#">+1 más<span class="solo-lector"> el 20 de octubre</span></a></td><td><a class="agenda-mes__dia" href="#" aria-label="21 de octubre">21</a><ul><li class="cat-1">Álgebra I</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="22 de octubre">22</a><ul><li class="cat-1">Química General</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="23 de octubre">23</a><ul><li class="cat-3">Muestra de Proyectos</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="24 de octubre">24</a></td><td><a class="agenda-mes__dia" href="#" aria-label="25 de octubre">25</a><ul><li class="cat-3">Charla de Seguridad</li></ul></td></tr>
+            <tr><td><a class="agenda-mes__dia" href="#" aria-label="26 de octubre">26</a><ul><li class="cat-1">Álgebra I</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="27 de octubre">27</a><ul><li class="cat-1">Programación I</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="28 de octubre">28</a><ul><li class="cat-1">Álgebra I</li><li class="cat-1">Bases de Datos</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="29 de octubre">29</a><ul><li class="cat-2">Parcial de Química</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="30 de octubre">30</a><ul><li class="cat-4">Cierre de cuatrimestre</li></ul></td><td><a class="agenda-mes__dia" href="#" aria-label="31 de octubre">31</a></td><td class="agenda-mes__otro"><a class="agenda-mes__dia" href="#" aria-label="1 de noviembre">1</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <details class="acordeon" style="margin-top:var(--espacio-8)">
+      <summary>Cuándo usarlo y cuándo no: agenda de aulas</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen" style="max-width:880px">
+          <div><dt>Usalo cuando</dt><dd>Hay que ver qué pasa en cada aula y a qué hora, y encontrar un lugar libre.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd>Es una lista de eventos sin aulas ni horarios que comparar: alcanza una tabla. Tampoco para elegir una fecha en un formulario: ahí va el campo de fecha.</dd></div>
+          <div><dt>Accesibilidad</dt><dd>La grilla es una tabla con encabezados de fila y de columna. La vista en lista está siempre disponible y es la de celular. Los conflictos se dicen con ícono y texto. Con teclado se reserva desde "Reservar aula": las celdas libres son un atajo para el mouse.</dd></div>
+        </dl>
+      </div>
+    </details>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.1</span>
+      </div>
+    </footer>
+  </main>
+
+  <nav class="menu-inferior" aria-label="Secciones">
+    <a href="#" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Agenda</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-users"/></svg>Inscripciones</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-building"/></svg>Aulas</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-chart"/></svg>Informes</a>
+  </nav>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+
+    // Vistas de la agenda. En este ejemplo los datos están escritos en el HTML;
+    // en la herramienta real los arma React a partir de los datos del servidor.
+    const TITULOS = { dia: 'Martes 13 de octubre', semana: 'Semana del 12 al 17 de octubre', mes: 'Octubre de 2026' };
+    const elegido = nombre => document.querySelector('input[name="' + nombre + '"]:checked').value;
+    const pintar = () => {
+      const periodo = elegido('periodo'), forma = elegido('forma');
+      const visible = periodo === 'mes' ? 'vista-mes' : 'vista-' + periodo + '-' + forma;
+      document.querySelectorAll('main > section').forEach(s => { s.hidden = s.id !== visible; });
+      document.getElementById('elegir-forma').hidden = periodo === 'mes';
+      document.getElementById('elegir-aula').hidden = periodo !== 'semana';
+      const t = document.getElementById('agenda-titulo');
+      t.textContent = TITULOS[periodo] + (periodo === 'dia' ? ' ' : '');
+      if (periodo === 'dia') { const hoy = document.createElement('span'); hoy.className = 'agenda-hoy'; hoy.textContent = 'Hoy'; t.append(hoy); }
+    };
+    document.querySelectorAll('input[name="periodo"], input[name="forma"]').forEach(r => r.addEventListener('change', pintar));
+    pintar();
+  </script>
+</body>
+</html>

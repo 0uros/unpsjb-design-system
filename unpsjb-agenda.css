@@ -1,0 +1,304 @@
+/* ==========================================================================
+   unpsjb-agenda.css — Módulo de agenda de aulas · v0.4.1
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 16.A.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
+   Ejemplo completo: muestra-agenda.html.
+
+   La idea:
+   - Dos formas de ver lo mismo: la grilla (una tabla) y la lista. La lista es
+     la que se usa en celular y la más cómoda con lector de pantalla.
+   - Hoy y ahora van en azul, nunca en naranja: el naranja es foco y "estás acá".
+   - Cada evento lleva el cuadradito de su categoría (.cat-N) y el nombre de la
+     categoría escrito.
+
+   Piezas
+   1. Barra de la agenda (.agenda-barra)
+   2. Fila de días, para celular (.agenda-dias)
+   3. Grilla por horas (.agenda-grilla, .agenda-evento, .agenda-libre, la hora actual)
+   4. Conflictos (.agenda-conflicto)
+   5. Lista (.agenda-lista)
+   6. Mes (.agenda-mes)
+   7. Celular e impresión
+   ========================================================================== */
+
+/* "Hoy": la misma marca chica en la barra, en la grilla y en el mes */
+.agenda-hoy {
+  display: inline-block;
+  padding: 0 var(--espacio-2);
+  font: 700 0.8125rem/1.5 var(--fuente-texto);
+  color: var(--color-panel);
+  background: var(--color-primario-texto);
+  border-radius: var(--radio-control);
+  vertical-align: middle;
+}
+
+/* 1. Barra ----------------------------------------------------------------- */
+/* <div class="agenda-barra">
+     <div class="agenda-barra__fecha">[‹ Anterior] <h2>Martes 13 de octubre</h2> [Siguiente ›]</div>
+     <div class="agenda-barra__vistas">[segmentado Día|Semana|Mes] [segmentado Grilla|Lista]</div>
+   </div> */
+.agenda-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3) var(--espacio-6);
+  margin-bottom: var(--espacio-4);
+}
+.agenda-barra__fecha { display: flex; align-items: center; gap: var(--espacio-1); min-width: 0; }
+.agenda-barra__fecha h2 { margin: 0 var(--espacio-2); font: var(--texto-titulo-3); letter-spacing: 0; }
+.agenda-barra__vistas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-3); }
+.agenda-barra .select { width: auto; }
+
+/* 2. Fila de días (solo celular) ------------------------------------------- */
+/* <nav class="agenda-dias" aria-label="Días de la semana">
+     <a href="…">Lun <b>12</b></a> <a href="…" aria-current="date">Mar <b>13</b></a> … </nav>
+   El día elegido lleva aria-current="date". */
+.agenda-dias { display: none; gap: var(--espacio-1); margin-bottom: var(--espacio-4); }
+.agenda-dias a {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  font: var(--texto-detalle);
+  color: var(--color-tinta-2);
+  text-decoration: none;
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-control);
+  background: var(--color-panel);
+}
+.agenda-dias b { font: 700 1.125rem/1.2 var(--fuente-texto); color: var(--color-tinta); font-variant-numeric: tabular-nums; }
+.agenda-dias a[aria-current="date"] { color: var(--color-panel); background: var(--color-primario-texto); border-color: var(--color-primario-texto); }
+.agenda-dias a[aria-current="date"] b { color: var(--color-panel); }
+
+/* 3. Grilla por horas ------------------------------------------------------ */
+/* Es una tabla: las columnas son aulas (vista Día) o días (vista Semana) y cada
+   fila es una hora. Un evento de dos horas ocupa dos filas (rowspan="2").
+   <div class="tabla-marco agenda-marco" tabindex="0" role="region" aria-label="…">
+     <div class="agenda-marco__interior">
+       <table class="agenda-grilla"> … </table>
+     </div></div> */
+.agenda-marco__interior { min-width: 720px; overflow: hidden; }
+.agenda-grilla {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font: var(--texto-detalle);
+}
+.agenda-grilla th, .agenda-grilla td {
+  height: var(--alto-fila);
+  padding: 2px;
+  border-bottom: 1px solid var(--color-linea);
+  border-left: 1px solid var(--color-linea);
+  vertical-align: top;
+  text-align: left;
+}
+.agenda-grilla tr > :first-child { border-left: 0; }
+.agenda-grilla tbody tr:last-child > * { border-bottom: 0; }
+.agenda-grilla thead th {
+  padding: var(--espacio-2) var(--espacio-3);
+  vertical-align: middle;
+  font: var(--texto-label);
+  color: var(--color-tinta);
+  background: var(--color-capa);
+  border-bottom: 2px solid var(--color-primario-texto);
+}
+.agenda-grilla thead th small { display: block; font: var(--texto-detalle); color: var(--color-tinta-2); }
+/* La columna de las horas */
+.agenda-grilla__horas { width: 64px; }
+.agenda-grilla tbody th {
+  padding: var(--espacio-1) var(--espacio-2) 0 0;
+  font: var(--texto-nota);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--color-tinta-2);
+}
+/* Hoy (vista Semana): toda la columna con un tinte azul */
+.agenda-grilla__col-hoy { background: var(--color-tinte); }
+
+/* Un evento: botón que ocupa su celda. Cuadradito de categoría + nombre, y
+   debajo el horario y el nombre de la categoría.
+   <button type="button" class="agenda-evento cat-1">
+     <span class="agenda-evento__nombre">Álgebra I</span>
+     <span class="agenda-evento__dato">8:00 a 10:00 · Clase</span></button> */
+.agenda-evento {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  min-height: calc(var(--alto-fila) - 5px);
+  margin: 0;
+  padding: var(--espacio-1) var(--espacio-2);
+  overflow: hidden;
+  font: inherit;
+  text-align: left;
+  color: var(--color-tinta);
+  background: var(--color-capa);
+  border: 0;
+  /* El borde separa el evento del fondo también en la columna de hoy, que va teñida */
+  box-shadow: inset 0 0 0 1px var(--color-linea-control);
+  border-radius: var(--radio-control);
+  cursor: pointer;
+  transition: background-color var(--duracion-rapida) var(--curva);
+}
+.agenda-evento:focus-visible { box-shadow: inset 0 0 0 1px var(--color-linea-control), var(--anillo-foco); }
+.agenda-evento:hover { background: color-mix(in srgb, var(--color-primario-texto) 16%, var(--color-capa)); }
+.agenda-evento__nombre { display: flex; align-items: baseline; gap: 6px; max-width: 100%; font: 700 0.875rem/1.3 var(--fuente-texto); }
+.agenda-evento__nombre::before {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--cat, var(--color-cat-5));
+}
+.agenda-evento__dato { max-width: 100%; font: var(--texto-nota); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; }
+@media (forced-colors: active) { .agenda-evento__nombre::before { forced-color-adjust: none; } .agenda-evento { border: 1px solid ButtonText; box-shadow: none; } }
+
+/* Celda libre: un atajo para el mouse. Lleva tabindex="-1": con teclado se
+   reserva desde el botón "Reservar aula" de la pantalla, para no sumar una
+   parada de Tab por cada hora libre.
+   <button type="button" class="agenda-libre" tabindex="-1" aria-label="Reservar Aula 101 a las 12:00">Reservar</button> */
+.agenda-libre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: calc(var(--alto-fila) - 5px);
+  margin: 0;
+  padding: 0;
+  font: var(--texto-nota);
+  color: transparent;
+  background: none;
+  border: 0;
+  border-radius: var(--radio-control);
+  cursor: pointer;
+}
+.agenda-libre:hover, .agenda-libre:focus-visible { color: var(--color-primario-texto); background: var(--color-tinte); }
+
+/* Ahora: una línea azul de 2px a la altura de la hora actual. Se ancla a la
+   fila de esa hora, así sigue bien aunque una fila crezca. Pasa por DETRÁS de
+   los eventos (si pasara por encima parecería un tachado): se ve en la columna
+   de las horas y en los huecos.
+   <th scope="row" class="agenda-grilla__ahora" style="--minutos: 15">10:00<span class="solo-lector"> (hora actual)</span></th>
+   --minutos: los minutos pasados de esa hora (10:15 → 15). */
+.agenda-grilla__ahora { position: relative; color: var(--color-primario-texto) !important; font-weight: 700 !important; }
+.agenda-grilla__ahora::before, .agenda-grilla__ahora::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--minutos, 0) / 60 * 100%);
+  background: var(--color-primario-texto);
+  pointer-events: none;
+}
+.agenda-grilla__ahora::after { left: 100%; width: 300vw; height: 2px; margin-top: -1px; }
+.agenda-grilla__ahora::before { right: -4px; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; z-index: 1; }
+.agenda-grilla td > * { position: relative; z-index: 1; }
+@media (forced-colors: active) { .agenda-grilla__ahora::before, .agenda-grilla__ahora::after { background: Highlight; } }
+
+/* 4. Conflictos ------------------------------------------------------------ */
+/* Dos eventos en la misma aula y hora: la celda muestra los dos y lo dice, con
+   ícono + texto en ámbar. Para el lector de pantalla, el aviso va primero.
+   <td><div class="agenda-conflicto">
+     <p class="agenda-conflicto__aviso"><svg class="icono">triangle-alert</svg>2 eventos a la misma hora</p>
+     <button class="agenda-evento cat-4">…</button><button class="agenda-evento cat-1">…</button>
+   </div></td> */
+.agenda-conflicto { display: flex; flex-direction: column; gap: 2px; height: 100%; }
+.agenda-conflicto .agenda-evento { height: auto; }
+.agenda-conflicto__aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin: 0;
+  padding: 2px var(--espacio-2);
+  font: 700 0.8125rem/1.4 var(--fuente-texto);
+  color: var(--color-advertencia-texto);
+}
+.agenda-conflicto__aviso .icono { width: 14px; height: 14px; }
+
+/* 5. Lista ----------------------------------------------------------------- */
+/* Los mismos eventos, en orden de hora. Es la vista de celular.
+   <ol class="agenda-lista"><li>
+     <p class="agenda-lista__hora">8:00 a 10:00</p>
+     <div><h3 class="agenda-lista__nombre"><a href="…">Álgebra I</a></h3>
+     <p class="agenda-lista__dato">Aula 101 · <span class="categoria cat-1">Clase</span></p></div>
+   </li> … </ol>
+   Si la lista abarca varios días, cada día va con su título y su propia <ol>. */
+.agenda-lista { margin: 0; padding: 0; list-style: none; background: var(--color-panel); border: 1px solid var(--color-linea); border-radius: var(--radio-contenedor); }
+.agenda-lista > li {
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: var(--espacio-1) var(--espacio-4);
+  padding: var(--espacio-3) var(--espacio-4);
+  border-bottom: 1px solid var(--color-linea);
+}
+.agenda-lista > li:last-child { border-bottom: 0; }
+.agenda-lista p { margin: 0; max-width: none; }
+.agenda-lista__hora { font: var(--texto-label); font-variant-numeric: tabular-nums; color: var(--color-tinta); }
+.agenda-lista__nombre { margin: 0; font: 700 1rem/1.4 var(--fuente-texto); letter-spacing: 0; }
+.agenda-lista__dato { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-1) var(--espacio-2); font: var(--texto-detalle); color: var(--color-tinta-2); }
+.agenda-lista__dato .categoria { color: var(--color-tinta-2); }
+.agenda-lista .agenda-conflicto__aviso { padding: 0; }
+.agenda-lista__dia { margin: var(--espacio-6) 0 var(--espacio-2); font: var(--texto-titulo-3); }
+.agenda-lista__dia:first-child { margin-top: 0; }
+@media (max-width: 479px) {
+  .agenda-lista > li { grid-template-columns: 1fr; }
+}
+
+/* 6. Mes ------------------------------------------------------------------- */
+/* Una tabla de 7 columnas. Cada día muestra hasta 2 eventos y "+3 más".
+   <table class="agenda-mes"><thead>…Lun…Dom…</thead><tbody><tr>
+     <td class="agenda-mes__hoy"><a class="agenda-mes__dia" href="…">13</a> <span class="agenda-hoy">Hoy</span>
+       <ul><li class="cat-1">Álgebra I</li><li class="cat-3">Jornada…</li></ul>
+       <a class="agenda-mes__mas" href="…">+9 más</a></td> … */
+.agenda-mes { width: 100%; min-width: 720px; table-layout: fixed; border-collapse: collapse; font: var(--texto-nota); }
+.agenda-mes th {
+  padding: var(--espacio-2);
+  font: var(--texto-label);
+  text-align: left;
+  color: var(--color-tinta);
+  background: var(--color-capa);
+  border-bottom: 2px solid var(--color-primario-texto);
+}
+.agenda-mes td {
+  height: 104px;
+  padding: var(--espacio-1) var(--espacio-2);
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-linea);
+  border-left: 1px solid var(--color-linea);
+}
+.agenda-mes tr > :first-child { border-left: 0; }
+.agenda-mes tbody tr:last-child td { border-bottom: 0; }
+.agenda-mes__dia { display: inline-block; min-width: 24px; padding: 2px 0; font: 700 0.875rem/1.4 var(--fuente-texto); font-variant-numeric: tabular-nums; }
+.agenda-mes__otro .agenda-mes__dia { font-weight: 400; color: var(--color-tinta-2); }
+.agenda-mes__hoy { background: var(--color-tinte); }
+.agenda-mes ul { margin: 2px 0 0; padding: 0; list-style: none; }
+.agenda-mes li { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--color-tinta); }
+.agenda-mes li::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 2px; background: var(--cat, var(--color-cat-5)); }
+.agenda-mes__mas { display: inline-block; padding: 2px 0; }
+@media (forced-colors: active) { .agenda-mes li::before { forced-color-adjust: none; } }
+
+/* 7. Celular e impresión --------------------------------------------------- */
+/* En celular no hay grilla ni mes: queda el día elegido, en lista.
+   .agenda-solo-grande marca lo que solo existe desde 768px (grillas, mes y los
+   selectores de vista). .agenda-en-celular marca la lista del día: en celular se
+   ve siempre, aunque en escritorio esté elegida otra vista. */
+@media (max-width: 767px) {
+  .agenda-solo-grande { display: none !important; }
+  .agenda-en-celular { display: block !important; }
+  .agenda-dias { display: flex !important; }
+  .agenda-barra__fecha { width: 100%; justify-content: space-between; }
+  .agenda-barra__fecha h2 { font-size: 1rem; text-align: center; }
+}
+@media print {
+  .agenda-dias, .agenda-libre, .agenda-barra__vistas, .agenda-barra .boton { display: none !important; }
+  .agenda-marco__interior, .agenda-mes { min-width: 0; }
+  .agenda-evento { display: flex !important; background: none; border: 1px solid var(--color-linea); }
+  .agenda-evento__nombre::before, .agenda-mes li::before, .agenda-hoy, .agenda-grilla__ahora::before, .agenda-grilla__ahora::after, .agenda-grilla__col-hoy, .agenda-mes__hoy {
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+  }
+}
