@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Documentos e impresión · muestra del módulo · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central -->
+  <link rel="stylesheet" href="unpsjb-documentos.css">
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-muestra-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--espacio-2) var(--espacio-6); margin-bottom: var(--espacio-4); }
+    .ext-muestra-barra .pestanas { margin-bottom: 0; flex: 1 1 auto; min-width: 0; }
+    .ext-muestra-ficha { margin-top: var(--espacio-8); }
+    .ext-muestra-ficha .resumen { max-width: 880px; }
+    .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
+    .ext-muestra-codigo {
+      max-width: 880px; margin: var(--espacio-3) 0 0; padding: var(--espacio-3) var(--espacio-4);
+      overflow-x: auto; font: 0.875rem/1.5 ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+      color: var(--color-tinta); background: var(--color-capa); border-radius: var(--radio-control);
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-file"/></svg>Constancias y certificados</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="boton boton--icono" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la herramienta">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Piloto</strong>
+      <p>Página de muestra del módulo <code>unpsjb-documentos.css</code>. Las personas, los números y las firmas son de ejemplo. <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido">
+    <div class="encabezado">
+      <h1>Documentos e impresión</h1>
+      <button class="boton boton--primario" type="button" id="imprimir"><svg class="icono" aria-hidden="true"><use href="#i-printer"/></svg>Imprimir o guardar como PDF</button>
+    </div>
+    <p>La hoja de abajo es la que sale por la impresora: mide un A4, con sus márgenes. Al imprimir sale solo la hoja, sin la banda ni los botones.</p>
+
+    <div class="ext-muestra-barra">
+      <div class="pestanas" role="tablist" aria-label="Tipo de documento">
+        <button class="pestanas__item" type="button" role="tab" id="tab-constancia" aria-controls="doc-constancia" aria-selected="true">Constancia</button>
+        <button class="pestanas__item" type="button" role="tab" id="tab-certificado" aria-controls="doc-certificado" aria-selected="false" tabindex="-1">Certificado</button>
+        <button class="pestanas__item" type="button" role="tab" id="tab-resolucion" aria-controls="doc-resolucion" aria-selected="false" tabindex="-1">Resolución</button>
+        <button class="pestanas__item" type="button" role="tab" id="tab-comprobante" aria-controls="doc-comprobante" aria-selected="false" tabindex="-1">Comprobante</button>
+        <button class="pestanas__item" type="button" role="tab" id="tab-planilla" aria-controls="doc-planilla" aria-selected="false" tabindex="-1">Planilla</button>
+      </div>
+      <label class="interruptor"><input type="checkbox" role="switch" id="una-tinta"> A una tinta</label>
+    </div>
+
+    <!-- Constancia: hoja vertical, texto en serif, firma digital y pie de verificación -->
+    <section role="tabpanel" id="doc-constancia" aria-labelledby="tab-constancia">
+      <article class="hoja fuente-academica" aria-labelledby="constancia-titulo">
+        <header class="membrete">
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
+          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Secretaría Académica</span></p>
+        </header>
+        <p class="documento__dato">Trelew, 2 de octubre de 2026</p>
+        <p class="documento__dato">Constancia N.º 0418/2026</p>
+        <h2 class="documento__titulo" id="constancia-titulo">Constancia de alumna regular</h2>
+        <div class="documento__cuerpo">
+          <p>La Secretaría Académica de la Delegación Trelew de la Universidad Nacional de la Patagonia San Juan Bosco hace constar que <strong>Camila Ñancufil</strong>, DNI 40.123.456, legajo 18.452, es alumna regular de la carrera Licenciatura en Informática durante el ciclo lectivo 2026.</p>
+          <p>Se extiende la presente a pedido de la persona interesada, para ser presentada ante quien corresponda, en la ciudad de Trelew, a los 2 días del mes de octubre de 2026.</p>
+        </div>
+        <div class="firmas">
+          <div class="firma firma--digital">
+            <p class="firma__nombre">Lic. Marina Roldán</p>
+            <p class="firma__cargo">Secretaria Académica, Delegación Trelew</p>
+            <p class="firma__dato">Firmado digitalmente el 02/10/2026 a las 10:32 h</p>
+          </div>
+        </div>
+        <footer class="verificacion">
+          <img class="verificacion__qr" src="assets/qr-ejemplo-documento.svg" alt="" width="76" height="76">
+          <p>Para comprobar que este documento es auténtico, entrá a <b>verificar.tw.unp.edu.ar</b> y cargá el código <b class="verificacion__codigo">K7QF-29MD</b>, o escaneá el código QR.</p>
+        </footer>
+      </article>
+    </section>
+
+    <!-- Certificado: hoja apaisada, centrada, dos firmas a mano -->
+    <section role="tabpanel" id="doc-certificado" aria-labelledby="tab-certificado" hidden>
+      <article class="hoja hoja--apaisada fuente-academica certificado" aria-labelledby="certificado-titulo">
+        <header class="membrete">
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
+          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Departamento de Informática</span></p>
+        </header>
+        <h2 class="certificado__tipo" id="certificado-titulo">Certificado de participación</h2>
+        <p>Se certifica que</p>
+        <p class="certificado__persona">Camila Ñancufil</p>
+        <p class="certificado__texto">DNI 40.123.456, participó de la Jornada de Informática 2026, realizada en la Sede Trelew el 13 de octubre de 2026, con una duración de 8 horas reloj.</p>
+        <div class="firmas">
+          <div class="firma">
+            <p class="firma__nombre">Dr. Esteban Quiroga</p>
+            <p class="firma__cargo">Jefe del Departamento de Informática</p>
+          </div>
+          <div class="firma">
+            <p class="firma__nombre">Lic. Marina Roldán</p>
+            <p class="firma__cargo">Secretaria Académica</p>
+          </div>
+        </div>
+        <footer class="verificacion">
+          <img class="verificacion__qr" src="assets/qr-ejemplo-documento.svg" alt="" width="76" height="76">
+          <p>Certificado N.º 0092/2026. Para comprobar que es auténtico, entrá a <b>verificar.tw.unp.edu.ar</b> y cargá el código <b class="verificacion__codigo">K7QF-29MD</b>, o escaneá el código QR.</p>
+        </footer>
+      </article>
+    </section>
+
+    <!-- Resolución: varias hojas, numeradas, con las fórmulas de la norma -->
+    <section role="tabpanel" id="doc-resolucion" aria-labelledby="tab-resolucion" hidden>
+      <article class="hoja hoja--numerada fuente-academica" aria-labelledby="resolucion-titulo">
+        <p class="hoja__borrador">Borrador: sin validez</p>
+        <header class="membrete">
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
+          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew</span></p>
+        </header>
+        <p class="documento__dato">Trelew, 2 de octubre de 2026</p>
+        <h2 class="documento__titulo" id="resolucion-titulo">Resolución N.º 142/2026</h2>
+        <div class="documento__cuerpo">
+          <h3 class="documento__formula">Visto</h3>
+          <p>La nota presentada por el Departamento de Informática, por la que solicita que se declare de interés institucional la Jornada de Informática 2026; y</p>
+          <h3 class="documento__formula">Considerando</h3>
+          <p>Que la Jornada reúne cada año a estudiantes, docentes y graduados de las carreras de Informática de la Sede Trelew.</p>
+          <p>Que la edición 2026 se realizará el 13 de octubre en el Auditorio de la Sede, con talleres y charlas abiertas a la comunidad.</p>
+          <p>Que la actividad no implica erogación alguna para la Delegación.</p>
+          <p>Que resulta conveniente acompañar las iniciativas que vinculan a la Universidad con el medio.</p>
+          <h3 class="documento__formula">Por ello, se resuelve</h3>
+          <p><strong class="documento__formula">Artículo 1.º</strong> Declarar de interés institucional la Jornada de Informática 2026, que se realizará el 13 de octubre de 2026 en la Sede Trelew.</p>
+          <p><strong class="documento__formula">Artículo 2.º</strong> Autorizar el uso del Auditorio y de los laboratorios de Informática 1 y 2 durante la jornada.</p>
+          <p><strong class="documento__formula">Artículo 3.º</strong> Extender certificados de participación a las personas inscriptas que asistan.</p>
+          <p><strong class="documento__formula">Artículo 4.º</strong> Regístrese, comuníquese a las áreas correspondientes y, cumplido, archívese.</p>
+        </div>
+        <div class="firmas">
+          <div class="firma">
+            <p class="firma__nombre">Mg. Raúl Antieco</p>
+            <p class="firma__cargo">Delegado Zonal<br>Delegación Trelew</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Comprobante: no es un documento solemne, así que va en la letra del sistema -->
+    <section role="tabpanel" id="doc-comprobante" aria-labelledby="tab-comprobante" hidden>
+      <article class="hoja" aria-labelledby="comprobante-titulo">
+        <header class="membrete">
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
+          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Soporte Informático</span></p>
+        </header>
+        <h2 class="documento__titulo" id="comprobante-titulo">Comprobante de solicitud</h2>
+        <p class="comprobante__numero"><span>Número de trámite</span> TW-2026-00418</p>
+        <dl class="resumen">
+          <div><dt>Trámite</dt><dd>Reserva de aula</dd></div>
+          <div><dt>Solicita</dt><dd>Camila Ñancufil, legajo 18.452</dd></div>
+          <div><dt>Aula y horario</dt><dd>Lab. Informática 1, viernes 16/10/2026 de 14:00 a 16:00 h</dd></div>
+          <div><dt>Enviada</dt><dd>02/10/2026 a las 10:32 h</dd></div>
+          <div><dt>Qué pasa ahora</dt><dd>Soporte Informático la revisa en 48 horas hábiles y te avisa por correo.</dd></div>
+        </dl>
+        <footer class="verificacion">
+          <img class="verificacion__qr" src="assets/qr-ejemplo-documento.svg" alt="" width="76" height="76">
+          <p>Podés ver cómo sigue tu solicitud en <b>verificar.tw.unp.edu.ar</b> con el código <b class="verificacion__codigo">K7QF-29MD</b>, o escaneando el código QR.</p>
+        </footer>
+      </article>
+    </section>
+
+    <!-- Planilla: una tabla para completar a mano -->
+    <section role="tabpanel" id="doc-planilla" aria-labelledby="tab-planilla" hidden>
+      <article class="hoja" aria-labelledby="planilla-titulo">
+        <header class="membrete">
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
+          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Departamento de Informática</span></p>
+        </header>
+        <h2 class="documento__titulo" id="planilla-titulo">Planilla de asistencia</h2>
+        <p>Jornada de Informática 2026 · Taller de Moodle · Lab. Informática 1 · 13/10/2026, de 8:00 a 12:00 h</p>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Planilla de asistencia al Taller de Moodle">
+          <table class="tabla tabla--planilla">
+            <thead><tr><th scope="col" class="num">N.º</th><th scope="col">Apellido y nombre</th><th scope="col">DNI</th><th scope="col" class="planilla__firma">Firma</th></tr></thead>
+            <tbody>
+              <tr><td class="num">1</td><td>Antileo, Martín</td><td>39.845.112</td><td></td></tr>
+              <tr><td class="num">2</td><td>Bustos, Florencia</td><td>41.220.874</td><td></td></tr>
+              <tr><td class="num">3</td><td>Calfín, Joaquín</td><td>40.556.309</td><td></td></tr>
+              <tr><td class="num">4</td><td>Evans, Rocío</td><td>42.019.663</td><td></td></tr>
+              <tr><td class="num">5</td><td>Huenchual, Tomás</td><td>38.974.501</td><td></td></tr>
+              <tr><td class="num">6</td><td>Jones, Agustina</td><td>41.887.240</td><td></td></tr>
+              <tr><td class="num">7</td><td>Ñancufil, Camila</td><td>40.123.456</td><td></td></tr>
+              <tr><td class="num">8</td><td>Williams, Santiago</td><td>39.401.728</td><td></td></tr>
+              <tr><td class="num">9</td><td></td><td></td><td></td></tr>
+              <tr><td class="num">10</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="firmas">
+          <div class="firma">
+            <p class="firma__nombre">Firma y aclaración</p>
+            <p class="firma__cargo">Docente a cargo</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <details class="acordeon ext-muestra-ficha no-imprimir">
+      <summary>Cuándo usarlo y cuándo no: documentos e impresión</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen">
+          <div><dt>Usalo cuando</dt><dd>La herramienta genera un papel que alguien presenta en otro lado o firma: constancias, certificados, resoluciones, notas, comprobantes y planillas.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Solo hay que imprimir una pantalla (una tabla, una agenda): eso ya lo resuelve <code>unpsjb.css</code> sin preparar nada.</li><li>Es un correo: va el módulo de correo.</li></ul></dd></div>
+          <div><dt>Accesibilidad</dt><dd><ul><li>La hoja es un <code>&lt;article&gt;</code> con su título; el texto es texto real, no una imagen.</li><li>El QR lleva <code>alt=""</code>: la dirección y el código están escritos al lado.</li><li>La firma digital se dice con palabras, no con un sello.</li><li>En celular la hoja ocupa el ancho de la pantalla y el texto sigue en 16px.</li></ul></dd></div>
+        </dl>
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: hoja con membrete, firma y verificación"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="unpsjb-documentos.css"&gt;
+
+&lt;article class="hoja fuente-academica" aria-labelledby="doc-titulo"&gt;
+  &lt;header class="membrete"&gt;
+    &lt;img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56"&gt;
+    &lt;p class="membrete__nombre"&gt;Universidad Nacional de la Patagonia San Juan Bosco
+      &lt;span&gt;Delegación Trelew · Secretaría Académica&lt;/span&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;p class="documento__dato"&gt;Trelew, 2 de octubre de 2026&lt;/p&gt;
+  &lt;h2 class="documento__titulo" id="doc-titulo"&gt;Constancia de alumna regular&lt;/h2&gt;
+  &lt;div class="documento__cuerpo"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="firmas"&gt;
+    &lt;div class="firma"&gt;
+      &lt;p class="firma__nombre"&gt;Lic. Marina Roldán&lt;/p&gt;
+      &lt;p class="firma__cargo"&gt;Secretaria Académica&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;footer class="verificacion"&gt;
+    &lt;img class="verificacion__qr" src="assets/qr-….svg" alt="" width="76" height="76"&gt;
+    &lt;p&gt;Para comprobar que este documento es auténtico, entrá a
+      &lt;b&gt;verificar.tw.unp.edu.ar&lt;/b&gt; y cargá el código
+      &lt;b class="verificacion__codigo"&gt;K7QF-29MD&lt;/b&gt;.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</code></pre>
+      </div>
+    </details>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.3</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+
+    // Pestañas: un clic o las flechas eligen el documento que se ve (y el que se imprime)
+    const pestanas = [...document.querySelectorAll('[role="tab"]')];
+    const elegir = (pestana, conFoco) => {
+      pestanas.forEach(p => {
+        const activa = p === pestana;
+        p.setAttribute('aria-selected', activa);
+        p.tabIndex = activa ? 0 : -1;
+        document.getElementById(p.getAttribute('aria-controls')).hidden = !activa;
+      });
+      if (conFoco) pestana.focus();
+    };
+    pestanas.forEach((p, i) => {
+      p.addEventListener('click', () => elegir(p));
+      p.addEventListener('keydown', e => {
+        const paso = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (paso) { e.preventDefault(); elegir(pestanas[(i + paso + pestanas.length) % pestanas.length], true); }
+        if (e.key === 'Home') { e.preventDefault(); elegir(pestanas[0], true); }
+        if (e.key === 'End') { e.preventDefault(); elegir(pestanas[pestanas.length - 1], true); }
+      });
+    });
+    // Se puede abrir directo en un documento: muestra-documentos.html#doc-certificado
+    const inicial = pestanas.find(p => '#' + p.getAttribute('aria-controls') === location.hash);
+    if (inicial) elegir(inicial);
+
+    // A una tinta: se aplica en el momento, a todas las hojas
+    const unaTinta = document.getElementById('una-tinta');
+    const pintarTinta = () => document.querySelectorAll('.hoja').forEach(h => h.classList.toggle('hoja--una-tinta', unaTinta.checked));
+    unaTinta.addEventListener('change', pintarTinta);
+    if (new URLSearchParams(location.search).has('una-tinta')) { unaTinta.checked = true; }
+    pintarTinta();
+
+    document.getElementById('imprimir').addEventListener('click', () => window.print());
+  </script>
+</body>
+</html>

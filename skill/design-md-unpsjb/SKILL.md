@@ -5,7 +5,7 @@ description: "Design.md para generar páginas para la universidad"
 
 ---
 name: UNPSJB MII 2.0 · Señalética
-version: 0.4.2
+version: 0.4.3
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -67,6 +67,11 @@ colors:
   oscuro-serie-4: "#0ea5b7"
   oscuro-serie-5: "#c026d3"
   oscuro-serie-otros: "#94a3b8"
+  # Papel: lo que se imprime y la hoja de los documentos (no siguen al tema)
+  papel: "#ffffff"
+  papel-tinta: "#000000"
+  papel-tinta-2: "#333d49"
+  papel-linea: "#b9c6d6"
 typography:
   titulo-1:
     fontFamily: Montserrat
@@ -143,7 +148,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB (MII 2.0)
 
-**Delegación Trelew · 2026 · versión 0.4.2 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.3 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`. Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `comparar-v3.html` (0.2.1 y la actual) y `comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -177,7 +182,7 @@ El sistema se distribuye como **una hoja de estilos central** (`unpsjb.css`) alo
 
 Toda herramienta, sea HTML o React, usa esta hoja. Así se ven iguales y un cambio de diseño se hace en un solo lugar.
 
-Las piezas grandes que usan pocas herramientas van en **módulos**: hojas aparte que se cargan después de la central y usan sus tokens (sección 16). Hoy hay dos: `unpsjb-agenda.css` y `unpsjb-video.css`.
+Las piezas grandes que usan pocas herramientas van en **módulos**: hojas aparte que se cargan después de la central y usan sus tokens (sección 16). Hoy hay seis: agenda de aulas, visor de cámaras, documentos e impresión, gráficos de líneas, mesa de ayuda y cartelera.
 
 **Cómo se nombran las clases y las variables (desde la 0.3.2).** Todo el código va en español, para poder adivinar un nombre sin ir a buscarlo:
 
@@ -381,7 +386,7 @@ Si por algún motivo no se puede adoptar Atkinson, la alternativa es seguir con 
 
 - **Respaldo ajustado:** mientras carga, se usa Arial (o Liberation Sans en Linux, que mide igual) **agrandada o achicada para que ocupe lo mismo** que la fuente real (`size-adjust`, `ascent-override`, `descent-override`). Así, cuando llega la fuente, el texto no salta de lugar. Los valores se midieron sobre los archivos actuales y están en `unpsjb.css` (familias "Atkinson respaldo" y "Montserrat respaldo").
 
-**Serif para documentos formales (nuevo en 0.3).** La interfaz no usa serif. La excepción son las vistas que reproducen un documento oficial (resolución, certificado, constancia) y sus PDF: el manual de 2008 pide Times New Roman para el texto corrido de esos documentos. Para eso está la clase `.fuente-academica` (`"Times New Roman", "Liberation Serif", Georgia, serif`), que se aplica al contenedor del documento, nunca a la interfaz que lo rodea.
+**Serif para documentos formales (nuevo en 0.3).** La interfaz no usa serif. La excepción son las vistas que reproducen un documento oficial (resolución, certificado, constancia) y sus PDF: el manual de 2008 pide Times New Roman para el texto corrido de esos documentos. Para eso está la clase `.fuente-academica` (`"Times New Roman", "Liberation Serif", Georgia, serif`), que se aplica al contenedor del documento, nunca a la interfaz que lo rodea. La hoja, el membrete, las firmas y el resto de un documento están en el módulo de documentos (sección 18).
 
 ### B. Escala
 
@@ -704,9 +709,9 @@ Para no volver a discutirlo cada vez:
 |---|---|---|
 | Banner de cookies | Las herramientas internas solo usan cookies de sesión. Si alguna vez se suma analítica de terceros, se revisa. | Nada |
 | Selector de fecha propio | El del navegador es más accesible, más liviano y no hay que mantenerlo. | `input type="date"` |
-| Línea de tiempo de un trámite | Ya lo cubren otras piezas. | Indicador de pasos y lista de resumen |
+| Línea de tiempo de un trámite | Ya lo cubren otras piezas. | Indicador de pasos y lista de resumen. (El historial de mensajes de una solicitud es otra cosa: sección 19) |
 | Centro de notificaciones | Necesita servidor y base de datos: no es un tema de la hoja de estilos. | Avisos y toasts |
-| Tooltip | En celular no existe "pasar el mouse", y tapa contenido. | Texto de ayuda fijo debajo del campo |
+| Tooltip | En celular no existe "pasar el mouse", y tapa contenido. | Texto de ayuda fijo debajo del campo. En los gráficos, la lectura fija de arriba (15.E) |
 | Torta con más de 3 partes, gráficos 3D, dos ejes | Se leen mal (sección 15). | Barras, o una tabla |
 
 ## 8. Estados del sistema
@@ -894,6 +899,7 @@ El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Deleg
 | `escudo-unpsjb-blanco.svg` | Banda en **celular**: solo el óvalo con la gaviota plana (29×36px). | ~1KB |
 | `logo-unpsjb-trelew.svg` | **Fondos claros**, documentos impresos o exportados; también el que usa `unpsjb.css` al imprimir. Gaviota plana; barra y "Sede Trelew" en gris `#3b3a36`. | ~3KB |
 | `logo-unpsjb-trelew-completo.svg` | **Usos grandes** (carteles, portadas, pantallas de bienvenida): el original sin cambios, con la foto de la gaviota y el texto curvo. | ~56KB |
+| `logo-unpsjb-trelew-una-tinta.svg` | **Impresión a una tinta** (nuevo en 0.4.3): óvalo, barra y "Sede Trelew" en negro; la gaviota entera en blanco, sin gris ni amarillo. Lo usa la hoja `.hoja--una-tinta` (sección 18). | ~3KB |
 
 - **Los colores del óvalo no se modifican:** el azul (`#347EBB`), el gris de las puntas y el amarillo del pico se tomaron de la foto original. Son parte de la marca, no colores de interfaz: no se usan en botones ni textos.
 - **De dónde sale la gaviota plana:** en el EPS la gaviota es una foto (JPEG en CMYK). `logo/vectorizar.sh` la separa por color, borra el detalle y la vectoriza; el resultado queda guardado en `logo/gaviota-plana.svg`. Solo hay que volver a correrlo si cambia el EPS (instala sus librerías de Python en `~/.cache/unpsjb-logo/`). `logo/generar.sh` usa esa gaviota guardada y no necesita nada extra. **No se edita a mano:** si hay que afinar la forma, se ajusta `logo/vectorizar.py` o se reemplaza por un dibujo hecho por un diseñador.
@@ -909,7 +915,7 @@ El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Deleg
 
 - **Tamaño mínimo:** el nivel M no se usa por debajo de 32px de alto (el óvalo se vuelve una mancha); por debajo va el S.
 - **Área de resguardo:** alrededor del logo queda libre un margen igual a **la mitad del ancho del óvalo**. Ahí no entran textos, íconos ni bordes. En la banda, ese aire es el que ya dan los 8px de arriba y abajo y los 24px hasta el separador.
-- **Monocromo:** para impresión a una tinta o sellos, el óvalo y la gaviota en un solo color (`#004992` o negro), sin gris ni amarillo. Pendiente de generar con `logo/generar.sh` (la silueta ya existe en `prueba-logo/minimalista/escudo-mono.svg`).
+- **A una tinta:** para impresión en negro o sellos, el óvalo y los textos en un solo color y la gaviota entera en blanco, sin gris ni amarillo. Lo genera `logo/generar.sh` desde la 0.4.3 (`logo-unpsjb-trelew-una-tinta.svg`, en negro). Como las demás versiones del logo, falta que lo confirme quien maneja la marca.
 - **Favicon:** `<link rel="icon" href="https://recursos.tw.unp.edu.ar/assets/favicon-unpsjb.svg" type="image/svg+xml">`. Es el mismo para todas las herramientas: lo que distingue a cada herramienta es su ícono de instalación (10.B).
 - **Qué ave es:** DESIGN.md la llama **gaviota**, como en el manual de marca. Algunas fuentes externas la describen como albatros; se mantiene "gaviota" hasta que lo confirme el responsable de la marca.
 
@@ -1035,6 +1041,11 @@ Las palabras son parte del diseño.
 | En gráficos, los colores de serie, en orden, y el valor escrito. | Pintar series con el semáforo o con las categorías. |
 | Dar siempre la tabla de un gráfico. | Tortas de muchas partes, 3D o dos ejes. |
 | Estilos propios de una herramienta con prefijo `.ext-`. | Colores o medidas sueltas en el HTML. |
+| Mostrar en pantalla la misma hoja que se imprime (`.hoja`). | Armar un documento como imagen o con marcas de agua. |
+| Escribir la dirección al lado de todo código QR. | Dejar un QR como única forma de llegar a algo. |
+| En el historial de una solicitud, decir quién habla con nombre y rol. | Globos de chat a izquierda y derecha, o un color por persona. |
+| En la cartelera, letra de 26 u o más y nada que tocar. | Poner en la tele una pantalla pensada para escritorio. |
+| Avisar en la cartelera cuando los datos están viejos. | Dejar una tele mostrando datos sin decir de cuándo son. |
 
 ## 14. Gobernanza: quién decide y cómo se versiona (nuevo en 0.3)
 
@@ -1069,7 +1080,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.2), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.3), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1157,14 +1168,40 @@ Nombre en `detalle`, el valor grande (32px, peso 700, en la misma fuente de text
 
 Los colores están en la sección 3.I.
 
+### E. Gráficos de líneas (nuevo en 0.4.3)
+
+Lo que cambia en el tiempo. Es el único gráfico que necesita un dibujo (SVG), así que va en un módulo: `unpsjb-graficos.css` (5 KB) y `unpsjb-graficos.js` (16 KB; 6 KB comprimido). Ejemplo: `muestra-graficos.html`.
+
+- **Los datos se escriben una sola vez, en una tabla.** La tabla lleva `data-grafico="lineas"`; el script arma el gráfico y el selector "Gráfico | Tabla". Sin JavaScript queda la tabla. La primera columna es el momento (mes, día, año) y cada una de las demás, una serie.
+- **`data-descripcion` es obligatorio:** una oración que dice lo importante ("Trelew sube de 310 a 412"). Es el nombre de la imagen: lo que escucha quien usa lector de pantalla.
+- Opcionales: `data-unidad="%"`, `data-alto` (260px por defecto) y `data-desde-cero="no"`.
+- **El eje arranca en cero.** Sin el cero, una suba de 2 % parece el doble. La excepción es cuando el cero no significa nada (una temperatura, un índice): ahí va `data-desde-cero="no"` y la nota del gráfico lo dice.
+- **Marcas del eje en números redondos** (0, 100, 200), cuatro o cinco. Los nombres del eje de abajo se saltean si no entran, y el último va siempre.
+- **Un punto en cada dato** si hay 20px o más entre uno y otro. Con muchos datos, solo en el último y en el momento elegido: una fila de puntos pegados es una línea más gruesa, no información.
+- **La lectura, arriba del gráfico** (`.lineas__lectura`): el momento elegido y el valor de cada serie con su cuadradito. Es también la leyenda. Sin tocar nada muestra el último momento.
+  - Con el mouse o el dedo se elige un momento; una guía vertical lo marca.
+  - Con el teclado, `Tab` llega al gráfico y las flechas lo recorren. Es un control de rango, como la línea de tiempo del visor (16.B): el lector de pantalla dice el momento y todos los valores.
+  - No hay cartel flotante (7.P): la lectura está siempre en el mismo lugar y no tapa nada.
+- **El último valor de cada serie va escrito en la punta,** en `tinta`. Si dos quedan encimados y habría que separarlos mucho, no se escriben: ya están en la lectura.
+- **Si falta un dato, la línea se corta.** No se une ni se inventa un valor; en la tabla dice "Sin dato".
+- **Color de cada serie:** en orden, de `serie-1` a `serie-5`. Para que una serie conserve su color aunque cambie el orden de las columnas, la clase va en su encabezado: `<th class="num serie-3">`.
+- **Sobre qué fondo:** los puntos llevan un aro del color del fondo. Dentro de un panel no hay que hacer nada; si el gráfico va suelto sobre la página, `style="--grafico-fondo: var(--color-fondo)"`.
+- **Al imprimir,** un gráfico por renglón y vuelto a trazar al ancho de la hoja, para que la letra salga a su tamaño.
+- **Lo que no hace:** áreas rellenas, líneas curvas (suavizar inventa valores entre dato y dato), dos ejes, más de cinco series.
+- En una herramienta hecha en React se puede usar el mismo script (después de cambiar los datos de la tabla, `unpsjbGraficos.dibujar(tabla)`) o armar un componente que produzca el mismo SVG con estas clases.
+
 ## 16. Módulos: agenda de aulas y visor de cámaras (nuevo en 0.4)
 
-Son dos piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no las cargue quien no las usa. Cada una se enlaza **después** de `unpsjb.css` y usa sus tokens.
+Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no las cargue quien no las usa. Cada una se enlaza **después** de `unpsjb.css` y usa sus tokens. Esta sección documenta las dos primeras; las demás tienen la suya.
 
-| Módulo | Hoja | Ejemplo | Peso |
-|---|---|---|---|
-| Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB |
-| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 12 KB |
+| Módulo | Hoja | Ejemplo | Peso | Reglas |
+|---|---|---|---|---|
+| Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB | 16.A |
+| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 12 KB | 16.B |
+| Gráficos de líneas (0.4.3) | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 5 KB + 16 KB | 15.E |
+| Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
+| Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
+| Cartelera (0.4.3) | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
 
 Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases. En el ejemplo de la agenda los eventos son siempre los mismos: al cambiar de fecha o de aula cambian los títulos y los días.
 
@@ -1247,3 +1284,188 @@ Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripc
 - **El logo completo** (nivel L, 10.A) solo donde hay lugar para mostrarlo a 96px o más: una portada, no la banda.
 - **Sin siglas internas** sin explicar (sección 12): quien llega de afuera no sabe qué es SIU ni SUDOCU.
 
+## 18. Documentos e impresión (nuevo en 0.4.3)
+
+Casi toda herramienta termina en un papel: una constancia, un certificado, un comprobante. El módulo `unpsjb-documentos.css` (ejemplo: `muestra-documentos.html`) da la hoja y sus partes. Imprimir una pantalla cualquiera (una tabla, una agenda) no necesita este módulo: eso ya lo hace `unpsjb.css` (6.G).
+
+| Documento | Hoja | Letra del texto | Trato |
+|---|---|---|---|
+| Constancia, nota, resolución | A4 vertical | Serif (`.fuente-academica`) | Formal, en tercera persona |
+| Certificado, diploma | A4 apaisada | Serif | Formal |
+| Comprobante de un trámite | A4 vertical | La del sistema | De vos, como la herramienta |
+| Planilla para firmar | A4 vertical | La del sistema | — |
+
+### A. La hoja
+
+- **En pantalla se ve la misma hoja que sale impresa** (`article.hoja`): mide un A4 y tiene sus márgenes. Quien la mira sabe qué va a salir, sin abrir la vista previa.
+- **La hoja es papel:** blanca con tinta negra, también en modo oscuro. Es la segunda excepción al tema, junto con el video sobre negro (16.B). Usa los colores de papel, los mismos con que `unpsjb.css` imprime cualquier pantalla (6.G): `papel` `#ffffff`, `papel-tinta` `#000000`, `papel-tinta-2` `#333d49` y `papel-linea` `#b9c6d6`.
+- **Márgenes:** 20 mm arriba, a la derecha y abajo, y 30 mm a la izquierda, para encuadernar o perforar. La hoja apaisada (`.hoja--apaisada`), 15 mm parejos. Son un punto de partida: **falta confirmar si la universidad tiene una norma propia.** Se cambian en dos lugares de la hoja de estilos (los tokens `--hoja-margen-*` y las reglas `@page`), porque `@page` no acepta variables.
+- **En celular** la hoja ocupa el ancho de la pantalla y el texto sigue en 16px. Se lee cómodo, aunque los renglones no corten donde cortan en el papel. La hoja apaisada se ve a tamaño real desde 1220px de ancho.
+- **Borrador:** lo dice arriba, con palabras (`.hoja__borrador`: "Borrador: sin validez"). No hay marcas de agua (3.G).
+- **Texto real, nunca una imagen:** se puede seleccionar, buscar y leer con lector de pantalla.
+
+### B. Membrete
+
+- El logo de fondos claros (`logo-unpsjb-trelew.svg`) a 15 mm de alto, y al lado el nombre completo de la universidad en Montserrat 700, con la dependencia debajo. Como el logo en ese tamaño va sin el texto curvo (10.A), el nombre escrito no es opcional.
+- Abajo, una línea `primario` de 2px: la misma que deja la banda al imprimir (6.G).
+- Va en la primera hoja. Las siguientes llevan el número de página.
+
+### C. El texto
+
+- **Serif, 12 pt, interlineado 1,5, alineado a la izquierda.** No se justifica: sin cortar palabras, el texto justificado deja ríos de blanco y se lee peor.
+- **Lugar y fecha** arriba a la derecha (`.documento__dato`), con la fecha en texto: "Trelew, 2 de octubre de 2026".
+- **Título centrado** (`.documento__titulo`), con mayúscula solo inicial: "Constancia de alumna regular".
+- **Trato formal** (sección 12): tercera persona o usted. La herramienta que rodea a la hoja sigue hablando de vos.
+- **Las fórmulas de una resolución** (Visto, Considerando, Resuelve, Artículo 1.º) van en mayúsculas, porque así las escribe la norma: es la única mayúscula sostenida del sistema. En el HTML se escriben con mayúscula inicial y las mayúsculas las pone la clase `.documento__formula`, para que el lector de pantalla no las deletree.
+
+### D. Firmas
+
+- Hasta tres en un renglón (`.firmas`). Cada una: 22 mm para firmar y sellar, una línea, el nombre y el cargo.
+- **Firma digital** (`.firma--digital`): no hay línea. Un recuadro con el nombre, el cargo y "Firmado digitalmente el 02/10/2026 a las 10:32 h". Se dice con palabras, no con el dibujo de un sello.
+- **Una firma nunca queda sola en una hoja:** si no entra, se lleva con ella el final del texto.
+
+### E. Pie de verificación y QR
+
+- Al pie de la hoja (`.verificacion`): dónde se comprueba que el documento es auténtico. **La dirección y el código van escritos**; el QR es un atajo a esa misma dirección.
+- El QR mide 20 mm: es el mínimo para escanear en papel con comodidad. Lleva `alt=""`, porque lo que dice ya está en el texto.
+- Todo QR del sistema se genera con `qr/generar.sh <dirección> <archivo.svg>`: negro sobre blanco, con su margen de 4 módulos y corrección de errores media. La dirección, lo más corta posible: cuanto más corta, más grandes los cuadraditos.
+- Falta: el servicio que verifica. El módulo da el lugar; la dirección de los ejemplos (`verificar.tw.unp.edu.ar`) no existe.
+
+### F. Certificado
+
+- Hoja apaisada con todo centrado (`.certificado`): es el único documento que se centra, como el login entre las pantallas.
+- El nombre de la persona en 28 pt; el tipo de certificado en 22 pt.
+- Sin marcos, orlas ni fondos (3.G). Lo que lo hace solemne es la hoja, el membrete y el espacio.
+
+### G. Planilla para firmar
+
+- Una tabla común con `.tabla--planilla`: renglones de 10 mm y todas las celdas con borde, para que se vea dónde escribir a mano.
+- La cabecera se repite en cada hoja y las filas no se cortan (6.G).
+
+### H. Al imprimir
+
+- **Sale solo la hoja.** En una página que tiene una `.hoja`, al imprimir se esconde todo lo demás: banda, botones, pie. No hay que marcar nada con `.no-imprimir`.
+- **El tamaño y la orientación los pone la hoja** (reglas `@page` con nombre): quien imprime no tiene que elegir "apaisado". Chrome, Edge y Firefox lo respetan; en Safari hay que elegir la orientación a mano.
+- **Numeración** (`.hoja--numerada`): "Página 2 de 3", abajo a la derecha, para documentos de más de una hoja. Hoy lo dibujan Chrome y Edge; en los demás navegadores la hoja sale sin número.
+- **A una tinta** (`.hoja--una-tinta`): el logo cambia por su versión en negro (10.A) y todo lo que era azul pasa a negro.
+- **Cortes:** `.salto-pagina` empieza una hoja nueva y `.sin-cortes` evita que un bloque se parta. Sirven en cualquier página, no solo dentro de una hoja.
+- **PDF:** el mismo camino. "Imprimir o guardar como PDF" abre la impresión del navegador. Si una herramienta necesita generar el PDF en el servidor, usa esta misma hoja con un navegador sin ventana.
+
+## 19. Mesa de ayuda (nuevo en 0.4.3)
+
+Una mesa de ayuda se arma casi entera con lo que ya hay: la bandeja es una tabla con filtros (7.D, 8.I), el pedido es un formulario (8.F) y su confirmación un comprobante (8.G). Lo único que faltaba es el **historial de una solicitud**: los mensajes que van y vienen, los cambios de estado y los adjuntos. Eso es el módulo `unpsjb-mesa-ayuda.css` (ejemplo: `muestra-mesa-ayuda.html`).
+
+### A. La pantalla de una solicitud
+
+- **El título es el asunto,** escrito por quien pidió ("No funciona el proyector del Aula 102"). Arriba, las migas con el número.
+- **Debajo del título, un renglón de estado** (`.solicitud__estado`): la insignia, el número, cuándo se abrió y quién la atiende. Es lo que hay que saber antes de leer.
+- **Dos columnas desde 1024px** (`.solicitud`): el historial y la respuesta a la izquierda; la ficha (`.solicitud__ficha`, una lista de resumen) a la derecha. En celular la ficha va al final: lo esencial ya está en el renglón de estado.
+
+### B. El historial
+
+- **De lo más viejo a lo más nuevo,** de arriba hacia abajo, y termina en el cuadro para responder. Lo nuevo aparece donde se está escribiendo.
+- **Un título por día** (`.hilo__dia`: "Jueves 1 de octubre") y, debajo, la lista de ese día (`ol.hilo`). Dentro del día va solo la hora.
+- **Un mensaje es un bloque** (`.hilo__mensaje`): nombre de quien escribe, su rol en una etiqueta ("Solicitante", "Soporte Informático") y la hora a la derecha. Cada mensaje es un `<article>` con ese nombre: con lector de pantalla se salta de uno a otro.
+- **Un cambio es un renglón** (`.hilo__evento`): ícono, qué pasó y la hora. "Martín Evans tomó la solicitud. Estado: En curso". Sin recuadro, para que los mensajes, que son lo que se lee, pesen más que los avisos del sistema.
+- **Quién habla se dice con palabras.** No hay globos de chat a izquierda y derecha, ni avatares, ni un color por persona: en una solicitud que pasa por tres personas, el color deja de alcanzar y el rol es lo que importa.
+- **Nota interna** (`.hilo__mensaje--nota`): la ve solo el equipo que atiende. Fondo `capa`, y arriba un candado con el texto "Nota interna: no la ve quien solicita". El fondo solo no alcanza: un error ahí manda al solicitante algo que no era para él.
+- **Adjuntos:** la lista de archivos de siempre (`.archivos`, 8.J), con el nombre como link y el peso.
+- **Lo que escribe la persona entra como texto,** nunca como HTML. Los emojis que escriba se ven con Twemoji (10.D).
+
+### C. Estados de una solicitud
+
+Cinco, con las mismas palabras para quien pide y para quien atiende:
+
+| Estado | Insignia | Ícono | Quiere decir |
+|---|---|---|---|
+| Nueva | neutra | `inbox` | Entró y nadie la tomó todavía |
+| En curso | información | `clock` | Alguien la está atendiendo |
+| Esperando respuesta | advertencia | `reply` | Falta que conteste quien la pidió |
+| Resuelta | éxito | `circle-check` | Soporte la dio por resuelta; se puede reabrir respondiendo |
+| Cerrada | neutra | `archive` | Terminó; para seguir hay que abrir otra |
+
+- "Esperando respuesta" es la única en ámbar: es la que le pide algo a una persona.
+- **La prioridad no es un estado** y no lleva semáforo. Va escrita, con su motivo ("Alta: hay un parcial el 02/10 a las 14:00 h"), y la ve solo el equipo.
+- **El plazo** se muestra en la ficha con fecha y hora. Si se venció, una insignia de error "Vencida".
+
+### D. Responder
+
+- Al final del historial, en un panel (`form.respuesta`): el cuadro de texto con su label ("Tu respuesta"), los adjuntos y los botones.
+- **La ayuda dice a quién le llega:** "La recibe Camila Ñancufil por correo y queda en este historial".
+- **Quien atiende elige "Respuesta | Nota interna"** con un segmentado. Al elegir nota interna cambian el label, la ayuda, el fondo del cuadro y el botón ("Guardar nota interna"): cuatro señales, porque equivocarse acá es caro.
+- **Botones que dicen lo que hacen:** "Enviar respuesta" (primario) y "Enviar y marcar como resuelta" (secundario, solo para quien atiende).
+- Al enviar, el mensaje aparece al final del historial y un toast lo confirma: "Respuesta enviada".
+- Una solicitud resuelta no se cierra en el momento: queda unos días abierta a una respuesta, que la reabre.
+
+## 20. Cartelera (nuevo en 0.4.3)
+
+Una tele en un pasillo que muestra las actividades del día. Es la señalética del sistema en sentido literal, y se diseña al revés que una herramienta: se mira **de lejos y de paso**, y **no se toca**. Módulo `unpsjb-cartelera.css`; ejemplos: `muestra-cartelera.html` (la tele) y `muestra-cartelera-celular.html` (la vista de solo lectura a la que lleva el QR).
+
+### A. Medidas para leer de lejos
+
+- **Todo se mide en "u":** una u es un píxel en una tele de 1920 × 1080. En otra resolución (720p, 4K) todo crece o se achica junto, y la pantalla se ve igual.
+- **Ninguna letra mide menos de 26 u:** el doble del mínimo de una pantalla de escritorio.
+
+| Pieza | Tamaño |
+|---|---|
+| Reloj | 72 u, peso 700 |
+| Hora de inicio, nombre de la actividad, lugar | 42 a 46 u, peso 700 |
+| Lugar de la pantalla (en la banda) | 42 u, Montserrat 700 |
+| Fecha | 36 u |
+| Hora de fin, tipo de actividad, avisos | 26 a 30 u |
+| Código QR | 300 u de lado |
+
+- En una tele de 43 pulgadas, 44 u son letras de unos 15 mm de alto: se leen desde unos 4 metros. Con una tele más chica o un pasillo más largo, conviene probarlo parado donde va a pasar la gente.
+- **Margen de 64 u** a los costados: algunas teles recortan los bordes de la imagen.
+- **Sin scroll, sin botones, sin links, sin foco.** A pantalla completa tampoco se ve la flecha del mouse.
+
+### B. Qué muestra
+
+- **La banda,** más alta (120 u): el logo, el lugar ("Edificio de Aulas") y, a la derecha, la fecha y la hora. La hora es lo más grande de la pantalla: es lo que se busca primero.
+- **La tabla de actividades** (`.cartelera-tabla`), ordenada por hora: hora, actividad y lugar. Es una tabla de verdad.
+- **Solo lo que le sirve a quien pasa:** las actividades públicas que están en curso o por empezar. Las que terminaron salen solas. Las tareas internas (mantenimiento) no van.
+- **En curso:** la fila lleva fondo `tinte` y la insignia "En curso". **En azul, no en naranja:** el naranja es el foco y "estás acá", y en la tele no hay ninguno de los dos.
+- **"Empieza en 15 min"** desde media hora antes.
+- **Cambio de aula:** insignia de advertencia, el aula nueva en grande y debajo "Antes: Aula 101".
+- **Suspendida:** insignia de error. El nombre se apaga, pero **no se tacha:** se tiene que poder leer qué se suspendió.
+- **Avisos** (`.cartelera-aviso`): la misma placa de estado de las herramientas (8.A), con título y una o dos frases. Van arriba del QR.
+
+### C. Cuando no entra todo
+
+- **Las filas se reparten en páginas que rotan solas,** cada 12 segundos. El pie dice "Página 1 de 2".
+- Se mide lo que entra: seis filas en una tele horizontal, menos si un nombre ocupa dos renglones. Un nombre largo sigue en otro renglón; no se corta con puntos suspensivos.
+- El cambio de página es un corte, sin animación (5.E).
+- Los avisos hacen lo mismo: si no entran todos arriba del QR, van por tandas.
+
+### D. El QR y la vista de solo lectura
+
+- **El QR lleva a las mismas actividades en el celular** (`.cartelera-qr`), para quien quiere mirar con calma, buscar su materia o ver otro día.
+- **Mide 300 u:** en una tele de 43 pulgadas son unos 15 cm, que se escanean a un metro y medio. Va siempre negro sobre blanco, con su margen, también con la tele en modo oscuro.
+- **Al lado, la dirección escrita,** para quien no puede escanear.
+- Se genera con `qr/generar.sh` (18.E). **El de los ejemplos es de prueba:** la dirección `agenda.tw.unp.edu.ar/hoy` todavía no existe. Cuando esté la definitiva, se corre el script y se reemplaza el archivo.
+- **La vista de solo lectura** es una página pública común (17.B): la banda, un contenedor angosto y el pie de páginas públicas. Usa la lista y la fila de días del módulo de agenda (16.A), dentro de `.solo-lectura`.
+  - **No pide cuenta** y no tiene nada para reservar ni cambiar. Las actividades no son links.
+  - Tiene un **buscador** por materia o aula, que no distingue tildes.
+  - Muestra el día completo, con las mismas palabras de la tele: "En curso", "Empieza en 15 min", "Cambio de aula", "Suspendida", y además "Terminó".
+  - Abajo dice de cuándo son los datos y dónde se reserva.
+
+### E. Cuando algo falla
+
+- **Sin actividades:** lo dice en grande ("No hay más actividades por hoy") y avisa cuál es la próxima. Nunca una tabla vacía.
+- **Sin conexión:** la tele sigue mostrando lo último que recibió y **lo dice en el pie,** con ícono y palabras: "Sin conexión. Se muestran los datos de las 9:40 h". Una cartelera con datos viejos y sin aviso es peor que una apagada.
+- El pie dice siempre a qué hora se actualizó.
+
+### F. Tema y orientación
+
+- **Claro u oscuro, fijo por pantalla.** La tele no tiene dónde elegirlo: se pone en la dirección (`?tema=oscuro`). Claro para pasillos con luz de día; oscuro para lugares con poca luz. La banda no cambia.
+- **Tele en vertical:** la u pasa a medirse sobre 1080 de ancho; la tabla ocupa todo el ancho y los avisos y el QR van abajo.
+
+### G. Lo que no va
+
+| No va | Por qué |
+|---|---|
+| Animaciones, texto que corre, transiciones entre páginas | El movimiento sin motivo cansa y distrae en un pasillo (5.E) |
+| Video o fotos de fondo | Fondos limpios (3.G); y bajan el contraste del texto |
+| Algo que haya que tocar | Nadie se acerca a una tele a hacer clic; para eso está el QR |
+| La grilla de la agenda | Es para comparar aulas sentado frente a una pantalla, no para leer de paso |
+| Más de dos avisos largos | Lo que no se lee en diez segundos, no se lee |

@@ -32,7 +32,12 @@ DY = OVALO_ALTO / 2 - (BARRA_Y1 + BARRA_Y2) / 2
 AZUL_OVALO = '#347ebb'
 gaviota = re.findall(r'<path [^>]*/>', open(os.path.join(os.path.dirname(__file__), 'gaviota-plana.svg')).read())
 
-def ovalo_plano():
+def ovalo_plano(tinta=None):
+    """El óvalo con la gaviota plana. Con `tinta`, la versión a una tinta: el óvalo
+    en ese color y toda la gaviota (cuerpo, puntas y pico) en blanco, sin gris ni amarillo."""
+    if tinta:
+        silueta = [re.sub(r'fill="#[0-9a-f]{6}"', 'fill="#ffffff"', p) for p in gaviota]
+        return f'<path fill="{tinta}" d="{oval_d}"/>\n' + '\n'.join(silueta) + '\n'
     return f'<path fill="{AZUL_OVALO}" d="{oval_d}"/>\n' + '\n'.join(gaviota) + '\n'
 
 def img(jpg):
@@ -45,7 +50,7 @@ def marca():
     paths = re.findall(r'<path[^>]*fill="' + re.escape(GRIS_TEXTO) + r'"[^>]*/>', body)
     return '\n'.join(paths)
 
-def armar(nombre, titulo, jpg, color_texto, color_curvo=None, forma='compacto'):
+def armar(nombre, titulo, jpg, color_texto, color_curvo=None, forma='compacto', tinta=None):
     if forma == 'completo':
         b = body.replace('@@OVALO@@', img(jpg))
         b = b.replace(GRIS_CURVO, color_curvo)
@@ -54,11 +59,11 @@ def armar(nombre, titulo, jpg, color_texto, color_curvo=None, forma='compacto'):
         defs = '\n'.join(defs_extra)
         vb = '0 0 224.23 112.66'
     elif forma == 'compacto':
-        b = (ovalo_plano() + f'<g transform="translate({DX:.2f} {DY:.2f})">\n' + marca() + '\n</g>\n')
+        b = (ovalo_plano(tinta) + f'<g transform="translate({DX:.2f} {DY:.2f})">\n' + marca() + '\n</g>\n')
         defs = ''
         vb = f'0 0 {TEXTO_FIN + DX + 0.8:.2f} {OVALO_ALTO}'
     else:   # escudo: solo el óvalo
-        b = ovalo_plano()
+        b = ovalo_plano(tinta)
         defs = ''
         vb = f'0 0 {OVALO_ANCHO} {OVALO_ALTO}'
     b = b.replace(GRIS_TEXTO, color_texto)
@@ -77,3 +82,5 @@ armar('assets/logo-unpsjb-trelew.svg', t, None, '#3b3a36')
 armar('assets/logo-unpsjb-trelew-blanco.svg', t, None, '#ffffff')
 armar('assets/escudo-unpsjb-blanco.svg', 'Universidad Nacional de la Patagonia San Juan Bosco', None, '#ffffff', forma='escudo')
 armar('assets/logo-unpsjb-trelew-completo.svg', t, T + '/oval-800.jpg', '#3b3a36', '#231f20', forma='completo')
+# A una tinta (documentos impresos en negro, sellos): óvalo, barra y "Sede Trelew" en negro
+armar('assets/logo-unpsjb-trelew-una-tinta.svg', t, None, '#000000', tinta='#000000')

@@ -1,0 +1,179 @@
+/* ==========================================================================
+   unpsjb-mesa-ayuda.css — Módulo de mesa de ayuda · v0.4.3
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 19.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
+   Ejemplo completo: muestra-mesa-ayuda.html.
+
+   Lo único que el sistema no tenía para una mesa de ayuda es el HISTORIAL de
+   una solicitud: los mensajes que van y vienen, los cambios de estado y los
+   adjuntos. La bandeja (una tabla con filtros), el formulario para pedir y el
+   comprobante ya salen de unpsjb.css.
+
+   La idea:
+   - El historial se lee de arriba hacia abajo, de lo más viejo a lo más nuevo,
+     y termina en el cuadro para responder.
+   - Un mensaje es un bloque; un cambio de estado es un renglón. Así los
+     mensajes, que son lo que se lee, pesan más que los avisos del sistema.
+   - Quién habla se dice con palabras (nombre y rol), no con colores ni globos
+     de chat a izquierda y derecha.
+   - La nota interna se distingue con ícono y texto, además del fondo.
+
+   Piezas
+   1. La pantalla de una solicitud (.solicitud)
+   2. El historial (.hilo, .hilo__dia, .hilo__mensaje, .hilo__evento)
+   3. Responder (.respuesta)
+   4. Celular e impresión
+   ========================================================================== */
+
+/* 1. La pantalla de una solicitud ----------------------------------------- */
+/* <div class="solicitud">
+     <div class="solicitud__principal">  historial + respuesta  </div>
+     <aside class="solicitud__ficha panel" aria-labelledby="ficha-titulo">  dl.resumen  </aside>
+   </div>
+   Desde 1024px, la ficha va a la derecha. En celular va debajo: lo esencial
+   (estado y número) ya está en el renglón de estado, arriba de todo. */
+.solicitud { display: grid; gap: var(--espacio-8); align-items: start; }
+.solicitud > * { min-width: 0; }
+@media (min-width: 1024px) {
+  .solicitud { grid-template-columns: minmax(0, 1fr) 320px; }
+}
+
+/* Renglón de estado, debajo del título: la insignia y los datos cortos.
+   <p class="solicitud__estado"><span class="insignia insignia--info">…En curso</span>
+     <span>N.º TW-2026-00418</span> <span>Abierta el 01/10/2026</span></p> */
+.solicitud__estado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-1) var(--espacio-4);
+  max-width: none;
+  margin: calc(-1 * var(--espacio-3)) 0 var(--espacio-6);
+  font: var(--texto-detalle);
+  color: var(--color-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* La ficha: en una columna angosta, cada dato va debajo de su nombre */
+.solicitud__ficha .resumen > div { grid-template-columns: 1fr auto; padding: var(--espacio-2) 0; }
+.solicitud__ficha .resumen dt { grid-column: 1 / -1; font: var(--texto-detalle); }
+
+/* 2. El historial ---------------------------------------------------------- */
+/* Un título por día y, debajo, la lista de ese día:
+   <h2 class="hilo__dia">Jueves 1 de octubre</h2>
+   <ol class="hilo"> <li class="hilo__mensaje">…</li> <li class="hilo__evento">…</li> </ol> */
+.hilo__dia {
+  margin: var(--espacio-6) 0 var(--espacio-3);
+  font: var(--texto-label);
+  letter-spacing: 0;
+  color: var(--color-tinta-2);
+}
+.hilo__dia:first-child { margin-top: 0; }
+.hilo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mensaje: lo que escribió una persona.
+   <li class="hilo__mensaje"><article aria-labelledby="m1">
+     <header class="hilo__cabecera">
+       <h3 class="hilo__autor" id="m1">Camila Ñancufil</h3>
+       <span class="etiqueta">Solicitante</span>
+       <time class="hilo__hora" datetime="2026-10-01T09:12">9:12 h</time>
+     </header>
+     <div class="hilo__texto"><p>…</p></div>
+     <ul class="archivos">…</ul>
+   </article></li> */
+.hilo__mensaje {
+  padding: var(--espacio-4) var(--espacio-6);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+}
+.hilo__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-1) var(--espacio-3);
+  margin-bottom: var(--espacio-2);
+}
+.hilo__autor { margin: 0; font: 700 1rem/1.4 var(--fuente-texto); letter-spacing: 0; color: var(--color-tinta); }
+.hilo__hora {
+  margin-left: auto;
+  font: var(--texto-detalle);
+  color: var(--color-tinta-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hilo__texto > :last-child { margin-bottom: 0; }
+.hilo__texto { overflow-wrap: anywhere; }      /* una dirección larga pegada no rompe la página */
+.hilo__mensaje .archivos { margin-top: var(--espacio-3); }
+.hilo__mensaje .archivos li { background: none; }
+
+/* Nota interna: la ve solo el equipo que atiende. Fondo capa, borde de control,
+   y lo dice con candado y palabras.
+   <li class="hilo__mensaje hilo__mensaje--nota"> … <p class="hilo__nota"><svg class="icono">lock</svg>
+     Nota interna: no la ve quien solicita</p> … */
+.hilo__mensaje--nota { background: var(--color-capa); border-color: var(--color-linea-control); }
+.hilo__nota {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  flex-basis: 100%;
+  max-width: none;
+  margin: 0;
+  font: 700 0.875rem/1.4 var(--fuente-texto);
+  color: var(--color-tinta);
+}
+.hilo__nota .icono { width: 16px; height: 16px; }
+
+/* Evento: algo que cambió (la tomó alguien, pasó de estado, se reasignó). Un
+   renglón, sin recuadro.
+   <li class="hilo__evento"><svg class="icono">…</svg>
+     <p><b>Martín Evans</b> tomó la solicitud. Estado: <span class="insignia insignia--info">…En curso</span></p>
+     <time class="hilo__hora" datetime="…">9:30 h</time></li> */
+.hilo__evento {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;    /* ícono · texto · hora */
+  align-items: center;
+  gap: var(--espacio-1) var(--espacio-2);
+  padding: 0 var(--espacio-6);
+  font: var(--texto-detalle);
+  color: var(--color-tinta-2);
+}
+.hilo__evento > .icono { width: 16px; height: 16px; }
+.hilo__evento > p:last-child { grid-column: 2 / -1; }    /* un evento sin hora */
+.hilo__evento p { max-width: none; margin: 0; }
+.hilo__evento b { color: var(--color-tinta); }
+.hilo__evento .insignia { vertical-align: middle; }
+
+/* 3. Responder ------------------------------------------------------------- */
+/* Va al final del historial, en un panel.
+   <form class="respuesta panel"> [segmentado Respuesta | Nota interna]
+     <div class="campo"><label class="label">Tu respuesta</label><textarea class="textarea">…
+     [archivo]  <div class="respuesta__acciones">[Enviar respuesta] [Enviar y marcar como resuelta]</div></form> */
+.respuesta { margin-top: var(--espacio-6); }
+.respuesta > .segmentado { margin-bottom: var(--espacio-4); }
+.respuesta .campo { margin-bottom: var(--espacio-4); }
+.respuesta__acciones { display: flex; flex-wrap: wrap; gap: var(--espacio-2); }
+/* Al escribir una nota interna, el cuadro toma el fondo de las notas */
+.respuesta--nota .textarea { background: var(--color-capa); }
+
+/* 4. Celular e impresión --------------------------------------------------- */
+@media (max-width: 639px) {
+  .hilo__mensaje { padding: var(--espacio-3) var(--espacio-4); }
+  .hilo__evento { padding-inline: var(--espacio-4); }
+  .respuesta__acciones .boton { flex: 1 1 100%; }
+}
+@media print {
+  .respuesta { display: none; }
+  .solicitud { display: block; }
+  .solicitud__ficha { margin-top: var(--espacio-6); }
+  .hilo__mensaje { break-inside: avoid; }
+  .hilo__dia { break-after: avoid; }
+  .hilo__mensaje--nota { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

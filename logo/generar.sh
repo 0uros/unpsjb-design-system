@@ -4,8 +4,9 @@
 # ./logo/vectorizar.sh); la versión completa usa la foto original del EPS.
 # Uso:  ./logo/generar.sh "logo unpsjb_SEDE TW.eps"
 # Salida: assets/logo-unpsjb-trelew.svg, assets/logo-unpsjb-trelew-blanco.svg (sin texto curvo),
-#         assets/escudo-unpsjb-blanco.svg (solo el óvalo) y
-#         assets/logo-unpsjb-trelew-completo.svg (con el texto curvo, para usos grandes)
+#         assets/escudo-unpsjb-blanco.svg (solo el óvalo),
+#         assets/logo-unpsjb-trelew-completo.svg (con el texto curvo, para usos grandes) y
+#         assets/logo-unpsjb-trelew-una-tinta.svg (todo en negro, para impresión a una tinta)
 # Requiere: ghostscript (gs), poppler (pdftocairo), ImageMagick (magick), python3.
 set -euo pipefail
 EPS="${1:?Falta el archivo EPS del logo}"

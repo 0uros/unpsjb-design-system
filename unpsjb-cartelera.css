@@ -1,0 +1,308 @@
+/* ==========================================================================
+   unpsjb-cartelera.css — Módulo de cartelera · v0.4.3
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 20.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
+   Ejemplos: muestra-cartelera.html (la tele) y muestra-cartelera-celular.html
+   (la vista de solo lectura a la que lleva el QR).
+
+   La cartelera es una pantalla de pasillo: una tele que muestra las actividades
+   del día. Es la señalética del sistema, literal.
+
+   La idea:
+   - Se mira de lejos y de paso: letra grande, pocas cosas, nada que tocar.
+     No hay botones, ni links, ni foco, ni scroll.
+   - Todo se mide en "u": una u es un píxel en una tele de 1920 × 1080. En una
+     tele de otra resolución (720p, 4K) todo crece o se achica junto.
+   - Ninguna letra mide menos de 26 u (el doble del mínimo de una pantalla
+     de escritorio).
+   - Si las actividades no entran, se reparten en páginas que rotan solas.
+   - El QR lleva a la misma agenda en el celular, en solo lectura.
+
+   Piezas
+   1. La pantalla (.cartelera, banda, cuerpo, pie)
+   2. La tabla de actividades (.cartelera-tabla)
+   3. Avisos y QR (.cartelera-aviso, .cartelera-qr)
+   4. Estados: sin actividades, sin conexión
+   5. Tele en vertical
+   6. La vista de solo lectura para el celular (.solo-lectura)
+   ========================================================================== */
+
+/* 1. La pantalla ----------------------------------------------------------- */
+/* <body class="cartelera">
+     <header class="cartelera__banda">…</header>
+     <main class="cartelera__cuerpo">
+       <section class="cartelera__agenda">…tabla…</section>
+       <aside class="cartelera__lateral">…avisos y QR…</aside>
+     </main>
+     <footer class="cartelera__pie">…</footer>
+   </body> */
+html:has(.cartelera) { overflow: hidden; scroll-padding: 0; }
+.cartelera {
+  /* La unidad: 1 u = 1 px en una tele de 1920 × 1080 */
+  --u: min(calc(100vw / 1920), calc(100vh / 1080));
+  /* Margen de seguridad: algunas teles recortan los bordes de la imagen */
+  --cartelera-margen: calc(64 * var(--u));
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+  font: 400 calc(30 * var(--u)) / 1.3 var(--fuente-texto);
+  user-select: none;
+}
+/* En la tele (navegador a pantalla completa) nadie usa el mouse: que no quede la flecha */
+@media (display-mode: fullscreen) { .cartelera { cursor: none; } }
+.cartelera p { max-width: none; margin: 0; }
+
+/* La banda: la misma placa azul de las herramientas, más alta.
+   <header class="cartelera__banda">
+     <img class="cartelera__logo" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew">
+     <h1 class="cartelera__lugar">Edificio de Aulas <span>Actividades de hoy</span></h1>
+     <p class="cartelera__fecha">Martes 13 de octubre</p>
+     <p class="cartelera__reloj"><time datetime="10:15">10:15</time> h</p>
+   </header> */
+.cartelera__banda {
+  display: flex;
+  align-items: center;
+  gap: calc(40 * var(--u));
+  min-height: calc(120 * var(--u));
+  padding: calc(16 * var(--u)) var(--cartelera-margen);
+  color: var(--color-sobre-banda);
+  background: var(--color-banda);
+}
+.cartelera__logo { display: block; width: auto; height: calc(80 * var(--u)); }   /* nivel M del logo (10.A) */
+.cartelera__lugar {
+  margin: 0;
+  padding-left: calc(40 * var(--u));
+  border-left: calc(2 * var(--u)) solid rgb(255 255 255 / 0.4);
+  font: 700 calc(42 * var(--u)) / 1.25 var(--fuente-titulo);
+  letter-spacing: -0.01em;
+  color: var(--color-sobre-banda);
+}
+.cartelera__lugar span {
+  display: block;
+  margin-top: calc(4 * var(--u));
+  font: 400 calc(28 * var(--u)) / 1.25 var(--fuente-texto);
+  letter-spacing: 0;
+  color: var(--color-sobre-banda-2);
+}
+.cartelera__fecha {
+  margin-left: auto !important;
+  font-size: calc(36 * var(--u));
+  text-align: right;
+  color: var(--color-sobre-banda);
+}
+.cartelera__reloj {
+  font: 700 calc(72 * var(--u)) / 1 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cartelera__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(480 * var(--u));
+  gap: calc(56 * var(--u));
+  min-height: 0;
+  padding: calc(28 * var(--u)) var(--cartelera-margen) calc(20 * var(--u));
+}
+.cartelera__agenda { min-height: 0; overflow: hidden; }
+.cartelera__lateral {
+  display: flex;
+  flex-direction: column;
+  gap: calc(28 * var(--u));
+  min-height: 0;
+}
+/* Los avisos ocupan lo que deja libre el QR. Si no entran todos juntos, el script
+   los muestra por tandas, igual que las filas de la tabla. */
+.cartelera-avisos {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--u));
+  min-height: 0;
+  overflow: hidden;
+}
+.cartelera-avisos > * { flex-shrink: 0; }
+
+/* El pie: cuándo se actualizó y en qué página va.
+   <footer class="cartelera__pie">
+     <p class="cartelera__actualizado">Actualizado a las 10:14 h</p>
+     <p class="cartelera__paginas">Página 1 de 2</p></footer> */
+.cartelera__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(40 * var(--u));
+  min-height: calc(64 * var(--u));
+  padding: calc(10 * var(--u)) var(--cartelera-margen) calc(16 * var(--u));
+  border-top: calc(2 * var(--u)) solid var(--color-linea);
+  font-size: calc(26 * var(--u));
+  color: var(--color-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+.cartelera__paginas { font-weight: 700; color: var(--color-tinta); }
+
+/* Insignias, categorías e íconos, a la medida de la tele */
+.cartelera .insignia {
+  gap: calc(8 * var(--u));
+  padding: calc(2 * var(--u)) calc(12 * var(--u));
+  font: 700 calc(26 * var(--u)) / 1.3 var(--fuente-texto);
+  border-radius: calc(4 * var(--u));
+  white-space: nowrap;
+}
+.cartelera .insignia .icono, .cartelera .icono { width: calc(26 * var(--u)); height: calc(26 * var(--u)); stroke-width: 2.25; }
+.cartelera .categoria { gap: calc(10 * var(--u)); color: var(--color-tinta-2); }
+.cartelera .categoria::before { width: calc(18 * var(--u)); height: calc(18 * var(--u)); border-radius: calc(3 * var(--u)); }
+
+/* 2. La tabla de actividades ----------------------------------------------- */
+/* Es una tabla de verdad: hora, actividad y lugar.
+   <table class="cartelera-tabla">
+     <thead><tr><th scope="col">Hora</th><th scope="col">Actividad</th><th scope="col">Lugar</th></tr></thead>
+     <tbody>
+       <tr class="cartelera-tabla__ahora">
+         <td class="cartelera-tabla__hora"><b>10:00</b> a 12:00</td>
+         <th scope="row" class="cartelera-tabla__actividad">Análisis Matemático
+           <span class="cartelera-tabla__dato"><span class="insignia insignia--info">…En curso</span>
+             <span class="categoria cat-1">Clase</span></span></th>
+         <td class="cartelera-tabla__lugar">Aula 101</td>
+       </tr> …
+   La actividad en curso lleva fondo tinte y la insignia "En curso": azul, no
+   naranja (el naranja es foco y "estás acá", y acá no hay ninguno de los dos). */
+.cartelera-tabla { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.cartelera-tabla th, .cartelera-tabla td { padding: calc(12 * var(--u)) calc(20 * var(--u)); text-align: left; vertical-align: top; }
+.cartelera-tabla thead th {
+  padding-block: 0 calc(10 * var(--u));
+  font: 400 calc(26 * var(--u)) / 1.3 var(--fuente-texto);
+  color: var(--color-tinta-2);
+  border-bottom: calc(3 * var(--u)) solid var(--color-primario-texto);
+}
+.cartelera-tabla thead th:nth-child(1) { width: calc(200 * var(--u)); }
+.cartelera-tabla thead th:nth-child(3) { width: calc(430 * var(--u)); }
+.cartelera-tabla tbody tr { border-bottom: calc(2 * var(--u)) solid var(--color-linea); }
+.cartelera-tabla__hora { font-size: calc(30 * var(--u)); color: var(--color-tinta-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cartelera-tabla__hora b { display: block; font: 700 calc(46 * var(--u)) / 1.15 var(--fuente-texto); color: var(--color-tinta); }
+.cartelera-tabla__actividad {
+  font: 700 calc(44 * var(--u)) / 1.25 var(--fuente-texto);
+  color: var(--color-tinta);
+  overflow-wrap: break-word;
+}
+.cartelera-tabla__dato {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(6 * var(--u)) calc(20 * var(--u));
+  margin-top: calc(6 * var(--u));
+  font: 400 calc(28 * var(--u)) / 1.3 var(--fuente-texto);
+  color: var(--color-tinta-2);
+}
+/* El lugar del estado queda en la fila aunque no haya nada que decir: vacío, no ocupa */
+.cartelera-tabla__estado:empty { display: none; }
+.cartelera-tabla__lugar { font: 700 calc(42 * var(--u)) / 1.25 var(--fuente-texto); color: var(--color-tinta); }
+/* Debajo del lugar: el piso, o el aula anterior si cambió ("Antes: Aula 101") */
+.cartelera-tabla__lugar span { display: block; margin-top: calc(6 * var(--u)); font: 400 calc(28 * var(--u)) / 1.3 var(--fuente-texto); color: var(--color-tinta-2); }
+.cartelera-tabla__ahora { background: var(--color-tinte); }
+/* Suspendida: lo dice la insignia. El nombre se apaga, pero no se tacha: se tiene que poder leer. */
+.cartelera-tabla__suspendida :is(.cartelera-tabla__actividad, .cartelera-tabla__lugar, .cartelera-tabla__hora b) { color: var(--color-tinta-2); }
+
+/* 3. Avisos y QR ----------------------------------------------------------- */
+/* Aviso: la misma placa de estado del sistema, a la medida de la tele. Van dentro
+   de <div class="cartelera-avisos">, arriba del QR.
+   <section class="cartelera-aviso"><div class="cartelera-aviso__placa"><svg class="icono">info</svg></div>
+     <div><h2 class="cartelera-aviso__titulo">Mesas de examen</h2>
+     <p>La inscripción cierra el viernes 16 de octubre.</p></div></section>
+   Variantes: --advertencia y --error, con los colores del semáforo. */
+.cartelera-aviso {
+  --aviso-color: var(--color-info);
+  display: grid;
+  grid-template-columns: calc(64 * var(--u)) minmax(0, 1fr);
+  overflow: hidden;
+  background: var(--color-panel);
+  border: calc(2 * var(--u)) solid var(--aviso-color);
+  border-radius: calc(8 * var(--u));
+}
+.cartelera-aviso--advertencia { --aviso-color: var(--color-advertencia); }
+.cartelera-aviso--error { --aviso-color: var(--color-error); }
+.cartelera-aviso__placa { display: flex; justify-content: center; padding-top: calc(22 * var(--u)); color: #ffffff; background: var(--aviso-color); }
+.cartelera-aviso__placa .icono { width: calc(32 * var(--u)); height: calc(32 * var(--u)); }
+.cartelera-aviso > div:last-child { padding: calc(16 * var(--u)) calc(22 * var(--u)) calc(20 * var(--u)); }
+.cartelera-aviso__titulo { margin: 0 0 calc(4 * var(--u)); font: 700 calc(30 * var(--u)) / 1.25 var(--fuente-texto); letter-spacing: 0; color: var(--color-tinta); }
+.cartelera-aviso p { font-size: calc(26 * var(--u)); line-height: 1.35; color: var(--color-tinta); }
+/* En oscuro, la placa azul se aclara y el ícono pasa a tinta (como .aviso) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .cartelera-aviso:not(.cartelera-aviso--advertencia, .cartelera-aviso--error) .cartelera-aviso__placa { color: #0f2438; }
+}
+:root[data-tema="oscuro"] .cartelera-aviso:not(.cartelera-aviso--advertencia, .cartelera-aviso--error) .cartelera-aviso__placa { color: #0f2438; }
+
+/* QR: lleva a la vista de solo lectura para el celular. Siempre negro sobre
+   blanco y con su margen, también en modo oscuro: es lo que leen las cámaras.
+   Mide 300 u: en una tele de 43 pulgadas son unos 15 cm, que se escanean a un
+   metro y medio. Al lado, la dirección ESCRITA, para quien no puede escanear.
+   <section class="cartelera-qr"><img src="assets/qr-….svg" alt="">
+     <p><b>Mirá las actividades en tu celular</b> agenda.tw.unp.edu.ar/hoy</p></section>
+   El QR se genera con qr/generar.sh. */
+.cartelera-qr {
+  display: grid;
+  grid-template-columns: 1fr;     /* el texto, debajo del QR */
+  align-items: center;
+  gap: calc(18 * var(--u)) calc(24 * var(--u));
+  margin-top: auto;               /* se va al fondo de la columna */
+}
+.cartelera-qr img { display: block; width: calc(300 * var(--u)); height: calc(300 * var(--u)); background: #ffffff; border-radius: calc(4 * var(--u)); }
+.cartelera-qr p { font-size: calc(26 * var(--u)); line-height: 1.3; color: var(--color-tinta-2); overflow-wrap: anywhere; }
+.cartelera-qr b { display: block; margin-bottom: calc(6 * var(--u)); font-size: calc(30 * var(--u)); line-height: 1.25; color: var(--color-tinta); overflow-wrap: normal; }
+
+/* 4. Estados --------------------------------------------------------------- */
+/* Sin actividades: lo dice en grande, y avisa cuál es la próxima.
+   <div class="cartelera-vacio"><h2>No hay más actividades por hoy</h2>
+     <p>Mañana, miércoles 14, la primera es Álgebra I a las 8:00 en el Aula 101.</p></div> */
+.cartelera-vacio { padding-top: calc(40 * var(--u)); }
+.cartelera-vacio h2 { margin: 0 0 calc(16 * var(--u)); font: 700 calc(56 * var(--u)) / 1.25 var(--fuente-titulo); letter-spacing: -0.01em; }
+.cartelera-vacio p { font-size: calc(34 * var(--u)); color: var(--color-tinta-2); }
+
+/* Sin conexión: la tele sigue mostrando lo último que recibió y lo dice en el
+   pie, con ícono y palabras. Una cartelera con datos viejos y sin aviso es
+   peor que una apagada.
+   <p class="cartelera__actualizado cartelera__actualizado--viejo"><svg class="icono">wifi-off</svg>
+     Sin conexión. Se muestran los datos de las 9:40 h.</p> */
+.cartelera__actualizado { display: flex; align-items: center; gap: calc(12 * var(--u)); }
+.cartelera__actualizado--viejo { font-weight: 700; color: var(--color-advertencia-texto); }
+
+/* 5. Tele en vertical ------------------------------------------------------ */
+/* La u pasa a medirse sobre 1080 de ancho; los avisos y el QR van abajo. */
+@media (orientation: portrait) {
+  .cartelera { --u: min(calc(100vw / 1080), calc(100vh / 1920)); }
+  .cartelera__banda { flex-wrap: wrap; row-gap: calc(12 * var(--u)); }
+  .cartelera__fecha { flex-basis: 100%; margin-left: 0 !important; text-align: left; order: 3; }
+  .cartelera__reloj { margin-left: auto; }
+  .cartelera__cuerpo { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: calc(32 * var(--u)); }
+  .cartelera__lateral { flex-direction: row; align-items: flex-end; }
+  .cartelera__lateral > * { flex: 1 1 0; }
+  .cartelera-avisos { align-self: stretch; }
+  .cartelera__lateral .cartelera-qr { flex: 0 0 calc(380 * var(--u)); margin-top: 0; }
+  .cartelera-tabla thead th:nth-child(1) { width: calc(220 * var(--u)); }
+  .cartelera-tabla thead th:nth-child(3) { width: calc(320 * var(--u)); }
+}
+
+@media (forced-colors: active) {
+  .cartelera-tabla__ahora { outline: calc(3 * var(--u)) solid Highlight; outline-offset: calc(-3 * var(--u)); }
+  .cartelera-qr img { forced-color-adjust: none; }
+}
+
+/* 6. La vista de solo lectura para el celular ------------------------------ */
+/* Es la página a la que lleva el QR: las mismas actividades, para leer en el
+   teléfono. Es una página pública común (banda, contenedor angosto, pie de
+   páginas públicas) que usa la lista del módulo de agenda:
+     <link rel="stylesheet" href="unpsjb.css">
+     <link rel="stylesheet" href="unpsjb-agenda.css">
+     <link rel="stylesheet" href="unpsjb-cartelera.css">
+     <main class="contenedor contenedor--angosto solo-lectura"> …
+       <nav class="agenda-dias">…</nav> <ol class="agenda-lista">…</ol>
+   No tiene "Reservar", ni cuenta, ni links en las actividades: se mira, no se toca. */
+.solo-lectura .agenda-dias { display: flex; }            /* la fila de días, también en pantallas grandes */
+.solo-lectura .agenda-lista__dato b { color: var(--color-tinta); }       /* el aula es lo que se busca */
+.solo-lectura .agenda-lista > li[data-estado="ahora"] { background: var(--color-tinte); }
+.solo-lectura .agenda-lista > li[data-estado="suspendida"] :is(.agenda-lista__nombre, .agenda-lista__hora, b) { color: var(--color-tinta-2); }
+.solo-lectura__nota { margin-top: var(--espacio-4); font: var(--texto-detalle); color: var(--color-tinta-2); }

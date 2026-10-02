@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Mesa de ayuda · muestra del módulo · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central -->
+  <link rel="stylesheet" href="unpsjb-mesa-ayuda.css">
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-muestra-vista { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2) var(--espacio-3); margin-bottom: var(--espacio-6); font: var(--texto-detalle); color: var(--color-tinta-2); }
+    /* Vista de quien solicita: no ve las notas internas ni los controles del equipo */
+    [data-vista="solicitante"] [data-solo-soporte] { display: none; }
+    [data-vista="soporte"] [data-solo-solicitante] { display: none; }
+    .ext-muestra-bandeja { margin-top: var(--espacio-12); }
+    .ext-muestra-ficha { margin-top: var(--espacio-8); }
+    .ext-muestra-ficha .resumen { max-width: 880px; }
+    .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
+    .ext-muestra-codigo {
+      max-width: 880px; margin: var(--espacio-3) 0 0; padding: var(--espacio-3) var(--espacio-4);
+      overflow-x: auto; font: 0.875rem/1.5 ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+      color: var(--color-tinta); background: var(--color-capa); border-radius: var(--radio-control);
+    }
+    @media print { .ext-muestra-ficha, .ext-muestra-vista, .ext-muestra-bandeja { display: none; } }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-life-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-reply" viewBox="0 0 24 24"><path d="m9 14-5-5 5-5"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></symbol>
+    <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-user-check" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-circle-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-life-buoy"/></svg>Mesa de ayuda</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="boton boton--icono" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="secciones" aria-label="Secciones">
+      <div class="contenedor secciones__lista">
+        <a href="#bandeja" aria-current="page">Solicitudes</a>
+        <a href="#">Nueva solicitud</a>
+        <a href="#">Preguntas frecuentes</a>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la herramienta">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Piloto</strong>
+      <p>Página de muestra del módulo <code>unpsjb-mesa-ayuda.css</code>, con personas y solicitudes de ejemplo. <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido" data-vista="soporte">
+    <nav class="migas" aria-label="Ruta">
+      <ol><li><a href="#bandeja">Solicitudes</a></li><li aria-current="page">TW-2026-00418</li></ol>
+    </nav>
+    <div class="encabezado">
+      <h1>No funciona el proyector del Aula 102</h1>
+    </div>
+    <p class="solicitud__estado">
+      <span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span>
+      <span>N.º TW-2026-00418</span>
+      <span>Abierta el 01/10/2026</span>
+      <span>La atiende Martín Evans</span>
+    </p>
+
+    <!-- Solo para esta muestra: cambia entre lo que ve el equipo y lo que ve quien pidió -->
+    <div class="ext-muestra-vista">
+      <span id="vista-leyenda">Ver esta muestra como</span>
+      <fieldset class="segmentado segmentado--compacto" aria-labelledby="vista-leyenda">
+        <label><input type="radio" name="vista" value="soporte" checked> Soporte</label>
+        <label><input type="radio" name="vista" value="solicitante"> Quien solicita</label>
+      </fieldset>
+    </div>
+
+    <div class="solicitud">
+      <div class="solicitud__principal">
+        <section aria-label="Historial de la solicitud">
+          <h2 class="hilo__dia">Jueves 1 de octubre</h2>
+          <ol class="hilo">
+            <li class="hilo__mensaje">
+              <article aria-labelledby="m1">
+                <header class="hilo__cabecera">
+                  <h3 class="hilo__autor" id="m1">Camila Ñancufil</h3>
+                  <span class="etiqueta">Solicitante</span>
+                  <time class="hilo__hora" datetime="2026-10-01T09:12">9:12 h</time>
+                </header>
+                <div class="hilo__texto">
+                  <p>Buen día. El proyector del Aula 102 enciende pero no muestra imagen: queda la pantalla azul con el cartel "Sin señal". Probé con dos notebooks y con el cable HDMI del aula.</p>
+                  <p>Mañana a las 14 tengo un parcial ahí.</p>
+                </div>
+                <ul class="archivos" aria-label="Archivos adjuntos">
+                  <li><svg class="icono" aria-hidden="true"><use href="#i-file"/></svg><a class="archivos__nombre" href="#">proyector-aula-102.jpg</a><span class="archivos__peso">1,2 MB</span></li>
+                </ul>
+              </article>
+            </li>
+            <li class="hilo__evento">
+              <svg class="icono" aria-hidden="true"><use href="#i-user-check"/></svg>
+              <p><b>Martín Evans</b> tomó la solicitud. Estado: <span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p>
+              <time class="hilo__hora" datetime="2026-10-01T09:30">9:30 h</time>
+            </li>
+            <li class="hilo__mensaje">
+              <article aria-labelledby="m2">
+                <header class="hilo__cabecera">
+                  <h3 class="hilo__autor" id="m2">Martín Evans</h3>
+                  <span class="etiqueta">Soporte Informático</span>
+                  <time class="hilo__hora" datetime="2026-10-01T09:41">9:41 h</time>
+                </header>
+                <div class="hilo__texto">
+                  <p>Hola, Camila. Gracias por avisar. En el control remoto, al tocar "Source", ¿aparece la opción HDMI 2? El cable del aula está conectado a esa entrada.</p>
+                </div>
+              </article>
+            </li>
+            <li class="hilo__evento">
+              <svg class="icono" aria-hidden="true"><use href="#i-refresh"/></svg>
+              <p>Estado: <span class="insignia insignia--advertencia"><svg class="icono" aria-hidden="true"><use href="#i-reply"/></svg>Esperando respuesta</span></p>
+              <time class="hilo__hora" datetime="2026-10-01T09:41">9:41 h</time>
+            </li>
+            <li class="hilo__mensaje hilo__mensaje--nota" data-solo-soporte>
+              <article aria-labelledby="m3">
+                <header class="hilo__cabecera">
+                  <p class="hilo__nota"><svg class="icono" aria-hidden="true"><use href="#i-lock"/></svg>Nota interna: no la ve quien solicita</p>
+                  <h3 class="hilo__autor" id="m3">Martín Evans</h3>
+                  <span class="etiqueta">Soporte Informático</span>
+                  <time class="hilo__hora" datetime="2026-10-01T10:05">10:05 h</time>
+                </header>
+                <div class="hilo__texto">
+                  <p>El Aula 102 tiene el proyector que se cambió en agosto. Si es la entrada, lo dejamos fijo en HDMI 2. Si no, hay un cable de repuesto en el depósito.</p>
+                </div>
+              </article>
+            </li>
+          </ol>
+
+          <h2 class="hilo__dia">Viernes 2 de octubre</h2>
+          <ol class="hilo" id="hilo-hoy">
+            <li class="hilo__mensaje">
+              <article aria-labelledby="m4">
+                <header class="hilo__cabecera">
+                  <h3 class="hilo__autor" id="m4">Camila Ñancufil</h3>
+                  <span class="etiqueta">Solicitante</span>
+                  <time class="hilo__hora" datetime="2026-10-02T08:15">8:15 h</time>
+                </header>
+                <div class="hilo__texto">
+                  <p>Aparecía HDMI 1. Lo cambié a HDMI 2 y ahora se ve bien. ¡Gracias! 🙌</p>
+                  <p>¿Puede quedar así para que no le pase a quien venga después?</p>
+                </div>
+              </article>
+            </li>
+            <li class="hilo__evento">
+              <svg class="icono" aria-hidden="true"><use href="#i-refresh"/></svg>
+              <p>Camila respondió. Estado: <span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p>
+              <time class="hilo__hora" datetime="2026-10-02T08:15">8:15 h</time>
+            </li>
+          </ol>
+        </section>
+
+        <form class="respuesta panel" id="responder" aria-labelledby="responder-titulo" novalidate>
+          <h2 class="solo-lector" id="responder-titulo">Responder</h2>
+          <fieldset class="segmentado" data-solo-soporte>
+            <legend class="solo-lector">Qué vas a escribir</legend>
+            <label><input type="radio" name="tipo" value="respuesta" checked> Respuesta</label>
+            <label><input type="radio" name="tipo" value="nota"> Nota interna</label>
+          </fieldset>
+          <div class="campo">
+            <label class="label" for="texto" id="texto-label">Tu respuesta</label>
+            <span class="ayuda" id="texto-ayuda">La recibe Camila Ñancufil por correo y queda en este historial.</span>
+            <textarea class="textarea" id="texto" aria-describedby="texto-ayuda"></textarea>
+          </div>
+          <div class="campo">
+            <span class="label" id="adj">Adjuntos <span class="opcional">(opcional)</span></span>
+            <span class="ayuda">PDF, JPG o PNG, hasta 10 MB cada uno</span>
+            <label class="boton boton--secundario archivo">Elegir archivo<input type="file" aria-labelledby="adj" multiple></label>
+          </div>
+          <div class="respuesta__acciones">
+            <button class="boton boton--primario" type="submit" id="enviar">Enviar respuesta</button>
+            <button class="boton boton--secundario" type="button" id="resolver" data-solo-soporte>Enviar y marcar como resuelta</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="solicitud__ficha panel" aria-labelledby="ficha-titulo">
+        <div class="panel__cabecera"><h2 id="ficha-titulo">Datos de la solicitud</h2></div>
+        <dl class="resumen">
+          <div><dt>Estado</dt><dd><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></dd></div>
+          <div><dt>Quién la pidió</dt><dd>Camila Ñancufil<br><span class="texto-detalle texto-secundario">Docente · cnancufil@unp.edu.ar</span></dd></div>
+          <div><dt>Tema</dt><dd>Aulas y proyectores</dd></div>
+          <div><dt>Lugar</dt><dd>Aula 102, Edificio de Aulas</dd></div>
+          <div data-solo-soporte><dt>Prioridad</dt><dd>Alta: hay un parcial el 02/10 a las 14:00 h</dd><dd class="resumen__accion"><a href="#">Cambiar<span class="solo-lector"> prioridad</span></a></dd></div>
+          <div><dt>La atiende</dt><dd>Martín Evans, Soporte Informático</dd><dd class="resumen__accion" data-solo-soporte><a href="#">Cambiar<span class="solo-lector"> quién la atiende</span></a></dd></div>
+          <div><dt>Plazo para resolverla</dt><dd>Lunes 05/10/2026, 9:12 h</dd></div>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- La bandeja es otra pantalla de la herramienta: se arma con lo que ya trae unpsjb.css -->
+    <section class="ext-muestra-bandeja" id="bandeja" aria-labelledby="bandeja-titulo">
+      <h2 id="bandeja-titulo">La bandeja</h2>
+      <p>Es otra pantalla, y no necesita nada del módulo: filtros, tabla en tarjetas e insignias de <code>unpsjb.css</code>. Va acá para mostrar los cinco estados de una solicitud.</p>
+      <div class="filtros">
+        <div class="buscador"><svg class="icono" aria-hidden="true"><use href="#i-search"/></svg><input class="input" type="search" aria-label="Buscar solicitud" placeholder="Número o asunto"></div>
+        <select class="select" aria-label="Estado"><option>Todos los estados</option><option>Nueva</option><option>En curso</option><option>Esperando respuesta</option><option>Resuelta</option><option>Cerrada</option></select>
+      </div>
+      <div class="tabla-marco">
+        <table class="tabla tabla--tarjetas">
+          <thead><tr><th scope="col">Asunto</th><th scope="col">Número</th><th scope="col">Estado</th><th scope="col">Quién la pidió</th><th scope="col">Último movimiento</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">No puedo entrar al aula virtual</a></td><td data-columna="Número">TW-2026-00423</td><td data-columna="Estado"><span class="insignia"><svg class="icono" aria-hidden="true"><use href="#i-inbox"/></svg>Nueva</span></td><td data-columna="Quién la pidió">Joaquín Calfín</td><td data-columna="Último movimiento">Hoy, 9:48 h</td></tr>
+            <tr aria-selected="true"><td><a href="#contenido">No funciona el proyector del Aula 102</a></td><td data-columna="Número">TW-2026-00418</td><td data-columna="Estado"><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></td><td data-columna="Quién la pidió">Camila Ñancufil</td><td data-columna="Último movimiento">Hoy, 8:15 h</td></tr>
+            <tr><td><a href="#">Alta de correo para una docente nueva</a></td><td data-columna="Número">TW-2026-00415</td><td data-columna="Estado"><span class="insignia insignia--advertencia"><svg class="icono" aria-hidden="true"><use href="#i-reply"/></svg>Esperando respuesta</span></td><td data-columna="Quién la pidió">Rocío Evans</td><td data-columna="Último movimiento">30/09/2026</td></tr>
+            <tr><td><a href="#">La impresora de Bedelía no imprime</a></td><td data-columna="Número">TW-2026-00409</td><td data-columna="Estado"><span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Resuelta</span></td><td data-columna="Quién la pidió">Tomás Huenchual</td><td data-columna="Último movimiento">29/09/2026</td></tr>
+            <tr><td><a href="#">Instalar un programa en el Lab. Informática 2</a></td><td data-columna="Número">TW-2026-00397</td><td data-columna="Estado"><span class="insignia"><svg class="icono" aria-hidden="true"><use href="#i-archive"/></svg>Cerrada</span></td><td data-columna="Quién la pidió">Agustina Jones</td><td data-columna="Último movimiento">24/09/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <details class="acordeon ext-muestra-ficha">
+      <summary>Cuándo usarlo y cuándo no: historial de una solicitud</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen">
+          <div><dt>Usalo cuando</dt><dd>Dos o más personas se escriben sobre un mismo pedido, y hay que ver qué se dijo y qué cambió: solicitudes de soporte, reclamos, pedidos de mantenimiento.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Es un trámite con pasos fijos y sin conversación: van el indicador de pasos y la lista de resumen.</li><li>Es un registro técnico de cambios (quién editó qué): va una tabla.</li><li>Es un chat en vivo: es otra herramienta.</li></ul></dd></div>
+          <div><dt>Accesibilidad</dt><dd><ul><li>Cada día es un título y cada mensaje un <code>&lt;article&gt;</code> con el nombre de quien escribe: con lector de pantalla se salta de mensaje en mensaje.</li><li>Las horas van en <code>&lt;time&gt;</code>, con la fecha completa.</li><li>El estado es siempre ícono y palabra; la nota interna, candado y texto.</li><li>Al enviar, el mensaje aparece al final del historial y un toast lo confirma ("Respuesta enviada").</li></ul></dd></div>
+        </dl>
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: historial de una solicitud"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="unpsjb-mesa-ayuda.css"&gt;
+
+&lt;h2 class="hilo__dia"&gt;Jueves 1 de octubre&lt;/h2&gt;
+&lt;ol class="hilo"&gt;
+  &lt;li class="hilo__mensaje"&gt;
+    &lt;article aria-labelledby="m1"&gt;
+      &lt;header class="hilo__cabecera"&gt;
+        &lt;h3 class="hilo__autor" id="m1"&gt;Camila Ñancufil&lt;/h3&gt;
+        &lt;span class="etiqueta"&gt;Solicitante&lt;/span&gt;
+        &lt;time class="hilo__hora" datetime="2026-10-01T09:12"&gt;9:12 h&lt;/time&gt;
+      &lt;/header&gt;
+      &lt;div class="hilo__texto"&gt;&lt;p&gt;El proyector del Aula 102 no muestra imagen…&lt;/p&gt;&lt;/div&gt;
+    &lt;/article&gt;
+  &lt;/li&gt;
+  &lt;li class="hilo__evento"&gt;
+    &lt;svg class="icono" aria-hidden="true"&gt;…&lt;/svg&gt;
+    &lt;p&gt;&lt;b&gt;Martín Evans&lt;/b&gt; tomó la solicitud. Estado:
+      &lt;span class="insignia insignia--info"&gt;…En curso&lt;/span&gt;&lt;/p&gt;
+    &lt;time class="hilo__hora" datetime="2026-10-01T09:30"&gt;9:30 h&lt;/time&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+      </div>
+    </details>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.3</span>
+      </div>
+    </footer>
+  </main>
+
+  <nav class="menu-inferior" aria-label="Secciones">
+    <a href="#bandeja" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-list"/></svg>Solicitudes</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Nueva</a>
+    <a href="#"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg>Preguntas</a>
+  </nav>
+
+  <div class="toasts" role="status" aria-live="polite"></div>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+
+    // En este ejemplo los datos están escritos en el HTML; en la herramienta real
+    // los arma React a partir de los datos del servidor.
+    const main = document.getElementById('contenido');
+    const form = document.getElementById('responder');
+    const texto = document.getElementById('texto');
+    const enviar = document.getElementById('enviar');
+    const esNota = () => main.dataset.vista === 'soporte' && form.querySelector('input[name="tipo"]:checked').value === 'nota';
+
+    // Respuesta o nota interna: cambian el label, la ayuda, el fondo del cuadro y el botón
+    const pintarTipo = () => {
+      const nota = esNota();
+      form.classList.toggle('respuesta--nota', nota);
+      document.getElementById('texto-label').textContent = nota ? 'Tu nota interna' : 'Tu respuesta';
+      document.getElementById('texto-ayuda').textContent = nota
+        ? 'Solo la ve el equipo de Soporte Informático.'
+        : (main.dataset.vista === 'soporte' ? 'La recibe Camila Ñancufil por correo y queda en este historial.' : 'La recibe Soporte Informático y queda en este historial.');
+      enviar.textContent = nota ? 'Guardar nota interna' : 'Enviar respuesta';
+      document.getElementById('resolver').hidden = nota;
+    };
+    form.querySelectorAll('input[name="tipo"]').forEach(r => r.addEventListener('change', pintarTipo));
+    document.querySelectorAll('input[name="vista"]').forEach(r => r.addEventListener('change', () => { main.dataset.vista = r.value; pintarTipo(); }));
+    const vistaInicial = new URLSearchParams(location.search).get('vista');
+    if (vistaInicial === 'solicitante') { main.dataset.vista = 'solicitante'; document.querySelector('input[name="vista"][value="solicitante"]').checked = true; }
+    pintarTipo();
+
+    const toast = mensaje => {
+      const t = document.createElement('div');
+      t.className = 'toast toast--exito';
+      t.innerHTML = '<svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg><span></span>' +
+        '<button class="boton boton--icono" type="button" aria-label="Cerrar aviso"><svg class="icono" aria-hidden="true"><use href="#i-x"/></svg></button>';
+      t.querySelector('span').textContent = mensaje;
+      document.querySelector('.toasts').append(t);
+      let restante = 5000, inicio, timer;
+      const correr = () => { inicio = Date.now(); timer = setTimeout(() => t.remove(), restante); };
+      const pausar = () => { clearTimeout(timer); restante -= Date.now() - inicio; };
+      t.addEventListener('mouseenter', pausar); t.addEventListener('mouseleave', correr);
+      t.addEventListener('focusin', pausar); t.addEventListener('focusout', correr);
+      t.querySelector('button').onclick = () => t.remove();
+      correr();
+    };
+
+    // Enviar: el mensaje se suma al final del historial. Lo que escribió la persona
+    // entra como texto (textContent), nunca como HTML.
+    let cuenta = 4;
+    const sumar = () => {
+      const escrito = texto.value.trim();
+      if (!escrito) {
+        texto.setAttribute('aria-invalid', 'true');
+        if (!document.getElementById('texto-error')) {
+          const e = document.createElement('span');
+          e.className = 'campo-error'; e.id = 'texto-error';
+          e.innerHTML = '<svg class="icono" aria-hidden="true"><use href="#i-circle-alert"/></svg><span>Escribí un mensaje antes de enviarlo.</span>';
+          texto.after(e);
+          texto.setAttribute('aria-describedby', 'texto-ayuda texto-error');
+        }
+        texto.focus();
+        return false;
+      }
+      const nota = esNota(), soporte = main.dataset.vista === 'soporte', id = 'm' + (++cuenta);
+      const ahora = new Date();
+      const li = document.createElement('li');
+      li.className = 'hilo__mensaje' + (nota ? ' hilo__mensaje--nota' : '');
+      if (nota) li.dataset.soloSoporte = '';
+      li.innerHTML = '<article aria-labelledby="' + id + '"><header class="hilo__cabecera">' +
+        (nota ? '<p class="hilo__nota"><svg class="icono" aria-hidden="true"><use href="#i-lock"/></svg>Nota interna: no la ve quien solicita</p>' : '') +
+        '<h3 class="hilo__autor" id="' + id + '"></h3><span class="etiqueta"></span><time class="hilo__hora"></time></header><div class="hilo__texto"></div></article>';
+      li.querySelector('.hilo__autor').textContent = soporte ? 'Martín Evans' : 'Camila Ñancufil';
+      li.querySelector('.etiqueta').textContent = soporte ? 'Soporte Informático' : 'Solicitante';
+      const hora = li.querySelector('time');
+      hora.dateTime = ahora.toISOString();
+      hora.textContent = ahora.getHours() + ':' + String(ahora.getMinutes()).padStart(2, '0') + ' h';
+      escrito.split(/\n{2,}/).forEach(parrafo => { const p = document.createElement('p'); p.textContent = parrafo; li.querySelector('.hilo__texto').append(p); });
+      document.getElementById('hilo-hoy').append(li);
+      texto.value = '';
+      texto.removeAttribute('aria-invalid');
+      texto.setAttribute('aria-describedby', 'texto-ayuda');
+      document.getElementById('texto-error')?.remove();
+      toast(nota ? 'Nota interna guardada' : 'Respuesta enviada');
+      return true;
+    };
+    form.addEventListener('submit', e => { e.preventDefault(); sumar(); });
+    document.getElementById('resolver').addEventListener('click', () => {
+      if (!sumar()) return;
+      const li = document.createElement('li');
+      li.className = 'hilo__evento';
+      li.innerHTML = '<svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>' +
+        '<p><b>Martín Evans</b> marcó la solicitud como resuelta. Estado: <span class="insignia insignia--exito"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Resuelta</span></p>';
+      document.getElementById('hilo-hoy').append(li);
+      document.querySelectorAll('.solicitud__estado .insignia, .solicitud__ficha .insignia').forEach(i => {
+        i.className = 'insignia insignia--exito';
+        i.innerHTML = '<svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Resuelta';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -14,12 +14,40 @@
 | Agregados de la ronda 3 | — | **0.4.0** |
 | Módulos de agenda y de video | — | **0.4.1** |
 | Ajustes a los dos módulos después de la primera revisión | — | **0.4.2** |
+| Módulos de documentos, gráficos de líneas, mesa de ayuda y cartelera | — | **0.4.3** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.4.2 · 2026-10-02 · oficial
+## 0.4.3 · 2026-10-02 · oficial
+
+Cuatro módulos nuevos. Sube el último número: son agregados, y nada de lo anterior cambia. `unpsjb.css` no cambia (solo su número), y los módulos de agenda y de video tampoco: siguen como en la 0.4.2.
+
+### Nuevo
+
+- **Módulo de documentos e impresión:** `unpsjb-documentos.css` (16 KB) y `muestra-documentos.html`. La hoja A4 que se ve en pantalla igual que impresa (`.hoja`, `.hoja--apaisada`, `.hoja--numerada`, `.hoja--una-tinta`), membrete, partes del documento, firmas (a mano y digital), pie de verificación con QR, certificado y planilla para firmar. Al imprimir una página que tiene una hoja, sale solo la hoja. Utilidades `.salto-pagina` y `.sin-cortes`. Reglas: `DESIGN.md`, sección 18.
+- **Módulo de gráficos de líneas:** `unpsjb-graficos.css` (5 KB), `unpsjb-graficos.js` (16 KB; 6 KB comprimido) y `muestra-graficos.html`. El gráfico se dibuja a partir de una tabla (`data-grafico="lineas"`), con la lectura fija arriba, recorrido con teclado y selector "Gráfico | Tabla". Cierra el pendiente de la 0.4.0. Reglas: 15.E.
+- **Módulo de mesa de ayuda:** `unpsjb-mesa-ayuda.css` (8 KB) y `muestra-mesa-ayuda.html`. El historial de una solicitud (`.hilo`: mensajes, cambios de estado, notas internas, adjuntos), la pantalla de una solicitud (`.solicitud`) y la respuesta (`.respuesta`). Los cinco estados de una solicitud. Reglas: sección 19.
+- **Módulo de cartelera:** `unpsjb-cartelera.css` (16 KB), `muestra-cartelera.html` (la tele) y `muestra-cartelera-celular.html` (la vista de solo lectura a la que lleva el QR). Todo medido en "u" (un píxel a 1920 × 1080), páginas que rotan solas, avisos, QR, estados sin actividades y sin conexión, tele en vertical. Reglas: sección 20.
+- **Logo a una tinta:** `assets/logo-unpsjb-trelew-una-tinta.svg`, generado por `logo/generar.sh`. Cierra el pendiente del logo monocromo (10.A). Los otros cuatro logos salen idénticos, byte a byte.
+- **Generador de QR:** `qr/generar.sh <dirección> <archivo.svg>`. Lo usan la cartelera y el pie de verificación de los documentos. Dos QR de ejemplo en `assets/` (`qr-ejemplo-cartelera.svg` y `qr-ejemplo-documento.svg`): sus direcciones no existen todavía.
+
+### Cambiado
+
+- `DESIGN.md`: la tabla de módulos (sección 16) lista los seis; 7.P aclara que el historial de mensajes no es la "línea de tiempo de un trámite" que no se agrega, y que en los gráficos la lectura fija reemplaza al tooltip; 13 suma cinco pares de hacer y no hacer.
+- `DESIGN.md`, encabezado: se declaran los cuatro **colores de papel** (`papel`, `papel-tinta`, `papel-tinta-2`, `papel-linea`). No son nuevos: son los que `unpsjb.css` usa al imprimir desde la 0.2, y ahora también los de la hoja.
+- `.impeccable/config.json`: se anotaron como excepción la serif de los documentos (ya permitida en 4.A) y los falsos positivos del detector en las cinco páginas nuevas (relleno, jerarquía de tamaños, interlineado y radios mal leídos de `calc()`).
+
+### Pendiente
+
+- **Módulo de correo:** falta confirmar qué es. Ayer se planteó como plantilla para los avisos automáticos de las herramientas; después se pidió como generador para escribir un correo con diseño institucional y pegarlo en Gmail. Son dos piezas distintas con la misma base.
+- **Documentos:** confirmar los márgenes de la hoja (hoy 20, 20, 20 y 30 mm) con la norma de la universidad, si la hay; el servicio que verifica un documento por código; confirmar el logo a una tinta con quien maneja la marca.
+- **Cartelera:** la dirección definitiva de la vista para el celular, para generar el QR real; probar en la tele que se vaya a usar (tamaño de letra a la distancia real, recorte de bordes) y cómo se deja el navegador a pantalla completa.
+- **Gráficos:** la numeración de páginas y el retrazado al imprimir se probaron solo en Chrome.
+- Las páginas de ejemplo tienen los datos escritos a mano. Falta armarlas en React con datos reales.
+
+## 0.4.2 · 2026-10-02 · anterior
 
 Ajustes a los dos módulos después de la primera revisión. `unpsjb.css` no cambia (solo su número). Quien ya usa las clases de la 0.4.1 tiene que revisar los tres puntos de **Cambiado** que tocan el HTML.
 

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Cartelera · muestra del módulo · UNPSJB</title>
+  <!-- La tele no tiene dónde elegir el tema: se fija en la dirección, con ?tema=oscuro o ?tema=claro.
+       Sin eso, sigue al sistema. -->
+  <script>try{var t=new URLSearchParams(location.search).get("tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central -->
+  <link rel="stylesheet" href="unpsjb-cartelera.css">
+</head>
+<body class="cartelera">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-circle-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></symbol>
+  </svg>
+
+  <header class="cartelera__banda">
+    <img class="cartelera__logo" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="168" height="80">
+    <h1 class="cartelera__lugar">Edificio de Aulas <span>Actividades de hoy</span></h1>
+    <p class="cartelera__fecha">Martes 13 de octubre</p>
+    <p class="cartelera__reloj"><time id="reloj" datetime="10:15">10:15</time> h</p>
+  </header>
+
+  <main class="cartelera__cuerpo">
+    <section class="cartelera__agenda" id="agenda" aria-label="Actividades de hoy">
+      <!-- data-desde y data-hasta: el script marca la que está en curso, saca las que
+           terminaron y reparte las demás en páginas. En la herramienta real, las filas
+           las arma el código con los datos del servidor. Solo van actividades públicas. -->
+      <table class="cartelera-tabla" id="tabla">
+        <thead><tr><th scope="col">Hora</th><th scope="col">Actividad</th><th scope="col">Lugar</th></tr></thead>
+        <tbody>
+          <tr data-desde="8:00" data-hasta="10:00">
+            <td class="cartelera-tabla__hora"><b>8:00</b> a 10:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Álgebra I <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 101</td>
+          </tr>
+          <tr data-desde="8:00" data-hasta="12:00">
+            <td class="cartelera-tabla__hora"><b>8:00</b> a 12:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Taller de Moodle <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-3">Evento</span></span></th>
+            <td class="cartelera-tabla__lugar">Lab. Informática 1</td>
+          </tr>
+          <tr data-desde="9:00" data-hasta="11:00">
+            <td class="cartelera-tabla__hora"><b>9:00</b> a 11:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Programación I <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 102</td>
+          </tr>
+          <tr data-desde="9:00" data-hasta="13:00">
+            <td class="cartelera-tabla__hora"><b>9:00</b> a 13:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Jornada de Informática <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-3">Evento</span></span></th>
+            <td class="cartelera-tabla__lugar">Auditorio</td>
+          </tr>
+          <tr data-desde="10:00" data-hasta="12:00">
+            <td class="cartelera-tabla__hora"><b>10:00</b> a 12:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Análisis Matemático <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 101</td>
+          </tr>
+          <tr data-desde="10:00" data-hasta="13:00">
+            <td class="cartelera-tabla__hora"><b>10:00</b> a 13:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Bases de Datos <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Lab. Informática 2</td>
+          </tr>
+          <tr data-desde="10:30" data-hasta="12:00">
+            <td class="cartelera-tabla__hora"><b>10:30</b> a 12:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Consulta de Química <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 104</td>
+          </tr>
+          <tr data-desde="14:00" data-hasta="16:00" data-estado="cambio">
+            <td class="cartelera-tabla__hora"><b>14:00</b> a 16:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Parcial de Física <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-2">Examen</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 102 <span>Antes: Aula 101</span></td>
+          </tr>
+          <tr data-desde="14:00" data-hasta="17:00">
+            <td class="cartelera-tabla__hora"><b>14:00</b> a 17:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Redes de Datos <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Lab. Informática 1</td>
+          </tr>
+          <tr data-desde="16:00" data-hasta="18:00" data-estado="suspendida">
+            <td class="cartelera-tabla__hora"><b>16:00</b> a 18:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Historia Regional <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 102</td>
+          </tr>
+          <tr data-desde="17:00" data-hasta="19:00">
+            <td class="cartelera-tabla__hora"><b>17:00</b> a 19:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Charla de Seguridad Informática <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-3">Evento</span></span></th>
+            <td class="cartelera-tabla__lugar">Auditorio</td>
+          </tr>
+          <tr data-desde="18:00" data-hasta="20:00">
+            <td class="cartelera-tabla__hora"><b>18:00</b> a 20:00</td>
+            <th scope="row" class="cartelera-tabla__actividad">Inglés Técnico <span class="cartelera-tabla__dato"><span class="cartelera-tabla__estado"></span><span class="categoria cat-1">Clase</span></span></th>
+            <td class="cartelera-tabla__lugar">Aula 101</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="cartelera-vacio" id="vacio" hidden>
+        <h2>No hay más actividades por hoy</h2>
+        <p>Mañana, miércoles 14, la primera es Álgebra I a las 8:00 en el Aula 101.</p>
+      </div>
+    </section>
+
+    <aside class="cartelera__lateral" aria-label="Avisos">
+      <div class="cartelera-avisos" id="avisos">
+      <section class="cartelera-aviso">
+        <div class="cartelera-aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg></div>
+        <div>
+          <h2 class="cartelera-aviso__titulo">Mesas de examen</h2>
+          <p>La inscripción cierra el viernes 16 de octubre.</p>
+        </div>
+      </section>
+      <section class="cartelera-aviso cartelera-aviso--advertencia">
+        <div class="cartelera-aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg></div>
+        <div>
+          <h2 class="cartelera-aviso__titulo">Corte de luz programado</h2>
+          <p>Jueves 15, de 7:00 a 9:00. Las clases de las 8:00 empiezan a las 9:00.</p>
+        </div>
+      </section>
+      </div>
+      <section class="cartelera-qr">
+        <!-- QR de ejemplo: la dirección todavía no existe. Se rehace con qr/generar.sh -->
+        <img src="assets/qr-ejemplo-cartelera.svg" alt="" width="300" height="300">
+        <p><b>Mirá las actividades en tu celular</b> agenda.tw.unp.edu.ar/hoy</p>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="cartelera__pie">
+    <p class="cartelera__actualizado" id="actualizado">Actualizado a las 10:14 h</p>
+    <p class="cartelera__paginas" id="paginas" aria-live="off"></p>
+  </footer>
+
+  <script>
+    // ==========================================
+    // CONFIGURACIÓN
+    // ==========================================
+    const SEGUNDOS_POR_PAGINA = 12;       // cuánto queda cada página en pantalla
+    const AVISAR_MINUTOS_ANTES = 30;      // "Empieza en 15 min" desde 30 minutos antes
+
+    // Solo para esta muestra: la hora está fija en las 10:15 para que coincida con los
+    // datos de ejemplo. Con ?hora=15:40 se prueba otra; con ?hora=real, la del reloj.
+    // ?sin-conexion muestra el aviso de datos viejos.
+    const P = new URLSearchParams(location.search);
+    const aMinutos = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const ahora = () => {
+      const pedida = P.get('hora') || '10:15';
+      if (pedida !== 'real') return aMinutos(pedida);
+      const d = new Date(); return d.getHours() * 60 + d.getMinutes();
+    };
+    const escribirHora = m => Math.floor(m / 60) + ':' + String(m % 60).padStart(2, '0');
+
+    const agenda = document.getElementById('agenda');
+    const tabla = document.getElementById('tabla');
+    const filas = [...tabla.tBodies[0].rows];
+    const insignia = (clase, icono, texto) =>
+      '<span class="insignia' + (clase ? ' insignia--' + clase : '') + '"><svg class="icono" aria-hidden="true"><use href="#i-' + icono + '"/></svg>' + texto + '</span>';
+
+    // Estado de cada actividad según la hora: terminó, está en curso o está por empezar
+    function marcar() {
+      const m = ahora();
+      document.getElementById('reloj').textContent = escribirHora(m);
+      document.getElementById('reloj').dateTime = escribirHora(m);
+      filas.forEach(f => {
+        const desde = aMinutos(f.dataset.desde), hasta = aMinutos(f.dataset.hasta);
+        const estado = f.querySelector('.cartelera-tabla__estado');
+        f.dataset.termino = hasta <= m ? 'si' : 'no';
+        f.classList.remove('cartelera-tabla__ahora', 'cartelera-tabla__suspendida');
+        if (f.dataset.estado === 'suspendida') {
+          f.classList.add('cartelera-tabla__suspendida');
+          estado.innerHTML = insignia('error', 'circle-x', 'Suspendida');
+        } else if (desde <= m && m < hasta) {
+          f.classList.add('cartelera-tabla__ahora');
+          estado.innerHTML = insignia('info', 'clock', 'En curso');
+        } else if (f.dataset.estado === 'cambio') {
+          estado.innerHTML = insignia('advertencia', 'triangle-alert', 'Cambio de aula');
+        } else if (desde > m && desde - m <= AVISAR_MINUTOS_ANTES) {
+          estado.innerHTML = insignia('', 'clock', 'Empieza en ' + (desde - m) + ' min');
+        } else {
+          estado.innerHTML = '';
+        }
+      });
+    }
+
+    // Páginas: entran las filas que entran. Se mide el alto de cada una, porque un
+    // nombre largo ocupa dos renglones.
+    let paginas = [], actual = 0;
+    function paginar() {
+      const vigentes = filas.filter(f => f.dataset.termino !== 'si');
+      filas.forEach(f => { f.hidden = f.dataset.termino === 'si'; });
+      document.getElementById('vacio').hidden = vigentes.length > 0;
+      tabla.hidden = vigentes.length === 0;
+      const lugar = agenda.clientHeight - tabla.tHead.offsetHeight;
+      paginas = [];
+      let pagina = [], alto = 0;
+      vigentes.forEach(f => {
+        const h = f.offsetHeight;
+        if (pagina.length && alto + h > lugar) { paginas.push(pagina); pagina = []; alto = 0; }
+        pagina.push(f); alto += h;
+      });
+      if (pagina.length) paginas.push(pagina);
+      mostrar(Math.min(actual, Math.max(0, paginas.length - 1)));
+    }
+    function mostrar(n) {
+      actual = n;
+      filas.forEach(f => { f.hidden = !(paginas[n] || []).includes(f); });
+      document.getElementById('paginas').textContent = paginas.length > 1 ? 'Página ' + (n + 1) + ' de ' + paginas.length : '';
+    }
+
+    // Avisos: lo mismo. Si no entran todos arriba del QR, van por tandas.
+    const cajaAvisos = document.getElementById('avisos');
+    const avisos = [...cajaAvisos.children];
+    let tandas = [], tanda = 0;
+    function repartirAvisos() {
+      avisos.forEach(a => { a.hidden = false; });
+      const separacion = parseFloat(getComputedStyle(cajaAvisos).rowGap) || 0;
+      tandas = [];
+      let grupo = [], alto = 0;
+      avisos.forEach(a => {
+        const h = a.offsetHeight + (grupo.length ? separacion : 0);
+        if (grupo.length && alto + h > cajaAvisos.clientHeight) { tandas.push(grupo); grupo = []; alto = 0; }
+        grupo.push(a); alto += grupo.length === 1 ? a.offsetHeight : h;
+      });
+      if (grupo.length) tandas.push(grupo);
+      mostrarAvisos(Math.min(tanda, Math.max(0, tandas.length - 1)));
+    }
+    function mostrarAvisos(n) {
+      tanda = n;
+      avisos.forEach(a => { a.hidden = !(tandas[n] || []).includes(a); });
+    }
+
+    // Sin conexión: se sigue mostrando lo último que llegó, y se dice
+    function conexion(hay) {
+      const p = document.getElementById('actualizado');
+      p.classList.toggle('cartelera__actualizado--viejo', !hay);
+      p.innerHTML = hay ? 'Actualizado a las 10:14 h'
+        : '<svg class="icono" aria-hidden="true"><use href="#i-wifi-off"/></svg>Sin conexión. Se muestran los datos de las 9:40 h.';
+    }
+    window.addEventListener('offline', () => conexion(false));
+    window.addEventListener('online', () => conexion(true));
+    if (P.has('sin-conexion')) conexion(false);
+
+    marcar();
+    const iniciar = () => {
+      paginar(); repartirAvisos();
+      if (P.has('pagina')) { const n = Number(P.get('pagina')) - 1; mostrar(Math.min(n, paginas.length - 1)); mostrarAvisos(n % tandas.length); }
+    };
+    // Las medidas dependen de la fuente: se pagina cuando ya cargó
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(iniciar);
+    window.addEventListener('resize', () => { paginar(); repartirAvisos(); });
+    // ?pagina=2 deja fija una página (para probar); si no, rotan solas
+    if (!P.has('pagina')) setInterval(() => {
+      if (paginas.length > 1) mostrar((actual + 1) % paginas.length);
+      if (tandas.length > 1) mostrarAvisos((tanda + 1) % tandas.length);
+    }, SEGUNDOS_POR_PAGINA * 1000);
+    setInterval(() => { marcar(); paginar(); }, 30 * 1000);
+  </script>
+</body>
+</html>

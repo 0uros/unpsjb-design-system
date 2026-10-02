@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Gráficos de líneas · muestra del módulo · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central: su hoja y su script -->
+  <link rel="stylesheet" href="unpsjb-graficos.css">
+  <script src="unpsjb-graficos.js" defer></script>
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-muestra-ficha { margin-top: var(--espacio-8); }
+    .ext-muestra-ficha .resumen { max-width: 880px; }
+    .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
+    .ext-muestra-codigo {
+      max-width: 880px; margin: var(--espacio-3) 0 0; padding: var(--espacio-3) var(--espacio-4);
+      overflow-x: auto; font: 0.875rem/1.5 ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+      color: var(--color-tinta); background: var(--color-capa); border-radius: var(--radio-control);
+    }
+    @media print { .ext-muestra-ficha { display: none; } }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-chart"/></svg>Informes</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="boton boton--icono" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la herramienta">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Piloto</strong>
+      <p>Página de muestra del módulo <code>unpsjb-graficos.css</code> y <code>unpsjb-graficos.js</code>, con datos de ejemplo. <a href="muestra.html#graficos">Volver a los gráficos de la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido">
+    <div class="encabezado">
+      <h1>Gráficos de líneas</h1>
+    </div>
+    <p>Para lo que cambia en el tiempo. Pasá el mouse o el dedo por un gráfico para leer cada momento; con el teclado, llegá con <kbd>Tab</kbd> y movete con las flechas. Cada gráfico se puede ver como tabla.</p>
+
+    <div class="grilla grilla--2">
+      <!-- Tres series, pocos datos: un punto en cada dato y el último valor escrito -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h2 class="grafico__titulo">Solicitudes de soporte por mes</h2>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Solicitudes de soporte por mes y sede">
+          <table class="tabla tabla--compacta" data-grafico="lineas"
+                 data-descripcion="Solicitudes de soporte por mes, de abril a septiembre de 2026. Trelew sube de 310 a 412, Puerto Madryn de 180 a 280 y Esquel se mantiene cerca de 110.">
+            <thead><tr><th scope="col">Mes</th><th scope="col" class="num">Trelew</th><th scope="col" class="num">Puerto Madryn</th><th scope="col" class="num">Esquel</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Abril</th><td class="num">310</td><td class="num">180</td><td class="num">95</td></tr>
+              <tr><th scope="row">Mayo</th><td class="num">342</td><td class="num">195</td><td class="num">102</td></tr>
+              <tr><th scope="row">Junio</th><td class="num">298</td><td class="num">210</td><td class="num">88</td></tr>
+              <tr><th scope="row">Julio</th><td class="num">365</td><td class="num">224</td><td class="num">110</td></tr>
+              <tr><th scope="row">Agosto</th><td class="num">390</td><td class="num">251</td><td class="num">117</td></tr>
+              <tr><th scope="row">Septiembre</th><td class="num">412</td><td class="num">280</td><td class="num">121</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Abril a septiembre de 2026. Total: 4.378 solicitudes.</p>
+      </figure>
+
+      <!-- Cinco series (el máximo): las puntas quedan encimadas, así que los valores van solo en la lectura -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h2 class="grafico__titulo">Inscripciones por carrera</h2>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Inscripciones por año y carrera">
+          <table class="tabla tabla--compacta" data-grafico="lineas"
+                 data-descripcion="Inscripciones por carrera, de 2021 a 2026. Informática crece de 120 a 214 y pasa a ser la carrera con más inscripciones; Historia baja de 96 a 71.">
+            <thead><tr><th scope="col">Año</th><th scope="col" class="num">Informática</th><th scope="col" class="num">Enfermería</th><th scope="col" class="num">Turismo</th><th scope="col" class="num">Historia</th><th scope="col" class="num">Geografía</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">2021</th><td class="num">120</td><td class="num">188</td><td class="num">74</td><td class="num">96</td><td class="num">52</td></tr>
+              <tr><th scope="row">2022</th><td class="num">138</td><td class="num">192</td><td class="num">81</td><td class="num">90</td><td class="num">55</td></tr>
+              <tr><th scope="row">2023</th><td class="num">151</td><td class="num">185</td><td class="num">79</td><td class="num">84</td><td class="num">61</td></tr>
+              <tr><th scope="row">2024</th><td class="num">176</td><td class="num">190</td><td class="num">92</td><td class="num">80</td><td class="num">58</td></tr>
+              <tr><th scope="row">2025</th><td class="num">198</td><td class="num">196</td><td class="num">88</td><td class="num">75</td><td class="num">64</td></tr>
+              <tr><th scope="row">2026</th><td class="num">214</td><td class="num">201</td><td class="num">85</td><td class="num">71</td><td class="num">66</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Sede Trelew, 2021 a 2026. Con más de cinco carreras, va una tabla.</p>
+      </figure>
+
+      <!-- Una serie, muchos datos: sin un punto en cada dato y con los nombres del eje salteados -->
+      <figure class="grafico panel grilla__completa">
+        <figcaption class="grafico__cabecera">
+          <h2 class="grafico__titulo">Dispositivos conectados al wifi por día</h2>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Dispositivos conectados al wifi por día">
+          <table class="tabla tabla--compacta" data-grafico="lineas"
+                 data-descripcion="Dispositivos conectados al wifi por día en septiembre de 2026. De lunes a viernes hay entre 1.200 y 1.500; los sábados bajan a unos 500 y los domingos a unos 200. El máximo fue el miércoles 23, con 1.486.">
+            <thead><tr><th scope="col">Día</th><th scope="col" class="num">Dispositivos</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">01/09</th><td class="num">1.312</td></tr>
+              <tr><th scope="row">02/09</th><td class="num">1.358</td></tr>
+              <tr><th scope="row">03/09</th><td class="num">1.340</td></tr>
+              <tr><th scope="row">04/09</th><td class="num">1.265</td></tr>
+              <tr><th scope="row">05/09</th><td class="num">512</td></tr>
+              <tr><th scope="row">06/09</th><td class="num">198</td></tr>
+              <tr><th scope="row">07/09</th><td class="num">1.295</td></tr>
+              <tr><th scope="row">08/09</th><td class="num">1.377</td></tr>
+              <tr><th scope="row">09/09</th><td class="num">1.402</td></tr>
+              <tr><th scope="row">10/09</th><td class="num">1.391</td></tr>
+              <tr><th scope="row">11/09</th><td class="num">1.288</td></tr>
+              <tr><th scope="row">12/09</th><td class="num">540</td></tr>
+              <tr><th scope="row">13/09</th><td class="num">214</td></tr>
+              <tr><th scope="row">14/09</th><td class="num">1.330</td></tr>
+              <tr><th scope="row">15/09</th><td class="num">1.418</td></tr>
+              <tr><th scope="row">16/09</th><td class="num">1.455</td></tr>
+              <tr><th scope="row">17/09</th><td class="num">1.429</td></tr>
+              <tr><th scope="row">18/09</th><td class="num">1.301</td></tr>
+              <tr><th scope="row">19/09</th><td class="num">498</td></tr>
+              <tr><th scope="row">20/09</th><td class="num">187</td></tr>
+              <tr><th scope="row">21/09</th><td class="num">1.204</td></tr>
+              <tr><th scope="row">22/09</th><td class="num">1.440</td></tr>
+              <tr><th scope="row">23/09</th><td class="num">1.486</td></tr>
+              <tr><th scope="row">24/09</th><td class="num">1.462</td></tr>
+              <tr><th scope="row">25/09</th><td class="num">1.335</td></tr>
+              <tr><th scope="row">26/09</th><td class="num">525</td></tr>
+              <tr><th scope="row">27/09</th><td class="num">205</td></tr>
+              <tr><th scope="row">28/09</th><td class="num">1.348</td></tr>
+              <tr><th scope="row">29/09</th><td class="num">1.421</td></tr>
+              <tr><th scope="row">30/09</th><td class="num">1.447</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Septiembre de 2026, Sede Trelew. Promedio de lunes a viernes: 1.364 dispositivos.</p>
+      </figure>
+
+      <!-- Con unidad y sin arrancar en cero: solo cuando el cero no significa nada -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h2 class="grafico__titulo">Temperatura de la sala de servidores</h2>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Temperatura de la sala de servidores por hora">
+          <table class="tabla tabla--compacta" data-grafico="lineas" data-unidad="°C" data-desde-cero="no"
+                 data-descripcion="Temperatura de la sala de servidores el 1 de octubre de 2026, cada dos horas. Se mantiene entre 19,5 y 21 grados hasta las 12; sube a 23,8 a las 16 y vuelve a 20,4 a las 22.">
+            <thead><tr><th scope="col">Hora</th><th scope="col" class="num">Temperatura</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">0:00</th><td class="num">19,8</td></tr>
+              <tr><th scope="row">2:00</th><td class="num">19,6</td></tr>
+              <tr><th scope="row">4:00</th><td class="num">19,5</td></tr>
+              <tr><th scope="row">6:00</th><td class="num">19,7</td></tr>
+              <tr><th scope="row">8:00</th><td class="num">20,3</td></tr>
+              <tr><th scope="row">10:00</th><td class="num">20,8</td></tr>
+              <tr><th scope="row">12:00</th><td class="num">21,0</td></tr>
+              <tr><th scope="row">14:00</th><td class="num">22,6</td></tr>
+              <tr><th scope="row">16:00</th><td class="num">23,8</td></tr>
+              <tr><th scope="row">18:00</th><td class="num">22,1</td></tr>
+              <tr><th scope="row">20:00</th><td class="num">20,9</td></tr>
+              <tr><th scope="row">22:00</th><td class="num">20,4</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">1 de octubre de 2026. El eje no arranca en cero: acá el cero no dice nada.</p>
+      </figure>
+
+      <!-- Con porcentajes y un dato que falta: la línea se corta, no se inventa -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h2 class="grafico__titulo">Ocupación de las aulas por turno</h2>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Ocupación de las aulas por semana y turno">
+          <table class="tabla tabla--compacta" data-grafico="lineas" data-unidad="%"
+                 data-descripcion="Ocupación de las aulas por turno en las primeras ocho semanas del cuatrimestre. La noche es el turno más ocupado: sube de 71 a 88 por ciento. La tarde es el menos ocupado: de 48 a 72,5. De la semana 5 no hay datos de la mañana.">
+            <thead><tr><th scope="col">Semana</th><th scope="col" class="num">Mañana</th><th scope="col" class="num">Tarde</th><th scope="col" class="num">Noche</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Semana 1</th><td class="num">62,5</td><td class="num">48,0</td><td class="num">71,0</td></tr>
+              <tr><th scope="row">Semana 2</th><td class="num">68,0</td><td class="num">52,5</td><td class="num">73,5</td></tr>
+              <tr><th scope="row">Semana 3</th><td class="num">71,5</td><td class="num">55,0</td><td class="num">76,0</td></tr>
+              <tr><th scope="row">Semana 4</th><td class="num">74,0</td><td class="num">61,0</td><td class="num">75,0</td></tr>
+              <tr><th scope="row">Semana 5</th><td class="num texto-secundario">Sin dato</td><td class="num">60,5</td><td class="num">79,0</td></tr>
+              <tr><th scope="row">Semana 6</th><td class="num">78,5</td><td class="num">64,0</td><td class="num">82,0</td></tr>
+              <tr><th scope="row">Semana 7</th><td class="num">81,0</td><td class="num">70,0</td><td class="num">85,5</td></tr>
+              <tr><th scope="row">Semana 8</th><td class="num">84,0</td><td class="num">72,5</td><td class="num">88,0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Segundo cuatrimestre de 2026. Horas reservadas sobre horas disponibles.</p>
+      </figure>
+    </div>
+
+    <details class="acordeon ext-muestra-ficha">
+      <summary>Cuándo usarlo y cuándo no: gráficos de líneas</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen">
+          <div><dt>Usalo cuando</dt><dd>Hay que mostrar cómo cambia algo en el tiempo: por día, por mes, por año. Hasta cinco series.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Se comparan cosas, no momentos (sedes, estados): van barras horizontales.</li><li>Es un número solo: va un indicador.</li><li>Hay más de cinco series: va una tabla, o un gráfico por serie.</li><li>Hay dos medidas con escalas distintas: van dos gráficos, nunca dos ejes.</li><li>Hay un solo momento: no hay línea que dibujar.</li></ul></dd></div>
+          <div><dt>Accesibilidad</dt><dd><ul><li>El gráfico es una imagen con una descripción (<code>data-descripcion</code>) que dice lo importante.</li><li>La tabla con todos los valores está siempre, detrás del selector "Gráfico | Tabla".</li><li>Con <kbd>Tab</kbd> se llega al gráfico y con las flechas se recorre: el lector de pantalla dice el momento y el valor de cada serie.</li><li>El color nunca va solo: cada serie tiene su nombre en la lectura de arriba, y el texto va en tinta.</li><li>No hay carteles flotantes: la lectura queda fija arriba del gráfico.</li></ul></dd></div>
+        </dl>
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: gráfico de líneas"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="unpsjb-graficos.css"&gt;
+&lt;script src="unpsjb-graficos.js" defer&gt;&lt;/script&gt;
+
+&lt;figure class="grafico panel"&gt;
+  &lt;figcaption class="grafico__cabecera"&gt;
+    &lt;h3 class="grafico__titulo"&gt;Solicitudes de soporte por mes&lt;/h3&gt;
+  &lt;/figcaption&gt;
+  &lt;div class="tabla-marco" tabindex="0" role="region" aria-label="Solicitudes de soporte por mes y sede"&gt;
+    &lt;table class="tabla tabla--compacta" data-grafico="lineas"
+           data-descripcion="Solicitudes por mes: Trelew sube de 310 a 412…"&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Mes&lt;/th&gt;&lt;th scope="col" class="num"&gt;Trelew&lt;/th&gt; … &lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;th scope="row"&gt;Abril&lt;/th&gt;&lt;td class="num"&gt;310&lt;/td&gt; … &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;p class="grafico__nota"&gt;Abril a septiembre de 2026. Total: 4.378 solicitudes.&lt;/p&gt;
+&lt;/figure&gt;</code></pre>
+      </div>
+    </details>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.3</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+  </script>
+</body>
+</html>

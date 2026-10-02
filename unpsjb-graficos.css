@@ -1,0 +1,130 @@
+/* ==========================================================================
+   unpsjb-graficos.css — Módulo de gráficos de líneas · v0.4.3
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 15.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
+   Va junto con unpsjb-graficos.js, que dibuja el gráfico a partir de una tabla.
+   Ejemplo completo: muestra-graficos.html.
+
+   Los indicadores, las barras y la barra apilada están en unpsjb.css (son solo
+   CSS). Este módulo suma lo que necesita un dibujo: las líneas.
+
+   La idea:
+   - Los datos se escriben una sola vez, en una tabla. El script arma el gráfico
+     y el selector "Gráfico | Tabla". Sin JavaScript queda la tabla.
+   - La lectura de arriba (el momento elegido y el valor de cada serie) es
+     también la leyenda. No hay cartel flotante: nada tapa el gráfico.
+   - El color va en las líneas y los puntos. Los textos van en tinta.
+
+   Piezas
+   1. Lectura y leyenda (.lineas__lectura)
+   2. El dibujo (.lineas__lienzo y las partes del SVG)
+   3. Recorrer con el teclado (.lineas__recorrer)
+   4. Impresión y alto contraste
+   ========================================================================== */
+
+.lineas {
+  /* El aro de los puntos lleva el color de lo que hay detrás. Dentro de un
+     .panel es el panel; si el gráfico va suelto sobre la página:
+       <figure class="grafico" style="--grafico-fondo: var(--color-fondo)"> */
+  --grafico-fondo: var(--color-panel);
+  font: var(--texto-detalle);
+}
+
+/* 1. Lectura --------------------------------------------------------------- */
+/* <div class="lineas__lectura"><p class="lineas__momento">Septiembre</p>
+     <ul class="leyenda"><li class="serie-1">Trelew <b>412</b></li> … </ul></div>
+   El alto mínimo evita que el gráfico salte cuando la leyenda pasa a dos renglones. */
+.lineas__lectura {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--espacio-1) var(--espacio-6);
+  min-height: 1.5rem;
+  margin-bottom: var(--espacio-2);
+}
+.lineas__momento {
+  margin: 0;
+  font: var(--texto-label);
+  color: var(--color-tinta);
+  font-variant-numeric: tabular-nums;
+}
+.lineas__lectura .leyenda { margin: 0; }
+.lineas__lectura .leyenda b { color: var(--color-tinta); }
+
+/* 2. El dibujo ------------------------------------------------------------- */
+.lineas__lienzo { position: relative; border-radius: var(--radio-control); }
+.lineas svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+  touch-action: pan-y;        /* el dedo en horizontal elige un momento; en vertical, mueve la página */
+  cursor: crosshair;
+}
+/* Grilla y eje: una línea fina y continua, nunca punteada */
+.lineas__grilla { stroke: var(--color-linea); stroke-width: 1; }
+.lineas__eje { stroke: var(--color-linea-control); stroke-width: 1; }
+.lineas__marca {
+  fill: var(--color-tinta-2);
+  font: 400 13px/1 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+}
+/* Línea de 2px con las uniones redondeadas */
+.lineas__linea {
+  fill: none;
+  stroke: var(--serie, var(--color-serie-1));
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+/* Punto de 8px con un aro de 2px del color del fondo: se distingue aunque
+   se cruce con otra línea */
+.lineas__punto {
+  fill: var(--serie, var(--color-serie-1));
+  stroke: var(--grafico-fondo);
+  stroke-width: 2;
+}
+/* Con muchos datos no se dibuja un punto en cada uno: solo en el último y en
+   el momento elegido */
+.lineas__punto--suelto { display: none; }
+.lineas__punto--elegido { display: inline; r: 6px; }
+/* El último valor de cada serie, escrito en la punta. En tinta, no en el color de la serie. */
+.lineas__valor {
+  fill: var(--color-tinta);
+  font: 700 13px/1 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+}
+/* La guía del momento elegido: solo mientras se recorre */
+.lineas__guia { stroke: var(--color-linea-control); stroke-width: 1; visibility: hidden; }
+.lineas--recorriendo .lineas__guia { visibility: visible; }
+
+/* 3. Recorrer con el teclado ---------------------------------------------- */
+/* Un control de rango, invisible pero con foco: Tab llega al gráfico y las
+   flechas cambian el momento elegido. El foco se dibuja alrededor del dibujo. */
+.lineas__recorrer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;       /* el mouse y el dedo los maneja el dibujo */
+}
+.lineas__lienzo:has(.lineas__recorrer:focus-visible) { box-shadow: var(--anillo-foco); }
+
+/* 4. Impresión y alto contraste -------------------------------------------- */
+@media print {
+  /* En papel, un gráfico por renglón: en dos columnas la letra quedaría muy chica.
+     El script los vuelve a trazar al ancho de la hoja. */
+  .grilla:has(.lineas) { display: block; }
+  .grilla:has(.lineas) > * + * { margin-top: var(--espacio-4); }
+  .lineas { break-inside: avoid; }
+  .lineas-selector, .lineas__recorrer, .lineas__guia { display: none; }
+  .lineas__linea, .lineas__punto { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+@media (forced-colors: active) {
+  .lineas__linea, .lineas__punto { forced-color-adjust: none; }
+  .lineas__grilla, .lineas__eje, .lineas__guia { stroke: CanvasText; }
+  .lineas__marca, .lineas__valor { fill: CanvasText; }
+}

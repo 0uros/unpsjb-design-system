@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Actividades de hoy · Edificio de Aulas · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- La lista y la fila de días son del módulo de agenda; la cartelera suma lo de la vista de solo lectura -->
+  <link rel="stylesheet" href="unpsjb-agenda.css">
+  <link rel="stylesheet" href="unpsjb-cartelera.css">
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-muestra-ficha { margin-top: var(--espacio-8); }
+    .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-circle-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <!-- Página pública: la misma banda, sin sub-barra y sin "Mi cuenta" (DESIGN.md, 17.B) -->
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Actividades</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="contenedor contenedor--angosto solo-lectura" id="contenido">
+    <div class="encabezado">
+      <h1>Actividades de hoy</h1>
+    </div>
+    <p>Edificio de Aulas · martes 13 de octubre <span class="agenda-hoy">Hoy</span></p>
+
+    <nav class="agenda-dias" aria-label="Días de la semana">
+      <a href="#">Lun <b>12</b></a><a href="#" aria-current="date">Mar <b>13</b></a><a href="#">Mié <b>14</b></a><a href="#">Jue <b>15</b></a><a href="#">Vie <b>16</b></a><a href="#">Sáb <b>17</b></a>
+    </nav>
+
+    <div class="buscador" style="margin-bottom:var(--espacio-2)">
+      <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
+      <input class="input" type="search" id="buscar" aria-label="Buscar por materia o aula" placeholder="Materia o aula">
+    </div>
+    <p class="texto-detalle texto-secundario" id="total" role="status">12 actividades</p>
+
+    <!-- La misma lista del módulo de agenda. No hay links ni "Reservar": es de solo lectura. -->
+    <ol class="agenda-lista" id="lista">
+      <li data-estado="termino">
+        <p class="agenda-lista__hora">8:00 a 10:00</p>
+        <div><h2 class="agenda-lista__nombre">Álgebra I</h2>
+        <p class="agenda-lista__dato"><b>Aula 101</b><span class="categoria cat-1">Clase</span><span class="insignia"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Terminó</span></p></div>
+      </li>
+      <li data-estado="ahora">
+        <p class="agenda-lista__hora">8:00 a 12:00</p>
+        <div><h2 class="agenda-lista__nombre">Taller de Moodle</h2>
+        <p class="agenda-lista__dato"><b>Lab. Informática 1</b><span class="categoria cat-3">Evento</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
+      </li>
+      <li data-estado="ahora">
+        <p class="agenda-lista__hora">9:00 a 11:00</p>
+        <div><h2 class="agenda-lista__nombre">Programación I</h2>
+        <p class="agenda-lista__dato"><b>Aula 102</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
+      </li>
+      <li data-estado="ahora">
+        <p class="agenda-lista__hora">9:00 a 13:00</p>
+        <div><h2 class="agenda-lista__nombre">Jornada de Informática</h2>
+        <p class="agenda-lista__dato"><b>Auditorio</b><span class="categoria cat-3">Evento</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
+      </li>
+      <li data-estado="ahora">
+        <p class="agenda-lista__hora">10:00 a 12:00</p>
+        <div><h2 class="agenda-lista__nombre">Análisis Matemático</h2>
+        <p class="agenda-lista__dato"><b>Aula 101</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
+      </li>
+      <li data-estado="ahora">
+        <p class="agenda-lista__hora">10:00 a 13:00</p>
+        <div><h2 class="agenda-lista__nombre">Bases de Datos</h2>
+        <p class="agenda-lista__dato"><b>Lab. Informática 2</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
+      </li>
+      <li>
+        <p class="agenda-lista__hora">10:30 a 12:00</p>
+        <div><h2 class="agenda-lista__nombre">Consulta de Química</h2>
+        <p class="agenda-lista__dato"><b>Aula 104</b><span class="categoria cat-1">Clase</span><span class="insignia"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>Empieza en 15 min</span></p></div>
+      </li>
+      <li data-estado="cambio">
+        <p class="agenda-lista__hora">14:00 a 16:00</p>
+        <div><h2 class="agenda-lista__nombre">Parcial de Física</h2>
+        <p class="agenda-lista__dato"><b>Aula 102</b><span>Antes: Aula 101</span><span class="categoria cat-2">Examen</span><span class="insignia insignia--advertencia"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>Cambio de aula</span></p></div>
+      </li>
+      <li>
+        <p class="agenda-lista__hora">14:00 a 17:00</p>
+        <div><h2 class="agenda-lista__nombre">Redes de Datos</h2>
+        <p class="agenda-lista__dato"><b>Lab. Informática 1</b><span class="categoria cat-1">Clase</span></p></div>
+      </li>
+      <li data-estado="suspendida">
+        <p class="agenda-lista__hora">16:00 a 18:00</p>
+        <div><h2 class="agenda-lista__nombre">Historia Regional</h2>
+        <p class="agenda-lista__dato"><b>Aula 102</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--error"><svg class="icono" aria-hidden="true"><use href="#i-circle-x"/></svg>Suspendida</span></p></div>
+      </li>
+      <li>
+        <p class="agenda-lista__hora">17:00 a 19:00</p>
+        <div><h2 class="agenda-lista__nombre">Charla de Seguridad Informática</h2>
+        <p class="agenda-lista__dato"><b>Auditorio</b><span class="categoria cat-3">Evento</span></p></div>
+      </li>
+      <li>
+        <p class="agenda-lista__hora">18:00 a 20:00</p>
+        <div><h2 class="agenda-lista__nombre">Inglés Técnico</h2>
+        <p class="agenda-lista__dato"><b>Aula 101</b><span class="categoria cat-1">Clase</span></p></div>
+      </li>
+    </ol>
+    <div class="vacio" id="sin-resultados" hidden>
+      <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
+      <h2 class="vacio__titulo">Ninguna actividad coincide</h2>
+      <p>Probá con otra palabra, o con el número del aula.</p>
+      <button class="boton boton--tranquilo" type="button" id="quitar">Quitar la búsqueda</button>
+    </div>
+
+    <p class="solo-lectura__nota">Actualizado a las 10:14 h. Esta página es solo para consultar: para reservar un aula, entrá a Gestión de Eventos con tu cuenta de la universidad.</p>
+
+    <details class="acordeon ext-muestra-ficha">
+      <summary>Sobre esta muestra: la vista a la que lleva el QR de la cartelera</summary>
+      <div class="acordeon__cuerpo">
+        <ul>
+          <li>Es la página que abre el QR de <a href="muestra-cartelera.html">la cartelera</a> (la tele del pasillo). Los datos son de ejemplo.</li>
+          <li>Es de solo lectura: no pide cuenta y no tiene nada para reservar o cambiar.</li>
+          <li>Usa la lista del módulo de agenda (<code>unpsjb-agenda.css</code>) más lo que suma <code>unpsjb-cartelera.css</code>.</li>
+          <li>En la herramienta real, este bloque no va.</li>
+        </ul>
+      </div>
+    </details>
+
+    <footer class="pie pie--publico">
+      <div class="pie__bloques">
+        <div>
+          <h2 class="pie__titulo">UNPSJB · Sede Trelew</h2>
+          <address>Dirección de la Sede<br>Trelew, Chubut</address>
+        </div>
+        <div>
+          <h2 class="pie__titulo">Contacto</h2>
+          <ul><li>Teléfono: (0280) 442-1234</li><li><a href="#">Escribir a la Sede</a></li></ul>
+        </div>
+        <div>
+          <h2 class="pie__titulo">Sobre este sitio</h2>
+          <ul><li><a href="#">Accesibilidad</a></li><li><a href="#">Privacidad y datos personales</a></li><li><a href="#">Reportar un problema</a></li></ul>
+        </div>
+      </div>
+      <p>© 2026 Universidad Nacional de la Patagonia San Juan Bosco</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+
+    // Buscador: filtra mientras se escribe (los datos ya están en la página).
+    // No distingue mayúsculas ni tildes: "analisis" encuentra "Análisis".
+    const llano = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const buscar = document.getElementById('buscar');
+    const items = [...document.querySelectorAll('#lista > li')];
+    const filtrar = () => {
+      const q = llano(buscar.value.trim());
+      let n = 0;
+      items.forEach(li => { li.hidden = !!q && !llano(li.textContent).includes(q); if (!li.hidden) n++; });
+      document.getElementById('lista').hidden = n === 0;
+      document.getElementById('sin-resultados').hidden = n > 0;
+      document.getElementById('total').textContent = n === 1 ? '1 actividad' : n + ' actividades';
+    };
+    buscar.addEventListener('input', filtrar);
+    document.getElementById('quitar').addEventListener('click', () => { buscar.value = ''; filtrar(); buscar.focus(); });
+  </script>
+</body>
+</html>

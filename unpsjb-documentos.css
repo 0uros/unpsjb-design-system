@@ -1,0 +1,393 @@
+/* ==========================================================================
+   unpsjb-documentos.css — Módulo de documentos e impresión · v0.4.3
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 18.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens.
+   Ejemplo completo: muestra-documentos.html.
+
+   La idea:
+   - Una herramienta muestra en pantalla la misma hoja que después sale impresa
+     o en PDF: la hoja (.hoja) mide lo que mide un A4 y tiene sus márgenes.
+   - La hoja es papel: siempre blanca con tinta negra, también en modo oscuro.
+   - Al imprimir una página que tiene una hoja, sale SOLO la hoja: ni banda,
+     ni botones, ni pie de la herramienta.
+   - El texto de un documento formal va en serif (.fuente-academica, de
+     unpsjb.css); el membrete y el pie de verificación, en las letras del sistema.
+
+   Piezas
+   1. La hoja (.hoja, .hoja--apaisada, .hoja--numerada, .hoja--una-tinta)
+   2. Membrete (.membrete)
+   3. Partes del documento (.documento__*)
+   4. Firmas (.firmas, .firma)
+   5. Pie de verificación (.verificacion)
+   6. Certificado (.certificado)
+   7. Planilla para firmar (.tabla--planilla)
+   8. Impresión: tamaño de hoja, márgenes, numeración y cortes
+
+   Márgenes de la hoja: están escritos DOS veces, porque las reglas @page no
+   aceptan variables. Si se cambian, se cambian en los tokens de .hoja (para la
+   pantalla) y en las reglas @page del punto 8 (para el papel).
+   ========================================================================== */
+
+/* 1. La hoja --------------------------------------------------------------- */
+/* <article class="hoja fuente-academica" aria-labelledby="doc-titulo"> … </article>
+   En pantalla, desde 900px, se ve a tamaño real (210 × 297 mm). En pantallas
+   más angostas pasa a ocupar el ancho disponible y el texto sigue en 16px: se
+   lee cómodo, aunque los renglones no corten donde cortan en el papel. */
+.hoja {
+  /* Márgenes de la hoja: arriba, derecha, abajo, izquierda (encuadernación) */
+  --hoja-margen-arriba: 20mm;
+  --hoja-margen-derecha: 20mm;
+  --hoja-margen-abajo: 20mm;
+  --hoja-margen-izquierda: 30mm;
+  --hoja-ancho: 210mm;
+  --hoja-alto: 297mm;
+
+  /* Papel: los mismos valores que usa unpsjb.css al imprimir. No siguen al tema. */
+  color-scheme: light;
+  --color-fondo: #ffffff;
+  --color-panel: #ffffff;
+  --color-capa: #e8eef5;
+  --color-tinte: #e6eef8;
+  --color-tinta: #000000;
+  --color-tinta-2: #333d49;
+  --color-linea: #b9c6d6;
+  --color-linea-control: #7b8ca1;
+  --color-primario-texto: #004992;
+  --color-primario-relleno: #004992;
+  --color-primario-relleno-hover: #003a75;
+  --color-exito-texto: #047857;
+  --color-advertencia-texto: #b45309;
+  --color-error-texto: #be123c;
+  --color-info: #004992;
+  --anillo-foco: 0 0 0 2px var(--color-acento), 0 0 0 4px var(--color-primario);
+  --hoja-regla: var(--color-primario);     /* la línea del membrete */
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--hoja-ancho);
+  margin: 0 0 var(--espacio-6);
+  padding: var(--espacio-6) var(--espacio-4);
+  font-size: 12pt;                 /* 16px en pantalla */
+  line-height: 1.5;
+  color: var(--color-tinta);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea-control);
+}
+.hoja p { max-width: none; margin: 0 0 1em; }
+.hoja > :last-child { margin-bottom: 0; }
+/* En papel las direcciones se escriben en el texto: no se repiten entre paréntesis */
+.hoja a[href]::after { content: none !important; }
+
+@media (min-width: 900px) {
+  .hoja {
+    width: var(--hoja-ancho);
+    min-height: var(--hoja-alto);
+    padding: var(--hoja-margen-arriba) var(--hoja-margen-derecha) var(--hoja-margen-abajo) var(--hoja-margen-izquierda);
+  }
+}
+
+/* Apaisada: certificados y diplomas. Márgenes parejos de 15 mm. */
+.hoja--apaisada {
+  --hoja-ancho: 297mm;
+  --hoja-alto: 210mm;
+  --hoja-margen-arriba: 15mm;
+  --hoja-margen-derecha: 15mm;
+  --hoja-margen-abajo: 15mm;
+  --hoja-margen-izquierda: 15mm;
+}
+/* La hoja apaisada necesita 297 mm (1123px) más los márgenes de la página */
+@media (min-width: 900px) and (max-width: 1219px) {
+  .hoja--apaisada { width: 100%; min-height: 0; }
+}
+
+/* A una tinta: para imprimir solo con negro. El logo cambia por su versión a una
+   tinta (assets/logo-unpsjb-trelew-una-tinta.svg) y todo lo que era azul o de
+   color pasa a negro. */
+.hoja--una-tinta {
+  --hoja-regla: #000000;
+  --color-tinta-2: #000000;
+  --color-linea: #000000;
+  --color-linea-control: #000000;
+  --color-primario-texto: #000000;
+  --color-exito-texto: #000000;
+  --color-advertencia-texto: #000000;
+  --color-error-texto: #000000;
+  --color-capa: #ffffff;
+}
+.hoja--una-tinta .membrete__logo { content: url("assets/logo-unpsjb-trelew-una-tinta.svg"); }
+
+/* Borrador: lo dice arriba de la hoja, con palabras. No hay marcas de agua.
+   <p class="hoja__borrador">Borrador: sin validez</p> */
+.hoja__borrador {
+  align-self: flex-start;
+  margin: 0 0 var(--espacio-4);
+  padding: 2px var(--espacio-2);
+  font: 700 10pt/1.4 var(--fuente-texto);
+  color: var(--color-advertencia-texto);
+  border: 1px solid var(--color-advertencia-texto);
+  border-radius: var(--radio-control);
+}
+
+/* 2. Membrete -------------------------------------------------------------- */
+/* <header class="membrete">
+     <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
+     <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco
+       <span>Delegación Trelew · Secretaría Académica</span></p>
+   </header>
+   El logo va a 15 mm de alto (nivel M: gaviota plana, sin el texto curvo). El
+   nombre completo de la universidad va escrito al lado, así que no se pierde.
+   Abajo, la misma línea azul de 2px que deja la banda al imprimir. */
+.membrete {
+  display: flex;
+  align-items: center;
+  gap: 5mm;
+  margin: 0 0 8mm;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--hoja-regla);
+  break-inside: avoid;
+}
+.membrete__logo { display: block; flex-shrink: 0; width: auto; height: 15mm; }
+.hoja .membrete__nombre {
+  margin: 0;
+  font: 700 10.5pt/1.3 var(--fuente-titulo);
+  letter-spacing: 0;
+  color: var(--color-tinta);
+}
+.membrete__nombre span {
+  display: block;
+  margin-top: 1mm;
+  font: 400 10pt/1.3 var(--fuente-texto);
+  color: var(--color-tinta-2);
+}
+@media (max-width: 479px) {
+  .membrete { align-items: flex-start; gap: var(--espacio-3); }
+  .membrete__logo { height: 12mm; }
+}
+
+/* 3. Partes del documento -------------------------------------------------- */
+/* Lugar y fecha, número de documento: un renglón a la derecha.
+   <p class="documento__dato">Trelew, 2 de octubre de 2026</p> */
+.hoja .documento__dato { margin: 0 0 2mm; text-align: right; font-variant-numeric: tabular-nums; }
+.hoja .documento__dato + :not(.documento__dato) { margin-top: 8mm; }
+
+/* Título del documento: centrado, con mayúscula solo inicial.
+   <h2 class="documento__titulo" id="doc-titulo">Constancia de alumno regular</h2> */
+.hoja .documento__titulo {
+  margin: 0 0 8mm;
+  font-size: 15pt;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--color-tinta);
+}
+/* Subtítulos dentro del documento */
+.hoja .documento__subtitulo { margin: 6mm 0 2mm; font-size: 12pt; font-weight: 700; line-height: 1.3; letter-spacing: 0; color: var(--color-tinta); }
+
+/* Fórmulas de una resolución (Visto, Considerando, Resuelve, Artículo 1.º): van
+   en mayúsculas porque así las escribe la norma. Es la única mayúscula sostenida
+   del sistema. En el HTML se escriben con mayúscula inicial ("Visto"), para que
+   el lector de pantalla no las deletree; las mayúsculas las pone esta clase.
+   <h3 class="documento__formula">Considerando</h3>
+   <p><strong class="documento__formula">Artículo 1.º</strong> Aprobar…</p> */
+.hoja .documento__formula {
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-tinta);
+}
+.hoja :is(h2, h3, h4).documento__formula { margin: 6mm 0 2mm; }
+
+/* Datos destacados dentro del texto: la persona, el DNI, el legajo */
+.documento__cuerpo strong { font-weight: 700; }
+.documento__cuerpo { font-variant-numeric: lining-nums; }
+.documento__cuerpo > :is(ul, ol) { margin: 0 0 1em; padding-left: 1.5em; }
+
+/* Listas de resumen y tablas dentro de la hoja: medidas de papel */
+.hoja .resumen > div { padding: 2mm 0; }
+.hoja .tabla { font-size: inherit; }
+.hoja .tabla th, .hoja .tabla td { height: auto; padding: 2mm 3mm; white-space: normal; }
+.hoja .tabla th { font-size: 10.5pt; }
+.hoja .tabla-marco { border-color: var(--color-linea-control); border-radius: 0; overflow: visible; }
+@media (max-width: 899px) { .hoja .tabla-marco { overflow-x: auto; } }
+
+/* 4. Firmas ---------------------------------------------------------------- */
+/* Hasta 3 firmas en un renglón. Cada una: el lugar para firmar, una línea, el
+   nombre y el cargo.
+   <div class="firmas">
+     <div class="firma"><p class="firma__nombre">Lic. Marina Roldán</p>
+       <p class="firma__cargo">Secretaria Académica<br>Delegación Trelew</p></div>
+   </div>
+   Firma digital: no hay línea ni lugar para firmar; lo dice con palabras.
+     <div class="firma firma--digital"><p class="firma__nombre">Lic. Marina Roldán</p>
+       <p class="firma__cargo">Secretaria Académica</p>
+       <p class="firma__dato">Firmado digitalmente el 02/10/2026 a las 10:32 h</p></div> */
+.firmas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 8mm 12mm;
+  margin-top: 14mm;
+  break-inside: avoid;
+}
+.firma {
+  flex: 0 1 60mm;
+  min-width: 45mm;
+  padding-top: 22mm;                          /* lugar para la firma y el sello */
+  text-align: center;
+  font: 400 10pt/1.35 var(--fuente-texto);
+  color: var(--color-tinta);
+}
+.hoja .firma p { margin: 0; }
+.firma__nombre { padding-top: 2mm; border-top: 1px solid var(--color-tinta); font-weight: 700; }
+.firma__cargo { color: var(--color-tinta-2); }
+.firma--digital {
+  padding: 3mm 4mm;
+  text-align: left;
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-control);
+}
+.firma--digital .firma__nombre { padding-top: 0; border-top: 0; }
+.firma__dato { margin-top: 1mm !important; font-size: 9pt; font-variant-numeric: tabular-nums; color: var(--color-tinta-2); }
+
+/* 5. Pie de verificación --------------------------------------------------- */
+/* Va al pie de la hoja. Dice dónde se comprueba que el documento es auténtico:
+   la dirección ESCRITA y el código, y al lado el QR con la misma dirección
+   (se genera con qr/generar.sh).
+   <footer class="verificacion">
+     <img class="verificacion__qr" src="assets/qr-….svg" alt="" width="76" height="76">
+     <p>Para comprobar que este documento es auténtico, entrá a
+       <b>verificar.tw.unp.edu.ar</b> y cargá el código
+       <b class="verificacion__codigo">K7QF-29MD</b>, o escaneá el código QR.</p>
+   </footer>
+   El QR lleva alt="": la dirección y el código ya están en el texto. */
+.verificacion {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  margin-top: auto;                 /* se va al fondo de la hoja */
+  padding-top: 4mm;
+  border-top: 1px solid var(--color-linea-control);
+  font: 400 9pt/1.4 var(--fuente-texto);
+  color: var(--color-tinta-2);
+  break-inside: avoid;
+}
+.hoja .verificacion p { margin: 0; }
+.hoja .verificacion p + p { margin-top: 1mm; }
+.verificacion b { color: var(--color-tinta); }
+.verificacion__qr { flex-shrink: 0; width: 20mm; height: 20mm; }   /* 2 cm: el mínimo para escanear en papel */
+.verificacion__codigo { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; white-space: nowrap; }
+/* Lo que va antes del pie deja aire, también cuando la hoja está llena */
+.hoja > :has(+ .verificacion) { margin-bottom: 10mm; }
+
+/* 6. Certificado ----------------------------------------------------------- */
+/* Hoja apaisada, con todo centrado: es el único documento que se centra.
+   <article class="hoja hoja--apaisada fuente-academica certificado">
+     <header class="membrete">…</header>
+     <p class="certificado__tipo">Certificado de participación</p>
+     <p>Se certifica que</p>
+     <p class="certificado__persona">Camila Ñancufil</p>
+     <p class="certificado__texto">DNI 40.123.456, participó de la Jornada de Informática…</p>
+     <div class="firmas">…</div> <footer class="verificacion">…</footer>
+   </article> */
+.certificado { text-align: center; }
+.certificado .membrete { justify-content: center; text-align: left; margin-bottom: 10mm; }
+.hoja .certificado__tipo {
+  margin: 0 0 8mm;
+  font-size: 22pt;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--color-tinta);
+}
+.hoja .certificado__persona {
+  margin: 2mm 0 6mm;
+  font-size: 28pt;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.hoja .certificado__texto { max-width: 200mm; margin-inline: auto; font-size: 14pt; text-wrap: balance; }
+.certificado .firmas { margin-top: 8mm; }
+.certificado .verificacion { text-align: left; }
+@media (max-width: 639px) {
+  .hoja .certificado__tipo { font-size: 17pt; }
+  .hoja .certificado__persona { font-size: 20pt; }
+  .hoja .certificado__texto { font-size: 12pt; }
+}
+
+/* 7. Planilla para firmar -------------------------------------------------- */
+/* Una tabla que se imprime para completar a mano (asistencia, entrega de
+   equipos). Renglones de 10 mm y todas las celdas con borde, para que se vea
+   dónde escribir.
+   <table class="tabla tabla--planilla"> … <td class="planilla__firma"></td> */
+.tabla--planilla th, .tabla--planilla td { border: 1px solid var(--color-linea-control); }
+.tabla--planilla thead th { border-bottom: 2px solid var(--color-primario-texto); }
+.hoja .tabla--planilla td, .hoja .tabla--planilla tbody th { height: 10mm; }
+.tabla--planilla tbody tr:hover td { background: none; }
+.planilla__firma { width: 30%; }
+.hoja--una-tinta .tabla th { background: none; }
+
+/* 8. Impresión ------------------------------------------------------------- */
+/* Tamaño y márgenes de cada tipo de hoja. Si se cambian, cambiar también los
+   tokens --hoja-margen-* del punto 1. */
+@page hoja-a4 { size: A4 portrait; margin: 20mm 20mm 20mm 30mm; }
+@page hoja-a4-numerada {
+  size: A4 portrait;
+  margin: 20mm 20mm 20mm 30mm;
+  /* "Página 2 de 3", abajo a la derecha. Hoy lo dibujan Chrome y Edge (desde la
+     versión 131); en los demás navegadores la hoja sale sin número. */
+  @bottom-right {
+    content: "Página " counter(page) " de " counter(pages);
+    font: 9pt/1 "Atkinson Hyperlegible Next", Arial, sans-serif;
+    color: #333d49;
+  }
+}
+@page hoja-a4-apaisada { size: A4 landscape; margin: 15mm; }
+
+/* Cortes de página, para cualquier página (no solo las que tienen una hoja) */
+.salto-pagina { break-before: page; }
+.sin-cortes { break-inside: avoid; }
+
+@media print {
+  /* Con una hoja en la página, sale SOLO la hoja: se esconde todo lo que no es
+     una hoja, ni está adentro de una, ni la contiene. */
+  body:has(.hoja) *:not(.hoja, .hoja *, :has(.hoja)) { display: none !important; }
+  body:has(.hoja), body:has(.hoja) :has(.hoja) {
+    display: block;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .hoja {
+    page: hoja-a4;
+    width: auto;
+    max-width: none;
+    /* El alto útil de la hoja menos 2 mm de tolerancia: así el pie de
+       verificación queda abajo sin empujar una hoja en blanco */
+    min-height: calc(var(--hoja-alto) - var(--hoja-margen-arriba) - var(--hoja-margen-abajo) - 2mm);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .hoja--numerada { page: hoja-a4-numerada; }
+  .hoja--apaisada { page: hoja-a4-apaisada; }
+  .hoja + .hoja { break-before: page; }
+
+  .hoja :is(h2, h3, h4) { break-after: avoid; }
+  .hoja p { orphans: 3; widows: 3; }
+  .hoja .tabla tr, .firmas, .verificacion, .membrete { break-inside: avoid; }
+  /* Una firma nunca queda sola en una hoja: se lleva con ella el final del texto */
+  .firmas { break-before: avoid; }
+  .hoja__borrador, .membrete, .tabla--planilla th { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

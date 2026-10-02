@@ -613,3 +613,72 @@ En los seis tamaños probados desde 768px de ancho (1920×950, 1366×641, 1280×
 - [ ] En el ejemplo, "Ampliar" una cámara y elegir una cámara de la lista no hacen nada todavía.
 - [ ] Revisar si el agregado "el aula abre su semana" se queda.
 - [ ] Siguen: armar los módulos en React con datos reales; subir `skill/design-md-unpsjb/SKILL.md` a claude.ai; pruebas con Orca, celular real, Firefox y Safari.
+
+## 2026-10-02 — Sesión 15: versión 0.4.3, cuatro módulos más
+
+Se pidieron cinco módulos de la lista del 1/10: documentos e impresión, correo, gráficos, mesa de ayuda y cartelera. Se hicieron cuatro. **El de correo quedó en espera** porque el pedido no coincide con lo planeado (ver "Pendientes").
+
+### Dónde se trabajó
+- La carpeta pasó a ser un repositorio git durante la sesión, y había otra sesión cambiando la agenda y el visor al mismo tiempo. Para no pisarlas, todo esto se hizo aparte: en la carpeta de trabajo `.claude/worktrees/modulos-0.4.2`, que quedó en la rama **`modulos-0.4.3`**.
+- La otra sesión numeró sus cambios 0.4.2, así que estos módulos son la **0.4.3**. La rama sale de `main` en la etiqueta `v0.4.2` y suma un solo commit; no hubo archivos tocados por los dos lados.
+- `main` no se tocó: sigue en la 0.4.2 hasta que se integre la rama.
+
+### Qué se hizo
+- **Documentos e impresión** (`unpsjb-documentos.css`, `muestra-documentos.html`): la hoja A4 que se ve en pantalla igual que impresa, membrete, firmas, pie de verificación con QR, certificado apaisado, planilla para firmar. Cinco ejemplos: constancia, certificado, resolución, comprobante y planilla.
+- **Gráficos de líneas** (`unpsjb-graficos.css`, `unpsjb-graficos.js`, `muestra-graficos.html`): el gráfico sale de una tabla. Cinco ejemplos: tres series, cinco series, 30 datos, sin arrancar en cero y con un dato que falta.
+- **Mesa de ayuda** (`unpsjb-mesa-ayuda.css`, `muestra-mesa-ayuda.html`): el historial de una solicitud, con la vista de quien atiende y la de quien pide, y la bandeja con los cinco estados.
+- **Cartelera** (`unpsjb-cartelera.css`, `muestra-cartelera.html`, `muestra-cartelera-celular.html`): la tele del pasillo y la vista de solo lectura a la que lleva el QR.
+- **Logo a una tinta** y **generador de QR** (`qr/generar.sh`).
+- `DESIGN.md`: 15.E y las secciones 18, 19 y 20.
+
+### Decisiones al construir
+- **La hoja es papel:** siempre blanca con tinta negra, también en modo oscuro (como el video, que va siempre sobre negro).
+- **Al imprimir sale solo la hoja,** sin marcar nada a mano: una regla esconde todo lo que no es la hoja ni la contiene.
+- **Texto de los documentos sin justificar:** sin corte de palabras, justificar deja ríos de blanco.
+- **Las fórmulas de una resolución van en mayúsculas** (así las escribe la norma), pero puestas por CSS: en el HTML dicen "Visto", para que el lector de pantalla no las deletree.
+- **Una firma nunca queda sola en una hoja.** Apareció al imprimir la resolución de ejemplo: la firma caía sola en la segunda hoja.
+- **Gráficos sin cartel flotante** (7.P dice que no hay tooltips): la lectura va fija arriba del gráfico y es también la leyenda. Con teclado se recorre con un control de rango, como la línea de tiempo del visor.
+- **Al imprimir, los gráficos se vuelven a trazar** al ancho de la hoja y van de a uno por renglón: achicados a dos columnas, la letra quedaba de unos 6 puntos.
+- **Historial sin globos de chat ni colores por persona:** quién habla se dice con nombre y rol.
+- **Nota interna con cuatro señales** (fondo, candado, texto y, al escribirla, label y botón distintos): mandarle por error una nota interna a quien pidió es caro.
+- **Cartelera en "u":** una u es un píxel a 1920 × 1080; así se ve igual en 720p y en 4K. Mínimo de letra: 26 u.
+- **"En curso" en azul, no en naranja,** igual que "Hoy" en la agenda.
+- **Las páginas de la cartelera se arman midiendo,** no contando filas: un nombre largo ocupa dos renglones.
+- **El QR lleva siempre la dirección escrita al lado.**
+- **La vista del celular reutiliza la lista y la fila de días del módulo de agenda,** dentro de `.solo-lectura`.
+
+### Lo que apareció
+- **El primer intento de la cartelera no entraba:** los dos avisos más el QR pasaban el alto de la pantalla y el texto quedaba cortado. Se resolvió repartiendo los avisos por tandas, como las filas, y bajando un poco la banda.
+- **Una falla falsa de axe en modo oscuro** (contraste del selector de tema): era la prueba, que cambiaba el tema después de cargar y medía a mitad de la transición. Corregida la prueba, no hay fallas.
+- **El detector de Impeccable marcó Times New Roman** como fuente fuera del sistema. Se anotó la excepción (4.A ya la permite para documentos).
+- **Al cerrar, el detector marcó 45 observaciones** en las cinco páginas nuevas:
+  - *Corregido:* interlineados de 1,15 y 1,2 en letra grande que puede ocupar más de un renglón (cartelera y certificado). Pasaron a 1,25, el mínimo de 4.C.
+  - *Corregido documentando:* los colores de papel (negro, `#333d49`, `#b9c6d6`) no estaban en el encabezado de `DESIGN.md`. Se declararon.
+  - *Anotado como excepción* (falsos positivos del análisis sin navegador): relleno "apretado" en la banda, `.tabla-marco` y `.segmentado`; jerarquía de tamaños "plana"; interlineado de 0,12; radios "1080" y "1920". El detector no resuelve `var()` ni `calc()` y lee las reglas de impresión como si fueran de pantalla.
+  - *Sin tocar:* "espaciado monótono" en las cinco páginas y los fondos de las insignias de advertencia y de error (salen de `color-mix`, en `unpsjb.css`). Vienen de la hoja central y también aparecen en las páginas anteriores: conviene decidirlo para todo el sistema, no página por página.
+
+### Cómo se verificó
+- **axe 4.10.2** (reglas WCAG 2.0, 2.1 y 2.2 A/AA y buenas prácticas), sin fallas en ninguna: documentos (los cinco ejemplos; escritorio, celular y 320px; claro y oscuro), gráficos (1280, 390 y 320px; claro y oscuro), mesa de ayuda (las dos vistas; 1280, 390 y 320px; claro y oscuro), vista de celular de la cartelera (390, 320 y 1280px; claro y oscuro) y la tele (las dos páginas; claro y oscuro).
+- **Ancho:** sin scroll horizontal en ninguna de esas pruebas (hasta 320px).
+- **Foco:** ningún control totalmente tapado en documentos, gráficos, mesa de ayuda y la vista de celular (1280×668, 390×844 y 683×334).
+- **Impresión a PDF (Chrome):** constancia (1 hoja A4), certificado (1 hoja apaisada), resolución (2 hojas, numeradas, con la firma acompañada), planilla a una tinta, y los gráficos (3 hojas, vueltos a trazar).
+- **QR:** leídos con un decodificador (zxing) desde los SVG y desde las capturas: la tele en claro, en oscuro, a 720p y en vertical, y la constancia en pantalla.
+- **Paleta de series:** validada otra vez con el validador de la guía de gráficos (peor pareja con daltonismo: 9,8 en claro y 10,9 en oscuro; mínimo 8).
+- **Logos:** los cuatro que ya existían salen idénticos byte a byte después de sumar el de una tinta.
+- **Capturas** de cada módulo en escritorio y celular, claro y oscuro; la cartelera a 1920×1080, 1280×720 y 1080×1920, con sus estados (cambio de aula, suspendida, sin actividades, sin conexión).
+- **Probado funcionando:** pestañas de documentos, interruptor "A una tinta", recorrer un gráfico con el mouse y con el teclado, pasar un gráfico a tabla, enviar una respuesta, guardar una nota interna, marcar como resuelta y el error al enviar vacío.
+- Sin probar: lector de pantalla, celular real, Firefox y Safari, una tele real. La numeración de páginas y la impresión se probaron solo en Chrome.
+
+### Archivos
+- Nuevos: `unpsjb-documentos.css`, `unpsjb-graficos.css`, `unpsjb-graficos.js`, `unpsjb-mesa-ayuda.css`, `unpsjb-cartelera.css`, `muestra-documentos.html`, `muestra-graficos.html`, `muestra-mesa-ayuda.html`, `muestra-cartelera.html`, `muestra-cartelera-celular.html`, `qr/generar.sh`, `assets/logo-unpsjb-trelew-una-tinta.svg`, `assets/qr-ejemplo-cartelera.svg`, `assets/qr-ejemplo-documento.svg`.
+- Tocados: `DESIGN.md`, `CHANGELOG.md`, `BITACORA.md`, `skill/design-md-unpsjb/SKILL.md`, `logo/armar.py`, `logo/generar.sh`, `.impeccable/config.json`. En `unpsjb.css`, solo el número de versión; en `muestra.html`, el número y los enlaces a los módulos nuevos.
+- Sin tocar: los módulos de agenda y de video y sus muestras (siguen en 0.4.2).
+
+### Pendientes
+- [ ] **Correo: confirmar qué se quiere.** El 1/10 se planeó como *plantilla para los avisos automáticos* que mandan las herramientas ("tu reserva fue aprobada"). Hoy se pidió como *generador*: una página donde una persona escribe un mensaje, lo ve con diseño institucional y lo copia para pegarlo en Gmail. Comparten la base (HTML de correo con los estilos adentro), pero son dos piezas. Se puede hacer el generador solo, o la base y las dos.
+- [ ] Para el correo, sea cual sea: hace falta una dirección pública (https) para el logo. Un correo no puede traer el logo desde la computadora de quien lo escribe.
+- [ ] **Integrar la rama `modulos-0.4.3` en `main`** y ponerle la etiqueta `v0.4.3` (son archivos nuevos, más los cambios de documentación): `git merge --ff-only modulos-0.4.3 && git tag v0.4.3`.
+- [ ] Documentos: confirmar los márgenes con la norma de la universidad, si la hay; definir el servicio de verificación; confirmar el logo a una tinta con quien maneja la marca.
+- [ ] Cartelera: definir la dirección de la vista para el celular y generar el QR real; probar en la tele real y decidir cómo queda el navegador a pantalla completa.
+- [ ] Siguen: armar los módulos en React con datos reales; subir `skill/design-md-unpsjb/SKILL.md` a claude.ai; pruebas con Orca, celular real, Firefox y Safari.
+
