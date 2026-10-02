@@ -564,3 +564,52 @@ Antes de empezar se renumeró lo de la sesión 11 (el código en español) como 
 - [ ] Armar los dos módulos en React con datos reales. Para el video hace falta un conversor de RTSP (MediaMTX o go2rtc).
 - [ ] Decidir en celular si la lista de cámaras se pliega.
 - [ ] Módulos siguientes, en este orden sugerido: documentos formales e impresión, plantilla de correo, gráficos de líneas, tema para SIU y Moodle.
+
+## 2026-10-02 — Sesión 14: versión 0.4.2, ajustes a los módulos después de la primera revisión
+
+### Lo que pidió el usuario
+- **Agenda:** el módulo le pareció bien resuelto. Pidió: pasar de Mes a una semana desde una opción a la izquierda del calendario; en Semana, pasar al día tocando el día; el selector Día | Semana | Mes a la derecha (se corría al salir de Mes); y mejorar cómo se ve en qué aula se está en la vista Semana (la primera vez no entendió cómo funcionaba).
+- **Visor:** que al entrar, sin scroll, se vean bien las cámaras, sean 1, 4 o 9; y un botón de pantalla completa.
+- **Grabaciones:** quedan como están. Pendiente: ver si se pueden tener los tramos de grabación según la cámara.
+
+### Qué se hizo en la agenda
+- **Mes → Semana:** columna "Semana" a la izquierda, con un botón por fila ("12 al 17 ›"). Al pasar por encima se tiñe la fila. El número del día y "+N más" abren ese día.
+- **Semana → Día:** el nombre de cada día, en el encabezado, es un botón con aspecto de enlace.
+- **Día → Semana** (agregado mío, no pedido): el nombre de cada aula abre la semana de esa aula. Es la misma idea al revés y ayuda a entender que la semana es de un aula.
+- **Barra:** Día | Semana | Mes va último, contra el borde derecho. Las dos flechas van juntas antes del título (también se corrían, con el largo del título).
+- **Aula en Semana:** placa propia (`.agenda-aula`) arriba de la grilla, con la etiqueta "Aula" a la vista, el selector, los datos del aula y "La semana muestra un aula por vez".
+- **El ejemplo ahora se puede recorrer:** flechas y saltos entre vistas funcionan dentro de octubre de 2026 (los días que muestra el mes). Los eventos son siempre los mismos; cambian títulos, días y rótulos. En Mes las flechas están apagadas: el ejemplo tiene un solo mes.
+
+### Qué se hizo en el visor
+- **El muro entra en la ventana.** Las celdas siguen en 16:9; el ancho del muro se calcula con el alto libre (`100dvh` menos `--visor-arriba`, que la página mide). Mínimo de 320px de alto.
+- **Pantalla completa:** botón al lado de 1 | 4 | 9. Usa la pantalla completa del navegador sobre toda la página y esconde cabecera, banner de fase y menú inferior.
+- **Lista de cámaras plegable** con menos de 1024px de ancho: arranca cerrada, así en celular lo primero que se ve es una cámara. Cierra el pendiente de la sesión 13.
+- **Celdas chicas:** insignia solo con ícono y "Sin señal" sin explicación (los textos siguen para el lector de pantalla).
+- Encabezado de la pantalla más bajo (`.encabezado--visor`) y otro ícono para "Ampliar" una cámara (`maximize-2`).
+
+### Medidas (Chrome, con la página de muestra, que tiene el banner "Piloto")
+| Ventana | 1 cámara | 4 cámaras | 9 cámaras |
+|---|---|---|---|
+| 1920×950 | 1186×667 | 540×304 | 325×183 |
+| 1366×641 (notebook) | 636×358 | 266×149 | 142×80 |
+| 1366×768 en pantalla completa | 996×560 | 491×276 | 307×173 |
+
+En los seis tamaños probados desde 768px de ancho (1920×950, 1366×641, 1280×800, 1024×700, 800×1000) el muro termina dentro de la ventana con 1, 4 y 9. En celular (390×844) entra la primera cámara; con 4 o 9 se sigue con scroll, una por renglón.
+
+### Cómo se verificó
+- **Recorrido automático en Chrome** de la agenda: Mes → semana del 5 → miércoles 7 → semana del Lab. Informática 1 → flechas hasta el borde. El selector de período no se movió (1058 a 1248px en las tres vistas) y "Siguiente" tampoco.
+- **Pantalla completa:** entrar, medir con 1, 4 y 9, salir.
+- **axe 4.10.2:** sin fallas en las dos páginas, escritorio y celular, claro y oscuro (visor con 4 y 9; agenda en Día, Semana, Mes y lista).
+- **Foco:** ningún control tapado (visor: 1280×668, 390×844, 683×334; agenda: Día, Semana y Mes a 1280×668, y celular).
+- **Ancho:** sin scroll horizontal a 390px. **Impresión:** la columna de semanas, las flechas y la lista de cámaras no salen.
+- Sin probar: lector de pantalla, celular real, Firefox y Safari. La pantalla completa se probó solo en Chrome.
+
+### Archivos
+- Tocados: `unpsjb-agenda.css`, `unpsjb-video.css`, `muestra-agenda.html`, `muestra-video.html`, `DESIGN.md` (16.A y 16.B), `CHANGELOG.md`, `skill/design-md-unpsjb/SKILL.md`. En `unpsjb.css` y `muestra.html`, solo el número de versión.
+
+### Pendientes
+- [ ] **Decidir:** en un muro de 9 en una notebook cada cámara queda de unos 140px de ancho, porque el pie (nombre, estado y botón) se lleva un tercio del alto. Poner nombre y estado **encima** del video las llevaría a unos 220px, pero cambia la regla de la sesión 13 ("el estado va debajo").
+- [ ] Averiguar si el grabador entrega los tramos de grabación por cámara (define cómo se arma la barra de tramos).
+- [ ] En el ejemplo, "Ampliar" una cámara y elegir una cámara de la lista no hacen nada todavía.
+- [ ] Revisar si el agregado "el aula abre su semana" se queda.
+- [ ] Siguen: armar los módulos en React con datos reales; subir `skill/design-md-unpsjb/SKILL.md` a claude.ai; pruebas con Orca, celular real, Firefox y Safari.

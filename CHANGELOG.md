@@ -13,12 +13,41 @@
 | El mismo, con el código en español | 0.4.0 (unas horas) | **0.3.2** |
 | Agregados de la ronda 3 | — | **0.4.0** |
 | Módulos de agenda y de video | — | **0.4.1** |
+| Ajustes a los dos módulos después de la primera revisión | — | **0.4.2** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.4.1 · 2026-10-01 · oficial
+## 0.4.2 · 2026-10-02 · oficial
+
+Ajustes a los dos módulos después de la primera revisión. `unpsjb.css` no cambia (solo su número). Quien ya usa las clases de la 0.4.1 tiene que revisar los tres puntos de **Cambiado** que tocan el HTML.
+
+### Nuevo
+
+- **Visor: el muro entra entero en la ventana,** con 1, 4 o 9 cámaras, sin scroll (desde 768px de ancho). Las celdas siguen en 16:9; el ancho del muro se calcula con el alto libre. La página le pasa a la hoja dónde empieza el muro, en `--visor-arriba`.
+- **Visor: botón "Pantalla completa".** Pone la página en pantalla completa y esconde la cabecera, el banner de fase y el menú inferior.
+- **Visor: `.encabezado--visor`** (encabezado más bajo), **`.camaras-panel`** (la lista de cámaras, que se pliega con menos de 1024px) y **`.camara__estado`** (el texto del estado, que en celdas de menos de 300px queda solo para el lector de pantalla).
+- **Agenda: pasar de una vista a otra tocando lo que se quiere ver.** En Mes, una columna "Semana" a la izquierda abre cada semana (`.agenda-mes__semanas`, `.agenda-mes__semana`), y el número del día abre ese día. En Semana, el nombre del día abre ese día; en Día, el nombre del aula abre su semana (`.agenda-grilla__ir`).
+- **Agenda: placa del aula** (`.agenda-aula`) en la vista Semana, con la etiqueta "Aula" a la vista, los datos del aula y la frase "La semana muestra un aula por vez".
+- En `muestra-agenda.html`, las flechas y los saltos entre vistas funcionan (dentro de octubre de 2026). Los eventos de ejemplo son siempre los mismos.
+
+### Cambiado
+
+- **Agenda, barra:** "Día | Semana | Mes" va último, contra el borde derecho, y "Grilla | Lista" a su izquierda. Antes, al entrar o salir de Mes, el selector de período se corría. **Hay que cambiar el orden en el HTML.**
+- **Agenda, flechas:** las dos van juntas, antes del título (en celular el título sigue entre las dos). **Hay que cambiar el orden en el HTML.**
+- **Agenda, aula de la vista Semana:** sale de la barra y pasa a `.agenda-aula`. La regla `.agenda-barra .select` ya no existe.
+- **Agenda, Mes:** la tabla tiene una columna más (la de semanas) y su ancho mínimo pasa de 720 a 800px.
+- **Visor, estado de cada cámara:** el texto va en `<span class="camara__estado">`, y la explicación de "Sin señal" en un `<span>`. **Hay que agregarlos en el HTML** para que las celdas chicas se acomoden.
+- **Visor, lista de cámaras:** va dentro de `details.acordeon.camaras-panel`. En pantallas de menos de 1024px arranca plegada, con el muro a la vista. Resuelve el pendiente de la 0.4.1.
+- **Visor, ícono de "Ampliar" una cámara:** `maximize-2`. `maximize` queda para la pantalla completa.
+
+### Pendiente
+
+- **Tramos de grabación por cámara:** falta ver si el grabador entrega, por cada cámara, los tramos con grabación. La línea de tiempo no se tocó.
+- **Muro de 9 en una notebook** (ventana de unos 640px de alto): entra, pero cada cámara mide unos 140px de ancho. En pantalla completa, unos 300px. Para agrandarlas sin pantalla completa habría que poner el nombre y el estado encima del video, que hoy la regla no permite.
+
+## 0.4.1 · 2026-10-01 · anterior
 
 Los dos módulos que en la 0.4.0 estaban solo como reglas. Sube el último número: son agregados, y nada de lo anterior cambia.
 

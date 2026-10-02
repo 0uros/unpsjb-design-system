@@ -5,7 +5,7 @@ description: "Design.md para generar páginas para la universidad"
 
 ---
 name: UNPSJB MII 2.0 · Señalética
-version: 0.4.1
+version: 0.4.2
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -143,7 +143,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB (MII 2.0)
 
-**Delegación Trelew · 2026 · versión 0.4.1 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.2 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`. Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `comparar-v3.html` (0.2.1 y la actual) y `comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -1069,7 +1069,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.1), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.2), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1163,15 +1163,27 @@ Son dos piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que
 
 | Módulo | Hoja | Ejemplo | Peso |
 |---|---|---|---|
-| Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 14 KB |
-| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 8 KB |
+| Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB |
+| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 12 KB |
 
-Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases.
+Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases. En el ejemplo de la agenda los eventos son siempre los mismos: al cambiar de fecha o de aula cambian los títulos y los días.
 
 ### A. Agenda de aulas
 
 - **Dos formas, siempre:** la grilla (`.agenda-grilla`) y una **lista** ordenada por hora (`.agenda-lista`), donde cada evento va con su título y todos sus datos. Se cambia con un segmentado "Grilla | Lista". La lista no es un extra: es la forma de usar la agenda con lector de pantalla y en celular.
 - **Tres períodos:** Día (aulas en columnas), Semana (los días de un aula en columnas) y Mes (`.agenda-mes`), con otro segmentado. En Mes, cada día muestra hasta 2 eventos y "+3 más".
+- **De una vista a la otra, tocando lo que se quiere ver** (0.4.2). No hace falta volver al segmentado:
+
+| Estás en | Tocás | Se abre |
+|---|---|---|
+| Mes | La semana, en la columna de la izquierda (`.agenda-mes__semana`) | Esa semana |
+| Mes | El número del día, o "+3 más" | Ese día |
+| Semana | El nombre del día, en el encabezado (`.agenda-grilla__ir`) | Ese día, con todas las aulas |
+| Día | El nombre del aula, en el encabezado (`.agenda-grilla__ir`) | La semana de esa aula |
+
+  Esos encabezados son botones con aspecto de enlace, y toda la celda responde al clic. Llevan `aria-describedby` hacia un texto que dice qué abren, así el nombre de la columna sigue siendo solo "Lunes 12". En Mes, al pasar por la semana se tiñe la fila entera. Al cambiar de vista, el foco queda en el título de la vista nueva.
+- **En la barra nada se corre al cambiar de vista** (0.4.2). Las dos flechas van juntas, **antes** del título: con el título en el medio, "Siguiente" se movía cada vez que el título cambiaba de largo. "Día | Semana | Mes" va **último, contra el borde derecho**; lo que aparece y desaparece según la vista ("Grilla | Lista") queda a su izquierda. Las flechas dicen qué mueven: "Día anterior", "Semana siguiente".
+- **En Semana, el aula va en su propia placa** (`.agenda-aula`, 0.4.2), justo arriba de la grilla o de la lista: el ícono, la etiqueta "Aula" **a la vista**, el selector, los datos del aula ("60 lugares · Planta baja") y la frase "La semana muestra un aula por vez". Antes era un selector sin etiqueta entre los controles de vista, y no se entendía qué era.
 - **En celular** solo hay Día, en lista: arriba, una fila con los días para elegir (`.agenda-dias`); la grilla y el mes no se muestran.
 - **La grilla es una tabla** (`<table>`): encabezados de columna y de fila, y un evento de dos horas ocupa dos filas (`rowspan`). Va dentro de un marco con scroll, como toda tabla (7.D). Una grilla con flechas en las cuatro direcciones (`role="grid"`) queda para más adelante: es cara de hacer bien.
 - **Cada renglón de una hora mide 48px**, como una fila de tabla.
@@ -1185,6 +1197,9 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 
 - **El video va siempre sobre negro** (`#000`, el único color propio del módulo), en claro y en oscuro. El resto de la pantalla respeta el tema elegido: el visor **no** fuerza el modo oscuro.
 - **Muro** (`.muro`) de 1, 4 o 9 cámaras, elegido con un segmentado. Celdas iguales, en 16:9. La pantalla va en `.contenedor--ancho` y con densidad compacta. En celular, una cámara por renglón.
+- **Al entrar, el muro se ve entero, sin scroll** (0.4.2, desde 768px de ancho). Las celdas siguen en 16:9: lo que se ajusta es el ancho del muro, calculado a partir del alto libre de la ventana. Si el alto sobra, manda el ancho de la columna. La página mide dónde empieza el muro y se lo pasa a la hoja en `--visor-arriba` (tres líneas de JavaScript, en `muestra-video.html`); sin ese dato se usa un valor aproximado. Con ventanas muy bajas el muro no baja de 320px de alto: ahí vuelve el scroll, en lugar de dejar cámaras ilegibles. El encabezado de la pantalla es más bajo (`.encabezado--visor`): ese alto va al muro.
+- **Pantalla completa** (0.4.2): un botón secundario, al lado del segmentado, con el ícono `maximize` ("Pantalla completa") y `minimize` ("Salir de pantalla completa"). Pone **la página** en pantalla completa y esconde la cabecera, el banner de fase y el menú inferior: queda el visor solo y el muro gana ese alto. Se sale con el mismo botón o con `Esc`. El botón se muestra solo si el navegador lo permite (en iPhone no existe para páginas). Ampliar **una** cámara usa otro ícono (`maximize-2`), para no confundir las dos acciones.
+- **Celdas chicas** (menos de 300px de ancho, por ejemplo un muro de 9 en una notebook): la insignia queda solo con su ícono, que es distinto en cada estado, y "Sin señal" queda sin la explicación. Los dos textos siguen estando para el lector de pantalla. Por eso el texto del estado va en `<span class="camara__estado">`.
 - **Cada cámara** (`.camara`) tiene el video arriba y, debajo, su número y nombre, su estado y el botón de ampliar. El estado no va encima del video: abajo se lee siempre igual, sin depender de lo que muestre la imagen.
 - **Estados, con ícono y texto,** nunca solo color:
 
@@ -1195,7 +1210,7 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 | Sin señal | `video-off` | Insignia de error, y en lugar del video una celda `capa` que dice "Sin señal" y qué hacer: "Cámara 04 desconectada. Avisá a Soporte Informático." |
 
 - Sin puntos que laten ni tramas: el movimiento solo responde a una acción (5.E).
-- **Lista de cámaras** (`.camaras-lista`) en la columna de 280px de `.grilla--lateral`, con buscador. Cada cámara es un botón con el ícono de su estado; el estado va también en texto para el lector de pantalla. La elegida lleva una marca `primario-texto` (no naranja: no es la navegación principal).
+- **Lista de cámaras** (`.camaras-lista`) en la columna de 280px de `.grilla--lateral`, con buscador, dentro de un panel que se pliega (`details.acordeon.camaras-panel`, 0.4.2). Desde 1024px está siempre abierto y sin título, y si la lista es larga tiene su propio scroll. Con menos ancho va arriba del muro y **arranca plegado** ("Cámaras (9)"), para que al entrar se vean las cámaras y no la lista. Cada cámara es un botón con el ícono de su estado; el estado va también en texto para el lector de pantalla. La elegida lleva una marca `primario-texto` (no naranja: no es la navegación principal).
 - **Línea de tiempo de grabaciones** (`.linea-tiempo`), sin depender de arrastrar (WCAG 2.2, 2.5.7):
   1. Botones de salto: "−15 min", "−1 min", "+1 min", "+15 min", y "Reproducir" / "Pausar".
   2. Un campo "Ir a la hora" (`input type="time"`).
