@@ -1,10 +1,10 @@
 /* ==========================================================================
-   unpsjb-cartelera.css — Módulo de cartelera · v0.4.3
+   unpsjb-cartelera.css — Módulo de cartelera · v0.4.4
    Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 20.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
    Ejemplos: muestra-cartelera.html (la tele) y muestra-cartelera-celular.html
-   (la vista de solo lectura a la que lleva el QR).
+   (la vista de solo lectura a la que lleva el QR: celular, tablet y notebook).
 
    La cartelera es una pantalla de pasillo: una tele que muestra las actividades
    del día. Es la señalética del sistema, literal.
@@ -25,7 +25,7 @@
    3. Avisos y QR (.cartelera-aviso, .cartelera-qr)
    4. Estados: sin actividades, sin conexión
    5. Tele en vertical
-   6. La vista de solo lectura para el celular (.solo-lectura)
+   6. La vista de solo lectura, que se adapta a la pantalla (.solo-lectura)
    ========================================================================== */
 
 /* 1. La pantalla ----------------------------------------------------------- */
@@ -291,18 +291,84 @@ html:has(.cartelera) { overflow: hidden; scroll-padding: 0; }
   .cartelera-qr img { forced-color-adjust: none; }
 }
 
-/* 6. La vista de solo lectura para el celular ------------------------------ */
-/* Es la página a la que lleva el QR: las mismas actividades, para leer en el
-   teléfono. Es una página pública común (banda, contenedor angosto, pie de
-   páginas públicas) que usa la lista del módulo de agenda:
+/* 6. La vista de solo lectura (la del QR) ----------------------------------- */
+/* Es la página a la que lleva el QR: las mismas actividades, para mirar con
+   calma. Es una página pública común (banda, contenedor, pie de páginas
+   públicas) que usa las piezas del módulo de agenda:
      <link rel="stylesheet" href="unpsjb.css">
      <link rel="stylesheet" href="unpsjb-agenda.css">
      <link rel="stylesheet" href="unpsjb-cartelera.css">
-     <main class="contenedor contenedor--angosto solo-lectura"> …
-       <nav class="agenda-dias">…</nav> <ol class="agenda-lista">…</ol>
-   No tiene "Reservar", ni cuenta, ni links en las actividades: se mira, no se toca. */
-.solo-lectura .agenda-dias { display: flex; }            /* la fila de días, también en pantallas grandes */
+     <main class="contenedor solo-lectura"> …
+   No tiene "Reservar", ni cuenta, ni links en las actividades: se mira, no se toca.
+
+   Se adapta a la pantalla (0.4.4):
+   - Celular: el día elegido, en lista, con la fila de días arriba.
+   - Tablet y notebook (desde 768px): el día en grilla, con las aulas en
+     columnas (la misma grilla de la agenda), o en lista; y la semana vigente,
+     con un día por columna.
+   - Al buscar, los resultados salen en lista y abarcan toda la semana. */
 .solo-lectura .agenda-lista__dato b { color: var(--color-tinta); }       /* el aula es lo que se busca */
 .solo-lectura .agenda-lista > li[data-estado="ahora"] { background: var(--color-tinte); }
 .solo-lectura .agenda-lista > li[data-estado="suspendida"] :is(.agenda-lista__nombre, .agenda-lista__hora, b) { color: var(--color-tinta-2); }
 .solo-lectura__nota { margin-top: var(--espacio-4); font: var(--texto-detalle); color: var(--color-tinta-2); }
+
+/* Buscador y total, arriba de las actividades */
+.solo-lectura__buscar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2) var(--espacio-4); margin-bottom: var(--espacio-4); }
+.solo-lectura__buscar .buscador { flex: 1 1 260px; max-width: 420px; }
+.solo-lectura__buscar p { margin: 0; font: var(--texto-detalle); color: var(--color-tinta-2); }
+
+/* La grilla del día, sin nada que tocar: el evento es un bloque, no un botón.
+   <div class="agenda-evento cat-1"><span class="agenda-evento__nombre">Álgebra I</span>
+     <span class="agenda-evento__dato">8:00 a 10:00 · Clase</span></div> */
+.solo-lectura .agenda-evento { cursor: default; }
+.solo-lectura .agenda-evento:hover { background: var(--color-capa); }
+/* Estado dentro de un evento de la grilla: ícono y palabras, en el color de texto del estado.
+   <span class="solo-lectura__estado solo-lectura__estado--advertencia"><svg class="icono">…</svg>Cambio de aula. Antes: Aula 101</span> */
+.solo-lectura__estado {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-1);
+  max-width: 100%;
+  margin-top: 2px;
+  font: 700 0.8125rem/1.4 var(--fuente-texto);
+  color: var(--color-tinta-2);
+}
+.solo-lectura__estado .icono { width: 14px; height: 14px; margin-top: 2px; }
+.solo-lectura__estado--advertencia { color: var(--color-advertencia-texto); }
+.solo-lectura__estado--error { color: var(--color-error-texto); }
+.solo-lectura .agenda-evento[data-estado="suspendida"] .agenda-evento__nombre { color: var(--color-tinta-2); }
+
+/* La semana vigente: un día por columna, cada uno con su lista.
+   <div class="solo-lectura__semana">
+     <section class="solo-lectura__dia" aria-labelledby="d13">
+       <h3 class="solo-lectura__dia-titulo" id="d13"><button class="boton boton--tranquilo boton--compacto">Martes 13</button>
+         <span class="agenda-hoy">Hoy</span></h3>
+       <ol class="agenda-lista">…</ol>
+     </section> …
+   Seis columnas desde 1180px; tres entre 768 y 1179px. El nombre del día abre
+   ese día. Hoy lleva la marca "Hoy" y la línea azul de las tablas arriba. */
+.solo-lectura__semana { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espacio-6) var(--espacio-4); align-items: start; }
+@media (min-width: 1180px) { .solo-lectura__semana { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--espacio-3); } }
+.solo-lectura__dia-titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--alto-control);
+  margin: 0 0 var(--espacio-2);
+  border-bottom: 2px solid var(--color-linea-control);
+  font: var(--texto-label);
+  letter-spacing: 0;
+}
+.solo-lectura__dia-titulo .boton { margin-left: calc(-1 * var(--espacio-3)); }
+.solo-lectura__dia--hoy .solo-lectura__dia-titulo { border-bottom-color: var(--color-primario-texto); }
+/* En una columna angosta, la hora va arriba del nombre y con menos aire */
+.solo-lectura__semana .agenda-lista > li { grid-template-columns: 1fr; gap: 0; padding: var(--espacio-2) var(--espacio-3); }
+.solo-lectura__semana .agenda-lista__hora { font: 700 0.875rem/1.4 var(--fuente-texto); }
+.solo-lectura__semana .agenda-lista__nombre { font-size: 0.9375rem; overflow-wrap: break-word; }
+.solo-lectura__sin-actividad { margin: 0; padding: var(--espacio-3) 0; font: var(--texto-detalle); color: var(--color-tinta-2); }
+
+@media print {
+  .solo-lectura__buscar, .solo-lectura .agenda-barra .boton { display: none !important; }
+  .solo-lectura__semana { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .solo-lectura__dia { break-inside: avoid; }
+}

@@ -1,9 +1,9 @@
 /* ==========================================================================
-   unpsjb-graficos.js — Módulo de gráficos de líneas · v0.4.3
+   unpsjb-graficos.js — Módulo de gráficos · v0.4.4
    Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 15.
 
-   Dibuja un gráfico de líneas A PARTIR DE UNA TABLA. Los datos se escriben una
-   sola vez, en la tabla; el gráfico se arma solo. Sin JavaScript queda la tabla.
+   Dibuja un gráfico A PARTIR DE UNA TABLA. Los datos se escriben una sola vez,
+   en la tabla; el gráfico se arma solo. Sin JavaScript queda la tabla.
 
      <figure class="grafico panel">
        <figcaption class="grafico__cabecera"><h3 class="grafico__titulo">Solicitudes por mes</h3></figcaption>
@@ -17,21 +17,30 @@
        <p class="grafico__nota">Abril a septiembre de 2026.</p>
      </figure>
 
+   Tres gráficos, según lo que haya que mostrar (data-grafico):
+   - "lineas": algo que cambia en el tiempo. Primera columna, el momento.
+   - "barras": cantidades de cosas para comparar. Primera columna, la cosa.
+     Horizontales; con data-orientacion="vertical", columnas (en pantallas
+     angostas vuelven a ser horizontales).
+   - "torta": partes de un total. Una sola columna de valores, hasta 5 partes
+     más "Otros" (si hay más filas, las que sobran se suman en "Otros").
+
    Qué lee de la tabla
-   - Primera columna: el momento (mes, día, año). Las demás: una serie cada una,
+   - Primera columna: el nombre de cada fila. Las demás: una serie cada una,
      hasta 5. Los colores se asignan en orden (serie-1, serie-2…); para fijar el
      color de una serie, la clase va en su encabezado: <th class="num serie-3">.
    - data-descripcion: lo que dice el gráfico, en una oración. Es lo que lee el
      lector de pantalla. Obligatorio.
    - data-unidad (opcional): lo que acompaña a cada valor, por ejemplo "%".
-   - data-desde-cero="no" (opcional): el eje no arranca en cero. Solo cuando el
-     cero no significa nada (una temperatura, un índice).
-   - data-alto (opcional): alto del gráfico en px. 260 por defecto.
+   - data-desde-cero="no" (opcional, solo líneas): el eje no arranca en cero.
+     Solo cuando el cero no significa nada (una temperatura, un índice). Las
+     barras arrancan siempre en cero.
+   - data-alto (opcional, líneas y columnas): alto del gráfico en px. 260 por defecto.
 
    Qué agrega a la página
    - El selector "Gráfico | Tabla" en la cabecera de la figura.
-   - El gráfico, con la lectura arriba: el momento elegido y el valor de cada serie.
-     Con el mouse o el dedo se elige un momento; con el teclado, con las flechas.
+   - El gráfico (.dibujo), con su lectura o su leyenda. En líneas y columnas, con
+     el mouse o el dedo se elige un momento; con el teclado, con las flechas.
 
    También se puede llamar a mano, después de cambiar los datos de la tabla:
      unpsjbGraficos.dibujar(tabla)
@@ -40,6 +49,7 @@
   'use strict';
   const SVG = 'http://www.w3.org/2000/svg';
   const MAX_SERIES = 5;
+  const ANCHO_PAPEL = 640;      // al imprimir, los gráficos se trazan a este ancho
   let cuenta = 0;
 
   const crear = (nombre, atributos, padre) => {
@@ -72,6 +82,8 @@
     for (let v = desde; v < maximo + paso * 0.999; v += paso) lista.push(Number(v.toFixed(10)));
     return lista;
   };
+  // Las marcas del eje llevan decimales solo si alguna los necesita (100, no 100,0)
+  const formatoEje = eje => new Intl.NumberFormat('es-AR', { minimumFractionDigits: eje.some(v => v % 1 !== 0) ? 1 : 0, maximumFractionDigits: 1 });
 
   function leerTabla(tabla) {
     const encabezados = [...tabla.tHead.rows[0].cells];
@@ -87,27 +99,24 @@
     return { columna: encabezados[0].textContent.trim(), momentos, series };
   }
 
-  function dibujar(tabla) {
-    const figura = tabla.closest('.grafico') || tabla.parentElement;
-    const marco = tabla.closest('.tabla-marco') || tabla;
-    const datos = leerTabla(tabla);
-    const n = datos.momentos.length;
-    if (n < 2 || !datos.series.length) return;   // con un solo dato no hay línea: queda la tabla
+  // Una barra: recta en la base y con 4px de radio en la punta
+  const barra = (x, y, ancho, alto, haciaArriba) => {
+    const r = Math.min(4, haciaArriba ? alto : ancho, (haciaArriba ? ancho : alto) / 2);
+    return haciaArriba
+      ? `M${x} ${y + alto}V${y + r}a${r} ${r} 0 0 1 ${r} ${-r}H${x + ancho - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + alto}Z`
+      : `M${x} ${y}H${x + ancho - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + alto - r}a${r} ${r} 0 0 1 ${-r} ${r}H${x}Z`;
+  };
 
-    const unidad = tabla.dataset.unidad ? ' ' + tabla.dataset.unidad : '';
-    const todos = datos.series.flatMap(s => s.valores).filter(v => v != null);
-    const decimales = todos.some(v => v % 1 !== 0) ? 1 : 0;
-    const formato = new Intl.NumberFormat('es-AR', { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
-    const escribir = v => v == null ? 'sin dato' : formato.format(v) + unidad;
-
-    // Si ya estaba dibujado (se llamó de nuevo con datos nuevos), se rehace
-    let caja = figura.querySelector('.lineas');
-    if (caja) caja.replaceChildren(); else { caja = html('div', 'lineas'); marco.before(caja); }
-    const id = caja.id || (caja.id = 'lineas-' + (++cuenta));
+  /* ------------------------------------------------------------------------
+     Líneas y columnas comparten casi todo: un eje de valores a la izquierda,
+     los nombres abajo, la lectura arriba y un momento elegido que se recorre.
+     ------------------------------------------------------------------------ */
+  function conEjes(c, columnas) {
+    const { tabla, datos, n, todos, formato, escribir, caja, svg, medir } = c;
 
     // Lectura: el momento elegido y el valor de cada serie. Es también la leyenda.
-    const lectura = html('div', 'lineas__lectura');
-    const momento = html('p', 'lineas__momento');
+    const lectura = html('div', 'dibujo__lectura');
+    const momento = html('p', 'dibujo__momento');
     const leyenda = html('ul', 'leyenda');
     const valoresLeyenda = datos.series.map(s => {
       const li = html('li', s.clase);
@@ -117,103 +126,108 @@
       return b;
     });
     lectura.append(momento, leyenda);
+    c.lienzo.before(lectura);
 
-    const lienzo = html('div', 'lineas__lienzo');
-    const svg = crear('svg', { role: 'img', 'aria-label': tabla.dataset.descripcion || figura.querySelector('.grafico__titulo')?.textContent || 'Gráfico de líneas' });
     // Con teclado: un control de rango, como la línea de tiempo del visor de cámaras
-    const rango = html('input', 'lineas__recorrer');
+    const rango = html('input', 'dibujo__recorrer');
     Object.assign(rango, { type: 'range', min: 0, max: n - 1, step: 1, value: n - 1 });
     rango.setAttribute('aria-label', 'Recorrer el gráfico por ' + datos.columna.toLowerCase());
-    lienzo.append(svg, rango);
-    caja.append(lectura, lienzo);
+    c.lienzo.append(rango);
 
     let elegido = n - 1, activo = false, geo = null;
 
-    const medir = (() => {
-      const lapiz = document.createElement('canvas').getContext('2d');
-      return (texto, negrita) => {
-        const e = getComputedStyle(caja);
-        lapiz.font = (negrita ? '700' : '400') + ' 13px ' + e.fontFamily;
-        return lapiz.measureText(texto).width;
-      };
-    })();
-
-    // anchoPapel: al imprimir se traza a un ancho fijo, para que la letra salga a su tamaño
-    function trazar(anchoPapel) {
-      const ancho = typeof anchoPapel === 'number' ? anchoPapel : Math.max(240, Math.floor(lienzo.clientWidth));
+    function trazar(ancho) {
       const alto = Number(tabla.dataset.alto) || (ancho < 480 ? 220 : 260);
-      const desdeCero = tabla.dataset.desdeCero !== 'no';
+      const desdeCero = columnas || tabla.dataset.desdeCero !== 'no';      // las barras arrancan siempre en cero
       const minimo = desdeCero ? Math.min(0, ...todos) : Math.min(...todos);
       const eje = marcas(minimo, Math.max(...todos), 4);
       const y0 = eje[0], y1 = eje[eje.length - 1];
-      // Las marcas del eje llevan decimales solo si alguna los necesita (100, no 100,0)
-      const enEje = new Intl.NumberFormat('es-AR', { minimumFractionDigits: eje.some(v => v % 1 !== 0) ? 1 : 0, maximumFractionDigits: 1 });
+      const enEje = formatoEje(eje);
 
       const ultimos = datos.series.map(s => s.valores[n - 1]);
       const izq = Math.ceil(Math.max(...eje.map(v => medir(enEje.format(v))))) + 10;
-      const der = Math.ceil(Math.max(...ultimos.map(v => v == null ? 0 : medir(escribir(v), true)))) + 16;
-      const arriba = 12, abajo = 30;
+      const der = columnas ? 4 : Math.ceil(Math.max(...ultimos.map(v => v == null ? 0 : medir(escribir(v), true)))) + 16;
+      const arriba = columnas ? 22 : 12, abajo = 30;
       const pw = ancho - izq - der, ph = alto - arriba - abajo;
-      const x = i => izq + (n === 1 ? pw / 2 : i * pw / (n - 1));
+      const banda = pw / n;                                                  // columnas: el lugar de cada grupo
+      const x = i => columnas ? izq + banda * (i + 0.5) : izq + (n === 1 ? pw / 2 : i * pw / (n - 1));
       const y = v => arriba + ph - (v - y0) / (y1 - y0) * ph;
-      geo = { izq, pw, x };
+      geo = { izq, pw, x, banda };
 
       svg.replaceChildren();
       svg.setAttribute('viewBox', '0 0 ' + ancho + ' ' + alto);
       svg.setAttribute('width', ancho);
       svg.setAttribute('height', alto);
 
+      // Columnas: la franja del grupo elegido, por detrás de todo
+      if (columnas) crear('rect', { class: 'dibujo__franja', y: arriba, height: ph, width: Math.max(0, banda - 4) }, svg);
+
       // Grilla y eje: líneas finas y continuas. La base (el cero) es el eje.
       eje.forEach(v => {
         const yy = Math.round(y(v)) + 0.5;
-        crear('line', { class: v === y0 ? 'lineas__eje' : 'lineas__grilla', x1: izq, x2: izq + pw, y1: yy, y2: yy }, svg);
-        crear('text', { class: 'lineas__marca', x: izq - 8, y: yy + 4, 'text-anchor': 'end' }, svg).textContent = enEje.format(v);
+        crear('line', { class: v === y0 ? 'dibujo__eje' : 'dibujo__grilla', x1: izq, x2: izq + pw, y1: yy, y2: yy }, svg);
+        crear('text', { class: 'dibujo__marca', x: izq - 8, y: yy + 4, 'text-anchor': 'end' }, svg).textContent = enEje.format(v);
       });
 
       // Nombres del eje de abajo: si no entran todos, uno cada tantos, siempre con el último
-      const paso = n === 1 ? 1 : Math.max(1, Math.ceil((Math.max(...datos.momentos.map(m => medir(m))) + 16) / (pw / (n - 1))));
+      const lugar = columnas ? banda : (n === 1 ? pw : pw / (n - 1));
+      const paso = Math.max(1, Math.ceil((Math.max(...datos.momentos.map(m => medir(m))) + 16) / lugar));
       datos.momentos.forEach((m, i) => {
         if ((n - 1 - i) % paso) return;
-        const ancla = i === n - 1 && der < medir(m) / 2 ? 'end' : 'middle';
-        crear('text', { class: 'lineas__marca', x: x(i), y: alto - 8, 'text-anchor': ancla }, svg).textContent = m;
+        const ancla = !columnas && i === n - 1 && der < medir(m) / 2 ? 'end' : 'middle';
+        crear('text', { class: 'dibujo__marca', x: x(i), y: alto - 8, 'text-anchor': ancla }, svg).textContent = m;
       });
 
-      // La guía vertical del momento elegido (solo se ve mientras se recorre)
-      crear('line', { class: 'lineas__guia', y1: arriba, y2: arriba + ph }, svg);
-
-      // Líneas: tramos rectos entre los datos. Donde falta un dato, la línea se corta.
-      const conPuntos = pw / (n - 1) >= 20;
-      datos.series.forEach(s => {
-        let d = '', pluma = false;
-        s.valores.forEach((v, i) => {
-          if (v == null) { pluma = false; return; }
-          d += (pluma ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1);
-          pluma = true;
+      if (columnas) {
+        // Columnas: de hasta 24px de ancho, separadas por 2px, con la punta redondeada
+        const k = datos.series.length;
+        const grosor = Math.max(3, Math.min(24, Math.floor((banda - 12 - (k - 1) * 2) / k)));
+        const grupo = k * grosor + (k - 1) * 2;
+        datos.series.forEach((s, j) => s.valores.forEach((v, i) => {
+          if (v == null) return;
+          const bx = x(i) - grupo / 2 + j * (grosor + 2), tope = Math.min(y(v), y(Math.max(0, y0))), base = Math.max(y(v), y(Math.max(0, y0)));
+          crear('path', { class: 'dibujo__barra ' + s.clase, 'data-i': i, d: barra(bx, tope, grosor, Math.max(1, base - tope), true) }, svg);
+          // Con una sola serie, el valor va escrito arriba de cada columna si entra
+          if (k === 1 && medir(escribir(v), true) <= banda - 4) {
+            crear('text', { class: 'dibujo__valor', x: x(i), y: tope - 6, 'text-anchor': 'middle' }, svg).textContent = escribir(v);
+          }
+        }));
+      } else {
+        // La guía vertical del momento elegido (solo se ve mientras se recorre)
+        crear('line', { class: 'dibujo__guia', y1: arriba, y2: arriba + ph }, svg);
+        // Líneas: tramos rectos entre los datos. Donde falta un dato, la línea se corta.
+        const conPuntos = n === 1 || pw / (n - 1) >= 20;
+        datos.series.forEach(s => {
+          let d = '', pluma = false;
+          s.valores.forEach((v, i) => {
+            if (v == null) { pluma = false; return; }
+            d += (pluma ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1);
+            pluma = true;
+          });
+          crear('path', { class: 'dibujo__linea ' + s.clase, d }, svg);
         });
-        crear('path', { class: 'lineas__linea ' + s.clase, d }, svg);
-      });
-      // Puntos: encima de todas las líneas, con su aro del color del fondo
-      datos.series.forEach((s, k) => s.valores.forEach((v, i) => {
-        if (v == null) return;
-        const fijo = conPuntos || i === n - 1;
-        crear('circle', { class: 'lineas__punto ' + s.clase + (fijo ? '' : ' lineas__punto--suelto'), 'data-i': i, cx: x(i).toFixed(1), cy: y(v).toFixed(1), r: 5 }, svg);
-      }));
-
-      // El último valor de cada serie, escrito en la punta. Si dos quedan
-      // encimados se separan; si hay que correrlos mucho, no se escriben (el
-      // valor ya está en la lectura de arriba).
-      const puntas = ultimos.map((v, k) => ({ k, v, y: v == null ? null : y(v) })).filter(p => p.v != null).sort((a, b) => a.y - b.y);
-      puntas.forEach(p => { p.lugar = p.y; });
-      for (let i = 1; i < puntas.length; i++) puntas[i].lugar = Math.max(puntas[i].lugar, puntas[i - 1].lugar + 15);
-      const exceso = puntas.length ? puntas[puntas.length - 1].lugar - (arriba + ph) : 0;
-      if (exceso > 0) {
-        puntas[puntas.length - 1].lugar -= exceso;
-        for (let i = puntas.length - 2; i >= 0; i--) puntas[i].lugar = Math.min(puntas[i].lugar, puntas[i + 1].lugar - 15);
-      }
-      if (puntas.every(p => Math.abs(p.lugar - p.y) <= 14)) {
-        puntas.forEach(p => {
-          crear('text', { class: 'lineas__valor', x: x(n - 1) + 10, y: p.lugar + 4.5 }, svg).textContent = escribir(p.v);
-        });
+        // Puntos: encima de todas las líneas, con su aro del color del fondo
+        datos.series.forEach(s => s.valores.forEach((v, i) => {
+          if (v == null) return;
+          const fijo = conPuntos || i === n - 1;
+          crear('circle', { class: 'dibujo__punto ' + s.clase + (fijo ? '' : ' dibujo__punto--suelto'), 'data-i': i, cx: x(i).toFixed(1), cy: y(v).toFixed(1), r: 5 }, svg);
+        }));
+        // El último valor de cada serie, escrito en la punta. Si dos quedan
+        // encimados se separan; si hay que correrlos mucho, no se escriben (el
+        // valor ya está en la lectura de arriba).
+        const puntas = ultimos.map(v => ({ v, y: v == null ? null : y(v) })).filter(p => p.v != null).sort((a, b) => a.y - b.y);
+        puntas.forEach(p => { p.lugar = p.y; });
+        for (let i = 1; i < puntas.length; i++) puntas[i].lugar = Math.max(puntas[i].lugar, puntas[i - 1].lugar + 15);
+        const exceso = puntas.length ? puntas[puntas.length - 1].lugar - (arriba + ph) : 0;
+        if (exceso > 0) {
+          puntas[puntas.length - 1].lugar -= exceso;
+          for (let i = puntas.length - 2; i >= 0; i--) puntas[i].lugar = Math.min(puntas[i].lugar, puntas[i + 1].lugar - 15);
+        }
+        if (puntas.every(p => Math.abs(p.lugar - p.y) <= 14)) {
+          puntas.forEach(p => {
+            crear('text', { class: 'dibujo__valor', x: x(n - 1) + 10, y: p.lugar + 4.5 }, svg).textContent = escribir(p.v);
+          });
+        }
       }
       pintar();
     }
@@ -223,19 +237,19 @@
       datos.series.forEach((s, k) => { valoresLeyenda[k].textContent = escribir(s.valores[elegido]); });
       rango.value = elegido;
       rango.setAttribute('aria-valuetext', datos.momentos[elegido] + ': ' + datos.series.map(s => s.nombre + ' ' + escribir(s.valores[elegido])).join(', '));
-      const guia = svg.querySelector('.lineas__guia');
-      if (!guia || !geo) return;
-      const gx = Math.round(geo.x(elegido)) + 0.5;
-      guia.setAttribute('x1', gx); guia.setAttribute('x2', gx);
-      caja.classList.toggle('lineas--recorriendo', activo);
-      svg.querySelectorAll('.lineas__punto').forEach(p => p.classList.toggle('lineas__punto--elegido', activo && Number(p.dataset.i) === elegido));
+      if (!geo) return;
+      caja.classList.toggle('dibujo--recorriendo', activo);
+      const guia = svg.querySelector('.dibujo__guia'), franja = svg.querySelector('.dibujo__franja');
+      if (guia) { const gx = Math.round(geo.x(elegido)) + 0.5; guia.setAttribute('x1', gx); guia.setAttribute('x2', gx); }
+      if (franja) franja.setAttribute('x', geo.x(elegido) - geo.banda / 2 + 2);
+      svg.querySelectorAll('.dibujo__punto').forEach(p => p.classList.toggle('dibujo__punto--elegido', activo && Number(p.dataset.i) === elegido));
     }
 
     const elegir = (i, recorriendo) => { elegido = Math.max(0, Math.min(n - 1, i)); activo = recorriendo; pintar(); };
     const alMover = e => {
       if (!geo) return;
       const px = e.clientX - svg.getBoundingClientRect().left;
-      elegir(Math.round((px - geo.izq) / (geo.pw / (n - 1))), true);
+      elegir(columnas ? Math.floor((px - geo.izq) / geo.banda) : Math.round((px - geo.izq) / (geo.pw / Math.max(1, n - 1))), true);
     };
     svg.addEventListener('pointermove', alMover);
     svg.addEventListener('pointerdown', alMover);
@@ -244,11 +258,180 @@
     rango.addEventListener('input', () => elegir(Number(rango.value), true));
     rango.addEventListener('focus', () => elegir(elegido, true));
     rango.addEventListener('blur', () => elegir(n - 1, false));
+    return trazar;
+  }
+
+  /* ------------------------------------------------------------------------
+     Barras horizontales: los nombres a la izquierda (pueden ser largos) y el
+     valor escrito en la punta de cada barra. No hay nada que recorrer: todo
+     está a la vista. Con dos series o más, la leyenda va arriba.
+     ------------------------------------------------------------------------ */
+  function barrasHorizontales(c) {
+    const { datos, n, todos, escribir, svg, medir } = c;
+    const k = datos.series.length;
+    if (k > 1) {
+      const leyenda = html('ul', 'leyenda');
+      datos.series.forEach(s => leyenda.append(html('li', s.clase, s.nombre)));
+      const lectura = html('div', 'dibujo__lectura');
+      lectura.append(leyenda);
+      c.lienzo.before(lectura);
+    }
+    return function trazar(ancho) {
+      const GROSOR = 16, grupo = k * GROSOR + (k - 1) * 2, paso = grupo + 14;
+      const eje = marcas(Math.min(0, ...todos), Math.max(...todos), ancho < 480 ? 3 : 4);
+      const x0 = eje[0], x1 = eje[eje.length - 1];
+      const enEje = formatoEje(eje);
+      // Los nombres ocupan lo que necesitan, hasta el 42 % del ancho; lo que no entra se corta con "…"
+      const tope = Math.floor(ancho * 0.42);
+      const izq = Math.min(tope, Math.ceil(Math.max(...datos.momentos.map(m => medir(m))))) + 10;
+      const der = Math.ceil(Math.max(...todos.map(v => medir(escribir(v), true)))) + 12;
+      const arriba = 4, abajo = 26;
+      const pw = ancho - izq - der, alto = arriba + n * paso + abajo;
+      const x = v => izq + (v - x0) / (x1 - x0) * pw;
+
+      svg.replaceChildren();
+      svg.setAttribute('viewBox', '0 0 ' + ancho + ' ' + alto);
+      svg.setAttribute('width', ancho);
+      svg.setAttribute('height', alto);
+
+      eje.forEach(v => {
+        const xx = Math.round(x(v)) + 0.5;
+        crear('line', { class: v === 0 ? 'dibujo__eje' : 'dibujo__grilla', x1: xx, x2: xx, y1: arriba, y2: alto - abajo }, svg);
+        crear('text', { class: 'dibujo__marca', x: xx, y: alto - 8, 'text-anchor': 'middle' }, svg).textContent = enEje.format(v);
+      });
+      datos.momentos.forEach((m, i) => {
+        const cy = arriba + i * paso + 7;
+        let texto = m;
+        while (texto.length > 3 && medir(texto) > izq - 10) texto = texto.slice(0, -2).trimEnd() + '…';
+        const t = crear('text', { class: 'dibujo__nombre', x: izq - 10, y: cy + grupo / 2 + 4.5, 'text-anchor': 'end' }, svg);
+        t.textContent = texto;
+        if (texto !== m) crear('title', {}, t).textContent = m;
+        datos.series.forEach((s, j) => {
+          const v = s.valores[i];
+          if (v == null) return;
+          const by = cy + j * (GROSOR + 2), desde = Math.min(x(0), x(v)), largo = Math.max(1, Math.abs(x(v) - x(0)));
+          crear('path', { class: 'dibujo__barra ' + s.clase, d: barra(desde, by, largo, GROSOR, false) }, svg);
+          crear('text', { class: 'dibujo__valor', x: desde + largo + 6, y: by + GROSOR / 2 + 4.5 }, svg).textContent = escribir(v);
+        });
+      });
+    };
+  }
+
+  /* ------------------------------------------------------------------------
+     Torta: partes de un total. Hasta 5 partes más "Otros". No lleva textos
+     encima: al lado va la lista con el nombre, el valor y el porcentaje de
+     cada parte, en el mismo orden que el dibujo (desde arriba, en el sentido
+     del reloj).
+     ------------------------------------------------------------------------ */
+  function torta(c) {
+    const { datos, escribir, svg, tabla } = c;
+    const serie = datos.series[0];
+    let partes = datos.momentos.map((nombre, i) => ({ nombre, valor: serie.valores[i] })).filter(p => p.valor > 0);
+    if (partes.length > MAX_SERIES + 1) {
+      const resto = partes.slice(MAX_SERIES);
+      partes = partes.slice(0, MAX_SERIES).concat({ nombre: 'Otros (' + resto.length + ')', valor: resto.reduce((t, p) => t + p.valor, 0), otros: true });
+    }
+    const total = partes.reduce((t, p) => t + p.valor, 0);
+    let color = 0;
+    partes.forEach(p => { p.clase = p.otros || /^otr[oa]s\b/i.test(p.nombre) ? 'serie-otros' : 'serie-' + (++color); });
+    // Porcentajes enteros que suman 100: se reparte lo que sobra del redondeo entre los que más perdieron
+    partes.forEach(p => { p.exacto = p.valor / total * 100; p.pct = Math.floor(p.exacto); });
+    [...partes].sort((a, b) => (b.exacto - b.pct) - (a.exacto - a.pct)).slice(0, 100 - partes.reduce((t, p) => t + p.pct, 0)).forEach(p => { p.pct++; });
+
+    const yaEsPorcentaje = (tabla.dataset.unidad || '').trim() === '%';
+    const leyenda = html('ul', 'leyenda leyenda--columna');
+    partes.forEach(p => {
+      const li = html('li', p.clase);
+      li.append(html('span', 'leyenda__nombre', p.nombre), html('b', null, escribir(p.valor)));
+      li.append(html('span', 'leyenda__dato', yaEsPorcentaje ? '' : p.pct + '\u00a0%'));     // siempre, para que la grilla no se corra
+      leyenda.append(li);
+    });
+    c.lienzo.after(leyenda);
+
+    return function trazar(ancho) {
+      const lado = Math.round(Math.max(150, Math.min(220, ancho * 0.42)));
+      const r = lado / 2 - 1, cx = lado / 2, cy = lado / 2;
+      svg.replaceChildren();
+      svg.setAttribute('viewBox', '0 0 ' + lado + ' ' + lado);
+      svg.setAttribute('width', lado);
+      svg.setAttribute('height', lado);
+      let angulo = -Math.PI / 2;
+      partes.forEach(p => {
+        const giro = p.valor / total * Math.PI * 2;
+        if (partes.length === 1) { crear('circle', { class: 'dibujo__porcion ' + p.clase, cx, cy, r }, svg); return; }
+        const x1 = cx + r * Math.cos(angulo), y1 = cy + r * Math.sin(angulo);
+        const x2 = cx + r * Math.cos(angulo + giro), y2 = cy + r * Math.sin(angulo + giro);
+        crear('path', { class: 'dibujo__porcion ' + p.clase, d: `M${cx} ${cy}L${x1.toFixed(2)} ${y1.toFixed(2)}A${r} ${r} 0 ${giro > Math.PI ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}Z` }, svg);
+        angulo += giro;
+      });
+    };
+  }
+
+  /* ------------------------------------------------------------------------
+     Lo común a los tres: leer la tabla, armar la caja y el selector, y volver
+     a trazar cuando cambia el ancho o se imprime.
+     ------------------------------------------------------------------------ */
+  function dibujar(tabla) {
+    const tipo = tabla.dataset.grafico;
+    const figura = tabla.closest('.grafico') || tabla.parentElement;
+    const marco = tabla.closest('.tabla-marco') || tabla;
+    const datos = leerTabla(tabla);
+    const n = datos.momentos.length;
+    const todos = datos.series.flatMap(s => s.valores).filter(v => v != null);
+    if (!n || !datos.series.length || !todos.length) return;
+    if (tipo === 'lineas' && n < 2) return;        // con un solo dato no hay línea: queda la tabla
+
+    const unidad = tabla.dataset.unidad ? ' ' + tabla.dataset.unidad : '';
+    const decimales = todos.some(v => v % 1 !== 0) ? 1 : 0;
+    const formato = new Intl.NumberFormat('es-AR', { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
+    const escribir = v => v == null ? 'sin dato' : formato.format(v) + unidad;
+
+    // Si ya estaba dibujado (se llamó de nuevo con datos nuevos), se rehace
+    let caja = figura.querySelector('.dibujo');
+    if (caja) caja.replaceChildren(); else { caja = html('div'); marco.before(caja); }
+    caja.className = 'dibujo dibujo--' + tipo;
+    const id = caja.id || (caja.id = 'dibujo-' + (++cuenta));
+    const lienzo = html('div', 'dibujo__lienzo');
+    const svg = crear('svg', { role: 'img', 'aria-label': tabla.dataset.descripcion || figura.querySelector('.grafico__titulo')?.textContent || 'Gráfico' });
+    lienzo.append(svg);
+    caja.append(lienzo);
+
+    const medir = (() => {
+      const lapiz = document.createElement('canvas').getContext('2d');
+      return (texto, negrita) => {
+        lapiz.font = (negrita ? '700' : '400') + ' 13px ' + getComputedStyle(caja).fontFamily;
+        return lapiz.measureText(texto).width;
+      };
+    })();
+    const c = { tabla, figura, datos, n, todos, formato, escribir, caja, lienzo, svg, medir };
+    // La torta va al lado de su leyenda: su ancho disponible es el de la caja, no el del dibujo
+    const medido = tipo === 'torta' ? caja : lienzo;
+
+    // Columnas en una pantalla angosta: pasan a barras horizontales (15.C)
+    const vertical = tipo === 'barras' && tabla.dataset.orientacion === 'vertical';
+    let trazador = null, comoColumnas = null;
+    const preparar = ancho => {
+      if (tipo === 'torta') return trazador || (trazador = torta(c));
+      if (tipo === 'lineas') return trazador || (trazador = conEjes(c, false));
+      const columnas = vertical && ancho >= 480;
+      if (columnas !== comoColumnas) {
+        caja.replaceChildren(lienzo); lienzo.replaceChildren(svg);
+        const limpio = svg.cloneNode(false); svg.replaceWith(limpio); c.svg = limpio;     // sin los eventos del trazador anterior
+        trazador = columnas ? conEjes(c, true) : barrasHorizontales(c);
+        comoColumnas = columnas;
+      }
+      return trazador;
+    };
+    // anchoPapel: al imprimir se traza a un ancho fijo, para que la letra salga a su tamaño
+    const trazar = anchoPapel => {
+      const ancho = typeof anchoPapel === 'number' ? anchoPapel : Math.max(240, Math.floor(medido.clientWidth));
+      preparar(ancho)(ancho);
+    };
 
     // Selector "Gráfico | Tabla": se agrega una sola vez por figura
-    let selector = figura.querySelector('.lineas-selector');
+    let selector = figura.querySelector('.dibujo-selector');
     if (!selector) {
-      selector = html('fieldset', 'segmentado segmentado--compacto lineas-selector');
+      selector = html('fieldset', 'segmentado segmentado--compacto dibujo-selector');
       const titulo = figura.querySelector('.grafico__titulo');
       selector.append(html('legend', 'solo-lector', 'Ver ' + (titulo ? titulo.textContent.trim() : 'los datos') + ' como'));
       [['grafico', 'Gráfico'], ['tabla', 'Tabla']].forEach(([valor, texto]) => {
@@ -269,25 +452,24 @@
     if (caja._observador) caja._observador.disconnect();
     let pendiente = 0, anchoPrevio = 0;
     caja._observador = new ResizeObserver(() => {
-      if (lienzo.clientWidth === anchoPrevio || caja.hidden) return;
-      anchoPrevio = lienzo.clientWidth;
+      if (medido.clientWidth === anchoPrevio || caja.hidden) return;
+      anchoPrevio = medido.clientWidth;
       cancelAnimationFrame(pendiente);
       pendiente = requestAnimationFrame(() => trazar());
     });
-    caja._observador.observe(lienzo);
-    if (!caja.hidden) { anchoPrevio = lienzo.clientWidth; trazar(); }
+    caja._observador.observe(medido);
+    if (!caja.hidden) { anchoPrevio = medido.clientWidth; trazar(); }
     caja._trazar = trazar;
     // El ancho del texto se mide con la fuente real: cuando termina de cargar, se rehace
     if (document.fonts && document.fonts.status !== 'loaded') document.fonts.ready.then(() => { if (!caja.hidden) trazar(); });
   }
 
   // Al imprimir, cada gráfico se vuelve a trazar al ancho de la hoja (y después, al de la pantalla)
-  const ANCHO_PAPEL = 640;
-  const retrazar = ancho => document.querySelectorAll('.lineas').forEach(c => { if (!c.hidden && c._trazar) c._trazar(ancho); });
+  const retrazar = ancho => document.querySelectorAll('.dibujo').forEach(c => { if (!c.hidden && c._trazar) c._trazar(ancho); });
   window.addEventListener('beforeprint', () => retrazar(ANCHO_PAPEL));
   window.addEventListener('afterprint', () => retrazar());
 
-  const iniciar = () => document.querySelectorAll('table[data-grafico="lineas"]').forEach(dibujar);
+  const iniciar = () => document.querySelectorAll('table[data-grafico]').forEach(t => { if (['lineas', 'barras', 'torta'].includes(t.dataset.grafico)) dibujar(t); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
   window.unpsjbGraficos = { dibujar };
 })();

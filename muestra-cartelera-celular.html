@@ -4,20 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#004992">
-  <title>Actividades de hoy · Edificio de Aulas · UNPSJB</title>
+  <title>Actividades · Edificio de Aulas · UNPSJB</title>
   <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
   <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
   <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
   <link rel="stylesheet" href="unpsjb.css">
-  <!-- La lista y la fila de días son del módulo de agenda; la cartelera suma lo de la vista de solo lectura -->
+  <!-- La grilla, la lista y la fila de días son del módulo de agenda; la cartelera suma lo de la vista de solo lectura -->
   <link rel="stylesheet" href="unpsjb-agenda.css">
   <link rel="stylesheet" href="unpsjb-cartelera.css">
   <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
   <style>
+    .ext-muestra-categorias { display: flex; flex-wrap: wrap; gap: var(--espacio-1) var(--espacio-4); margin: 0 0 var(--espacio-4); padding: 0; list-style: none; font: var(--texto-detalle); }
     .ext-muestra-ficha { margin-top: var(--espacio-8); }
     .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
+    @media print { .ext-muestra-ficha { display: none; } }
   </style>
 </head>
 <body>
@@ -29,6 +31,8 @@
     <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
     <symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
     <symbol id="i-circle-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
   </svg>
 
   <a class="saltar" href="#contenido">Ir al contenido</a>
@@ -49,89 +53,68 @@
     </div>
   </header>
 
-  <main class="contenedor contenedor--angosto solo-lectura" id="contenido">
+  <main class="contenedor solo-lectura" id="contenido">
     <div class="encabezado">
-      <h1>Actividades de hoy</h1>
+      <h1>Actividades del Edificio de Aulas</h1>
     </div>
-    <p>Edificio de Aulas · martes 13 de octubre <span class="agenda-hoy">Hoy</span></p>
+    <noscript><p>Esta página necesita JavaScript para mostrar las actividades.</p></noscript>
 
-    <nav class="agenda-dias" aria-label="Días de la semana">
-      <a href="#">Lun <b>12</b></a><a href="#" aria-current="date">Mar <b>13</b></a><a href="#">Mié <b>14</b></a><a href="#">Jue <b>15</b></a><a href="#">Vie <b>16</b></a><a href="#">Sáb <b>17</b></a>
-    </nav>
-
-    <div class="buscador" style="margin-bottom:var(--espacio-2)">
-      <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
-      <input class="input" type="search" id="buscar" aria-label="Buscar por materia o aula" placeholder="Materia o aula">
+    <!-- La barra del módulo de agenda: flechas, título y, desde 768px, los selectores de vista -->
+    <div class="agenda-barra">
+      <div class="agenda-barra__fecha">
+        <button class="boton boton--icono" type="button" id="anterior" aria-label="Día anterior"><svg class="icono" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+        <button class="boton boton--icono" type="button" id="siguiente" aria-label="Día siguiente"><svg class="icono" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+        <h2 id="titulo" aria-live="polite"></h2>
+      </div>
+      <div class="agenda-barra__vistas agenda-solo-grande">
+        <fieldset class="segmentado" id="elegir-forma">
+          <legend class="solo-lector">Ver el día como</legend>
+          <label><input type="radio" name="forma" value="grilla" checked> Grilla</label>
+          <label><input type="radio" name="forma" value="lista"> Lista</label>
+        </fieldset>
+        <fieldset class="segmentado">
+          <legend class="solo-lector">Período</legend>
+          <label><input type="radio" name="vista" value="dia" checked> Día</label>
+          <label><input type="radio" name="vista" value="semana"> Semana</label>
+        </fieldset>
+      </div>
     </div>
-    <p class="texto-detalle texto-secundario" id="total" role="status">12 actividades</p>
 
-    <!-- La misma lista del módulo de agenda. No hay links ni "Reservar": es de solo lectura. -->
-    <ol class="agenda-lista" id="lista">
-      <li data-estado="termino">
-        <p class="agenda-lista__hora">8:00 a 10:00</p>
-        <div><h2 class="agenda-lista__nombre">Álgebra I</h2>
-        <p class="agenda-lista__dato"><b>Aula 101</b><span class="categoria cat-1">Clase</span><span class="insignia"><svg class="icono" aria-hidden="true"><use href="#i-circle-check"/></svg>Terminó</span></p></div>
-      </li>
-      <li data-estado="ahora">
-        <p class="agenda-lista__hora">8:00 a 12:00</p>
-        <div><h2 class="agenda-lista__nombre">Taller de Moodle</h2>
-        <p class="agenda-lista__dato"><b>Lab. Informática 1</b><span class="categoria cat-3">Evento</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
-      </li>
-      <li data-estado="ahora">
-        <p class="agenda-lista__hora">9:00 a 11:00</p>
-        <div><h2 class="agenda-lista__nombre">Programación I</h2>
-        <p class="agenda-lista__dato"><b>Aula 102</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
-      </li>
-      <li data-estado="ahora">
-        <p class="agenda-lista__hora">9:00 a 13:00</p>
-        <div><h2 class="agenda-lista__nombre">Jornada de Informática</h2>
-        <p class="agenda-lista__dato"><b>Auditorio</b><span class="categoria cat-3">Evento</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
-      </li>
-      <li data-estado="ahora">
-        <p class="agenda-lista__hora">10:00 a 12:00</p>
-        <div><h2 class="agenda-lista__nombre">Análisis Matemático</h2>
-        <p class="agenda-lista__dato"><b>Aula 101</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
-      </li>
-      <li data-estado="ahora">
-        <p class="agenda-lista__hora">10:00 a 13:00</p>
-        <div><h2 class="agenda-lista__nombre">Bases de Datos</h2>
-        <p class="agenda-lista__dato"><b>Lab. Informática 2</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--info"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>En curso</span></p></div>
-      </li>
-      <li>
-        <p class="agenda-lista__hora">10:30 a 12:00</p>
-        <div><h2 class="agenda-lista__nombre">Consulta de Química</h2>
-        <p class="agenda-lista__dato"><b>Aula 104</b><span class="categoria cat-1">Clase</span><span class="insignia"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg>Empieza en 15 min</span></p></div>
-      </li>
-      <li data-estado="cambio">
-        <p class="agenda-lista__hora">14:00 a 16:00</p>
-        <div><h2 class="agenda-lista__nombre">Parcial de Física</h2>
-        <p class="agenda-lista__dato"><b>Aula 102</b><span>Antes: Aula 101</span><span class="categoria cat-2">Examen</span><span class="insignia insignia--advertencia"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg>Cambio de aula</span></p></div>
-      </li>
-      <li>
-        <p class="agenda-lista__hora">14:00 a 17:00</p>
-        <div><h2 class="agenda-lista__nombre">Redes de Datos</h2>
-        <p class="agenda-lista__dato"><b>Lab. Informática 1</b><span class="categoria cat-1">Clase</span></p></div>
-      </li>
-      <li data-estado="suspendida">
-        <p class="agenda-lista__hora">16:00 a 18:00</p>
-        <div><h2 class="agenda-lista__nombre">Historia Regional</h2>
-        <p class="agenda-lista__dato"><b>Aula 102</b><span class="categoria cat-1">Clase</span><span class="insignia insignia--error"><svg class="icono" aria-hidden="true"><use href="#i-circle-x"/></svg>Suspendida</span></p></div>
-      </li>
-      <li>
-        <p class="agenda-lista__hora">17:00 a 19:00</p>
-        <div><h2 class="agenda-lista__nombre">Charla de Seguridad Informática</h2>
-        <p class="agenda-lista__dato"><b>Auditorio</b><span class="categoria cat-3">Evento</span></p></div>
-      </li>
-      <li>
-        <p class="agenda-lista__hora">18:00 a 20:00</p>
-        <div><h2 class="agenda-lista__nombre">Inglés Técnico</h2>
-        <p class="agenda-lista__dato"><b>Aula 101</b><span class="categoria cat-1">Clase</span></p></div>
-      </li>
-    </ol>
+    <!-- Solo en celular: los días de la semana vigente -->
+    <nav class="agenda-dias" id="dias" aria-label="Días de la semana"></nav>
+
+    <div class="solo-lectura__buscar">
+      <div class="buscador">
+        <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
+        <input class="input" type="search" id="buscar" aria-label="Buscar por materia o aula en toda la semana" placeholder="Materia o aula">
+      </div>
+      <p id="total" role="status"></p>
+    </div>
+
+    <ul class="ext-muestra-categorias" aria-label="Tipos de actividad">
+      <li><span class="categoria cat-1">Clase</span></li><li><span class="categoria cat-2">Examen</span></li><li><span class="categoria cat-3">Evento</span></li><li><span class="categoria cat-4">Reunión</span></li>
+    </ul>
+
+    <!-- Día en grilla: aulas en columnas, horas en filas. Desde 768px. -->
+    <section id="vista-grilla" class="agenda-solo-grande" aria-labelledby="titulo">
+      <div class="tabla-marco agenda-marco" tabindex="0" role="region" aria-label="Actividades del día, por aula">
+        <div class="agenda-marco__interior" id="grilla"></div>
+      </div>
+      <p class="texto-detalle texto-secundario" id="nota-ahora" style="margin-top:var(--espacio-2)">La línea azul marca la hora actual.</p>
+    </section>
+
+    <!-- Lista: el día elegido (es la vista de celular) o los resultados de la búsqueda -->
+    <section id="vista-lista" class="agenda-en-celular" aria-labelledby="titulo" hidden></section>
+
+    <!-- Semana vigente: un día por columna. Desde 768px. -->
+    <section id="vista-semana" class="agenda-solo-grande" aria-labelledby="titulo" hidden>
+      <div class="solo-lectura__semana" id="semana"></div>
+    </section>
+
     <div class="vacio" id="sin-resultados" hidden>
       <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
       <h2 class="vacio__titulo">Ninguna actividad coincide</h2>
-      <p>Probá con otra palabra, o con el número del aula.</p>
+      <p>Probá con otra palabra, o con el número del aula. La búsqueda mira toda la semana.</p>
       <button class="boton boton--tranquilo" type="button" id="quitar">Quitar la búsqueda</button>
     </div>
 
@@ -141,9 +124,10 @@
       <summary>Sobre esta muestra: la vista a la que lleva el QR de la cartelera</summary>
       <div class="acordeon__cuerpo">
         <ul>
-          <li>Es la página que abre el QR de <a href="muestra-cartelera.html">la cartelera</a> (la tele del pasillo). Los datos son de ejemplo.</li>
+          <li>Es la página que abre el QR de <a href="muestra-cartelera.html">la cartelera</a> (la tele del pasillo). Los datos son de ejemplo, y la hora está fija en las 10:15 del martes 13.</li>
+          <li>Se adapta a la pantalla: en celular, el día elegido en lista; desde 768px, el día en grilla (o en lista) y la semana vigente.</li>
           <li>Es de solo lectura: no pide cuenta y no tiene nada para reservar o cambiar.</li>
-          <li>Usa la lista del módulo de agenda (<code>unpsjb-agenda.css</code>) más lo que suma <code>unpsjb-cartelera.css</code>.</li>
+          <li>Usa la barra, la grilla, la lista y la fila de días del módulo de agenda (<code>unpsjb-agenda.css</code>), más lo que suma <code>unpsjb-cartelera.css</code>.</li>
           <li>En la herramienta real, este bloque no va.</li>
         </ul>
       </div>
@@ -194,21 +178,232 @@
       };
     });
 
-    // Buscador: filtra mientras se escribe (los datos ya están en la página).
-    // No distingue mayúsculas ni tildes: "analisis" encuentra "Análisis".
+    // ==========================================
+    // DATOS DE EJEMPLO
+    // En la herramienta real llegan del servidor (y los arma React). Acá, la
+    // semana vigente es la del 12 al 17 de octubre, hoy es martes 13 y son las 10:15.
+    // d: desde · h: hasta · n: nombre · a: aula · c: categoría · estado: "cambio" o "suspendida"
+    // ==========================================
+    const HOY = '13', AHORA = '10:15', SEMANA = 'Semana del 12 al 17 de octubre';
+    const AULAS = ['Aula 101', 'Aula 102', 'Aula 104', 'Lab. Informática 1', 'Lab. Informática 2', 'Auditorio'];
+    const CATEGORIAS = { 1: 'Clase', 2: 'Examen', 3: 'Evento', 4: 'Reunión', 5: 'Otros' };
+    const DIAS = [
+      { id: '12', nombre: 'Lunes', corto: 'Lun', sin: 'Feriado: sin actividades', eventos: [] },
+      { id: '13', nombre: 'Martes', corto: 'Mar', eventos: [
+        { d: '8:00', h: '10:00', n: 'Álgebra I', a: 'Aula 101', c: 1 },
+        { d: '8:00', h: '12:00', n: 'Taller de Moodle', a: 'Lab. Informática 1', c: 3 },
+        { d: '9:00', h: '11:00', n: 'Programación I', a: 'Aula 102', c: 1 },
+        { d: '9:00', h: '13:00', n: 'Jornada de Informática', a: 'Auditorio', c: 3 },
+        { d: '10:00', h: '12:00', n: 'Análisis Matemático', a: 'Aula 101', c: 1 },
+        { d: '10:00', h: '13:00', n: 'Bases de Datos', a: 'Lab. Informática 2', c: 1 },
+        { d: '10:30', h: '12:00', n: 'Consulta de Química', a: 'Aula 104', c: 1 },
+        { d: '14:00', h: '16:00', n: 'Parcial de Física', a: 'Aula 102', c: 2, estado: 'cambio', antes: 'Aula 101' },
+        { d: '14:00', h: '17:00', n: 'Redes de Datos', a: 'Lab. Informática 1', c: 1 },
+        { d: '16:00', h: '18:00', n: 'Historia Regional', a: 'Aula 102', c: 1, estado: 'suspendida' },
+        { d: '17:00', h: '19:00', n: 'Charla de Seguridad Informática', a: 'Auditorio', c: 3 },
+        { d: '18:00', h: '20:00', n: 'Inglés Técnico', a: 'Aula 101', c: 1 } ] },
+      { id: '14', nombre: 'Miércoles', corto: 'Mié', eventos: [
+        { d: '8:00', h: '10:00', n: 'Álgebra I', a: 'Aula 101', c: 1 },
+        { d: '8:00', h: '11:00', n: 'Bases de Datos', a: 'Lab. Informática 2', c: 1 },
+        { d: '10:00', h: '12:00', n: 'Análisis Matemático', a: 'Aula 101', c: 1 },
+        { d: '10:00', h: '12:00', n: 'Química General', a: 'Aula 104', c: 1 },
+        { d: '14:00', h: '16:00', n: 'Programación I', a: 'Lab. Informática 1', c: 1 },
+        { d: '15:00', h: '16:00', n: 'Reunión de departamento', a: 'Aula 102', c: 4 },
+        { d: '18:00', h: '20:00', n: 'Historia Regional', a: 'Aula 102', c: 1 } ] },
+      { id: '15', nombre: 'Jueves', corto: 'Jue', eventos: [
+        { d: '9:00', h: '11:00', n: 'Programación I', a: 'Aula 102', c: 1 },
+        { d: '9:00', h: '12:00', n: 'Redes de Datos', a: 'Lab. Informática 1', c: 1 },
+        { d: '10:00', h: '12:00', n: 'Química General', a: 'Aula 104', c: 1 },
+        { d: '14:00', h: '16:00', n: 'Parcial de Análisis Matemático', a: 'Auditorio', c: 2 },
+        { d: '16:00', h: '18:00', n: 'Inglés Técnico', a: 'Aula 101', c: 1 },
+        { d: '18:00', h: '20:00', n: 'Álgebra I', a: 'Aula 101', c: 1 } ] },
+      { id: '16', nombre: 'Viernes', corto: 'Vie', eventos: [
+        { d: '8:00', h: '10:00', n: 'Álgebra I', a: 'Aula 101', c: 1 },
+        { d: '10:00', h: '13:00', n: 'Bases de Datos', a: 'Lab. Informática 2', c: 1 },
+        { d: '11:00', h: '12:00', n: 'Reunión de cátedra', a: 'Aula 102', c: 4 },
+        { d: '14:00', h: '16:00', n: 'Parcial de Química', a: 'Aula 104', c: 2 },
+        { d: '17:00', h: '19:00', n: 'Charla de egresados', a: 'Auditorio', c: 3 } ] },
+      { id: '17', nombre: 'Sábado', corto: 'Sáb', eventos: [
+        { d: '9:00', h: '13:00', n: 'Curso de ingreso: Matemática', a: 'Auditorio', c: 1 },
+        { d: '9:00', h: '12:00', n: 'Taller de Programación', a: 'Lab. Informática 1', c: 3 } ] },
+    ];
+
+    // ==========================================
+    // UTILIDADES
+    // ==========================================
+    const minutos = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    // No distingue mayúsculas ni tildes: "analisis" encuentra "Análisis"
     const llano = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-    const buscar = document.getElementById('buscar');
-    const items = [...document.querySelectorAll('#lista > li')];
-    const filtrar = () => {
-      const q = llano(buscar.value.trim());
-      let n = 0;
-      items.forEach(li => { li.hidden = !!q && !llano(li.textContent).includes(q); if (!li.hidden) n++; });
-      document.getElementById('lista').hidden = n === 0;
-      document.getElementById('sin-resultados').hidden = n > 0;
-      document.getElementById('total').textContent = n === 1 ? '1 actividad' : n + ' actividades';
+    // Crea un elemento. El texto que viene de los datos entra siempre como texto, nunca como HTML.
+    const crear = (etiqueta, atributos, ...hijos) => {
+      const e = document.createElement(etiqueta);
+      for (const k in atributos) { if (atributos[k] != null) e.setAttribute(k, atributos[k]); }
+      e.append(...hijos.filter(x => x != null));
+      return e;
     };
-    buscar.addEventListener('input', filtrar);
-    document.getElementById('quitar').addEventListener('click', () => { buscar.value = ''; filtrar(); buscar.focus(); });
+    const icono = nombre => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('class', 'icono'); s.setAttribute('aria-hidden', 'true'); const u = document.createElementNS('http://www.w3.org/2000/svg', 'use'); u.setAttribute('href', '#i-' + nombre); s.append(u); return s; };
+
+    // Qué le pasa a una actividad: lo que avisa la herramienta (cambio, suspendida)
+    // o lo que dice la hora (terminó, en curso, empieza pronto). Solo hoy tiene hora.
+    const ESTADOS = {
+      suspendida: { clase: 'error', icono: 'circle-x', texto: () => 'Suspendida' },
+      cambio: { clase: 'advertencia', icono: 'triangle-alert', texto: () => 'Cambio de aula' },
+      ahora: { clase: 'info', icono: 'clock', texto: () => 'En curso' },
+      termino: { clase: '', icono: 'circle-check', texto: () => 'Terminó' },
+      pronto: { clase: '', icono: 'clock', texto: ev => 'Empieza en ' + (minutos(ev.d) - minutos(AHORA)) + ' min' },
+    };
+    const estadoDe = (ev, dia) => {
+      if (ev.estado) return ev.estado;
+      if (dia.id !== HOY) return null;
+      const m = minutos(AHORA), d = minutos(ev.d), h = minutos(ev.h);
+      return h <= m ? 'termino' : d <= m ? 'ahora' : d - m <= 30 ? 'pronto' : null;
+    };
+    const insignia = (ev, dia) => {
+      const e = ESTADOS[estadoDe(ev, dia)];
+      return e ? crear('span', { class: 'insignia' + (e.clase ? ' insignia--' + e.clase : '') }, icono(e.icono), e.texto(ev)) : null;
+    };
+
+    // Una actividad en una lista (la del día, la de cada día de la semana, la de resultados)
+    const item = (ev, dia, nivel) => crear('li', { 'data-estado': estadoDe(ev, dia) },
+      crear('p', { class: 'agenda-lista__hora' }, ev.d + ' a ' + ev.h),
+      crear('div', {},
+        crear('h' + nivel, { class: 'agenda-lista__nombre' }, ev.n),
+        crear('p', { class: 'agenda-lista__dato' },
+          crear('b', {}, ev.a),
+          ev.antes ? crear('span', {}, 'Antes: ' + ev.antes) : null,
+          crear('span', { class: 'categoria cat-' + ev.c }, CATEGORIAS[ev.c]),
+          insignia(ev, dia))));
+    const lista = (dia, eventos, nivel) => crear('ol', { class: 'agenda-lista' }, ...eventos.map(ev => item(ev, dia, nivel)));
+
+    // ==========================================
+    // LAS TRES FORMAS DE VER LO MISMO
+    // ==========================================
+    // 1. El día en grilla: una tabla con las aulas en columnas y las horas en filas
+    function grilla(dia) {
+      const desde = Math.min(8, ...dia.eventos.map(ev => Math.floor(minutos(ev.d) / 60)));
+      const hasta = Math.max(20, ...dia.eventos.map(ev => Math.ceil(minutos(ev.h) / 60)));
+      const tabla = crear('table', { class: 'agenda-grilla' });
+      tabla.append(crear('colgroup', {}, crear('col', { class: 'agenda-grilla__horas' }), ...AULAS.map(() => crear('col', {}))));
+      tabla.append(crear('thead', {}, crear('tr', {},
+        crear('th', { scope: 'col' }, crear('span', { class: 'solo-lector' }, 'Hora')),
+        ...AULAS.map(a => crear('th', { scope: 'col' }, a)))));
+      const cuerpo = crear('tbody', {});
+      const ocupadoHasta = {};                        // por aula: hasta qué hora llega el evento de arriba
+      for (let hora = desde; hora < hasta; hora++) {
+        const ahora = dia.id === HOY && Math.floor(minutos(AHORA) / 60) === hora;
+        const fila = crear('tr', {}, crear('th', { scope: 'row', class: ahora ? 'agenda-grilla__ahora' : null, style: ahora ? '--minutos: ' + (minutos(AHORA) % 60) : null },
+          hora + ':00', ahora ? crear('span', { class: 'solo-lector' }, ' (hora actual)') : null));
+        AULAS.forEach(aula => {
+          if (ocupadoHasta[aula] > hora) return;      // la celda de arriba ocupa esta fila
+          const ev = dia.eventos.find(x => x.a === aula && Math.floor(minutos(x.d) / 60) === hora);
+          if (!ev) { fila.append(crear('td', {})); return; }
+          const fin = Math.ceil(minutos(ev.h) / 60);
+          ocupadoHasta[aula] = fin;
+          const e = ESTADOS[ev.estado];
+          fila.append(crear('td', { rowspan: fin - hora },
+            crear('div', { class: 'agenda-evento cat-' + ev.c, 'data-estado': ev.estado },
+              crear('span', { class: 'agenda-evento__nombre' }, ev.n),
+              crear('span', { class: 'agenda-evento__dato' }, ev.d + ' a ' + ev.h + ' · ' + CATEGORIAS[ev.c]),
+              e ? crear('span', { class: 'solo-lectura__estado solo-lectura__estado--' + e.clase }, icono(e.icono),
+                e.texto(ev) + (ev.antes ? '. Antes: ' + ev.antes : '')) : null)));
+        });
+        cuerpo.append(fila);
+      }
+      tabla.append(cuerpo);
+      return tabla;
+    }
+
+    // 2. La semana vigente: un día por columna. El nombre del día abre ese día.
+    function semana() {
+      return DIAS.map(dia => {
+        const boton = crear('button', { class: 'boton boton--tranquilo boton--compacto', type: 'button' }, dia.nombre + ' ' + dia.id);
+        boton.addEventListener('click', () => { estado.dia = dia.id; estado.vista = 'dia'; document.querySelector('input[name="vista"][value="dia"]').checked = true; pintar(); document.getElementById('titulo').focus(); });
+        return crear('section', { class: 'solo-lectura__dia' + (dia.id === HOY ? ' solo-lectura__dia--hoy' : ''), 'aria-labelledby': 'dia-' + dia.id },
+          crear('h3', { class: 'solo-lectura__dia-titulo', id: 'dia-' + dia.id }, boton, dia.id === HOY ? crear('span', { class: 'agenda-hoy' }, 'Hoy') : null),
+          dia.eventos.length ? lista(dia, dia.eventos, 4) : crear('p', { class: 'solo-lectura__sin-actividad' }, dia.sin || 'Sin actividades'));
+      });
+    }
+
+    // 3. Los resultados de una búsqueda: en lista, de toda la semana, un título por día
+    function resultados(q) {
+      const partes = [];
+      let total = 0;
+      DIAS.forEach(dia => {
+        const hallados = dia.eventos.filter(ev => llano(ev.n + ' ' + ev.a + ' ' + CATEGORIAS[ev.c]).includes(q));
+        if (!hallados.length) return;
+        total += hallados.length;
+        partes.push(crear('h3', { class: 'agenda-lista__dia' }, dia.nombre + ' ' + dia.id + ' de octubre', dia.id === HOY ? ' ' : null, dia.id === HOY ? crear('span', { class: 'agenda-hoy' }, 'Hoy') : null), lista(dia, hallados, 4));
+      });
+      return { partes, total };
+    }
+
+    // ==========================================
+    // QUÉ SE VE
+    // ==========================================
+    const estado = { vista: 'dia', forma: 'grilla', dia: HOY, q: '' };
+    const celular = window.matchMedia('(max-width: 767px)');
+    const plural = n => n === 1 ? '1 actividad' : n + ' actividades';
+    const $ = id => document.getElementById(id);
+
+    function pintar() {
+      const vista = celular.matches ? 'dia' : estado.vista;      // en celular siempre se ve un día
+      const i = DIAS.findIndex(d => d.id === estado.dia), dia = DIAS[i];
+      const buscando = estado.q !== '';
+
+      // Título y flechas
+      const titulo = $('titulo');
+      titulo.replaceChildren(vista === 'semana' ? SEMANA : dia.nombre + ' ' + dia.id + ' de octubre');
+      if (vista === 'dia' && dia.id === HOY) titulo.append(' ', crear('span', { class: 'agenda-hoy' }, 'Hoy'));
+      titulo.tabIndex = -1;
+      $('anterior').hidden = $('siguiente').hidden = vista === 'semana';
+      $('anterior').disabled = i === 0;
+      $('siguiente').disabled = i === DIAS.length - 1;
+      $('elegir-forma').hidden = vista === 'semana';
+
+      // Fila de días (celular)
+      $('dias').replaceChildren(...DIAS.map(d => {
+        const a = crear('a', { href: '#dia-' + d.id, 'aria-current': d.id === estado.dia ? 'date' : null }, d.corto + ' ', crear('b', {}, d.id));
+        a.addEventListener('click', e => { e.preventDefault(); estado.dia = d.id; pintar(); });
+        return a;
+      }));
+
+      // Las vistas. La lista lleva la clase .agenda-en-celular: en celular se ve siempre.
+      const r = buscando ? resultados(estado.q) : null;
+      $('vista-grilla').hidden = buscando || vista !== 'dia' || estado.forma !== 'grilla';
+      $('vista-semana').hidden = buscando || vista !== 'semana';
+      $('vista-lista').hidden = buscando ? r.total === 0 : (vista !== 'dia' || estado.forma !== 'lista');
+      $('vista-lista').classList.toggle('agenda-en-celular', !buscando || r.total > 0);
+      $('sin-resultados').hidden = !buscando || r.total > 0;
+
+      if (buscando) {
+        $('vista-lista').replaceChildren(...r.partes);
+        $('total').textContent = plural(r.total) + (r.total === 1 ? ' coincide' : ' coinciden') + ' con "' + $('buscar').value.trim() + '" en la semana';
+      } else {
+        $('grilla').replaceChildren(grilla(dia));
+        $('nota-ahora').hidden = dia.id !== HOY;
+        $('vista-lista').replaceChildren(dia.eventos.length ? lista(dia, dia.eventos, 3) : crear('p', { class: 'solo-lectura__sin-actividad' }, dia.sin || 'Sin actividades'));
+        $('semana').replaceChildren(...semana());
+        $('total').textContent = vista === 'semana'
+          ? plural(DIAS.reduce((n, d) => n + d.eventos.length, 0)) + ' en la semana'
+          : (dia.eventos.length ? plural(dia.eventos.length) : (dia.sin || 'Sin actividades'));
+      }
+    }
+
+    document.querySelectorAll('input[name="vista"]').forEach(r => r.addEventListener('change', () => { estado.vista = r.value; pintar(); }));
+    document.querySelectorAll('input[name="forma"]').forEach(r => r.addEventListener('change', () => { estado.forma = r.value; pintar(); }));
+    $('anterior').addEventListener('click', () => { estado.dia = DIAS[Math.max(0, DIAS.findIndex(d => d.id === estado.dia) - 1)].id; pintar(); });
+    $('siguiente').addEventListener('click', () => { estado.dia = DIAS[Math.min(DIAS.length - 1, DIAS.findIndex(d => d.id === estado.dia) + 1)].id; pintar(); });
+    $('buscar').addEventListener('input', () => { estado.q = llano($('buscar').value.trim()); pintar(); });
+    $('quitar').addEventListener('click', () => { $('buscar').value = ''; estado.q = ''; pintar(); $('buscar').focus(); });
+    celular.addEventListener('change', pintar);
+
+    // Para probar: muestra-cartelera-celular.html?vista=semana, ?forma=lista, ?dia=15, ?q=algebra
+    const P = new URLSearchParams(location.search);
+    if (P.get('vista') === 'semana') { estado.vista = 'semana'; document.querySelector('input[name="vista"][value="semana"]').checked = true; }
+    if (P.get('forma') === 'lista') { estado.forma = 'lista'; document.querySelector('input[name="forma"][value="lista"]').checked = true; }
+    if (DIAS.some(d => d.id === P.get('dia'))) estado.dia = P.get('dia');
+    if (P.get('q')) { $('buscar').value = P.get('q'); estado.q = llano(P.get('q').trim()); }
+    pintar();
   </script>
 </body>
 </html>
