@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Planos · muestra del módulo · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- El módulo va después de la hoja central: su hoja y su script -->
+  <link rel="stylesheet" href="unpsjb-planos.css">
+  <script src="unpsjb-planos.js" defer></script>
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-muestra-ficha { margin-top: var(--espacio-8); }
+    .ext-muestra-ficha .resumen { max-width: 880px; }
+    .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
+    .ext-muestra-codigo {
+      max-width: 880px; margin: var(--espacio-3) 0 0; padding: var(--espacio-3) var(--espacio-4);
+      overflow-x: auto; font: 0.875rem/1.5 ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+      color: var(--color-tinta); background: var(--color-capa); border-radius: var(--radio-control);
+    }
+    @media print { .ext-muestra-ficha { display: none; } }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-map"/></svg>Planos de la sede</p>
+          <div class="banda__acciones">
+            <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
+            <button class="boton boton--icono" type="button" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la herramienta">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Piloto</strong>
+      <p>Página de muestra del módulo <code>unpsjb-planos.css</code> y <code>unpsjb-planos.js</code>, con un edificio y datos inventados. <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido">
+    <div class="encabezado">
+      <h1>Planos</h1>
+    </div>
+    <p>Las plantas de un edificio con lo que se marca encima: antenas de wifi y aulas. Se mueve arrastrando y se acerca con los botones; con el teclado, llegá al plano con <kbd>Tab</kbd> y usá las flechas, <kbd>+</kbd> y <kbd>−</kbd>. Todo se puede ver también como lista.</p>
+
+    <!-- El dibujo de la planta. En una herramienta real es un archivo .svg aparte ("svg": "planos/pb.svg").
+         Solo trazos con las clases .plano-trazo: el color lo pone la hoja. -->
+    <template id="dibujo-ejemplo">
+      <svg viewBox="0 0 400 240">
+        <path class="plano-trazo--suave" fill="none" stroke="currentColor" d="M146 136h48M146 148h48M146 160h48M146 172h48M146 184h48M146 196h48M170 130v84M8 232h384"/>
+        <path class="plano-trazo" fill="none" stroke="currentColor" d="M20 20h360v200h-360zM20 110h12M48 110h104M168 110h104M288 110h92M20 130h60M96 130h110M222 130h40M290 130h90M140 20v90M260 20v90M140 130v90M200 130v90M4 110v20"/>
+        <path class="plano-trazo--suave" fill="none" stroke="currentColor" d="M32 110a16 16 0 0 1 16-16M152 110a16 16 0 0 1 16-16M272 110a16 16 0 0 1 16-16M80 130a16 16 0 0 0 16 16M262 130a28 28 0 0 0 28 28"/>
+      </svg>
+    </template>
+    <script type="application/json" id="datos-ejemplo">
+    {
+      "plantas": [
+        { "id": "pb", "nombre": "Planta baja", "svg": "#dibujo-ejemplo" },
+        { "id": "p1", "nombre": "Primer piso", "svg": "#dibujo-ejemplo" }
+      ],
+      "antenas": [
+        { "id": "ap-01", "nombre": "AP Pasillo oeste", "planta": "pb", "x": 60, "y": 120, "estado": "activa", "equipo": "plato", "modelo": "UniFi U6 Lite", "nota": "Sobre la puerta del Aula 3" },
+        { "id": "ap-02", "nombre": "AP Pasillo este", "planta": "pb", "x": 320, "y": 120, "estado": "sin-conexion", "equipo": "router", "modelo": "", "nota": "" },
+        { "id": "ap-03", "nombre": "AP Auditorio", "planta": "pb", "x": 345, "y": 150, "estado": "mantenimiento", "equipo": "exterior", "modelo": "UniFi U6 Pro", "nota": "Se cambia el viernes" },
+        { "id": "ap-04", "nombre": "AP Primer piso", "planta": "p1", "x": 200, "y": 120, "estado": "activa", "modelo": "UniFi U6 Lite", "nota": "" }
+      ],
+      "aulas": [
+        { "id": "pb-aula-1", "nombre": "Aula 1", "planta": "pb", "capacidad": 60, "puntos": [[20,20],[140,20],[140,110],[20,110]] },
+        { "id": "pb-aula-2", "nombre": "Aula 2", "planta": "pb", "capacidad": 60, "puntos": [[140,20],[260,20],[260,110],[140,110]] },
+        { "id": "pb-lab", "nombre": "Lab. Informática", "planta": "pb", "capacidad": 30, "puntos": [[260,20],[380,20],[380,110],[260,110]] },
+        { "id": "pb-aula-3", "nombre": "Aula 3", "planta": "pb", "capacidad": 45, "puntos": [[20,130],[140,130],[140,220],[20,220]] },
+        { "id": "pb-auditorio", "nombre": "Auditorio", "planta": "pb", "capacidad": 180, "puntos": [[200,130],[380,130],[380,220],[200,220]] },
+        { "id": "p1-aula-101", "nombre": "Aula 101", "planta": "p1", "capacidad": 60, "puntos": [[20,20],[140,20],[140,110],[20,110]] },
+        { "id": "p1-aula-102", "nombre": "Aula 102", "planta": "p1", "capacidad": 60, "puntos": [[140,20],[260,20],[260,110],[140,110]] }
+      ]
+    }
+    </script>
+    <script type="application/json" id="ocupacion-ejemplo">
+    {
+      "pb-aula-1": { "estado": "ocupada", "hasta": "10:00", "evento": "Álgebra I" },
+      "pb-aula-2": { "estado": "libre", "hasta": "14:00" },
+      "pb-lab": { "estado": "ocupada", "hasta": "12:00", "evento": "Taller de Moodle" },
+      "pb-aula-3": { "estado": "libre" },
+      "p1-aula-101": { "estado": "libre" }
+    }
+    </script>
+
+    <section class="plano" aria-label="Plano del edificio de ejemplo"
+             data-plano="#datos-ejemplo"
+             data-ocupacion="#ocupacion-ejemplo"
+             data-agenda="muestra-agenda.html?aula={id}"
+             data-enlace="no">
+      <p>Para ver el plano hace falta JavaScript.</p>
+    </section>
+
+    <details class="acordeon ext-muestra-ficha">
+      <summary>Cuándo usarlo y cuándo no: planos</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen">
+          <div><dt>Usalo cuando</dt><dd>Lo que importa es <strong>dónde</strong> está algo dentro de un edificio: una antena, un aula, una cámara, un matafuegos. Y hay un plano confiable para dibujarlo.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Alcanza con decir el lugar ("Aula 12, primer piso"): va una tabla.</li><li>Hay que elegir un aula y un horario: va la agenda de aulas. El plano muestra el estado de ahora, no la semana.</li><li>Es para llegar a la sede desde la calle: va un enlace a un mapa.</li><li>No hay plano, o está desactualizado: un plano que miente es peor que una lista.</li></ul></dd></div>
+          <div><dt>Accesibilidad</dt><dd><ul><li>Todo plano tiene su lista ("Plano | Lista"), con los mismos datos. En celular se abre la lista.</li><li>Mover y acercar no dependen de arrastrar: están los botones y el teclado (flechas, <kbd>+</kbd>, <kbd>−</kbd> y <kbd>0</kbd> para ver todo).</li><li>Las antenas y los rótulos de las aulas son botones: se llega con <kbd>Tab</kbd>, y si quedaron fuera de la vista el plano se mueve hasta ahí.</li><li>El estado nunca va solo en color: cada uno tiene su ícono, y el texto está en el rótulo, en el panel y en la lista.</li><li>No hay carteles flotantes: los datos de lo elegido van en el panel del costado.</li><li>El dibujo del plano es decorativo para el lector de pantalla (<code>aria-hidden</code>): lo que informa son los botones y la lista.</li></ul></dd></div>
+          <div><dt>El dibujo</dt><dd>Un SVG de solo trazos, con las clases <code>.plano-trazo</code> (muros), <code>.plano-trazo--suave</code> (lo demás) y <code>.plano-trazo--rotulo</code> (textos). Nunca con los colores de CAD ni como imagen: así se ve bien en claro, en oscuro y al acercar.</dd></div>
+        </dl>
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: plano"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="unpsjb-planos.css"&gt;
+&lt;script src="unpsjb-planos.js" defer&gt;&lt;/script&gt;
+
+&lt;section class="plano" aria-label="Plano de la sede"
+         data-plano="datos/planos.json"
+         data-ocupacion="datos/ocupacion.json"
+         data-agenda="agenda.html?aula={id}"&gt;
+  &lt;p&gt;Para ver el plano hace falta JavaScript.&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;!-- datos/planos.json --&gt;
+{ "plantas": [{ "id": "pb", "nombre": "Planta baja", "svg": "planos/pb.svg" }],
+  "antenas": [{ "id": "ap-01", "nombre": "AP Pasillo", "planta": "pb", "x": 60, "y": 120,
+                "estado": "activa", "modelo": "", "nota": "" }],
+  "aulas":   [{ "id": "pb-aula-1", "nombre": "Aula 1", "planta": "pb", "capacidad": 60,
+                "puntos": [[20,20],[140,20],[140,110],[20,110]] }] }
+
+&lt;!-- datos/ocupacion.json --&gt;
+{ "pb-aula-1": { "estado": "ocupada", "hasta": "10:00", "evento": "Álgebra I" } }</code></pre>
+      </div>
+    </details>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.4</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+  </script>
+</body>
+</html>

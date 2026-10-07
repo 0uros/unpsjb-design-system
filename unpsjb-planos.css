@@ -1,0 +1,262 @@
+/* ==========================================================================
+   unpsjb-planos.css — Módulo de planos · v0.4.4
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 21.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
+   Va junto con unpsjb-planos.js, que arma la pantalla a partir de un archivo
+   de datos. Ejemplo completo: muestra-planos.html.
+
+   La idea:
+   - El plano es el fondo: se dibuja en neutros, nunca con los colores de CAD.
+     El color queda para lo que se marca encima (antenas, aulas).
+   - Lo que se marca son botones, no dibujos: una antena mide siempre lo mismo
+     aunque se acerque o se aleje el plano.
+   - Todo plano tiene su lista. Es la forma de usarlo en celular y con lector
+     de pantalla.
+   - Lo elegido va en azul, nunca en naranja: el naranja es foco y "estás acá".
+   - No hay carteles flotantes: los datos de lo elegido van en un panel fijo.
+
+   Piezas
+   1. Barra (.plano__barra)
+   2. Lienzo y dibujo (.plano__lienzo, .plano-trazo)
+   3. Aulas (.plano-zona, .plano-rotulo)
+   4. Antenas (.plano-marca)
+   5. Referencias, detalle y lista
+   6. Celular, impresión y alto contraste
+   ========================================================================== */
+
+.plano { font: var(--texto-base); }
+
+/* 1. Barra ----------------------------------------------------------------- */
+/* Plantas a la izquierda; "Plano | Lista" último, contra el borde derecho.
+   Lo que aparece y desaparece (capas, acercar) queda en el medio. */
+.plano__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-4);
+  margin-bottom: var(--espacio-3);
+}
+.plano__capas, .plano__zoom { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-1) var(--espacio-4); }
+.plano__zoom { gap: var(--espacio-1); }
+.plano__barra > :last-child { margin-left: auto; }
+
+.plano__cuerpo { display: grid; gap: var(--espacio-4); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1024px) { .plano__cuerpo { grid-template-columns: minmax(0, 1fr) 280px; } }
+
+/* 2. Lienzo y dibujo ------------------------------------------------------- */
+/* El alto sale de la proporción del plano (--plano-proporcion, la pone el
+   script), sin pasar de lo que entra en la ventana. */
+.plano__lienzo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--plano-proporcion, 16 / 9);
+  min-height: 280px;
+  max-height: 70vh;
+  overflow: clip;
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+  cursor: grab;
+  touch-action: none;         /* el dedo mueve el plano; la página se mueve tocando fuera */
+  user-select: none;
+}
+.plano__lienzo:focus-visible { outline: 0; box-shadow: var(--anillo-foco); }
+.plano__lienzo--moviendo { cursor: grabbing; }
+.plano__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plano__cargando { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--color-tinta-2); }
+
+/* El dibujo. Las líneas no engordan al acercar: es un plano, no una foto.
+   .plano-trazo           muros, columnas, aberturas
+   .plano-trazo--rotulo   nombres escritos en el plano original
+   .plano-trazo--suave    lo demás: escaleras, cotas, mobiliario */
+.plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+.plano-trazo { color: var(--color-tinta-2); }
+.plano-trazo--rotulo { color: var(--color-tinta-2); stroke-width: 0.75px; }
+.plano-trazo--suave { color: var(--color-linea-control); stroke-width: 0.75px; }
+
+/* 3. Aulas ----------------------------------------------------------------- */
+/* La forma del aula (un polígono del SVG) y su rótulo (un botón). El estado va
+   en el ícono y en el texto del rótulo; el color acompaña.
+   Ocupada no es un error: va en neutro, no en rojo. */
+.plano-zona {
+  --zona: var(--color-primario-texto);
+  fill: color-mix(in srgb, var(--zona) 10%, transparent);
+  stroke: var(--zona);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill var(--duracion-rapida) var(--curva);
+}
+.plano-zona--libre { --zona: var(--color-exito-texto); }
+.plano-zona--ocupada { --zona: var(--color-tinta-2); fill: color-mix(in srgb, var(--zona) 22%, transparent); }
+/* Lo que no se reserva (una oficina, la biblioteca): sin estado, casi sin relleno */
+.plano-zona--fija { --zona: var(--color-linea-control); fill: color-mix(in srgb, var(--zona) 8%, transparent); stroke-width: 1px; }
+.plano-zona:hover { fill: color-mix(in srgb, var(--zona) 28%, transparent); }
+.plano-zona--elegida { stroke: var(--color-primario-texto); stroke-width: 3px; }
+
+/* Rótulo y marca comparten cómo se ubican: el script pasa el punto en --x, --y */
+.plano-rotulo, .plano-marca {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%));
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.plano-rotulo::after, .plano-marca::after { content: ""; position: absolute; inset: -8px; }  /* área para el dedo */
+.plano-rotulo:focus-visible, .plano-marca:focus-visible { outline: 0; box-shadow: var(--anillo-foco); z-index: 2; }
+
+/* <button class="plano-rotulo plano-rotulo--libre"><svg class="icono">…</svg>
+     <span class="plano-rotulo__nombre">Aula 1</span>
+     <span class="plano-rotulo__estado">Libre</span></button> */
+.plano-rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: 28px;
+  padding: 0 var(--espacio-2);
+  font: 700 0.8125rem/1.2 var(--fuente-texto);
+  white-space: nowrap;
+  color: var(--color-tinta);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-control);
+}
+.plano-rotulo .icono { width: 14px; height: 14px; color: var(--color-tinta-2); }
+.plano-rotulo--libre .icono { color: var(--color-exito-texto); }
+.plano-rotulo__estado { font-weight: 400; color: var(--color-tinta-2); }
+.plano-rotulo__estado::before { content: "· "; }
+/* Cuando el aula se ve chica, el rótulo se acorta para no salirse de ella:
+   --medio  sin el estado      --corto  solo el nombre      --chico  solo el ícono
+   El nombre y el estado siguen estando para el lector de pantalla (aria-label). */
+.plano-rotulo--medio .plano-rotulo__estado,
+.plano-rotulo--corto .plano-rotulo__estado,
+.plano-rotulo--corto .icono,
+.plano-rotulo--chico .plano-rotulo__estado,
+.plano-rotulo--chico .plano-rotulo__nombre { display: none; }
+/* Lo que no se reserva no tiene estado: su ícono aparece solo cuando no entra el nombre */
+.plano-rotulo--fija:not(.plano-rotulo--chico) .icono { display: none; }
+.plano-rotulo--corto { padding: 0 var(--espacio-1); }
+.plano-rotulo--chico { padding: 0; width: 28px; justify-content: center; }
+.plano-rotulo:hover { border-color: var(--color-primario-texto); }
+.plano-rotulo[aria-pressed="true"] {
+  border-color: var(--color-primario-texto);
+  background: color-mix(in srgb, var(--color-primario-texto) 14%, var(--color-panel));
+  outline: 1px solid var(--color-primario-texto);
+}
+
+/* 4. Antenas --------------------------------------------------------------- */
+/* <button class="plano-marca plano-marca--sin-conexion" aria-label="Antena AP Hall, sin conexión">
+     <svg class="icono">…dibujo del equipo…</svg>
+     <span class="plano-marca__aviso"><svg class="icono">…</svg></span></button>
+   Un círculo de 26px con el dibujo del equipo (de plato, exterior, módem). El
+   estado va en el color del borde y, si no está activa, en un aviso en la
+   esquina con su propio ícono: no depende solo del color. */
+.plano-marca {
+  --marca: var(--color-tinta-2);
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  color: var(--color-tinta);
+  background: var(--color-panel);
+  border: 2px solid var(--marca);
+  border-radius: var(--radio-completo);
+  z-index: 1;
+}
+.plano-marca::after { inset: -9px; }
+.plano-marca > .icono { width: 16px; height: 16px; }
+.plano-marca--activa { --marca: var(--color-exito-texto); }
+.plano-marca--sin-conexion { --marca: var(--color-error-texto); }
+.plano-marca--mantenimiento { --marca: var(--color-advertencia-texto); }
+.plano-marca:hover { background: color-mix(in srgb, var(--marca) 14%, var(--color-panel)); }
+.plano-marca__aviso {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  color: var(--color-panel);
+  background: var(--marca);
+  border-radius: var(--radio-completo);
+}
+.plano-marca__aviso .icono { width: 10px; height: 10px; stroke-width: 3; }
+/* La elegida: un aro azul alrededor. Conserva el color de su estado. */
+.plano-marca[aria-pressed="true"] { outline: 3px solid var(--color-primario-texto); outline-offset: 2px; }
+/* La misma marca en las referencias, sin ubicar */
+.plano-marca--muestra { position: relative; transform: none; cursor: default; flex-shrink: 0; margin-right: var(--espacio-1); }
+.plano-marca--muestra::after { content: none; }
+
+/* 5. Referencias, detalle y lista ------------------------------------------ */
+.plano__nota { margin: var(--espacio-2) 0 0; font: var(--texto-detalle); color: var(--color-tinta-2); max-width: none; }
+.plano__referencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1) var(--espacio-6);
+  margin: var(--espacio-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font: var(--texto-detalle);
+  color: var(--color-tinta);
+}
+.plano__referencias li { display: inline-flex; align-items: center; gap: var(--espacio-2); }
+.plano__referencias > li > .icono { width: 16px; height: 16px; }
+.plano__referencia--exito .icono { color: var(--color-exito-texto); }
+.plano__referencia--error .icono { color: var(--color-error-texto); }
+.plano__referencia--advertencia .icono { color: var(--color-advertencia-texto); }
+
+/* Detalle: la ficha de lo elegido, siempre en el mismo lugar */
+.plano__detalle > :first-child { margin-top: 0; }
+/* El panel es angosto: cada dato va debajo de su nombre */
+.plano__detalle .resumen > div { grid-template-columns: 1fr; gap: 0; }
+.plano__titulo { margin: 0 0 var(--espacio-1); font: var(--texto-titulo-3); }
+.plano__tipo { margin: 0 0 var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); }
+.plano__vacio { margin: 0; color: var(--color-tinta-2); }
+/* El tipo de equipo de una antena: su dibujo y su nombre */
+.plano__equipo { display: inline-flex; align-items: center; gap: var(--espacio-2); }
+.plano__dibujo { width: 32px; height: 32px; stroke-width: 1.5; color: var(--color-tinta-2); }
+.plano__acciones { display: flex; flex-wrap: wrap; gap: var(--espacio-2); margin-top: var(--espacio-4); }
+.plano__acciones:empty { display: none; }
+
+.plano__lista > * + * { margin-top: var(--espacio-6); }
+.plano__subtitulo { margin: 0 0 var(--espacio-2); font: var(--texto-titulo-3); }
+/* El nombre de cada fila es un botón con aspecto de enlace: la elige */
+.plano__ir {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--color-primario-texto);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.plano__ir:hover { text-decoration-thickness: 2px; }
+
+/* 6. Celular, impresión y alto contraste ----------------------------------- */
+@media (max-width: 639px) {
+  .plano__barra > :last-child { margin-left: 0; }
+  .plano__lienzo { max-height: 60vh; }
+}
+@media (prefers-reduced-motion: reduce) { .plano-zona { transition: none; } }
+@media print {
+  .plano__barra, .plano__nota { display: none; }
+  .plano__lienzo { max-height: none; border-color: var(--color-linea-control); break-inside: avoid; }
+  .plano__lista[hidden] { display: block; }          /* en papel van el plano y la lista */
+  .plano-zona, .plano-marca, .plano-rotulo { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+@media (forced-colors: active) {
+  .plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { color: CanvasText; }
+  .plano-zona { fill: none; stroke: ButtonText; }
+  .plano-zona--elegida { stroke: Highlight; }
+  .plano-marca[aria-pressed="true"], .plano-rotulo[aria-pressed="true"] { outline-color: Highlight; }
+  .plano-marca__aviso { background: ButtonText; color: ButtonFace; }
+}
