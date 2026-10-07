@@ -1,128 +1,126 @@
 /* ==========================================================================
-   unpsjb-video.css — Módulo de video (visor de cámaras) · v0.4.2
+   unpsjb-video.css — Módulo de video (visor de cámaras) · en curso, después de la 0.4.4
    Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 16.B.
 
-   Se carga DESPUÉS de unpsjb.css y usa sus tokens. El único color propio es el
-   negro detrás del video. Ejemplo completo: muestra-video.html.
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens. Los únicos colores propios
+   son los del video: el negro de fondo y lo que se escribe encima de la imagen.
+   Ejemplo completo: muestra-video.html.
 
    La idea:
+   - Lo primero es el tamaño de las cámaras. El muro ocupa todo el ancho y todo
+     el alto libres de la ventana, y nada de lo que lo rodea le saca alto: no
+     hay encabezado de pantalla ni barra de herramientas arriba, y el nombre de
+     cada cámara va encima de la imagen, no debajo.
+   - Los controles van en un panel a la izquierda, que se pliega a un riel
+     angosto. Plegado, el muro gana ese ancho.
    - El video va siempre sobre negro. El resto respeta el tema elegido: el
      visor no fuerza el modo oscuro.
-   - Al entrar, el muro se ve entero sin hacer scroll: las cámaras se achican
-     o se agrandan según el alto de la ventana (0.4.2).
-   - El estado de cada cámara se dice con ícono y texto (insignias), nunca
-     solo con color, y sin nada que parpadee.
+   - El estado de cada cámara se dice con ícono y texto, nunca solo con color,
+     y sin nada que parpadee.
    - La línea de tiempo no depende de arrastrar: hay botones de salto, un campo
      de hora y un control que se mueve con las flechas.
 
    Piezas
-   1. Muro de cámaras (.muro, .camara)
-   2. Lista de cámaras (.camaras-panel, .camaras-lista)
-   3. Línea de tiempo (.linea-tiempo)
-   4. Pantalla completa
-   5. Impresión
+   1. Visor: panel lateral y muro (.visor, .visor__lateral)
+   2. Muro y vistas de 1, 4, 5, 6 y 9 cámaras (.muro)
+   3. Cámara (.camara)
+   4. Lista de cámaras (.camaras-lista)
+   5. Línea de tiempo (.linea-tiempo)
+   6. Pantalla completa
+   7. Impresión
    ========================================================================== */
 
-:root { --color-video-fondo: #000000; --color-video-texto: #c7d7ea; }
+/* Encima de la imagen siempre hay una barra oscura, en claro y en oscuro: por
+   eso estos colores no cambian con el tema. Son los del semáforo en modo oscuro. */
+:root {
+  --color-video-fondo: #000000;
+  --color-video-texto: #ffffff;
+  --color-video-barra: rgb(0 0 0 / 0.75);
+  --color-video-exito: #34d399;
+  --color-video-info: #7ab3f0;
+  --color-video-error: #fb7185;
+}
 
-/* 1. Muro ------------------------------------------------------------------ */
-/* <div class="muro" data-camaras="4"> <figure class="camara">…</figure> … </div>
-   data-camaras: 1, 4 o 9. En celular siempre va una por renglón.
-
-   Desde 768px el muro entra entero en la ventana (0.4.2). Las celdas siguen en
-   16:9: lo que cambia es el ancho del muro, que se calcula a partir del alto
-   libre. Si el alto sobra, manda el ancho de la columna.
-   El alto libre es el de la ventana menos lo que hay arriba del muro. Ese dato
-   lo pone la página en --visor-arriba (en píxeles), midiendo dónde empieza el
-   muro; ver el script de muestra-video.html. Sin ese dato se usa un valor
-   aproximado. Con ventanas muy bajas el muro no baja de 320px de alto: ahí
-   vuelve el scroll, en lugar de dejar cámaras ilegibles. */
-.muro {
-  --muro-lado: 1;                                               /* cámaras por lado */
-  --muro-pie: calc(var(--alto-control) + var(--espacio-2));     /* alto del pie de cada cámara */
+/* 1. Visor ----------------------------------------------------------------- */
+/* La pantalla "En vivo": el panel a la izquierda y el muro a la derecha.
+   <div class="visor" data-lista="abierta">
+     <aside class="visor__lateral" aria-label="Cámaras y vista">
+       <div class="visor__titulo"> <h1>Cámaras en vivo</h1>
+         <button class="boton boton--tranquilo visor__plegar" aria-expanded="true" aria-controls="…">…</button> </div>
+       <fieldset class="segmentado visor__vistas">…1 · 4 · 5 · 6 · 9…</fieldset>
+       <button class="boton boton--secundario visor__completa">…Pantalla completa</button>
+       <div class="visor__lista" id="…"> [buscador] <p class="visor__ayuda">…</p> <ul class="camaras-lista">…</ul>
+         <label class="interruptor visor__llenar">…Llenar el cuadro</label> </div>
+     </aside>
+     <div class="muro" data-camaras="4">…</div>
+   </div>
+   - El título de la pantalla (el h1) va dentro del panel: no hay un .encabezado
+     arriba del muro, que le sacaría alto.
+   - data-lista="plegada": desde 1024px el panel queda como un riel con los
+     controles en columna (desplegar, 1 · 4 · 5 · 6 · 9, pantalla completa) y
+     el muro gana el ancho de la lista. Con menos ancho el panel va arriba del
+     muro y "plegada" esconde solo la lista; ahí arranca plegada, para que al
+     entrar se vean las cámaras.
+   - El alto libre es el de la ventana menos lo que hay arriba del muro. Ese
+     dato lo pone la página en --visor-arriba (en píxeles), midiendo dónde
+     empieza el muro; ver el script de muestra-video.html. Sin ese dato se usa
+     un valor aproximado. */
+.visor {
+  --visor-alto: max(320px, calc(100dvh - var(--visor-arriba, calc(var(--alto-cabecera) + var(--espacio-3))) - var(--espacio-3)));
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-3);
+  padding-top: var(--espacio-3);
 }
-@media (min-width: 640px) {
-  .muro[data-camaras="4"], .muro[data-camaras="9"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 768px) {
-  .muro {
-    --muro-alto: max(320px, calc(100dvh - var(--visor-arriba, calc(var(--alto-cabecera) + 72px)) - var(--espacio-4)));
-    /* Lo que no es video: el pie y el borde de cada fila, y los espacios entre filas */
-    --muro-fijo: calc(var(--muro-lado) * (var(--muro-pie) + 2px) + (var(--muro-lado) - 1) * var(--espacio-3));
-    width: min(100%, calc((var(--muro-alto) - var(--muro-fijo)) * 16 / 9 + (var(--muro-lado) - 1) * var(--espacio-3)));
-    margin-inline: auto;
-    grid-template-columns: repeat(var(--muro-lado), minmax(0, 1fr));
-  }
-  .muro[data-camaras="4"] { --muro-lado: 2; grid-template-columns: repeat(var(--muro-lado), minmax(0, 1fr)); }
-  .muro[data-camaras="9"] { --muro-lado: 3; grid-template-columns: repeat(var(--muro-lado), minmax(0, 1fr)); }
-  .muro .camara__pie { height: var(--muro-pie); }
-}
-/* La pantalla del visor gasta poco alto en su encabezado: lo que sobra va al muro.
-   <div class="encabezado encabezado--visor"> <h1>Cámaras en vivo</h1> <div class="fila">…</div> </div> */
-@media (min-width: 768px) {
-  .encabezado--visor { padding-block: var(--espacio-4) var(--espacio-3); }
-}
-
-/* Una cámara: el video arriba y, debajo, su nombre, su estado y sus acciones.
-   <figure class="camara">
-     <div class="camara__video"><video …></video></div>
-     <figcaption class="camara__pie"><span class="camara__nombre">01 · Acceso principal</span>
-       <span class="insignia insignia--exito">…<span class="camara__estado">En vivo</span></span>
-       <button class="boton boton--icono" aria-label="Ampliar Acceso principal">…</button></figcaption>
-   </figure> */
-.camara {
-  container: camara / inline-size;
-  margin: 0;
+.visor__lateral {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
   min-width: 0;
+  padding: var(--espacio-3);
   background: var(--color-panel);
   border: 1px solid var(--color-linea);
   border-radius: var(--radio-contenedor);
-  overflow: hidden;
 }
-.camara__video {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 9;
-  min-height: 0;
-  overflow: hidden;
-  color: var(--color-video-texto);
-  background: var(--color-video-fondo);
-}
-.camara__video > video, .camara__video > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-.camara__pie {
-  display: flex;
-  align-items: center;
-  gap: var(--espacio-2);
-  min-height: var(--alto-control);
-  padding: var(--espacio-1) var(--espacio-1) var(--espacio-1) var(--espacio-3);
-}
-.camara__nombre { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font: var(--texto-label); color: var(--color-tinta); }
+.visor__titulo { flex: 1 1 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--espacio-2); min-width: 0; }
+.visor__titulo h1 { margin: 0; font: var(--texto-titulo-3); letter-spacing: 0; }
+.visor__vistas { flex: 1 1 auto; display: flex; }
+.visor__vistas label { flex: 1 1 0; justify-content: center; padding: 0 var(--espacio-2); font-variant-numeric: tabular-nums; }
+.visor__lista { flex: 1 1 100%; display: flex; flex-direction: column; gap: var(--espacio-2); min-width: 0; min-height: 0; }
+.visor[data-lista="plegada"] .visor__lista { display: none; }
+/* El botón que pliega: en pantallas angostas dice "Lista" y lleva una flecha */
+.visor__plegar { flex-shrink: 0; gap: var(--espacio-1); padding: 0 var(--espacio-2); color: var(--color-tinta-2); }
+.visor__plegar .icono { width: 20px; height: 20px; transition: transform var(--duracion-rapida) var(--curva); }
+.visor__plegar .visor__icono-plegar, .visor__plegar .visor__icono-desplegar { display: none; }
+.visor__plegar[aria-expanded="true"] .visor__icono-flecha { transform: rotate(180deg); }
+/* Llenar el cuadro: agranda la imagen hasta tapar toda su celda y recorta lo
+   que sobra. Apagado (lo normal) la imagen se ve entera. */
+.visor__llenar { margin-top: var(--espacio-1); padding-top: var(--espacio-2); border-top: 1px solid var(--color-linea); font: var(--texto-detalle); }
+.visor__llenar small { display: block; font: var(--texto-nota); color: var(--color-tinta-2); }
+/* Una línea que dice cómo cambiar una cámara de lugar, y el paso que sigue */
+.visor__ayuda { margin: 0; max-width: none; font: var(--texto-nota); color: var(--color-tinta-2); }
 
-/* Sin señal: no hay video. La celda lo dice y dice qué hacer.
-   <div class="camara__video camara__video--sin-senal"><svg class="icono">video-off</svg>
-   <p><strong>Sin señal</strong><span>Cámara 04 desconectada. Avisá a Soporte Informático.</span></p></div> */
-.camara__video--sin-senal {
-  flex-direction: column;
-  gap: var(--espacio-2);
-  padding: var(--espacio-4);
-  text-align: center;
-  color: var(--color-tinta-2);
-  background: var(--color-capa);
-}
-.camara__video--sin-senal .icono { width: 32px; height: 32px; }
-.camara__video--sin-senal p { margin: 0; max-width: 28ch; font: var(--texto-detalle); }
-.camara__video--sin-senal strong { display: block; font: var(--texto-label); color: var(--color-tinta); }
+@media (min-width: 1024px) {
+  .visor { grid-template-columns: 280px minmax(0, 1fr); align-items: start; }
+  .visor__lateral { flex-direction: column; flex-wrap: nowrap; align-items: stretch; height: var(--visor-alto); }
+  .visor__titulo, .visor__vistas, .visor__lista { flex: 0 0 auto; }
+  .visor__lista { flex: 1 1 0; }
+  .visor__llenar { margin-top: auto; }
+  /* Con tres clases, para ganarle al relleno de los botones en densidad compacta */
+  .visor__titulo .boton.visor__plegar { width: var(--alto-control); padding: 0; }
+  .visor__plegar .visor__icono-flecha, .visor__plegar span { display: none; }
+  .visor__plegar[aria-expanded="true"] .visor__icono-plegar,
+  .visor__plegar[aria-expanded="false"] .visor__icono-desplegar { display: block; }
 
-/* Celdas chicas (un muro de 9 en una notebook): la insignia queda solo con su
-   ícono, que es distinto en cada estado, y "Sin señal" queda sin la explicación.
-   Los dos textos siguen estando para el lector de pantalla. */
-@container camara (max-width: 300px) {
-  .camara__estado, .camara__video--sin-senal p span {
+  /* El riel */
+  .visor[data-lista="plegada"] { grid-template-columns: auto minmax(0, 1fr); }
+  .visor[data-lista="plegada"] .visor__lateral { align-items: center; padding: var(--espacio-1); }
+  .visor[data-lista="plegada"] .visor__vistas { flex-direction: column; }
+  .visor[data-lista="plegada"] .visor__vistas label { flex: 0 0 auto; width: calc(var(--alto-control) - 6px); padding: 0; }
+  .visor[data-lista="plegada"] .visor__completa { width: var(--alto-control); padding: 0; }
+  /* En el riel el título y el texto del botón no se ven, pero siguen estando para el lector de pantalla */
+  .visor[data-lista="plegada"] :is(.visor__titulo h1, .visor__completa span) {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -130,63 +128,328 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  .camara__pie { gap: var(--espacio-1); padding-left: var(--espacio-2); }
-  .camara__pie .insignia { gap: 0; padding: var(--espacio-1); }
-  .camara__video--sin-senal { gap: var(--espacio-1); padding: var(--espacio-2); }
-  .camara__video--sin-senal .icono { width: 24px; height: 24px; }
 }
 
-/* 2. Lista de cámaras ------------------------------------------------------ */
-/* Va en la columna de 280px de .grilla--lateral, dentro de un panel que se
-   pliega (0.4.2):
-   <details class="acordeon camaras-panel" open><summary>Cámaras (9)</summary>
-     <div class="camaras-panel__cuerpo"> [buscador] <ul class="camaras-lista">…</ul> </div></details>
-   - Desde 1024px está siempre abierto y sin título: es la columna de la izquierda.
-     Si la lista es larga, tiene su propio scroll y no estira la primera pantalla.
-   - Con menos ancho va arriba del muro y arranca plegado (lo cierra la página al
-     cargar), para que al entrar se vean las cámaras y no la lista. */
-.camaras-panel__cuerpo { display: flex; flex-direction: column; gap: var(--espacio-3); }
-@media (max-width: 1023px) {
-  .camaras-panel__cuerpo { padding-bottom: var(--espacio-4); }
-}
-@media (min-width: 1024px) {
-  .camaras-panel { border: 0; }
-  .camaras-panel > summary { display: none; }
-  .camaras-panel__cuerpo { max-height: max(320px, calc(100dvh - var(--visor-arriba, calc(var(--alto-cabecera) + 72px)) - var(--espacio-4))); }
-  .camaras-panel .camaras-lista { min-height: 0; overflow-y: auto; }
-}
+/* 2. Muro ------------------------------------------------------------------ */
+/* <div class="muro" data-camaras="6"> <figure class="camara">…</figure> … </div>
+   data-camaras dice la vista. Las cámaras se muestran en el orden en que están:
+   las primeras son las grandes en las vistas de 5 (dos) y de 6 (una).
 
-/* Cada cámara es un botón con su nombre y el ícono de su estado; el estado
-   también va en texto, para el lector de pantalla. La elegida lleva aria-current="true".
-   <ul class="camaras-lista"><li><button type="button" aria-current="true">
-     <svg class="icono">video</svg><span>01 · Acceso principal</span>
-     <span class="solo-lector">, en vivo</span></button></li> … </ul> */
-.camaras-lista { margin: 0; padding: 0; list-style: none; }
-.camaras-lista button {
+     1        4       5 (dos grandes + 3)    6 (una grande + 5)     9
+   ┌────┐  ┌──┬──┐    ┌─────┬─────┐          ┌───────┬───┐         ┌──┬──┬──┐
+   │    │  ├──┼──┤    │     │     │          │       ├───┤         ├──┼──┼──┤
+   └────┘  └──┴──┘    ├───┬─┴─┬───┤          ├───┬───┼───┤         ├──┼──┼──┤
+                      └───┴───┴───┘          └───┴───┴───┘         └──┴──┴──┘
+
+   Desde 768px el muro ocupa todo el ancho libre y, de alto, lo que piden sus
+   celdas en 16:9, sin pasarse nunca del alto libre de la ventana: así se ve
+   entero, sin scroll. Cuando el alto no alcanza, las celdas quedan más anchas
+   que 16:9 y la imagen, que no se deforma ni se recorta, deja negro a los
+   costados. La vista de 5 es más apaisada que las otras (32:15 contra 16:9):
+   en una pantalla ancha y baja es la que mejor aprovecha el lugar.
+   En celular, una cámara por renglón, en 16:9.
+
+   .muro--llenar: la imagen tapa toda su celda y se recorta lo que sobra. */
+.muro {
+  --muro-columnas: 1;
+  --muro-filas: 1;
+  --muro-ancho: 16;      /* proporción del muro entero */
+  --muro-alto: 9;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-2);
+  min-width: 0;
+}
+@media (min-width: 768px) {
+  .muro {
+    width: 100%;
+    min-height: 0;
+    max-height: var(--visor-alto);
+    aspect-ratio: var(--muro-ancho) / var(--muro-alto);
+    grid-template-columns: repeat(var(--muro-columnas), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--muro-filas), minmax(0, 1fr));
+  }
+  .muro[data-camaras="4"] { --muro-columnas: 2; --muro-filas: 2; }
+  /* 5: dos arriba (la mitad del ancho cada una) y tres abajo (un tercio), todas en 16:9 */
+  .muro[data-camaras="5"] { --muro-columnas: 6; --muro-filas: 5; --muro-ancho: 32; --muro-alto: 15; }
+  .muro[data-camaras="5"] > .camara { grid-column: span 2; grid-row: span 2; }
+  .muro[data-camaras="5"] > .camara:nth-child(-n+2) { grid-column: span 3; grid-row: span 3; }
+  .muro[data-camaras="6"], .muro[data-camaras="9"] { --muro-columnas: 3; --muro-filas: 3; }
+  /* 6: la destacada ocupa dos columnas y dos filas; las demás se acomodan solas */
+  .muro[data-camaras="6"] > .camara:first-child { grid-column: span 2; grid-row: span 2; }
+}
+/* 3. Cámara ---------------------------------------------------------------- */
+/* La imagen ocupa toda la celda y, encima, una barra con el nombre, el estado
+   y las acciones:
+   <figure class="camara">
+     <div class="camara__video"><video …></video></div>
+     <figcaption class="camara__barra">
+       <button type="button" class="camara__nombre" aria-pressed="false">01 · Acceso principal</button>
+       <span class="insignia insignia--exito">…<span class="camara__estado">En vivo</span></span>
+       <span class="camara__acciones">
+         <button class="boton boton--icono camara__ampliar camara__ampliar--izquierda" aria-label="Ampliar … a la izquierda">arrow-up-left</button>
+         <button class="boton boton--icono camara__ampliar camara__ampliar--derecha" aria-label="Ampliar … a la derecha">arrow-up-right</button>
+         <button class="boton boton--icono camara__ampliar" aria-label="Ampliar …">maximize-2</button>
+         <button class="boton boton--icono camara__completa" aria-label="… en pantalla completa" hidden>fullscreen</button>
+         <button class="boton camara__quitar">x<span>Quitar</span></button>
+       </span></figcaption>
+   </figure>
+   - La barra tapa una franja de la imagen. A cambio no le saca alto al muro: con
+     el nombre debajo, en un muro de 9 se iba un tercio del alto en rótulos.
+   - Es oscura al 75%: lo escrito encima se lee igual sea cual sea la imagen
+     (blanco, 10:1 o más; los íconos de estado, 3,7:1 o más sobre una imagen blanca).
+
+   Dos acciones distintas, con dos íconos distintos:
+   - "Ampliar" agranda la cámara DENTRO del muro. En la vista de 6 la pasa al
+     lugar grande; en la de 5 hay dos botones, uno por cada lugar grande
+     (izquierda y derecha); en las de 4 y de 9, la deja sola. Solo lo llevan las
+     cámaras chicas. La hoja muestra el botón que corresponde a cada vista.
+   - "Pantalla completa" deja esa cámara como lo único que se ve en el monitor,
+     sin nada de la interfaz, como un video. La barra aparece unos segundos al
+     mover el mouse, tocar la pantalla o usar el teclado (.camara--controles), y
+     ahí está el botón para salir; también se sale con Esc. El botón lleva
+     hidden y la página lo muestra si el navegador lo permite.
+
+   Qué cámara va en cada lugar, sin arrastrar: se toca su recuadro (el nombre es
+   un botón, con aria-pressed; con el mouse sirve toda la imagen) y después otro
+   recuadro, y las dos se intercambian. O se toca una cámara de la lista, y pasa
+   a ese lugar. El recuadro elegido lleva un marco azul y la barra en azul
+   institucional, y en la barra queda solo "Quitar", que saca la cámara del muro
+   y deja su lugar vacío (ver .camara--vacia). Esc cancela. */
+.camara {
+  --camara-barra: var(--alto-control);
+  container: camara / inline-size;
+  position: relative;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-video-fondo);
+  border-radius: var(--radio-contenedor);
+}
+@media (min-width: 768px) {
+  .camara { --camara-barra: 32px; aspect-ratio: auto; }
+}
+.camara__video { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-video-texto); }
+.camara__video > video, .camara__video > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.muro--llenar .camara__video > video, .muro--llenar .camara__video > img { object-fit: cover; }
+.camara__barra {
+  position: absolute;
+  inset: 0 0 auto 0;
   display: flex;
   align-items: center;
   gap: var(--espacio-2);
+  height: var(--camara-barra);
+  padding: 0 var(--espacio-1) 0 var(--espacio-3);
+  color: var(--color-video-texto);
+  background: var(--color-video-barra);
+  --anillo-foco: 0 0 0 2px var(--color-acento);
+}
+.camara__nombre {
+  flex: 1;
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  font: 700 0.875rem/1.2 var(--fuente-texto);
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+}
+button.camara__nombre, .camara:has(button.camara__nombre) .camara__video { cursor: pointer; }
+button.camara__nombre:focus-visible { box-shadow: inset var(--anillo-foco); }
+/* El recuadro elegido para cambiarlo de lugar */
+.camara:has([aria-pressed="true"]) { outline: 3px solid var(--color-primario-texto); outline-offset: 2px; }
+.camara:has([aria-pressed="true"]) .camara__barra { background: var(--color-primario); }
+/* El estado, sobre la barra: texto blanco y el ícono con el color del estado */
+.camara__barra .insignia { flex-shrink: 0; padding: 0; font: 700 0.8125rem/1.2 var(--fuente-texto); color: var(--color-video-texto); background: none; }
+.camara__barra .insignia--exito .icono { color: var(--color-video-exito); }
+.camara__barra .insignia--info .icono { color: var(--color-video-info); }
+.camara__barra .insignia--error .icono { color: var(--color-video-error); }
+.camara__acciones { flex-shrink: 0; display: flex; align-items: center; gap: 2px; }
+.camara__barra .boton {
+  flex-shrink: 0;
+  gap: var(--espacio-1);
+  height: calc(var(--camara-barra) - var(--espacio-1));
+  min-height: 0;
+  padding: 0 var(--espacio-2);
+  font: 700 0.8125rem/1.2 var(--fuente-texto);
+  color: var(--color-video-texto);
+  background: transparent;
+}
+.camara__barra .boton--icono { width: calc(var(--camara-barra) - var(--espacio-1)); padding: 0; }
+.camara__barra .boton:hover { color: var(--color-video-texto); background: rgb(255 255 255 / 0.18); }
+.camara__barra .boton .icono { width: 16px; height: 16px; }
+
+/* Qué botón se ve en cada caso. Sin nada más, se ven "Ampliar" y "Pantalla completa". */
+.camara__ampliar--izquierda, .camara__ampliar--derecha, .camara__quitar { display: none; }
+/* En celular las cámaras van una debajo de la otra: no hay lugar grande al que ampliar */
+@media (max-width: 767px) { .camara__ampliar { display: none; } }
+@media (min-width: 768px) {
+  .muro[data-camaras="1"] .camara__ampliar,
+  .muro[data-camaras="5"] .camara__ampliar,
+  .muro[data-camaras="6"] > .camara:first-child .camara__ampliar { display: none; }
+  .muro[data-camaras="5"] > .camara:nth-child(n+3) :is(.camara__ampliar--izquierda, .camara__ampliar--derecha) { display: inline-flex; }
+}
+/* Con el recuadro elegido queda solo "Quitar" */
+.camara:has([aria-pressed="true"]) .camara__barra .boton:not(.camara__quitar) { display: none; }
+.camara:has([aria-pressed="true"]) .camara__quitar { display: inline-flex; }
+
+/* Lugar vacío: lo que queda al quitar una cámara del muro. Todo el recuadro es
+   un botón: se lo toca y después se elige en la lista la cámara que va ahí.
+   <div class="camara camara--vacia"><button type="button" class="camara__vacia" aria-pressed="false">
+     <svg class="icono">plus</svg><strong>Lugar vacío</strong><span>Tocalo y elegí una cámara de la lista</span></button></div> */
+.camara--vacia { background: none; border: 1px dashed var(--color-linea-control); }
+.camara__vacia {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-1);
   width: 100%;
+  margin: 0;
+  padding: var(--espacio-2);
+  font: var(--texto-nota);
+  text-align: center;
+  color: var(--color-tinta-2);
+  background: none;
+  border: 0;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.camara__vacia strong { font: var(--texto-label); color: var(--color-tinta); }
+.camara__vacia .icono { width: 24px; height: 24px; }
+.camara__vacia:hover, .camara__vacia[aria-pressed="true"] { background: var(--color-tinte); }
+.camara__vacia:focus-visible { box-shadow: inset 0 0 0 2px var(--color-acento), inset 0 0 0 4px var(--color-primario); }
+
+/* Una cámara en pantalla completa: la imagen sola. La barra está, pero no se
+   ve hasta que la persona hace algo (o llega con Tab), y vuelve a irse. */
+.camara:fullscreen { --camara-barra: var(--alto-control); width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; cursor: none; }
+.camara:fullscreen .camara__video { cursor: inherit; }
+.camara:fullscreen .camara__barra { opacity: 0; pointer-events: none; transition: opacity var(--duracion-normal) var(--curva); }
+.camara:fullscreen:is(.camara--controles, :has(:focus-visible)) { cursor: auto; }
+.camara:fullscreen:is(.camara--controles, :has(:focus-visible)) .camara__barra { opacity: 1; pointer-events: auto; }
+.camara:fullscreen .camara__barra .boton:not(.camara__completa) { display: none; }
+.camara:fullscreen .camara__nombre { cursor: default; }
+
+/* Sin señal: no hay video. La celda lo dice y dice qué hacer.
+   <div class="camara__video camara__video--sin-senal"><svg class="icono">video-off</svg>
+   <p><strong>Sin señal</strong><span>Cámara 04 desconectada. Avisá a Soporte Informático.</span></p></div> */
+.camara__video--sin-senal {
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: calc(var(--camara-barra) + var(--espacio-2)) var(--espacio-4) var(--espacio-2);
+  text-align: center;
+  color: var(--color-tinta-2);
+  background: var(--color-capa);
+}
+.camara__video--sin-senal .icono { width: 32px; height: 32px; flex-shrink: 0; }
+.camara__video--sin-senal p { margin: 0; max-width: 28ch; font: var(--texto-detalle); }
+.camara__video--sin-senal strong { display: block; font: var(--texto-label); color: var(--color-tinta); }
+
+/* Celdas chicas (las chicas de las vistas de 5 y de 6, o un muro de 9 en una
+   notebook): el estado y "Quitar" quedan solo con su ícono (el del estado es
+   distinto en cada estado), y "Sin señal" y el lugar vacío quedan sin la
+   explicación. Los textos siguen estando para el lector de pantalla. */
+@container camara (max-width: 340px) {
+  .camara__estado, .camara__quitar span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .camara__barra { gap: var(--espacio-1); padding-left: var(--espacio-2); }
+  /* Con tres clases, para ganarle al relleno de los botones en densidad compacta */
+  .camara__barra .boton.camara__quitar { width: calc(var(--camara-barra) - var(--espacio-1)); padding: 0; }
+}
+@container camara (max-width: 300px) {
+  .camara__video--sin-senal p span, .camara__vacia span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .camara__video--sin-senal { gap: var(--espacio-1); padding-inline: var(--espacio-2); }
+  .camara__video--sin-senal .icono { width: 24px; height: 24px; }
+}
+@media (forced-colors: active) { .camara { border: 1px solid CanvasText; } .camara:has([aria-pressed="true"]) { outline-color: Highlight; } }
+
+/* 4. Lista de cámaras ------------------------------------------------------ */
+/* Va dentro de .visor__lista, debajo del buscador. Cada renglón tiene dos botones:
+   <ul class="camaras-lista"><li>
+     <button type="button" class="camaras-lista__camara" aria-current="true">
+       <svg class="icono">video</svg><span>01 · Acceso principal</span>
+       <span class="solo-lector">, en vivo</span><span class="solo-lector">, en el muro</span></button>
+     <button type="button" class="boton boton--icono camaras-lista__ojo" aria-label="Quitar Acceso principal del muro">
+       <svg class="icono">eye</svg><svg class="icono">eye-off</svg></button>
+   </li> … </ul>
+   - El de la cámara lleva su nombre y el ícono de su estado; el estado también
+     va en texto, para el lector de pantalla. La del primer lugar del muro lleva
+     aria-current="true".
+   - El ojo está solo en las cámaras que se están viendo en el muro (las demás
+     lo llevan con hidden). Tocarlo la quita del muro y deja su lugar vacío. Al
+     pasar el mouse, o al llegar con Tab, el ojo pasa a ojo tachado en rojo: así
+     se ve lo que va a hacer antes de hacerlo.
+   Si la lista es larga tiene su propio scroll: no estira la primera pantalla. */
+.camaras-lista { margin: 0; padding: 0; list-style: none; }
+@media (min-width: 1024px) {
+  .camaras-lista { flex: 1 1 0; min-height: 0; overflow-y: auto; }
+}
+.camaras-lista li { display: flex; align-items: center; border-left: 4px solid transparent; border-radius: 0 var(--radio-control) var(--radio-control) 0; }
+@media (hover: hover) {
+  .camaras-lista li:has(.camaras-lista__camara:hover) { background: var(--color-tinte); }
+}
+/* La marca es azul, no naranja: elegir una cámara no es la navegación principal */
+.camaras-lista li:has([aria-current="true"]) { background: var(--color-tinte); border-left-color: var(--color-primario-texto); }
+.camaras-lista__camara {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-width: 0;
   min-height: var(--alto-control);
-  padding: 0 var(--espacio-3);
+  margin: 0;
+  padding: 0 var(--espacio-2) 0 var(--espacio-3);
   font: var(--texto-base);
   text-align: left;
   color: var(--color-tinta);
   background: none;
   border: 0;
-  border-left: 4px solid transparent;
   border-radius: 0 var(--radio-control) var(--radio-control) 0;
   cursor: pointer;
 }
-.camaras-lista button > span:first-of-type { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.camaras-lista button .icono { color: var(--color-tinta-2); }
-.camaras-lista button:hover { background: var(--color-tinte); }
-/* La marca es azul, no naranja: elegir una cámara no es la navegación principal */
-.camaras-lista button[aria-current="true"] { font-weight: 700; background: var(--color-tinte); border-left-color: var(--color-primario-texto); }
+.camaras-lista__camara:focus-visible { box-shadow: inset 0 0 0 2px var(--color-acento), inset 0 0 0 4px var(--color-primario); }
+.camaras-lista__camara > span:first-of-type { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.camaras-lista__camara .icono { color: var(--color-tinta-2); }
+.camaras-lista__camara[aria-current="true"] { font-weight: 700; }
 .camaras-lista__sin-senal { color: var(--color-tinta-2); }
-.camaras-lista__sin-senal .icono { color: var(--color-error-texto) !important; }
+.camaras-lista__sin-senal .icono { color: var(--color-error-texto); }
+/* El ojo: se está viendo. Con el mouse encima o con el foco, ojo tachado en rojo: la va a quitar. */
+.camaras-lista__ojo { flex-shrink: 0; color: var(--color-primario-texto); }
+.camaras-lista__ojo .icono { width: 18px; height: 18px; }
+.camaras-lista__ojo .icono + .icono { display: none; }
+.camaras-lista__ojo:focus-visible { color: var(--color-error-texto); background: color-mix(in srgb, var(--color-error) 10%, var(--color-panel)); box-shadow: inset 0 0 0 2px var(--color-acento), inset 0 0 0 4px var(--color-primario); }
+.camaras-lista__ojo:focus-visible .icono:first-child { display: none; }
+.camaras-lista__ojo:focus-visible .icono + .icono { display: block; }
+@media (hover: hover) {
+  .camaras-lista__ojo:hover { color: var(--color-error-texto); background: color-mix(in srgb, var(--color-error) 10%, var(--color-panel)); }
+  .camaras-lista__ojo:hover .icono:first-child { display: none; }
+  .camaras-lista__ojo:hover .icono + .icono { display: block; }
+}
 
-/* 3. Línea de tiempo ------------------------------------------------------- */
+/* 5. Línea de tiempo ------------------------------------------------------- */
 /* Para recorrer las grabaciones de una cámara. Tres formas de moverse, ninguna
    obliga a arrastrar:
    <div class="linea-tiempo">
@@ -223,20 +486,29 @@
 @media (max-width: 639px) { .linea-tiempo__saltos label { margin-left: 0; flex-basis: 100%; } }
 @media (forced-colors: active) { .linea-tiempo__tramos span { forced-color-adjust: none; background: Highlight; } }
 
-/* 4. Pantalla completa ----------------------------------------------------- */
+/* 6. Pantalla completa ----------------------------------------------------- */
 /* Un botón pone la página en pantalla completa (document.documentElement
    .requestFullscreen()). Ahí se van la cabecera, el banner de fase y el menú
    inferior: queda el visor solo, y el muro gana ese alto. Se sale con el mismo
    botón o con Esc. El botón se muestra solo si el navegador lo permite (en
    iPhone no hay pantalla completa para páginas).
-   <button class="boton boton--secundario" type="button" hidden>
+   <button class="boton boton--secundario visor__completa" type="button" hidden>
      <svg class="icono">maximize</svg><span>Pantalla completa</span></button> */
 :root:fullscreen :is(.cabecera, .fase, .menu-inferior) { display: none; }
 
-/* 5. Impresión ------------------------------------------------------------- */
+/* 7. Impresión ------------------------------------------------------------- */
+/* Sale el muro como una planilla: cada cámara con su nombre y su estado, sin
+   fondos negros. */
 @media print {
-  .camaras-panel, .linea-tiempo__saltos, .linea-tiempo__control { display: none !important; }
-  .muro { width: auto; }
-  .camara__video { background: none; border-bottom: 1px solid var(--color-linea); color: var(--color-tinta-2); }
+  .visor__lateral, .linea-tiempo__saltos, .linea-tiempo__control, .camara__acciones, .camara--vacia { display: none !important; }
+  .visor { display: block; }
+  .muro { aspect-ratio: auto; max-height: none; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
+  .muro > .camara:first-child { grid-column: auto !important; grid-row: auto !important; }
+  .camara { aspect-ratio: auto; background: none; border: 1px solid var(--color-linea); break-inside: avoid; }
+  .camara__video { position: static; aspect-ratio: 16 / 9; color: var(--color-tinta-2); }
+  .camara__video > video, .camara__video > img { position: static; }
+  .camara__video--sin-senal { padding-top: var(--espacio-2); }
+  .camara__barra { position: static; height: auto; padding: var(--espacio-1) var(--espacio-2); color: var(--color-tinta); background: none; }
+  .camara__barra .insignia, .camara__barra .insignia .icono { color: var(--color-tinta); }
   .linea-tiempo__tramos, .linea-tiempo__tramos span { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
