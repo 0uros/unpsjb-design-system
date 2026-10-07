@@ -17,6 +17,7 @@
   <style>
     .ext-muestra-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--espacio-2) var(--espacio-6); margin-bottom: var(--espacio-4); }
     .ext-muestra-barra .pestanas { margin-bottom: 0; flex: 1 1 auto; min-width: 0; }
+    .ext-muestra-barra .fila { gap: var(--espacio-1) var(--espacio-6); }
     .ext-muestra-ficha { margin-top: var(--espacio-8); }
     .ext-muestra-ficha .resumen { max-width: 880px; }
     .ext-muestra-ficha ul { margin: 0; padding-left: var(--espacio-4); }
@@ -75,15 +76,18 @@
         <button class="pestanas__item" type="button" role="tab" id="tab-comprobante" aria-controls="doc-comprobante" aria-selected="false" tabindex="-1">Comprobante</button>
         <button class="pestanas__item" type="button" role="tab" id="tab-planilla" aria-controls="doc-planilla" aria-selected="false" tabindex="-1">Planilla</button>
       </div>
-      <label class="interruptor"><input type="checkbox" role="switch" id="una-tinta"> A una tinta</label>
+      <div class="fila">
+        <label class="interruptor"><input type="checkbox" role="switch" id="una-tinta"> A una tinta</label>
+        <label class="interruptor"><input type="checkbox" role="switch" id="con-verificacion"> Pie de verificación (en espera)</label>
+      </div>
     </div>
 
-    <!-- Constancia: hoja vertical, texto en serif, firma digital y pie de verificación -->
+    <!-- Constancia: hoja vertical, texto en serif y firma digital. El pie de verificación está en espera: arranca escondido -->
     <section role="tabpanel" id="doc-constancia" aria-labelledby="tab-constancia">
       <article class="hoja fuente-academica" aria-labelledby="constancia-titulo">
         <header class="membrete">
-          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
-          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Secretaría Académica</span></p>
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg" alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98">
+          <p class="membrete__nombre">Secretaría Académica<span>Delegación Trelew</span></p>
         </header>
         <p class="documento__dato">Trelew, 2 de octubre de 2026</p>
         <p class="documento__dato">Constancia N.º 0418/2026</p>
@@ -99,7 +103,7 @@
             <p class="firma__dato">Firmado digitalmente el 02/10/2026 a las 10:32 h</p>
           </div>
         </div>
-        <footer class="verificacion">
+        <footer class="verificacion" hidden>
           <img class="verificacion__qr" src="assets/qr-ejemplo-documento.svg" alt="" width="76" height="76">
           <p>Para comprobar que este documento es auténtico, entrá a <b>verificar.tw.unp.edu.ar</b> y cargá el código <b class="verificacion__codigo">K7QF-29MD</b>, o escaneá el código QR.</p>
         </footer>
@@ -110,8 +114,8 @@
     <section role="tabpanel" id="doc-certificado" aria-labelledby="tab-certificado" hidden>
       <article class="hoja hoja--apaisada fuente-academica certificado" aria-labelledby="certificado-titulo">
         <header class="membrete">
-          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
-          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Departamento de Informática</span></p>
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg" alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98">
+          <p class="membrete__nombre">Departamento de Informática<span>Delegación Trelew</span></p>
         </header>
         <h2 class="certificado__tipo" id="certificado-titulo">Certificado de participación</h2>
         <p>Se certifica que</p>
@@ -127,7 +131,7 @@
             <p class="firma__cargo">Secretaria Académica</p>
           </div>
         </div>
-        <footer class="verificacion">
+        <footer class="verificacion" hidden>
           <img class="verificacion__qr" src="assets/qr-ejemplo-documento.svg" alt="" width="76" height="76">
           <p>Certificado N.º 0092/2026. Para comprobar que es auténtico, entrá a <b>verificar.tw.unp.edu.ar</b> y cargá el código <b class="verificacion__codigo">K7QF-29MD</b>, o escaneá el código QR.</p>
         </footer>
@@ -139,8 +143,8 @@
       <article class="hoja hoja--numerada fuente-academica" aria-labelledby="resolucion-titulo">
         <p class="hoja__borrador">Borrador: sin validez</p>
         <header class="membrete">
-          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
-          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew</span></p>
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg" alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98">
+          <p class="membrete__nombre">Delegación Trelew</p>
         </header>
         <p class="documento__dato">Trelew, 2 de octubre de 2026</p>
         <h2 class="documento__titulo" id="resolucion-titulo">Resolución N.º 142/2026</h2>
@@ -171,8 +175,8 @@
     <section role="tabpanel" id="doc-comprobante" aria-labelledby="tab-comprobante" hidden>
       <article class="hoja" aria-labelledby="comprobante-titulo">
         <header class="membrete">
-          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
-          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Soporte Informático</span></p>
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg" alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98">
+          <p class="membrete__nombre">Soporte Informático<span>Delegación Trelew</span></p>
         </header>
         <h2 class="documento__titulo" id="comprobante-titulo">Comprobante de solicitud</h2>
         <p class="comprobante__numero"><span>Número de trámite</span> TW-2026-00418</p>
@@ -183,7 +187,7 @@
           <div><dt>Enviada</dt><dd>02/10/2026 a las 10:32 h</dd></div>
           <div><dt>Qué pasa ahora</dt><dd>Soporte Informático la revisa en 48 horas hábiles y te avisa por correo.</dd></div>
         </dl>
-        <footer class="verificacion">
+        <footer class="verificacion" hidden>
           <img class="verificacion__qr" src="assets/qr-ejemplo-documento.svg" alt="" width="76" height="76">
           <p>Podés ver cómo sigue tu solicitud en <b>verificar.tw.unp.edu.ar</b> con el código <b class="verificacion__codigo">K7QF-29MD</b>, o escaneando el código QR.</p>
         </footer>
@@ -194,8 +198,8 @@
     <section role="tabpanel" id="doc-planilla" aria-labelledby="tab-planilla" hidden>
       <article class="hoja" aria-labelledby="planilla-titulo">
         <header class="membrete">
-          <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
-          <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco<span>Delegación Trelew · Departamento de Informática</span></p>
+          <img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg" alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98">
+          <p class="membrete__nombre">Departamento de Informática<span>Delegación Trelew</span></p>
         </header>
         <h2 class="documento__titulo" id="planilla-titulo">Planilla de asistencia</h2>
         <p>Jornada de Informática 2026 · Taller de Moodle · Lab. Informática 1 · 13/10/2026, de 8:00 a 12:00 h</p>
@@ -231,16 +235,16 @@
         <dl class="resumen">
           <div><dt>Usalo cuando</dt><dd>La herramienta genera un papel que alguien presenta en otro lado o firma: constancias, certificados, resoluciones, notas, comprobantes y planillas.</dd></div>
           <div><dt>No lo uses cuando</dt><dd><ul><li>Solo hay que imprimir una pantalla (una tabla, una agenda): eso ya lo resuelve <code>unpsjb.css</code> sin preparar nada.</li><li>Es un correo: va el módulo de correo.</li></ul></dd></div>
-          <div><dt>Accesibilidad</dt><dd><ul><li>La hoja es un <code>&lt;article&gt;</code> con su título; el texto es texto real, no una imagen.</li><li>El QR lleva <code>alt=""</code>: la dirección y el código están escritos al lado.</li><li>La firma digital se dice con palabras, no con un sello.</li><li>En celular la hoja ocupa el ancho de la pantalla y el texto sigue en 16px.</li></ul></dd></div>
+          <div><dt>Accesibilidad</dt><dd><ul><li>La hoja es un <code>&lt;article&gt;</code> con su título; el texto es texto real, no una imagen.</li><li>El logo del membrete lleva el nombre completo de la universidad en su texto alternativo.</li><li>La firma digital se dice con palabras, no con un sello.</li><li>En celular la hoja ocupa el ancho de la pantalla y el texto sigue en 16px.</li></ul></dd></div>
         </dl>
-        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: hoja con membrete, firma y verificación"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: hoja con membrete y firma"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
 &lt;link rel="stylesheet" href="unpsjb-documentos.css"&gt;
 
 &lt;article class="hoja fuente-academica" aria-labelledby="doc-titulo"&gt;
   &lt;header class="membrete"&gt;
-    &lt;img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56"&gt;
-    &lt;p class="membrete__nombre"&gt;Universidad Nacional de la Patagonia San Juan Bosco
-      &lt;span&gt;Delegación Trelew · Secretaría Académica&lt;/span&gt;&lt;/p&gt;
+    &lt;img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg"
+         alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98"&gt;
+    &lt;p class="membrete__nombre"&gt;Secretaría Académica&lt;span&gt;Delegación Trelew&lt;/span&gt;&lt;/p&gt;
   &lt;/header&gt;
   &lt;p class="documento__dato"&gt;Trelew, 2 de octubre de 2026&lt;/p&gt;
   &lt;h2 class="documento__titulo" id="doc-titulo"&gt;Constancia de alumna regular&lt;/h2&gt;
@@ -251,12 +255,6 @@
       &lt;p class="firma__cargo"&gt;Secretaria Académica&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;footer class="verificacion"&gt;
-    &lt;img class="verificacion__qr" src="assets/qr-….svg" alt="" width="76" height="76"&gt;
-    &lt;p&gt;Para comprobar que este documento es auténtico, entrá a
-      &lt;b&gt;verificar.tw.unp.edu.ar&lt;/b&gt; y cargá el código
-      &lt;b class="verificacion__codigo"&gt;K7QF-29MD&lt;/b&gt;.&lt;/p&gt;
-  &lt;/footer&gt;
 &lt;/article&gt;</code></pre>
       </div>
     </details>
@@ -273,7 +271,7 @@
             <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
           </fieldset>
         </div>
-        <span>v0.4.3</span>
+        <span>v0.4.4</span>
       </div>
     </footer>
   </main>
@@ -323,6 +321,13 @@
     unaTinta.addEventListener('change', pintarTinta);
     if (new URLSearchParams(location.search).has('una-tinta')) { unaTinta.checked = true; }
     pintarTinta();
+
+    // Pie de verificación: está en espera, así que arranca apagado
+    const conVerificacion = document.getElementById('con-verificacion');
+    const pintarVerificacion = () => document.querySelectorAll('.verificacion').forEach(v => { v.hidden = !conVerificacion.checked; });
+    conVerificacion.addEventListener('change', pintarVerificacion);
+    if (new URLSearchParams(location.search).has('verificacion')) { conVerificacion.checked = true; }
+    pintarVerificacion();
 
     document.getElementById('imprimir').addEventListener('click', () => window.print());
   </script>

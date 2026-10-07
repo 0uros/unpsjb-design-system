@@ -1,41 +1,52 @@
 /* ==========================================================================
-   unpsjb-graficos.css — Módulo de gráficos de líneas · v0.4.3
+   unpsjb-graficos.css — Módulo de gráficos · v0.4.4
    Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 15.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
    Va junto con unpsjb-graficos.js, que dibuja el gráfico a partir de una tabla.
    Ejemplo completo: muestra-graficos.html.
 
-   Los indicadores, las barras y la barra apilada están en unpsjb.css (son solo
-   CSS). Este módulo suma lo que necesita un dibujo: las líneas.
+   Tres gráficos, según lo que haya que mostrar:
+   - Líneas: algo que cambia en el tiempo.
+   - Barras (horizontales o columnas): cantidades de cosas para comparar.
+   - Torta: partes de un total, hasta 5 más "Otros".
+   Los indicadores, la barra apilada y las barras de una sola serie hechas solo
+   con CSS (.barras) siguen en unpsjb.css.
 
    La idea:
    - Los datos se escriben una sola vez, en una tabla. El script arma el gráfico
      y el selector "Gráfico | Tabla". Sin JavaScript queda la tabla.
-   - La lectura de arriba (el momento elegido y el valor de cada serie) es
-     también la leyenda. No hay cartel flotante: nada tapa el gráfico.
-   - El color va en las líneas y los puntos. Los textos van en tinta.
+   - No hay cartel flotante: nada tapa el gráfico. Los valores van escritos (en
+     la punta de las barras, en la lista de la torta) o en la lectura de arriba.
+   - El color va en las líneas, las barras y las porciones. Los textos van en tinta.
 
    Piezas
-   1. Lectura y leyenda (.lineas__lectura)
-   2. El dibujo (.lineas__lienzo y las partes del SVG)
-   3. Recorrer con el teclado (.lineas__recorrer)
-   4. Impresión y alto contraste
+   1. La caja y su lectura (.dibujo, .dibujo__lectura)
+   2. Ejes, grilla y textos del dibujo
+   3. Líneas (.dibujo__linea, .dibujo__punto)
+   4. Barras y columnas (.dibujo__barra)
+   5. Torta (.dibujo__porcion, .leyenda--columna)
+   6. Recorrer con el teclado (.dibujo__recorrer)
+   7. Impresión y alto contraste
+
+   0.4.4: las clases que arma el script pasan de .lineas__… a .dibujo__…, porque
+   ya no son solo de las líneas. El HTML que se escribe a mano no cambia.
    ========================================================================== */
 
-.lineas {
-  /* El aro de los puntos lleva el color de lo que hay detrás. Dentro de un
-     .panel es el panel; si el gráfico va suelto sobre la página:
+/* 1. La caja y su lectura -------------------------------------------------- */
+.dibujo {
+  /* Lo que separa una marca de otra lleva el color de lo que hay detrás. Dentro
+     de un .panel es el panel; si el gráfico va suelto sobre la página:
        <figure class="grafico" style="--grafico-fondo: var(--color-fondo)"> */
   --grafico-fondo: var(--color-panel);
   font: var(--texto-detalle);
 }
-
-/* 1. Lectura --------------------------------------------------------------- */
-/* <div class="lineas__lectura"><p class="lineas__momento">Septiembre</p>
+/* Lectura (líneas y columnas): el momento elegido y el valor de cada serie.
+   Es también la leyenda.
+   <div class="dibujo__lectura"><p class="dibujo__momento">Septiembre</p>
      <ul class="leyenda"><li class="serie-1">Trelew <b>412</b></li> … </ul></div>
    El alto mínimo evita que el gráfico salte cuando la leyenda pasa a dos renglones. */
-.lineas__lectura {
+.dibujo__lectura {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -43,35 +54,47 @@
   min-height: 1.5rem;
   margin-bottom: var(--espacio-2);
 }
-.lineas__momento {
+.dibujo__momento {
   margin: 0;
   font: var(--texto-label);
   color: var(--color-tinta);
   font-variant-numeric: tabular-nums;
 }
-.lineas__lectura .leyenda { margin: 0; }
-.lineas__lectura .leyenda b { color: var(--color-tinta); }
+.dibujo__lectura .leyenda { margin: 0; }
+.dibujo .leyenda b { color: var(--color-tinta); }
 
-/* 2. El dibujo ------------------------------------------------------------- */
-.lineas__lienzo { position: relative; border-radius: var(--radio-control); }
-.lineas svg {
+/* 2. Ejes, grilla y textos ------------------------------------------------- */
+.dibujo__lienzo { position: relative; border-radius: var(--radio-control); }
+.dibujo svg {
   display: block;
   max-width: 100%;
   height: auto;
   overflow: visible;
-  touch-action: pan-y;        /* el dedo en horizontal elige un momento; en vertical, mueve la página */
-  cursor: crosshair;
 }
 /* Grilla y eje: una línea fina y continua, nunca punteada */
-.lineas__grilla { stroke: var(--color-linea); stroke-width: 1; }
-.lineas__eje { stroke: var(--color-linea-control); stroke-width: 1; }
-.lineas__marca {
+.dibujo__grilla { stroke: var(--color-linea); stroke-width: 1; }
+.dibujo__eje { stroke: var(--color-linea-control); stroke-width: 1; }
+.dibujo__marca {
   fill: var(--color-tinta-2);
   font: 400 13px/1 var(--fuente-texto);
   font-variant-numeric: tabular-nums;
 }
+/* El nombre de cada barra horizontal */
+.dibujo__nombre { fill: var(--color-tinta); font: 400 13px/1 var(--fuente-texto); }
+/* Un valor escrito: en la punta de una línea o de una barra. En tinta, no en el color de la serie. */
+.dibujo__valor {
+  fill: var(--color-tinta);
+  font: 700 13px/1 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 3. Líneas ---------------------------------------------------------------- */
+.dibujo--lineas svg, .dibujo--barras:has(.dibujo__recorrer) svg {
+  touch-action: pan-y;        /* el dedo en horizontal elige un momento; en vertical, mueve la página */
+  cursor: crosshair;
+}
 /* Línea de 2px con las uniones redondeadas */
-.lineas__linea {
+.dibujo__linea {
   fill: none;
   stroke: var(--serie, var(--color-serie-1));
   stroke-width: 2;
@@ -80,29 +103,55 @@
 }
 /* Punto de 8px con un aro de 2px del color del fondo: se distingue aunque
    se cruce con otra línea */
-.lineas__punto {
+.dibujo__punto {
   fill: var(--serie, var(--color-serie-1));
   stroke: var(--grafico-fondo);
   stroke-width: 2;
 }
 /* Con muchos datos no se dibuja un punto en cada uno: solo en el último y en
    el momento elegido */
-.lineas__punto--suelto { display: none; }
-.lineas__punto--elegido { display: inline; r: 6px; }
-/* El último valor de cada serie, escrito en la punta. En tinta, no en el color de la serie. */
-.lineas__valor {
-  fill: var(--color-tinta);
-  font: 700 13px/1 var(--fuente-texto);
-  font-variant-numeric: tabular-nums;
-}
+.dibujo__punto--suelto { display: none; }
+.dibujo__punto--elegido { display: inline; r: 6px; }
 /* La guía del momento elegido: solo mientras se recorre */
-.lineas__guia { stroke: var(--color-linea-control); stroke-width: 1; visibility: hidden; }
-.lineas--recorriendo .lineas__guia { visibility: visible; }
+.dibujo__guia { stroke: var(--color-linea-control); stroke-width: 1; visibility: hidden; }
+.dibujo--recorriendo .dibujo__guia { visibility: visible; }
 
-/* 3. Recorrer con el teclado ---------------------------------------------- */
+/* 4. Barras y columnas ----------------------------------------------------- */
+/* 16px de grosor en horizontal y hasta 24px en columnas; rectas en la base y
+   con 4px de radio en la punta; 2px de aire entre las de un mismo grupo. Una
+   serie, un color: no se pinta cada barra distinta. */
+.dibujo__barra { fill: var(--serie, var(--color-serie-1)); }
+/* Columnas: la franja del grupo elegido, solo mientras se recorre */
+.dibujo__franja { fill: var(--color-tinte); visibility: hidden; }
+.dibujo--recorriendo .dibujo__franja { visibility: visible; }
+
+/* 5. Torta ----------------------------------------------------------------- */
+/* El dibujo a la izquierda y, al lado, la lista con el nombre, el valor y el
+   porcentaje de cada parte. En pantallas angostas, la lista va debajo.
+   Las porciones se separan con 2px del color del fondo, no con un borde. */
+.dibujo--torta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-4) var(--espacio-8); }
+.dibujo--torta .dibujo__lienzo { flex: 0 0 auto; }
+.dibujo__porcion { fill: var(--serie, var(--color-serie-otros)); stroke: var(--grafico-fondo); stroke-width: 2; stroke-linejoin: round; }
+/* La leyenda en columna: una parte por renglón, con los números alineados
+   <ul class="leyenda leyenda--columna"><li class="serie-1"><span class="leyenda__nombre">Clases</span>
+     <b>312 h</b><span class="leyenda__dato">52 %</span></li> … </ul> */
+.leyenda--columna {
+  flex: 1 1 220px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: var(--espacio-2) var(--espacio-3);
+  align-items: baseline;
+  margin: 0;
+}
+.leyenda--columna li { display: contents; }
+.leyenda--columna li::before { align-self: center; }
+.leyenda--columna b, .leyenda__dato { text-align: right; white-space: nowrap; }
+.leyenda__dato { color: var(--color-tinta-2); }
+
+/* 6. Recorrer con el teclado ----------------------------------------------- */
 /* Un control de rango, invisible pero con foco: Tab llega al gráfico y las
    flechas cambian el momento elegido. El foco se dibuja alrededor del dibujo. */
-.lineas__recorrer {
+.dibujo__recorrer {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -111,20 +160,20 @@
   opacity: 0;
   pointer-events: none;       /* el mouse y el dedo los maneja el dibujo */
 }
-.lineas__lienzo:has(.lineas__recorrer:focus-visible) { box-shadow: var(--anillo-foco); }
+.dibujo__lienzo:has(.dibujo__recorrer:focus-visible) { box-shadow: var(--anillo-foco); }
 
-/* 4. Impresión y alto contraste -------------------------------------------- */
+/* 7. Impresión y alto contraste -------------------------------------------- */
 @media print {
   /* En papel, un gráfico por renglón: en dos columnas la letra quedaría muy chica.
      El script los vuelve a trazar al ancho de la hoja. */
-  .grilla:has(.lineas) { display: block; }
-  .grilla:has(.lineas) > * + * { margin-top: var(--espacio-4); }
-  .lineas { break-inside: avoid; }
-  .lineas-selector, .lineas__recorrer, .lineas__guia { display: none; }
-  .lineas__linea, .lineas__punto { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .grilla:has(.dibujo) { display: block; }
+  .grilla:has(.dibujo) > * + * { margin-top: var(--espacio-4); }
+  .dibujo { break-inside: avoid; }
+  .dibujo-selector, .dibujo__recorrer, .dibujo__guia, .dibujo__franja { display: none; }
+  .dibujo__linea, .dibujo__punto, .dibujo__barra, .dibujo__porcion { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
 @media (forced-colors: active) {
-  .lineas__linea, .lineas__punto { forced-color-adjust: none; }
-  .lineas__grilla, .lineas__eje, .lineas__guia { stroke: CanvasText; }
-  .lineas__marca, .lineas__valor { fill: CanvasText; }
+  .dibujo__linea, .dibujo__punto, .dibujo__barra, .dibujo__porcion { forced-color-adjust: none; }
+  .dibujo__grilla, .dibujo__eje, .dibujo__guia { stroke: CanvasText; }
+  .dibujo__marca, .dibujo__valor, .dibujo__nombre { fill: CanvasText; }
 }

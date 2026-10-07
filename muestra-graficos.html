@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#004992">
-  <title>Gráficos de líneas · muestra del módulo · UNPSJB</title>
+  <title>Gráficos · muestra del módulo · UNPSJB</title>
   <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
   <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
   <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -55,21 +55,36 @@
   <aside class="fase" aria-label="Estado de la herramienta">
     <div class="contenedor fase__fila">
       <strong class="fase__nombre">Piloto</strong>
-      <p>Página de muestra del módulo <code>unpsjb-graficos.css</code> y <code>unpsjb-graficos.js</code>, con datos de ejemplo. <a href="muestra.html#graficos">Volver a los gráficos de la muestra general</a>.</p>
+      <p>Página de muestra del módulo de gráficos (<code>unpsjb-graficos.css</code> y <code>unpsjb-graficos.js</code>), con datos de ejemplo. <a href="muestra.html#graficos">Volver a los gráficos de la muestra general</a>.</p>
     </div>
   </aside>
 
   <main class="contenedor" id="contenido">
     <div class="encabezado">
-      <h1>Gráficos de líneas</h1>
+      <h1>Gráficos</h1>
     </div>
-    <p>Para lo que cambia en el tiempo. Pasá el mouse o el dedo por un gráfico para leer cada momento; con el teclado, llegá con <kbd>Tab</kbd> y movete con las flechas. Cada gráfico se puede ver como tabla.</p>
+    <p>Tres gráficos, y cada uno sirve para una cosa. Todos se dibujan solos a partir de una tabla, y todos se pueden ver como tabla.</p>
+    <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué gráfico usar" style="max-width:880px">
+      <table class="tabla">
+        <thead><tr><th scope="col">Lo que hay que mostrar</th><th scope="col">Va</th><th scope="col">Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Algo que cambia en el tiempo</td><th scope="row"><a href="#lineas">Líneas</a></th><td>Solicitudes por mes</td></tr>
+          <tr><td>Cantidades de varias cosas, para comparar</td><th scope="row"><a href="#barras">Barras</a></th><td>Reservas por aula</td></tr>
+          <tr><td>Pocos períodos, uno al lado del otro</td><th scope="row"><a href="#barras">Columnas</a></th><td>Eventos por mes</td></tr>
+          <tr><td>Partes de un total (hasta 5, más "Otros")</td><th scope="row"><a href="#torta">Torta</a></th><td>Uso de las aulas por tipo</td></tr>
+          <tr><td>Un número solo</td><th scope="row"><a href="muestra.html#graficos">Indicador</a></th><td>Aulas ocupadas ahora</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="lineas">Líneas</h2>
+    <p>Para lo que cambia en el tiempo. Pasá el mouse o el dedo por un gráfico para leer cada momento; con el teclado, llegá con <kbd>Tab</kbd> y movete con las flechas.</p>
 
     <div class="grilla grilla--2">
       <!-- Tres series, pocos datos: un punto en cada dato y el último valor escrito -->
       <figure class="grafico panel">
         <figcaption class="grafico__cabecera">
-          <h2 class="grafico__titulo">Solicitudes de soporte por mes</h2>
+          <h3 class="grafico__titulo">Solicitudes de soporte por mes</h3>
         </figcaption>
         <div class="tabla-marco" tabindex="0" role="region" aria-label="Solicitudes de soporte por mes y sede">
           <table class="tabla tabla--compacta" data-grafico="lineas"
@@ -91,7 +106,7 @@
       <!-- Cinco series (el máximo): las puntas quedan encimadas, así que los valores van solo en la lectura -->
       <figure class="grafico panel">
         <figcaption class="grafico__cabecera">
-          <h2 class="grafico__titulo">Inscripciones por carrera</h2>
+          <h3 class="grafico__titulo">Inscripciones por carrera</h3>
         </figcaption>
         <div class="tabla-marco" tabindex="0" role="region" aria-label="Inscripciones por año y carrera">
           <table class="tabla tabla--compacta" data-grafico="lineas"
@@ -113,7 +128,7 @@
       <!-- Una serie, muchos datos: sin un punto en cada dato y con los nombres del eje salteados -->
       <figure class="grafico panel grilla__completa">
         <figcaption class="grafico__cabecera">
-          <h2 class="grafico__titulo">Dispositivos conectados al wifi por día</h2>
+          <h3 class="grafico__titulo">Dispositivos conectados al wifi por día</h3>
         </figcaption>
         <div class="tabla-marco" tabindex="0" role="region" aria-label="Dispositivos conectados al wifi por día">
           <table class="tabla tabla--compacta" data-grafico="lineas"
@@ -159,7 +174,7 @@
       <!-- Con unidad y sin arrancar en cero: solo cuando el cero no significa nada -->
       <figure class="grafico panel">
         <figcaption class="grafico__cabecera">
-          <h2 class="grafico__titulo">Temperatura de la sala de servidores</h2>
+          <h3 class="grafico__titulo">Temperatura de la sala de servidores</h3>
         </figcaption>
         <div class="tabla-marco" tabindex="0" role="region" aria-label="Temperatura de la sala de servidores por hora">
           <table class="tabla tabla--compacta" data-grafico="lineas" data-unidad="°C" data-desde-cero="no"
@@ -187,7 +202,7 @@
       <!-- Con porcentajes y un dato que falta: la línea se corta, no se inventa -->
       <figure class="grafico panel">
         <figcaption class="grafico__cabecera">
-          <h2 class="grafico__titulo">Ocupación de las aulas por turno</h2>
+          <h3 class="grafico__titulo">Ocupación de las aulas por turno</h3>
         </figcaption>
         <div class="tabla-marco" tabindex="0" role="region" aria-label="Ocupación de las aulas por semana y turno">
           <table class="tabla tabla--compacta" data-grafico="lineas" data-unidad="%"
@@ -209,15 +224,178 @@
       </figure>
     </div>
 
+
+    <h2 id="barras">Barras</h2>
+    <p>Para comparar cantidades de cosas. Horizontales cuando los nombres son largos (y siempre en celular): el valor va escrito en la punta. En columnas cuando son pocos períodos, uno al lado del otro.</p>
+    <div class="grilla grilla--2">
+      <!-- Una serie, horizontales: ordenadas de mayor a menor, todas del mismo color -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h3 class="grafico__titulo">Reservas por aula</h3>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Reservas por aula">
+          <table class="tabla tabla--compacta" data-grafico="barras"
+                 data-descripcion="Reservas por aula en septiembre de 2026. El Auditorio es el más pedido, con 48 reservas, seguido por el Laboratorio de Informática 1 con 41. El Aula 104 es la menos pedida, con 12.">
+            <thead><tr><th scope="col">Aula</th><th scope="col" class="num">Reservas</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Auditorio</th><td class="num">48</td></tr>
+              <tr><th scope="row">Lab. Informática 1</th><td class="num">41</td></tr>
+              <tr><th scope="row">Aula 101</th><td class="num">37</td></tr>
+              <tr><th scope="row">Lab. Informática 2</th><td class="num">29</td></tr>
+              <tr><th scope="row">Aula 102</th><td class="num">26</td></tr>
+              <tr><th scope="row">Aula 104</th><td class="num">12</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Septiembre de 2026. Total: 193 reservas.</p>
+      </figure>
+
+      <!-- Dos series, horizontales: una barra por serie en cada fila, y la leyenda arriba -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h3 class="grafico__titulo">Pedidos de eventos por área</h3>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Pedidos de eventos por área: pedidos y aprobados">
+          <table class="tabla tabla--compacta" data-grafico="barras"
+                 data-descripcion="Pedidos de eventos por área en el segundo cuatrimestre de 2026, pedidos y aprobados. Extensión Universitaria es la que más pide: 34 pedidos, 29 aprobados. En todas las áreas se aprueba la mayoría.">
+            <thead><tr><th scope="col">Área</th><th scope="col" class="num">Pedidos</th><th scope="col" class="num">Aprobados</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Extensión Universitaria</th><td class="num">34</td><td class="num">29</td></tr>
+              <tr><th scope="row">Departamento de Informática</th><td class="num">27</td><td class="num">25</td></tr>
+              <tr><th scope="row">Secretaría Académica</th><td class="num">21</td><td class="num">21</td></tr>
+              <tr><th scope="row">Centro de Estudiantes</th><td class="num">16</td><td class="num">11</td></tr>
+              <tr><th scope="row">Bienestar Universitario</th><td class="num">9</td><td class="num">8</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Agosto a octubre de 2026. Total: 107 pedidos, 94 aprobados.</p>
+      </figure>
+
+      <!-- Columnas, una serie: pocos períodos, con el valor arriba de cada una -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h3 class="grafico__titulo">Eventos por mes</h3>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Eventos por mes">
+          <table class="tabla tabla--compacta" data-grafico="barras" data-orientacion="vertical"
+                 data-descripcion="Eventos por mes, de abril a septiembre de 2026. Septiembre fue el mes con más eventos, 14; julio, el de menos, con 3.">
+            <thead><tr><th scope="col">Mes</th><th scope="col" class="num">Eventos</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Abril</th><td class="num">6</td></tr>
+              <tr><th scope="row">Mayo</th><td class="num">9</td></tr>
+              <tr><th scope="row">Junio</th><td class="num">7</td></tr>
+              <tr><th scope="row">Julio</th><td class="num">3</td></tr>
+              <tr><th scope="row">Agosto</th><td class="num">11</td></tr>
+              <tr><th scope="row">Septiembre</th><td class="num">14</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Abril a septiembre de 2026. Total: 50 eventos.</p>
+      </figure>
+
+      <!-- Columnas, tres series: se leen con la lectura de arriba -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h3 class="grafico__titulo">Aulas ocupadas por turno</h3>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Aulas ocupadas por día y turno">
+          <table class="tabla tabla--compacta" data-grafico="barras" data-orientacion="vertical"
+                 data-descripcion="Aulas ocupadas por turno, de lunes a viernes de la semana del 5 de octubre de 2026, sobre 24 aulas. La noche es el turno más ocupado todos los días, con 19 a 22 aulas; la tarde, el menos ocupado, con 9 a 13.">
+            <thead><tr><th scope="col">Día</th><th scope="col" class="num">Mañana</th><th scope="col" class="num">Tarde</th><th scope="col" class="num">Noche</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Lunes</th><td class="num">16</td><td class="num">11</td><td class="num">21</td></tr>
+              <tr><th scope="row">Martes</th><td class="num">18</td><td class="num">13</td><td class="num">22</td></tr>
+              <tr><th scope="row">Miércoles</th><td class="num">17</td><td class="num">12</td><td class="num">20</td></tr>
+              <tr><th scope="row">Jueves</th><td class="num">15</td><td class="num">10</td><td class="num">21</td></tr>
+              <tr><th scope="row">Viernes</th><td class="num">14</td><td class="num">9</td><td class="num">19</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Semana del 5 al 9 de octubre de 2026. La Sede tiene 24 aulas.</p>
+      </figure>
+    </div>
+
+    <h2 id="torta">Torta</h2>
+    <p>Para las partes de un total, cuando son pocas y lo que importa es cuánto del todo se lleva cada una. Al lado va la lista con el nombre, el valor y el porcentaje, en el mismo orden que el dibujo.</p>
+    <div class="grilla grilla--2">
+      <!-- Cinco partes más "Otros": el máximo -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h3 class="grafico__titulo">Uso de las aulas por tipo de actividad</h3>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Uso de las aulas por tipo de actividad">
+          <table class="tabla tabla--compacta" data-grafico="torta" data-unidad="h"
+                 data-descripcion="Uso de las aulas por tipo de actividad en septiembre de 2026, en horas reservadas. Las clases se llevan 312 horas, el 52 por ciento; los exámenes, 108; los eventos, 84; las reuniones, 54; extensión, 30; y otros usos, 12.">
+            <thead><tr><th scope="col">Tipo de actividad</th><th scope="col" class="num">Horas</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Clases</th><td class="num">312</td></tr>
+              <tr><th scope="row">Exámenes</th><td class="num">108</td></tr>
+              <tr><th scope="row">Eventos</th><td class="num">84</td></tr>
+              <tr><th scope="row">Reuniones</th><td class="num">54</td></tr>
+              <tr><th scope="row">Extensión</th><td class="num">30</td></tr>
+              <tr><th scope="row">Otros</th><td class="num">12</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Septiembre de 2026. Total: 600 horas reservadas.</p>
+      </figure>
+
+      <!-- Más de seis filas: las que sobran se suman solas en "Otros" -->
+      <figure class="grafico panel">
+        <figcaption class="grafico__cabecera">
+          <h3 class="grafico__titulo">Reservas según quién las pide</h3>
+        </figcaption>
+        <div class="tabla-marco" tabindex="0" role="region" aria-label="Reservas según quién las pide">
+          <table class="tabla tabla--compacta" data-grafico="torta"
+                 data-descripcion="Reservas de aulas según quién las pide, en septiembre de 2026. Los departamentos piden 86 de las 193, el 45 por ciento; la Secretaría Académica, 41; Extensión, 27; el Centro de Estudiantes, 16; Bienestar, 9; y otras tres áreas suman 14.">
+            <thead><tr><th scope="col">Quién pide</th><th scope="col" class="num">Reservas</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Departamentos</th><td class="num">86</td></tr>
+              <tr><th scope="row">Secretaría Académica</th><td class="num">41</td></tr>
+              <tr><th scope="row">Extensión Universitaria</th><td class="num">27</td></tr>
+              <tr><th scope="row">Centro de Estudiantes</th><td class="num">16</td></tr>
+              <tr><th scope="row">Bienestar Universitario</th><td class="num">9</td></tr>
+              <tr><th scope="row">Biblioteca</th><td class="num">7</td></tr>
+              <tr><th scope="row">Posgrado</th><td class="num">4</td></tr>
+              <tr><th scope="row">Soporte Informático</th><td class="num">3</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="grafico__nota">Septiembre de 2026. Total: 193 reservas. La tabla muestra las ocho áreas; el gráfico suma las tres últimas en "Otros".</p>
+      </figure>
+    </div>
+
     <details class="acordeon ext-muestra-ficha">
+      <summary>Cuándo usarlo y cuándo no: barras y columnas</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen">
+          <div><dt>Usalo cuando</dt><dd>Hay que comparar cantidades de varias cosas (aulas, áreas, estados). En columnas, cuando son pocos períodos y se quieren ver uno al lado del otro.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Son muchos momentos seguidos (días de un mes): van líneas.</li><li>Lo que importa es la parte del total: va una torta o una barra apilada.</li><li>Hay más de cinco series: va una tabla.</li><li>Es una sola serie y no hace falta el script: alcanza la tabla <code>.barras</code> de <code>unpsjb.css</code>.</li></ul></dd></div>
+          <div><dt>Cómo se arma</dt><dd><ul><li>Las barras arrancan siempre en cero.</li><li>Una serie, un color: no se pinta cada barra distinta.</li><li>Conviene ordenar las filas de mayor a menor, salvo que tengan un orden propio (días, meses).</li><li>Las columnas pasan solas a barras horizontales en pantallas angostas.</li></ul></dd></div>
+        </dl>
+      </div>
+    </details>
+
+    <details class="acordeon ext-muestra-ficha" style="margin-top:0">
+      <summary>Cuándo usarlo y cuándo no: torta</summary>
+      <div class="acordeon__cuerpo">
+        <dl class="resumen">
+          <div><dt>Usalo cuando</dt><dd>Son las partes de un total, hay pocas (hasta cinco, más "Otros") y lo que importa es cuánto del todo se lleva cada una.</dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Hay que comparar partes de tamaño parecido: en una torta, 23 % y 26 % se ven iguales. Van barras.</li><li>Las partes no suman un total (respuestas múltiples, promedios).</li><li>Hay que comparar dos totales: dos tortas, una al lado de la otra, no se comparan bien. Van barras con dos series.</li><li>Algo cambia en el tiempo: van líneas.</li></ul></dd></div>
+          <div><dt>Cómo se arma</dt><dd><ul><li>Empieza arriba y gira en el sentido del reloj, en el orden de la tabla. Conviene de mayor a menor.</li><li>Sin textos encima del dibujo: el nombre, el valor y el porcentaje van en la lista de al lado.</li><li>Sin 3D, sin porciones separadas y sin dona.</li></ul></dd></div>
+        </dl>
+      </div>
+    </details>
+
+    <details class="acordeon ext-muestra-ficha" style="margin-top:0">
       <summary>Cuándo usarlo y cuándo no: gráficos de líneas</summary>
       <div class="acordeon__cuerpo">
         <dl class="resumen">
           <div><dt>Usalo cuando</dt><dd>Hay que mostrar cómo cambia algo en el tiempo: por día, por mes, por año. Hasta cinco series.</dd></div>
-          <div><dt>No lo uses cuando</dt><dd><ul><li>Se comparan cosas, no momentos (sedes, estados): van barras horizontales.</li><li>Es un número solo: va un indicador.</li><li>Hay más de cinco series: va una tabla, o un gráfico por serie.</li><li>Hay dos medidas con escalas distintas: van dos gráficos, nunca dos ejes.</li><li>Hay un solo momento: no hay línea que dibujar.</li></ul></dd></div>
+          <div><dt>No lo uses cuando</dt><dd><ul><li>Se comparan cosas, no momentos (sedes, estados): van barras.</li><li>Es un número solo: va un indicador.</li><li>Hay más de cinco series: va una tabla, o un gráfico por serie.</li><li>Hay dos medidas con escalas distintas: van dos gráficos, nunca dos ejes.</li><li>Hay un solo momento: no hay línea que dibujar.</li></ul></dd></div>
           <div><dt>Accesibilidad</dt><dd><ul><li>El gráfico es una imagen con una descripción (<code>data-descripcion</code>) que dice lo importante.</li><li>La tabla con todos los valores está siempre, detrás del selector "Gráfico | Tabla".</li><li>Con <kbd>Tab</kbd> se llega al gráfico y con las flechas se recorre: el lector de pantalla dice el momento y el valor de cada serie.</li><li>El color nunca va solo: cada serie tiene su nombre en la lectura de arriba, y el texto va en tinta.</li><li>No hay carteles flotantes: la lectura queda fija arriba del gráfico.</li></ul></dd></div>
         </dl>
-        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: gráfico de líneas"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: un gráfico a partir de una tabla"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
 &lt;link rel="stylesheet" href="unpsjb-graficos.css"&gt;
 &lt;script src="unpsjb-graficos.js" defer&gt;&lt;/script&gt;
 
@@ -226,6 +404,7 @@
     &lt;h3 class="grafico__titulo"&gt;Solicitudes de soporte por mes&lt;/h3&gt;
   &lt;/figcaption&gt;
   &lt;div class="tabla-marco" tabindex="0" role="region" aria-label="Solicitudes de soporte por mes y sede"&gt;
+    &lt;!-- data-grafico: "lineas", "barras" (con data-orientacion="vertical" para columnas) o "torta" --&gt;
     &lt;table class="tabla tabla--compacta" data-grafico="lineas"
            data-descripcion="Solicitudes por mes: Trelew sube de 310 a 412…"&gt;
       &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Mes&lt;/th&gt;&lt;th scope="col" class="num"&gt;Trelew&lt;/th&gt; … &lt;/tr&gt;&lt;/thead&gt;
@@ -251,7 +430,7 @@
             <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
           </fieldset>
         </div>
-        <span>v0.4.3</span>
+        <span>v0.4.4</span>
       </div>
     </footer>
   </main>

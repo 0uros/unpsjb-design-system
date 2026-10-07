@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-documentos.css — Módulo de documentos e impresión · v0.4.3
+   unpsjb-documentos.css — Módulo de documentos e impresión · v0.4.4
    Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 18.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens.
@@ -19,7 +19,7 @@
    2. Membrete (.membrete)
    3. Partes del documento (.documento__*)
    4. Firmas (.firmas, .firma)
-   5. Pie de verificación (.verificacion)
+   5. Pie de verificación (.verificacion), en espera
    6. Certificado (.certificado)
    7. Planilla para firmar (.tabla--planilla)
    8. Impresión: tamaño de hoja, márgenes, numeración y cortes
@@ -103,9 +103,10 @@
   .hoja--apaisada { width: 100%; min-height: 0; }
 }
 
-/* A una tinta: para imprimir solo con negro. El logo cambia por su versión a una
-   tinta (assets/logo-unpsjb-trelew-una-tinta.svg) y todo lo que era azul o de
-   color pasa a negro. */
+/* A una tinta: para imprimir solo con negro. El logo original tiene una foto, que
+   a una tinta sale como una mancha gris: se cambia por la versión a una tinta
+   (assets/logo-unpsjb-trelew-una-tinta.svg, la gaviota plana), y todo lo que
+   era azul o de color pasa a negro. */
 .hoja--una-tinta {
   --hoja-regla: #000000;
   --color-tinta-2: #000000;
@@ -133,12 +134,13 @@
 
 /* 2. Membrete -------------------------------------------------------------- */
 /* <header class="membrete">
-     <img class="membrete__logo" src="assets/logo-unpsjb-trelew.svg" alt="UNPSJB Sede Trelew" width="118" height="56">
-     <p class="membrete__nombre">Universidad Nacional de la Patagonia San Juan Bosco
-       <span>Delegación Trelew · Secretaría Académica</span></p>
+     <img class="membrete__logo" src="assets/logo-unpsjb-trelew-completo.svg" alt="Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew" width="196" height="98">
+     <p class="membrete__nombre">Secretaría Académica<span>Delegación Trelew</span></p>
    </header>
-   El logo va a 15 mm de alto (nivel M: gaviota plana, sin el texto curvo). El
-   nombre completo de la universidad va escrito al lado, así que no se pierde.
+   El logo es el ORIGINAL (0.4.4): la gaviota con su detalle y el texto curvo con
+   el nombre de la universidad. Va a 26 mm de alto, el mínimo al que ese logo se
+   lee (nivel L, 10.A). Al lado, la dependencia que emite el documento: el
+   nombre de la universidad ya lo dice el logo, así que no se repite.
    Abajo, la misma línea azul de 2px que deja la banda al imprimir. */
 .membrete {
   display: flex;
@@ -149,10 +151,10 @@
   border-bottom: 2px solid var(--hoja-regla);
   break-inside: avoid;
 }
-.membrete__logo { display: block; flex-shrink: 0; width: auto; height: 15mm; }
+.membrete__logo { display: block; flex-shrink: 0; width: auto; height: 26mm; }
 .hoja .membrete__nombre {
   margin: 0;
-  font: 700 10.5pt/1.3 var(--fuente-titulo);
+  font: 700 12pt/1.3 var(--fuente-titulo);
   letter-spacing: 0;
   color: var(--color-tinta);
 }
@@ -162,9 +164,9 @@
   font: 400 10pt/1.3 var(--fuente-texto);
   color: var(--color-tinta-2);
 }
+/* En celular el logo no se achica (dejaría de leerse): la dependencia pasa abajo */
 @media (max-width: 479px) {
-  .membrete { align-items: flex-start; gap: var(--espacio-3); }
-  .membrete__logo { height: 12mm; }
+  .membrete { flex-direction: column; align-items: flex-start; gap: var(--espacio-2); }
 }
 
 /* 3. Partes del documento -------------------------------------------------- */
@@ -256,8 +258,11 @@
 .firma--digital .firma__nombre { padding-top: 0; border-top: 0; }
 .firma__dato { margin-top: 1mm !important; font-size: 9pt; font-variant-numeric: tabular-nums; color: var(--color-tinta-2); }
 
-/* 5. Pie de verificación --------------------------------------------------- */
-/* Va al pie de la hoja. Dice dónde se comprueba que el documento es auténtico:
+/* 5. Pie de verificación (EN ESPERA) ---------------------------------------- */
+/* En espera desde la 0.4.4: la pieza está diseñada, pero no se usa hasta que
+   exista el servicio que verifica un documento. Los ejemplos no la muestran,
+   salvo que se la encienda en muestra-documentos.html.
+   Va al pie de la hoja. Dice dónde se comprueba que el documento es auténtico:
    la dirección ESCRITA y el código, y al lado el QR con la misma dirección
    (se genera con qr/generar.sh).
    <footer class="verificacion">
@@ -297,7 +302,7 @@
      <div class="firmas">…</div> <footer class="verificacion">…</footer>
    </article> */
 .certificado { text-align: center; }
-.certificado .membrete { justify-content: center; text-align: left; margin-bottom: 10mm; }
+.certificado .membrete { justify-content: center; text-align: left; margin-bottom: 8mm; }
 .hoja .certificado__tipo {
   margin: 0 0 8mm;
   font-size: 22pt;
