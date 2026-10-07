@@ -15,10 +15,70 @@
 | Módulos de agenda y de video | — | **0.4.1** |
 | Ajustes a los dos módulos después de la primera revisión | — | **0.4.2** |
 | Módulos de documentos, gráficos de líneas, mesa de ayuda y cartelera | — | **0.4.3** |
+| Módulo de planos | — | **0.4.4** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
+
+## En curso · piezas del estudio de referencia · 2026-10-07 · sin número todavía
+
+Sale del estudio de los sitios de la UNC y la UBA y del portal MiUNC (`REFERENCIAS-UNC-UBA.md`). Se tomó estructura, no aspecto. No cambia nada de lo que ya existía: son dos piezas y cuatro reglas nuevas. Falta darle número y registrarlo en git.
+
+### Nuevo
+
+- **Lista de accesos** (`ul.accesos`, `.accesos__nombre`, `.accesos__marca`, `.accesos--columnas`): a dónde se puede ir desde acá. Cada renglón lleva el nombre, una línea que dice para qué sirve y una flecha o un botón. Sirve para los accesos de una página de inicio, una lista de trámites y un listado de herramientas. Va en lugar de la grilla de tarjetas con ícono. `DESIGN.md`, 7.Q.
+- **Entradas** (`ul.entradas`, `.entradas__titulo`, `.entradas__principal`): de dos a cuatro bloques grandes y planos para la portada de un portal, nombrados por lo que la persona viene a hacer. `DESIGN.md`, 17.C.
+- **Portal de la Delegación** (17.C): chico, informativo y de consulta rápida. Avisos antes que noticias, sin foto de apertura, navegación de un nivel y contacto a la vista.
+- **Página de inicio de una cuenta** (17.D): quién sos, qué tenés pendiente y a dónde ir, en ese orden.
+- **Topes de peso para fotos y video** (2.C): 1 MB por página, 200 KB por foto, carga diferida y ningún video que arranque solo.
+- **Un punto más en "Antes de publicar"** (sección 9): `lang="es"`, el `viewport` sin bloquear el zoom y ninguna ventana al entrar.
+- **Tres filas en "Lo que no se agrega"** (7.P): carrusel, ventana que se abre sola y asistente de chat flotante.
+- **El pie va al fondo** (6.C): en una pantalla con poco contenido, el `<footer class="pie">` que cierra `<main>` baja hasta el borde de abajo de la ventana. Lo hace la hoja sola y vale para todas las herramientas; en una página larga no cambia nada.
+- **Prototipo:** `muestra-portal.html`, con cinco pantallas (portada, trámites, herramientas, inicio de cuenta y datos de la cuenta). Al final de cada una, una tabla dice qué se tomó del estudio y de dónde. Trae el script que evita que el pie entre cortado (6.C).
+
+## En curso · visor de cámaras rehecho · 2026-10-06 · sin número todavía
+
+El visor de cámaras se rehízo tomando ideas de un visor comercial de referencia. Cambia el HTML de la pantalla "En vivo": quien ya la armó con la 0.4.2 tiene que rehacerla con `muestra-video.html`. La línea de tiempo de grabaciones no cambia. Falta darle número y registrarlo en git.
+
+### Nuevo
+
+- **Vistas de 5 y de 6 cámaras,** además de 1, 4 y 9. La de 6 es una grande y cinco chicas alrededor; la de 5, dos grandes arriba y tres chicas abajo.
+- **Panel lateral** (`.visor`, `.visor__lateral`) con el título, las vistas, la pantalla completa, el buscador y la lista. Se pliega a un riel de 46px que conserva los controles (`data-lista="plegada"`), y el muro gana ese ancho.
+- **Nombre y estado encima de la imagen,** en una barra oscura (`.camara__barra`).
+- **"Llenar el cuadro"** (`.muro--llenar`): la imagen tapa su celda y se recorta lo que sobra. Apagado al entrar.
+- **Elegir qué cámara va en cada lugar,** sin arrastrar: se toca un recuadro y después otro (se intercambian) o una cámara de la lista (pasa a ese lugar). El nombre de cada cámara pasó a ser un botón (`button.camara__nombre`). La lista marca con un ojo las que se están viendo, y la vista y el orden se recuerdan.
+- **"Ampliar" y "Pantalla completa" son dos botones distintos en cada cámara.** "Ampliar" (`.camara__ampliar`) agranda la cámara dentro del muro: en 6 la pasa al lugar grande, en 4 y en 9 la deja sola, y en 5 son dos botones, uno por cada lugar grande (`.camara__ampliar--izquierda`, `.camara__ampliar--derecha`). "Pantalla completa" (`.camara__completa`) deja esa cámara como lo único que se ve en el monitor; la barra aparece unos segundos al entrar y cuando la persona hace algo (`.camara--controles`).
+- **Lugares vacíos** (`.camara--vacia`): "Quitar" (`.camara__quitar`, en la barra del recuadro elegido, o `Supr`) saca la cámara del muro y deja su lugar vacío. El lugar vacío se toca y se llena desde la lista.
+- **El ojo de la lista quita la cámara del muro** (`.camaras-lista__ojo`). Con el mouse encima o con el foco pasa a ojo tachado en rojo. Cada renglón de la lista tiene ahora dos botones: el de la cámara (`.camaras-lista__camara`) y el ojo.
+- Tokens `--color-video-texto`, `--color-video-barra`, `--color-video-exito`, `--color-video-info` y `--color-video-error`.
+
+### Cambiado
+
+- **El muro ocupa todo el ancho y todo el alto libres.** Antes se achicaba hasta que sus celdas en 16:9 entraran, y quedaba centrado con lugar vacío a los costados. Ahora las celdas pueden ser más anchas que 16:9 y la imagen deja negro a los costados.
+- **No hay encabezado de pantalla arriba del muro:** el `h1` va dentro del panel. Ese alto pasó a las cámaras.
+- **La regla "el estado no va encima del video" se reemplaza** por la barra oscura. Con el nombre debajo, en un muro de 9 se iba un tercio del alto.
+- Las grabaciones van debajo del visor, a todo el ancho de la pantalla (antes, en la columna de la derecha).
+- `--color-video-texto` pasa a blanco (`#ffffff`): ahora es el color de lo que se escribe sobre la barra.
+- En una notebook (1366×641, con el banner "Piloto"), el ancho de la imagen de cada cámara pasó de 636 a 827px con 1, de 266 a 406px con 4 y de 142 a 266px con 9.
+
+### Eliminado
+
+- `.camara__pie` (ahora `.camara__barra`), `.camaras-panel`, `.camaras-panel__cuerpo` y `.encabezado--visor`. El visor ya no usa `.grilla--lateral`.
+
+## 0.4.4 · 2026-10-05 · oficial
+
+Un módulo nuevo: planos. Sube el último número: es un agregado, y nada de lo anterior cambia. `unpsjb.css` no cambia (solo su número), y los demás módulos tampoco.
+
+### Nuevo
+
+- **Módulo de planos:** `unpsjb-planos.css` (11 KB), `unpsjb-planos.js` (31 KB; 10 KB comprimido) y `muestra-planos.html`. Las plantas de un edificio con antenas de wifi (`.plano-marca`) y aulas (`.plano-zona` y su rótulo `.plano-rotulo`) marcadas encima. El plano se dibuja en neutros a partir de un SVG de solo trazos (`.plano-trazo`), nunca con los colores de CAD. Selector de plantas, capas, acercar y mover con botones y teclado, panel de detalle fijo y selector "Plano | Lista". El estado de las aulas (libre, ocupada) llega como un dato aparte. Reglas: sección 21.
+- En el módulo de planos, los espacios que no se reservan (`"reservable": false`, con su `"tipo"`) se marcan sin estado (`.plano-zona--fija`), y el dibujo conserva las coordenadas de la hoja original, para poder simplificar un plano sin mover lo marcado.
+- Nace de la primera herramienta que lo usa: los planos de la sede Trelew (antenas de wifi y aulas), que guarda su conversor de PDF de AutoCAD a SVG y su modo de edición.
+
+### Cambiado
+
+- `DESIGN.md`: 2.A y la tabla de módulos (sección 16) listan los siete.
 
 ## 0.4.3 · 2026-10-02 · oficial
 

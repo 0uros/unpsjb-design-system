@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.4.3
+   unpsjb.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.4.4
    Dirección "Señalética". Delegación Trelew · 2026
    Versión oficial. Fuente de verdad: DESIGN.md. Cambios: CHANGELOG.md.
    Los nombres del código van en español (regla y excepciones: DESIGN.md, 2.A).
@@ -21,7 +21,8 @@
       lateral, migas, encabezado de pantalla, menú inferior, pie, selector de tema
    5. Componentes: botones, campos, opciones, interruptor, segmentado, buscador,
       paneles, tablas (con tarjetas en celular), insignias, categorías, pestañas,
-      paginación, carga, filtros y chips, archivos, pasos y revisión
+      paginación, carga, filtros y chips, archivos, pasos y revisión, lista de
+      accesos, entradas
    6. Estados: avisos, toasts, modales, vacíos, comprobante, páginas de error
    7. Inteligencia artificial
    8. Gráficos e indicadores
@@ -700,6 +701,15 @@ img, svg { max-width: 100%; }
 .pie__derecha { display: flex; align-items: center; gap: var(--espacio-4); }
 @media (max-width: 639px) { .pie { flex-direction: column; align-items: flex-start; } }
 @media (max-width: 639px) { .pie__derecha { flex-wrap: wrap; } }
+/* Pie al fondo (en curso, sin número todavía): en una página corta el pie baja
+   hasta el borde de abajo de la ventana, en lugar de quedar a mitad de pantalla.
+   Cómo: <main> ocupa el alto que sobra (body es una columna) y el pie, pegajoso
+   con una ventana entera de distancia, se corre hacia abajo hasta donde termina
+   <main>. En una página larga no cambia nada. Solo vale para el <footer> que
+   cierra <main>. */
+@media screen {
+  main > footer.pie:last-child { position: sticky; top: 100vh; top: 100dvh; }
+}
 
 /* Pie de las páginas públicas (0.4): quién es, dónde queda, cómo contactar y los
    enlaces legales. Las herramientas internas usan el pie simple de arriba.
@@ -1396,6 +1406,101 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
   white-space: nowrap;
 }
 .etiquetas { display: flex; flex-wrap: wrap; gap: var(--espacio-1) var(--espacio-2); margin: 0; padding: 0; list-style: none; }
+
+/* Lista de accesos (en curso, sin número todavía): a dónde se puede ir desde acá.
+   Cada renglón es un destino: el nombre, una línea que dice para qué sirve y, a
+   la derecha, una flecha o un botón. Sirve para la página de inicio de una
+   cuenta, una lista de trámites y un listado de herramientas. Reemplaza a la
+   grilla de tarjetas con ícono, título y texto (DESIGN.md, 7.C y 7.Q).
+   Si el nombre es el enlace, se puede tocar todo el renglón:
+   <ul class="accesos">
+     <li><a class="accesos__nombre" href="…">Mis datos</a>
+         <p>Nombre, documento y formas de contacto.</p>
+         <svg class="icono accesos__marca" aria-hidden="true">…</svg></li>
+   Si la acción es un botón, el nombre es texto y el botón dice qué inicia:
+     <li><h3 class="accesos__nombre">Comedor</h3><p>…</p>
+         <a class="boton boton--secundario" href="…">Iniciar trámite<span class="solo-lector">: comedor</span></a></li>
+   </ul>
+   .accesos--columnas: en dos o tres columnas cuando son muchos (un listado de
+   herramientas) y cada renglón es corto. */
+.accesos { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-linea); }
+.accesos > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  align-content: center;   /* si el renglón de al lado es más alto, el texto no se separa */
+  column-gap: var(--espacio-4);
+  min-height: 64px;
+  padding: var(--espacio-3);
+  border-bottom: 1px solid var(--color-linea);
+}
+.accesos > li > * { grid-column: 1; }
+.accesos__nombre { margin: 0; font: var(--texto-label); font-size: 1rem; letter-spacing: 0; color: var(--color-tinta); }
+a.accesos__nombre { justify-self: start; color: var(--color-primario-texto); text-decoration: none; }
+/* El enlace cubre el renglón entero; el foco se dibuja en el renglón */
+a.accesos__nombre::after { content: ""; position: absolute; inset: 0; }
+a.accesos__nombre:focus-visible { box-shadow: none; }
+.accesos > li:has(> a.accesos__nombre:focus-visible) {
+  outline: 2px solid transparent;
+  box-shadow: var(--anillo-foco);
+  border-radius: var(--radio-control);
+}
+.accesos > li:has(> a.accesos__nombre:hover) { background: var(--color-tinte); }
+.accesos > li:has(> a.accesos__nombre:hover) .accesos__nombre { text-decoration: underline; }
+.accesos p { margin: 0; font: var(--texto-detalle); color: var(--color-tinta-2); }
+.accesos > li > .accesos__marca,
+.accesos > li > .boton { grid-column: 2; grid-row: 1 / span 2; }
+.accesos__marca { color: var(--color-tinta-2); }
+.accesos > li > .boton { position: relative; }   /* queda por encima del enlace del renglón */
+@media (max-width: 639px) {
+  .accesos > li > .boton { grid-column: 1; grid-row: auto; justify-self: start; margin-top: var(--espacio-2); }
+}
+.accesos--columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  column-gap: var(--espacio-8);
+  border-top: 0;
+}
+
+/* Entradas (en curso, sin número todavía): de dos a cuatro bloques grandes para
+   elegir por dónde empezar, según lo que la persona viene a hacer. Solo en la
+   portada de un portal (DESIGN.md, 17.C). Son planos y sin ícono. La principal
+   va en azul con texto blanco; las demás, en neutro con texto oscuro. El
+   naranja no se usa de relleno. Con más de cuatro destinos va .accesos.
+   <ul class="entradas">
+     <li><a class="entradas__principal" href="…"><span class="entradas__titulo">Estudiar en Trelew</span>
+         <span>Carreras, ingreso y calendario</span></a></li> … </ul> */
+.entradas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: var(--espacio-3);
+}
+.entradas > li { display: grid; }   /* todos los bloques de una fila miden lo mismo */
+.entradas a {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--espacio-1);
+  min-height: 144px;
+  padding: var(--espacio-6);
+  color: var(--color-tinta-2);
+  text-decoration: none;
+  background: var(--color-capa);
+  border-radius: var(--radio-contenedor);
+  transition: background-color var(--duracion-rapida) var(--curva);
+}
+.entradas a:hover { background: var(--color-tinte); }
+.entradas__titulo { font: var(--texto-titulo-2); letter-spacing: -0.01em; color: var(--color-tinta); }
+.entradas a:hover .entradas__titulo { text-decoration: underline; }
+.entradas a.entradas__principal { color: #ffffff; background: var(--color-primario-relleno); }
+.entradas a.entradas__principal:hover { background: var(--color-primario-relleno-hover); }
+.entradas__principal .entradas__titulo { color: #ffffff; }
+@media (max-width: 639px) { .entradas a { min-height: 96px; padding: var(--espacio-4); } }
+@media (forced-colors: active) { .entradas a { border: 1px solid LinkText; } }
 
 /* 6. Estados --------------------------------------------------------------- */
 

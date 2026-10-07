@@ -122,6 +122,33 @@
         "value": "1920",
         "createdAt": "2026-10-02T18:57:23.482Z",
         "reason": "falso positivo: resto mal leído de calc(8 * var(--u)); es el radio de contenedor de 8px a 1920 × 1080"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "atkinson respaldo",
+        "createdAt": "2026-10-07T14:54:29.328Z",
+        "reason": "falso positivo: es el @font-face de respaldo ajustado de Atkinson (Arial con size-adjust), documentado en DESIGN.md 4.A 'Respaldo ajustado'; ya estaba en la hoja"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "montserrat respaldo",
+        "createdAt": "2026-10-07T14:54:29.334Z",
+        "reason": "falso positivo: es el @font-face de respaldo ajustado de Montserrat, documentado en DESIGN.md 4.A 'Respaldo ajustado'; ya estaba en la hoja"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "twemoji unpsjb",
+        "createdAt": "2026-10-07T14:54:29.340Z",
+        "reason": "falso positivo: fuente de emojis del sistema, documentada en DESIGN.md 10.D; ya estaba en la hoja"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "muestra-portal.html"
+        ],
+        "createdAt": "2026-10-07T14:59:41.187Z",
+        "reason": "falso positivo, igual que en las otras muestras: son piezas de unpsjb.css (la banda, que solo lleva borde al imprimir, y las opciones de .segmentado, que traen su propio relleno); revisado en las capturas a 1280 y 390px"
       }
     ]
   }

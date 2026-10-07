@@ -682,3 +682,230 @@ Se pidieron cinco módulos de la lista del 1/10: documentos e impresión, correo
 - [ ] Cartelera: definir la dirección de la vista para el celular y generar el QR real; probar en la tele real y decidir cómo queda el navegador a pantalla completa.
 - [ ] Siguen: armar los módulos en React con datos reales; subir `skill/design-md-unpsjb/SKILL.md` a claude.ai; pruebas con Orca, celular real, Firefox y Safari.
 
+
+---
+
+## 2026-10-06 — Estudio de referencia: UNC, UBA y MiUNC
+
+Sin número de sesión, porque hay trabajo en curso sin anotar (0.4.4 y el módulo de planos) y no se quiso pisar su numeración.
+
+### Qué se hizo
+- Se estudiaron **unc.edu.ar**, **uba.ar** y **mi.unc.edu.ar** (MiUNC, con la sesión del usuario). Todo quedó en `REFERENCIAS-UNC-UBA.md`: arriba el resumen con 10 acciones, abajo el detalle por tema.
+- **No se cambió nada del diseño**: `DESIGN.md`, `unpsjb.css` y las muestras no se tocaron.
+
+### Qué salió
+- Los tres se ven cuidados y ninguno pasaría nuestra lista de "antes de publicar". La UBA bloquea el zoom, dice `lang="en"` y usa texto blanco sobre celeste y naranja (2:1). MiUNC no muestra el foco y usa 13px para casi todo. La UNC es la mejor en teclado, pero su portada baja 22 MB.
+- **Vale tomar estructura, no aspecto.** De MiUNC: la página de inicio de cuenta, la lista de trámites en dos grupos, el lanzador de aplicaciones con buscador y el perfil con navegación lateral. De los portales: las tres entradas por tarea de la UNC y el mosaico de bloques planos de la UBA (con nuestros colores).
+- Confirma decisiones ya tomadas: letra con identidad local, naranja nunca como texto, radios chicos, sin sombras ni degradados.
+
+### Cómo se verificó
+- Portales: Chrome sin ventana con `playwright-core`, seis páginas por sitio a 1280, 390 y 320px; estilos efectivos, peso, **axe 4.10.2** y recorrido con Tab. Lo crudo está en `referencias/medidas.json` y se repite con `referencias/medir.js`.
+- MiUNC: en el navegador, solo mirando; el ancho de celular, con marcos de 390 y 320px. No se guardaron capturas porque muestran datos personales.
+- Contrastes calculados aparte.
+- Sin probar: lector de pantalla, Firefox, Safari. Se miraron seis páginas por sitio, no todo.
+
+### Archivos
+- Nuevos: `REFERENCIAS-UNC-UBA.md`, `referencias/medidas.json`, `referencias/medir.js`. Las capturas (`referencias/unc/`, `referencias/uba/`, 11 MB) quedan fuera de git.
+- Tocados: `.gitignore`, `BITACORA.md`.
+
+### Pendientes
+**En espera por decisión del usuario (2026-10-06):** no se integra nada todavía, por el trabajo en paralelo. Queda como información.
+- Decidido: el portal de la Delegación **se va a hacer, pero simple**, informativo y de consulta rápida, porque el portal institucional lo maneja Comodoro. No hace falta un módulo completo de noticias.
+- [ ] Cuando se retome: sumar a `DESIGN.md` las reglas de las acciones 8 (tope de peso para fotos) y 9 (`lang`, zoom y ventana de entrada).
+- [ ] Cuando se retome: decidir si las acciones 1 a 4 (piezas tomadas de MiUNC) entran en una versión.
+- [ ] Cuando llegue el portal: partir de las acciones 6 y 7, en chico.
+
+## 2026-10-06 — Visor de cámaras rehecho (sin número de versión todavía)
+
+### Lo que pidió el usuario
+- Mostró una captura de un visor comercial ("Vigilance") que le parece más pulido, y pidió una versión del visor que tome sus ideas siguiendo el sistema.
+- Una vista de 5 cámaras "como en el ejemplo" y una de 6.
+- **La prioridad: que las cámaras sean lo más grandes posible.** Observó que, en todas las vistas, plegar la lista solo corría las cámaras al centro, sin ganar lugar útil.
+- Antes (2/10) había pedido poder plegar la lista en pantallas anchas; quedó hecho ese día y este rediseño lo reemplaza.
+
+### Qué se tomó de la referencia
+- Panel lateral con todo lo que no es video, el nombre de cada cámara en una barra sobre la imagen, y vistas con cámaras de distinto tamaño.
+- **No se tomó:** el tema oscuro forzado (el visor respeta el tema elegido), la línea de tiempo en la misma pantalla (le sacaría alto al muro, y el usuario pidió no tocarla) y el recorte de la imagen como comportamiento normal (queda como opción, apagada).
+
+### Qué se hizo
+- **Panel lateral** con el `h1`, las vistas 1 · 4 · 5 · 6 · 9, pantalla completa, buscador, lista e interruptor "Llenar el cuadro". Plegado es un riel de 46px con los controles en columna.
+- **Sin encabezado ni barra arriba del muro,** y el nombre encima de la imagen: todo ese alto pasó a las cámaras.
+- **El muro llena el ancho y el alto libres.** Las celdas pueden ser más anchas que 16:9; la imagen no se deforma y deja negro a los costados.
+- **Vista de 6:** una grande y cinco chicas, igual a la referencia. **Vista de 5:** dos grandes y tres chicas.
+- **"Ampliar"** y la lista ahora hacen algo (cierra un pendiente de la sesión 14).
+- **Elegir qué cámara va en cada lugar** (pedido el mismo día, después de ver las vistas): se toca un recuadro y después otro recuadro, y se intercambian; o una cámara de la lista, y pasa a ese lugar. Sin arrastrar. La lista marca con un ojo las cámaras que se están viendo. La vista y el orden se recuerdan en el navegador. Antes, elegir una cámara la mandaba siempre al primer lugar y corría a todas las demás.
+- En el ejemplo, cada cámara muestra una imagen de prueba en 16:9 con su borde, para que se vea cuánto ocupa la imagen real dentro de su celda.
+
+### Decisiones
+- **Vista de 5: dos grandes y tres chicas. Decidido por el usuario.** Se probó también con una sola grande y una tira de cuatro chicas al costado (grande de 806×454 y chicas de 191×108 en notebook); el usuario la vio y pidió volver a la de dos grandes. Antes se había descartado la grande con cuatro chicas en un cuadro de 2 × 2: en un monitor quedaba más chica que la de 6. No volver a proponer una sola grande para la vista de 5.
+- **El nombre encima del video** cambia la regla de la sesión 13. Lo decidió la prioridad del usuario; era el pendiente abierto de la sesión 14.
+- **"Llenar el cuadro" apagado al entrar:** recortar esconde bordes de la imagen, y en vigilancia eso tiene que ser una elección.
+- **Controles en el panel y no en una barra arriba del muro:** una barra costaba 44px de alto en todas las vistas.
+
+### Medidas (Chrome; ancho × alto de la imagen, no de la celda)
+| Ventana | 1 | 4 | 5 (grande / chica) | 6 (grande / chica) | 9 |
+|---|---|---|---|---|---|
+| Notebook 1366×641, antes | 636×358 | 266×149 | — | — | 142×80 |
+| Notebook 1366×641, ahora | 827×465 | 406×229 | 490×276 / 322×181 | 546×307 / 266×150 | 266×150 |
+| Monitor 1920×950, ahora | 1376×774 | 681×383 | 776×437 / 513×288 | 913×513 / 449×253 | 449×253 |
+| Monitor, panel plegado | 1376×774 | 681×383 | 820×461 / 542×305 | 913×513 / 449×253 | 449×253 |
+| Notebook, pantalla completa y panel plegado (1366×768) | 1244×700 | 615×346 | 616×347 / 406×228 | 825×464 / 405×228 | 405×228 |
+
+- **Plegar el panel agranda la imagen** cuando lo que limita es el ancho: la vista de 5 en un monitor, todas las vistas en ventanas angostas (a 1024×700, 4 cámaras pasan de 327 a 444px) y en pantalla completa.
+- **En una ventana ancha y baja, con 1, 4, 6 o 9, plegar el panel no agranda la imagen:** lo que limita es el alto, y una imagen 16:9 no puede crecer sin recortarse. Ahí la celda se ensancha y queda negro a los costados. Para que crezca hay que encender "Llenar el cuadro".
+
+### Cómo se verificó
+- El muro termina dentro de la ventana en las cinco vistas, con el panel abierto y plegado, a 1366×641, 1920×950, 1024×700 y 800×1000. En celular (390×844) entra la primera cámara.
+- Recorrido automático: ampliar en 6 y en 9, elegir en la lista, llenar el cuadro, plegar con teclado, recargar (se recuerda) y pantalla completa.
+- **axe 4.10.2:** sin fallas en claro y oscuro, panel abierto y plegado, celular y tablet. **Foco:** ningún control tapado. **Ancho:** sin scroll horizontal. **Impresión:** sale el muro como planilla, sin fondos negros ni panel.
+- Sin probar: video real (las imágenes son de prueba), lector de pantalla, celular real, Firefox y Safari.
+
+### Archivos
+- Tocados: `unpsjb-video.css` (rehecho salvo la línea de tiempo), `muestra-video.html`, `DESIGN.md` (16.B y el peso en la tabla de módulos), `CHANGELOG.md` (entrada "En curso"), `skill/design-md-unpsjb/SKILL.md`.
+- Nada de esto está en git todavía.
+
+### Pendientes
+- [ ] Que el usuario revise cómo se cambia una cámara de lugar.
+- [ ] Darle número de versión y registrarla en git, junto con lo demás que está sin registrar en `main`.
+- [ ] Probar con video real: ahí se ve si la barra tapa algo importante (la hora que la cámara escribe sobre la imagen suele ir arriba).
+- [ ] El buscador de la lista sigue sin filtrar en el ejemplo.
+- [x] "Ampliar" y la lista de cámaras ya hacen algo (pendiente de la sesión 14).
+- [x] Decidido: el nombre y el estado van encima del video (pendiente de la sesión 14).
+
+## 2026-10-06 — Visor: ampliar y pantalla completa por cámara, lugares vacíos, y prueba en cuatro tipos de equipo
+
+### Lo que pidió el usuario
+- Diferenciar "ampliar" de "pantalla completa": un botón que deje la cámara como lo único que se ve en el monitor, sin interfaz, "como en un video de YouTube".
+- Que siga habiendo un botón para ampliar. En la vista de 6 le parece bien; en la de 5, que sean dos, para elegir izquierda o derecha.
+- Poder sacar una cámara y dejar la vacante vacía.
+- Probar todo en celular, tablet, notebook y monitor de PC.
+
+### Qué se hizo
+- **Tres botones de agrandar, según la vista:** "Ampliar" (`maximize-2`) en 4, 6 y 9; "Ampliar a la izquierda" y "a la derecha" (`arrow-up-left`, `arrow-up-right`) en las tres chicas de la vista de 5; "Pantalla completa" (`fullscreen`) en todas. Las cámaras que ya son grandes no llevan "Ampliar". La hoja decide qué botón se ve; el HTML los lleva todos.
+- **Pantalla completa de una cámara:** usa la pantalla completa del navegador sobre el recuadro. La barra se ve 3 segundos al entrar y vuelve al mover el mouse, tocar o usar el teclado; con el mouse quieto se esconde también el puntero.
+- **Lugares vacíos:** el recuadro elegido muestra "Quitar" en su barra (y funciona `Supr`). Queda un lugar vacío con borde punteado, que se toca y se llena desde la lista. Si la lista está plegada, se abre sola.
+- **Cambió el modelo del ejemplo:** el muro son nueve lugares, cada uno con una cámara o vacío; una cámara puede no estar en ninguno. Lo que se guarda en el navegador admite lugares vacíos.
+
+### Decisiones
+- **"Quitar" aparece solo en el recuadro elegido,** no siempre: con cuatro botones fijos, en las cámaras chicas el nombre quedaba en 84px.
+- **Sin "Ampliar" en celular:** ahí las cámaras van una debajo de la otra y no hay lugar grande.
+- **La barra se muestra al entrar a pantalla completa:** si no, no se ve cómo salir.
+- **Al reemplazar una cámara por otra que no estaba en el muro, la reemplazada sale del muro** (no va sola a un lugar vacío): que un lugar quede vacío es una elección de la persona.
+
+### Prueba en cuatro tipos de equipo (Chrome; celular y tablet con pantalla táctil simulada)
+Imagen de cada cámara, grande / chica, con el panel abierto:
+
+| Equipo | 1 | 4 | 5 | 6 | 9 |
+|---|---|---|---|---|---|
+| Celular 390×844 y 360×640 | 358×201 (328×185 en el chico), una debajo de la otra en todas las vistas | | | | |
+| Tablet parada 768×1024 | 704×396 | 345×194 | 346×195 / 226×127 | 465×261 / 225×127 | 225×127 |
+| Tablet acostada 1024×768 | 668×376 | 327×184 | 328×185 / 214×120 | 441×248 / 213×120 | 213×120 |
+| Tablet acostada, panel plegado | 902×507 | 444×250 | 445×250 / 292×164 | 597×336 / 291×164 | 291×164 |
+| Notebook 1366×641 | 827×465 | 406×229 | 490×276 / 322×181 | 546×307 / 266×150 | 266×150 |
+| Notebook 1536×730 | 985×554 | 485×273 | 584×329 / 385×216 | 652×367 / 319×179 | 319×179 |
+| Monitor 1920×950 | 1376×774 | 681×383 | 776×437 / 513×288 | 913×513 / 449×253 | 449×253 |
+| Monitor 2560×1300 | 1998×1124 | 992×558 | 1096×617 / 726×408 | 1327×747 / 657×369 | 657×369 |
+
+En los ocho tamaños, con el mismo recorrido:
+- Desde tablet, las cinco vistas entran sin scroll, con el panel abierto y plegado. Sin scroll horizontal en ninguno.
+- La barra de ninguna cámara desborda; el nombre más angosto mide 95px (vista de 5 en la tablet acostada con el panel abierto).
+- Ampliar en 6, ampliar a la derecha y a la izquierda en 5, quitar, recargar (el lugar vacío se recuerda) y llenar el lugar vacío desde la lista.
+- Pantalla completa de una cámara: ocupa todo el monitor, la barra se va a los 3 segundos, vuelve al tocar o mover el mouse, y el botón sale.
+- **axe 4.10.2** con un lugar vacío: sin fallas.
+
+Además, en notebook: todo con teclado solo (elegir, `Supr`, llenar el vacío, entrar y salir de pantalla completa); pantalla completa de la página y, adentro, la de una cámara (al salir se vuelve a la de la página); foco sin controles tapados a 1366, 768 y 390px; impresión sin botones ni lugares vacíos.
+
+### Lo que no se probó
+- Equipos reales: todo fue en Chrome simulando los tamaños y el toque. En un **iPhone** el botón de pantalla completa de cada cámara no va a aparecer (Safari no la permite para elementos de la página); con video real se puede resolver con la pantalla completa propia del video.
+- Firefox, Safari, lector de pantalla y video real.
+
+### Pendientes
+- [ ] Probar en un celular y una tablet reales.
+- [ ] Con video real: pantalla completa en iPhone, y ver si la barra tapa algo de la imagen.
+- [x] Decidida la vista de 5 (dos grandes y tres chicas) y el cambio de lugar de las cámaras.
+
+## 2026-10-07 — Visor: el ojo de la lista quita la cámara. La maqueta queda lista para implementar
+
+### Lo que pidió el usuario
+- Que al tocar el ojo de una cámara activa, en la barra lateral, se la pueda sacar de la vista; y que al pasar el mouse aparezca un ojo tachado en rojo, para dar a entender que la va a sacar.
+- Con eso da la maqueta por lista: **se va a usar próximamente para una implementación.**
+
+### Qué se hizo
+- Cada renglón de la lista tiene dos botones: el de la cámara (`.camaras-lista__camara`) y el ojo (`.camaras-lista__ojo`), que está solo en las cámaras que se ven en el muro.
+- Tocar el ojo quita la cámara y deja su lugar vacío, igual que "Quitar" en el recuadro. El foco se queda en el renglón.
+- Con el mouse encima, o con el foco del teclado, el ojo pasa a ojo tachado (`eye-off`) en el rojo de error, con un fondo rosado.
+- Para volver a ponerla: se toca su nombre en la lista y va al lugar vacío.
+
+### Cómo se verificó
+- Chrome, en notebook (claro), monitor (oscuro), tablet y celular (táctil simulado): el ojo aparece solo en las cámaras que se ven, cambia a tachado con el mouse y con `Tab`, quita la cámara, el aviso al lector de pantalla sale, y tocar el nombre la devuelve. **axe 4.10.2** sin fallas y sin scroll horizontal en los cuatro.
+- En táctil no hay "mouse encima": el ojo quita al primer toque, sin el aviso previo.
+
+### Para quien implemente el visor
+`muestra-video.html` es la referencia de marcado y de comportamiento; `unpsjb-video.css` se usa tal cual. Lo que en la maqueta está simulado y la herramienta tiene que resolver:
+- **Video:** las imágenes son de prueba. Los navegadores no reproducen RTSP: hace falta un conversor (MediaMTX o go2rtc). El `<video>` va dentro de `.camara__video`.
+- **Estado de cada cámara** (en vivo, grabando, sin señal): está escrito a mano; tiene que venir del grabador.
+- **Lugares y vista:** se guardan en `localStorage` (`unpsjb-visor-orden`, `unpsjb-visor-vista`, `unpsjb-visor-lista`, `unpsjb-visor-llenar`). Si el muro tiene que ser el mismo en todos los equipos de un puesto, va al servidor.
+- **`--visor-arriba`:** la página mide dónde empieza el muro y lo pone en `<html>`; hay que repetirlo al cambiar el tamaño de la ventana y al entrar o salir de pantalla completa.
+- **Buscador de la lista:** no filtra todavía.
+- **Grabaciones:** la línea de tiempo no está conectada, y falta saber si el grabador entrega los tramos por cámara.
+- **iPhone:** no hay pantalla completa para un elemento de la página; usar la del `<video>`.
+
+### Pendientes
+- [ ] Darle número de versión y registrar en git todo lo que está sin registrar en `main` (incluye la 0.4.4 de planos).
+- [ ] Probar en un celular y una tablet reales, y con video real.
+
+---
+
+## 2026-10-07 — Piezas del estudio de referencia y prototipo de portal
+
+Sin número de sesión ni de versión: hay otros trabajos en paralelo (el visor de cámaras, entre otros) y el usuario pidió no subir nada todavía. **Sin commitear.**
+
+### Qué se hizo
+- Se pasó a `DESIGN.md` y a `unpsjb.css` lo que convenía del estudio (`REFERENCIAS-UNC-UBA.md`). Todo lo nuevo está marcado "(nuevo, sin número todavía)".
+- **Dos piezas en `unpsjb.css`:** la lista de accesos (`.accesos`) y las entradas (`.entradas`). No se tocó ninguna regla que ya existía.
+- **En `DESIGN.md`:** 2.C (topes de peso para fotos y video), 7.P (tres filas: carrusel, ventana al entrar, chat flotante), 7.Q (lista de accesos), sección 9 (punto 7 de "Antes de publicar"), 13 (tres filas), 17.C (portal de la Delegación) y 17.D (página de inicio de una cuenta).
+- **`muestra-portal.html`:** prototipo con cinco pantallas en un archivo: portada, trámites, herramientas con buscador, inicio de cuenta y datos de la cuenta. Con datos de ejemplo.
+
+### Decisiones
+- **Una sola pieza para tres usos.** Los accesos de MiUNC, su lista de trámites y su lanzador de aplicaciones son la misma lista con otra cosa a la derecha. Se hizo una pieza, no tres.
+- **El perfil no necesitó nada nuevo:** menú lateral más lista de resumen, que ya existían.
+- **Las entradas son la única excepción** a "la banda es el único bloque grande de color", y solo en la portada de un portal. Hasta cuatro, sin ícono; la principal en azul, las demás en neutro. El naranja no se usa de relleno.
+- **El portal se pensó chico,** como pidió el usuario: el institucional lo maneja Comodoro. No hay módulo de noticias; las novedades son una lista corta que enlaza al portal de la universidad.
+- **No se hizo hoja aparte** (`unpsjb-portal.css`): son 80 líneas y sirven también dentro de las herramientas.
+
+### Cómo se verificó
+- **axe 4.10.2** (WCAG 2.0, 2.1 y 2.2 A/AA y buenas prácticas), sin fallas en las cinco pantallas, a 1280, 390 y 320px, en claro y en oscuro.
+- **Ancho:** sin scroll horizontal en ninguna de esas pruebas.
+- **Probado funcionando:** cambio de pantalla desde la sub-barra y el menú inferior, el buscador (filtra sin distinguir tildes ni mayúsculas, cuenta "1 de 9", muestra el estado vacío y "Borrar búsqueda" lo restablece) y el foco con teclado, que marca el renglón entero.
+- **Capturas** revisadas con las fuentes reales (servido por http): portada, trámites en celular, herramientas en oscuro y datos de la cuenta.
+- La página pesa 23 KB sin la hoja ni las fuentes.
+- Sin probar: lector de pantalla, celular real, Firefox y Safari, impresión.
+
+### Lo que apareció
+- En el listado en columnas, si un renglón tenía una descripción de dos líneas, en el de al lado el nombre y la descripción se separaban. Corregido con `align-content: center`.
+- El detector de Impeccable marcó las tres fuentes de respaldo de `unpsjb.css` ("Atkinson respaldo", "Montserrat respaldo", "Twemoji UNPSJB") como fuentes fuera del sistema. Ya estaban en la hoja y están documentadas (4.A y 10.D): se anotaron como excepción en `.impeccable/config.json`.
+
+### Archivos
+- Nuevos: `muestra-portal.html`.
+- Tocados: `DESIGN.md`, `unpsjb.css`, `CHANGELOG.md` (entrada "En curso"), `BITACORA.md`, `REFERENCIAS-UNC-UBA.md` (el estado), `skill/design-md-unpsjb/SKILL.md` (copia de `DESIGN.md`), `.impeccable/config.json`.
+- Sin tocar: `muestra.html` (no se sumó el enlace al prototipo ni las fichas de las dos piezas, para no cruzarse con el trabajo en paralelo) y todos los módulos.
+
+### Pendientes
+- [ ] Darle número de versión, junto con lo demás que está en curso.
+- [ ] Sumar a `muestra.html` el enlace a `muestra-portal.html` y las fichas "cuándo usarlo" de la lista de accesos y de las entradas (14.F).
+- [ ] Para el portal de verdad: los datos reales (dirección, horarios, teléfonos, las direcciones de cada herramienta) y qué secciones lleva.
+- [ ] Subir `skill/design-md-unpsjb/SKILL.md` a claude.ai.
+
+### Ajustes después de la primera mirada del usuario (mismo día)
+
+El usuario miró `muestra-portal.html` y marcó tres cosas.
+
+- **"No veo el aporte de la investigación."** Tenía razón: lo que se tomó es estructura y, sobre todo, cosas que *no* están (carrusel, ventana al entrar, logos por trámite), así que la maqueta se veía como el sistema de siempre. Se sumó al final de cada pantalla una tabla plegable, "Qué sale del estudio en esta pantalla", con qué se vio, dónde y qué se hizo. Es una nota del prototipo, no va en la página real.
+- **En Herramientas el pie quedaba alto,** con un hueco debajo. Regla nueva en `unpsjb.css` y en 6.C: el pie va al fondo de la ventana cuando el contenido es corto. Es una sola línea (`position: sticky; top: 100dvh` en el `<footer class="pie">` que cierra `<main>`): el pie se corre hacia abajo hasta donde termina `<main>`, que ya ocupaba el alto que sobra. No hizo falta cambiar `<main>` ni envolver el contenido, y vale para todas las muestras.
+- **En Mi cuenta el pie se veía cortado.** Con solo CSS no hay forma de decir "si no entra entero, que no se vea". Se resolvió con un script de quince líneas en el prototipo, que le da alto a la pantalla para que el pie empiece justo debajo del borde. Quedó escrito en 6.C como mejora opcional.
+
+Lo que apareció:
+- **Las pantallas tenían como `id` el mismo nombre que el enlace** (`#cuenta`), y el navegador corría la página 41px hasta ese punto: parte del "se ve cortado" era eso. Se les quitó el `id`.
+- **Medir el pie para saber dónde empezaría daba mal,** porque la regla nueva ya lo había corrido. Se mide desde donde termina el contenido.
+
+Verificado: 120 casos (cinco pantallas; ocho tamaños de ventana, de 320×640 a 2560×1440; al cargar, al navegar y con las notas plegadas): el pie queda al fondo o debajo del borde, nunca cortado. axe sin fallas en las cinco pantallas y los ocho tamaños. En las otras ocho muestras el pie sigue donde estaba, y en una ventana alta baja al fondo (`muestra-planos.html` a 1920×1200).

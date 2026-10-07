@@ -1,6 +1,6 @@
 ---
 name: UNPSJB MII 2.0 · Señalética
-version: 0.4.3
+version: 0.4.4
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -143,7 +143,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB (MII 2.0)
 
-**Delegación Trelew · 2026 · versión 0.4.3 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.4 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`. Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `comparar-v3.html` (0.2.1 y la actual) y `comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -177,7 +177,7 @@ El sistema se distribuye como **una hoja de estilos central** (`unpsjb.css`) alo
 
 Toda herramienta, sea HTML o React, usa esta hoja. Así se ven iguales y un cambio de diseño se hace en un solo lugar.
 
-Las piezas grandes que usan pocas herramientas van en **módulos**: hojas aparte que se cargan después de la central y usan sus tokens (sección 16). Hoy hay seis: agenda de aulas, visor de cámaras, documentos e impresión, gráficos de líneas, mesa de ayuda y cartelera.
+Las piezas grandes que usan pocas herramientas van en **módulos**: hojas aparte que se cargan después de la central y usan sus tokens (sección 16). Hoy hay siete: agenda de aulas, visor de cámaras, documentos e impresión, gráficos de líneas, mesa de ayuda, cartelera y planos.
 
 **Cómo se nombran las clases y las variables (desde la 0.3.2).** Todo el código va en español, para poder adivinar un nombre sin ir a buscarlo:
 
@@ -203,6 +203,11 @@ Regla práctica: si la herramienta empieza a necesitar más de una pantalla, o h
 - **DOM poco profundo:** prohibido anidar contenedores (`div`) sin necesidad. Preferir etiquetas semánticas (`header`, `main`, `nav`, `section`, `footer`).
 - **Sin Tailwind por CDN:** el script de Tailwind por CDN pesa cientos de KB y no está pensado para producción. En React se permite Tailwind **compilado**, configurado con los mismos tokens de `unpsjb.css`.
 - **Fuentes:** solo en formato `woff2` variable, un archivo por familia, con `font-display: swap`.
+- **Fotos y video (nuevo, sin número todavía).** Las páginas con fotos son las que más pesan: en el estudio de referencia (`REFERENCIAS-UNC-UBA.md`), la portada de una universidad bajaba 22 MB, casi todo imágenes sin reducir, y la de otra, 11,7 MB de un video. Topes:
+  - **Una página no pasa de 1 MB** en total la primera vez que se abre.
+  - **Cada foto, 200 KB como máximo,** en `webp` o `avif`, y con el tamaño en que se muestra, no el de la cámara. Con `width` y `height` escritos, para que la página no salte al cargar.
+  - **`loading="lazy"`** en toda foto que no se ve al entrar.
+  - **Ningún video arranca solo** ni se descarga antes de que la persona lo pida: va una imagen con el botón de reproducir.
 
 ### D. PWA (aplicación instalable)
 
@@ -507,6 +512,11 @@ A la derecha, antes de la versión, va el **selector de tema** (sección 3.F). E
 
 La herramienta suma sola lo que ya sabe (quién reporta, en qué pantalla, con qué navegador): no se le pide a la persona. Qué se hace con cada reporte está en la sección 14.F.
 
+**El pie va al fondo (nuevo, sin número todavía).** En una pantalla con poco contenido, el pie baja hasta el borde de abajo de la ventana: no queda flotando a mitad de pantalla con un hueco debajo. Lo hace la hoja sola, sin clase ni script, para el `<footer class="pie">` que cierra `<main>`. En una página larga no cambia nada: el pie va después del contenido.
+
+- **El pie no entra cortado.** Si al abrir la página el pie entra solo en parte, es mejor que no se vea: se le da alto al contenido para que el pie empiece justo debajo del borde de la ventana, y se llega bajando. Importa sobre todo con el pie de las páginas públicas, que es alto. Esto sí necesita un script chico (quince líneas, en `muestra-portal.html`): es una mejora y, si no está, la página funciona igual.
+- En el celular, el borde de abajo es el del menú inferior.
+
 **Pie de las páginas públicas (nuevo en 0.4).** Las páginas que ve gente de afuera de la universidad (sección 17) usan un pie más completo (`.pie.pie--publico`), con tres bloques arriba de la línea de derechos: quién es y dónde queda (la dirección, en `<address>`), cómo contactar, y los enlaces "Accesibilidad", "Privacidad y datos personales" y "Reportar un problema". No lleva número de versión ni clave de IA.
 
 ### D. Encabezado de pantalla
@@ -708,6 +718,30 @@ Para no volver a discutirlo cada vez:
 | Centro de notificaciones | Necesita servidor y base de datos: no es un tema de la hoja de estilos. | Avisos y toasts |
 | Tooltip | En celular no existe "pasar el mouse", y tapa contenido. | Texto de ayuda fijo debajo del campo. En los gráficos, la lectura fija de arriba (15.E) |
 | Torta con más de 3 partes, gráficos 3D, dos ejes | Se leen mal (sección 15). | Barras, o una tabla |
+| Carrusel de fotos o de noticias | Pesa mucho y lo que importa queda en una de varias vueltas que casi nadie espera. | Una sola noticia destacada y, debajo, una lista |
+| Ventana que se abre sola al entrar | Tapa todo en el celular y atrapa el foco antes de que la persona haya visto la página. | Un aviso (8.A) arriba del contenido |
+| Asistente de chat flotante | Es otro elemento fijo que tapa contenido en el celular. | Un enlace a la mesa de ayuda (sección 19) |
+
+Las últimas tres filas son nuevas (sin número todavía) y salen del estudio de referencia.
+
+### Q. Lista de accesos (nuevo, sin número todavía)
+
+**A dónde se puede ir desde acá** (`ul.accesos`). Cada renglón es un destino: el nombre, una línea que dice para qué sirve y, a la derecha, una flecha o un botón. Es lo que va donde otros sitios ponen una grilla de tarjetas con ícono, título y texto (prohibida en 7.C): la misma información, en menos lugar y fácil de recorrer con la vista.
+
+Sirve para tres cosas:
+
+| Uso | Cómo va |
+|---|---|
+| **Accesos** de una página de inicio (17.D) | El nombre es el enlace (`a.accesos__nombre`) y a la derecha va una flecha (`chevron-right`). Se puede tocar todo el renglón. |
+| **Lista de trámites** | El nombre es texto (`h3.accesos__nombre`) y a la derecha va **un solo botón**, `.boton--secundario`: "Iniciar trámite". En dos grupos con su título: los más pedidos primero y "Otros trámites" después. |
+| **Listado de herramientas** | Con `.accesos--columnas` (dos o tres columnas si entran). Arriba, un buscador (7.I) que **filtra mientras se escribe** y un texto que dice cuántas hay ("12 herramientas"; al filtrar, "3 de 12"). |
+
+- **Una línea de descripción,** que diga para qué sirve con palabras de quien lo usa ("Reservá y pagá el menú del día"), no el nombre de la oficina.
+- **Si el enlace sale del sitio,** en lugar de la flecha va el ícono `external-link`, y el nombre lo dice para el lector de pantalla: `Guaraní<span class="solo-lector"> (abre otro sitio)</span>`.
+- **El botón dice qué inicia:** `Iniciar trámite<span class="solo-lector">: comedor</span>`. Si no, un lector de pantalla lee cinco veces "Iniciar trámite".
+- **Sin logo ni color por renglón.** Cuando cada trámite trae su logo, la página parece un collage. Si hace falta decir de qué área es, va una categoría (3.H) al lado del nombre.
+- **Sin resultados** al filtrar: el estado vacío (8.D), con el botón "Borrar búsqueda".
+- **No reemplaza** al menú de la herramienta (6.A) ni a una tabla: si de cada cosa hay que comparar varios datos, es una tabla (7.D).
 
 ## 8. Estados del sistema
 
@@ -864,6 +898,10 @@ Una lista corta que se recorre en cada versión nueva. Se anota el resultado en 
 4. **Contraste:** los colores nuevos que no estén en este documento se miden (4.5:1 texto, 3:1 controles), en claro **y** en oscuro.
 5. **Lector de pantalla:** el recorrido principal con **Orca** (Linux), **NVDA** (Windows) o VoiceOver (macOS/iOS). Los botones dicen qué hacen, los errores y toasts se anuncian solos y los íconos decorativos no se leen.
 6. **Celular real:** un recorrido en un teléfono, con los campos de 16px (sin zoom automático) y el menú inferior sin tapar contenido.
+7. **Lo básico de la página (nuevo, sin número todavía):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
+   - `<html lang="es">`. Con otro idioma declarado, el lector de pantalla pronuncia todo mal.
+   - El `viewport` es `width=device-width, initial-scale=1`, **sin** `maximum-scale` ni `user-scalable=no`: bloquean el zoom con los dedos.
+   - Al entrar no se abre ninguna ventana encima del contenido (7.P).
 
 ### Pruebas con personas (nuevo en 0.4)
 
@@ -1032,6 +1070,9 @@ Las palabras son parte del diseño.
 | Con 6 secciones o más, 4 + "Más" en el menú inferior. | Amontonar 6 ítems en el menú inferior. |
 | Compactar una pantalla de trabajo con `data-densidad="compacta"`. | Achicar la letra para que entre más. |
 | Mostrar un solo registro como lista de resumen. | Armar una tabla de una fila o campos deshabilitados. |
+| Listar destinos como lista de accesos: nombre, una línea y una flecha o un botón. | Una grilla de tarjetas con ícono, o un logo y un color por trámite. |
+| En la portada de un portal, de 2 a 4 entradas por tarea, planas. | Carrusel, foto de apertura, ventana al entrar o bloques con texto blanco sobre un color claro. |
+| Fotos de hasta 200 KB y páginas de hasta 1 MB. | Subir la foto como sale de la cámara, o un video que arranca solo. |
 | Usar el acordeón para lo secundario. | Esconder campos obligatorios o avisos importantes. |
 | En gráficos, los colores de serie, en orden, y el valor escrito. | Pintar series con el semáforo o con las categorías. |
 | Dar siempre la tabla de un gráfico. | Tortas de muchas partes, 3D o dos ejes. |
@@ -1075,7 +1116,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.3), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.4), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1192,11 +1233,12 @@ Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no 
 | Módulo | Hoja | Ejemplo | Peso | Reglas |
 |---|---|---|---|---|
 | Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB | 16.A |
-| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 12 KB | 16.B |
+| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
 | Gráficos de líneas (0.4.3) | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 5 KB + 16 KB | 15.E |
 | Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
 | Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
 | Cartelera (0.4.3) | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
+| Planos (0.4.4) | `unpsjb-planos.css` + `unpsjb-planos.js` | `muestra-planos.html` | 11 KB + 31 KB | 21 |
 
 Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases. En el ejemplo de la agenda los eventos son siempre los mismos: al cambiar de fecha o de aula cambian los títulos y los días.
 
@@ -1227,22 +1269,58 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 
 ### B. Visor de cámaras
 
-- **El video va siempre sobre negro** (`#000`, el único color propio del módulo), en claro y en oscuro. El resto de la pantalla respeta el tema elegido: el visor **no** fuerza el modo oscuro.
-- **Muro** (`.muro`) de 1, 4 o 9 cámaras, elegido con un segmentado. Celdas iguales, en 16:9. La pantalla va en `.contenedor--ancho` y con densidad compacta. En celular, una cámara por renglón.
-- **Al entrar, el muro se ve entero, sin scroll** (0.4.2, desde 768px de ancho). Las celdas siguen en 16:9: lo que se ajusta es el ancho del muro, calculado a partir del alto libre de la ventana. Si el alto sobra, manda el ancho de la columna. La página mide dónde empieza el muro y se lo pasa a la hoja en `--visor-arriba` (tres líneas de JavaScript, en `muestra-video.html`); sin ese dato se usa un valor aproximado. Con ventanas muy bajas el muro no baja de 320px de alto: ahí vuelve el scroll, en lugar de dejar cámaras ilegibles. El encabezado de la pantalla es más bajo (`.encabezado--visor`): ese alto va al muro.
-- **Pantalla completa** (0.4.2): un botón secundario, al lado del segmentado, con el ícono `maximize` ("Pantalla completa") y `minimize` ("Salir de pantalla completa"). Pone **la página** en pantalla completa y esconde la cabecera, el banner de fase y el menú inferior: queda el visor solo y el muro gana ese alto. Se sale con el mismo botón o con `Esc`. El botón se muestra solo si el navegador lo permite (en iPhone no existe para páginas). Ampliar **una** cámara usa otro ícono (`maximize-2`), para no confundir las dos acciones.
-- **Celdas chicas** (menos de 300px de ancho, por ejemplo un muro de 9 en una notebook): la insignia queda solo con su ícono, que es distinto en cada estado, y "Sin señal" queda sin la explicación. Los dos textos siguen estando para el lector de pantalla. Por eso el texto del estado va en `<span class="camara__estado">`.
-- **Cada cámara** (`.camara`) tiene el video arriba y, debajo, su número y nombre, su estado y el botón de ampliar. El estado no va encima del video: abajo se lee siempre igual, sin depender de lo que muestre la imagen.
-- **Estados, con ícono y texto,** nunca solo color:
+Rehecho el 6 de octubre de 2026 (todavía sin número de versión), a partir de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
+
+- **Lo primero es el tamaño de las cámaras.** Todo lo demás se acomoda a eso: nada le saca alto al muro. No hay encabezado de pantalla ni barra de herramientas arriba, y el nombre de cada cámara va encima de la imagen, no debajo.
+- **El video va siempre sobre negro** (`#000`), en claro y en oscuro. El resto de la pantalla respeta el tema elegido: el visor **no** fuerza el modo oscuro. Los únicos colores propios del módulo son los del video: el negro, y lo que se escribe encima de la imagen.
+- **Panel lateral** (`.visor__lateral`, 280px, con fondo `panel`): arriba el título de la pantalla (el `h1`, "Cámaras en vivo") y el botón que lo pliega; debajo el segmentado de vistas, el botón de pantalla completa, el buscador, la lista de cámaras y el interruptor "Llenar el cuadro". Es la única excepción al encabezado de pantalla (6.D): acá el título vive en el panel.
+- **El panel se pliega a un riel** de 46px (`data-lista="plegada"` en `.visor`) con los mismos controles en columna: desplegar, 1 · 4 · 5 · 6 · 9 y pantalla completa. El muro gana el ancho de la lista. Se recuerda entre visitas. Con menos de 1024px el panel va arriba del muro, "plegada" esconde solo la lista, y arranca plegada para que al entrar se vean las cámaras.
+- **Muro** (`.muro`) con cinco vistas, elegidas con el segmentado. Las cámaras se muestran en el orden en que están; las primeras son las grandes:
+
+| Vista | Cómo se arma | Proporción del muro |
+|---|---|---|
+| 1 | Una cámara | 16:9 |
+| 4 | 2 × 2 | 16:9 |
+| 5 | Dos grandes arriba y tres chicas abajo | 32:15 |
+| 6 | Una grande (dos columnas y dos filas) y cinco chicas alrededor | 16:9 |
+| 9 | 3 × 3 | 16:9 |
+
+- **El muro ocupa todo el ancho libre y se ve entero, sin scroll** (desde 768px). De alto toma lo que piden sus celdas en 16:9, sin pasarse del alto libre de la ventana. Cuando el alto no alcanza, las celdas quedan más anchas que 16:9: la imagen no se deforma ni se recorta, y deja negro a los costados. La página mide dónde empieza el muro y se lo pasa a la hoja en `--visor-arriba` (en `muestra-video.html`); sin ese dato se usa un valor aproximado. Con ventanas muy bajas el muro no baja de 320px. En celular, una cámara por renglón.
+- **"Llenar el cuadro"** (`.muro--llenar`, un interruptor en el panel, apagado al entrar): la imagen tapa toda su celda y se recorta lo que sobra. Apagado es lo seguro en vigilancia: no esconde ningún borde de la imagen. Encendido, plegar el panel agranda la imagen en todas las vistas.
+- **Cada cámara** (`.camara`) es su imagen y, encima, una **barra oscura** (`.camara__barra`, negro al 75%, 32px; 44px en celular) con el número y nombre, el estado y las acciones. Tapa una franja de la imagen; a cambio no le saca alto al muro (con el nombre debajo, en un muro de 9 se iba un tercio del alto). Al ser oscura, lo escrito se lee igual con cualquier imagen: el texto, blanco, da 10:1 o más; los íconos de estado, 3,7:1 o más sobre una imagen blanca. Reemplaza a la regla anterior ("el estado no va encima del video").
+- **Qué cámara va en cada lugar se elige sin arrastrar** (WCAG 2.2, 2.5.7), en dos toques:
+  1. Se toca el recuadro que se quiere cambiar. El nombre de cada cámara es un botón (`button.camara__nombre`, con `aria-pressed`); con el mouse sirve toda la imagen. El elegido lleva un marco `primario-texto` y la barra en azul institucional.
+  2. Se toca **otro recuadro**, y las dos cámaras se intercambian; o **una cámara de la lista**, y pasa a ese lugar (si ya estaba en el muro, se intercambian; si no, la otra sale del muro).
+  - `Esc`, o tocar de nuevo el mismo recuadro, cancela. Una línea en el panel (`.visor__ayuda`) dice el paso que sigue, y cada cambio se le avisa al lector de pantalla.
+  - Sin ningún recuadro elegido, tocar una cámara de la lista la pone en el primer lugar.
+  - En la lista, las cámaras que se están viendo llevan un **ojo** (`eye`) a la derecha, que es un botón (`.camaras-lista__ojo`): tocarlo quita esa cámara del muro y deja su lugar vacío. Al pasar el mouse, o al llegar con `Tab`, el ojo pasa a **ojo tachado en rojo** (`eye-off`, color de error): muestra lo que va a hacer antes de hacerlo. En pantallas táctiles no hay ese aviso previo; el botón dice lo que hace ("Quitar Biblioteca del muro") y se deshace tocando el nombre de la cámara, que vuelve al lugar vacío.
+  - La vista y el orden se recuerdan entre visitas.
+- **Lugares vacíos.** Con un recuadro elegido, en su barra queda solo **"Quitar"** (ícono `x`; también `Supr`): la cámara sale del muro y su lugar queda vacío (`.camara--vacia`, borde punteado, "Lugar vacío"). El lugar vacío es un botón: se lo toca y se elige en la lista la cámara que va ahí; si la lista está plegada, se abre sola. Una cámara de la lista sin recuadro elegido va al primer lugar vacío que se esté viendo y, si no hay ninguno, al primer lugar. El muro son nueve lugares: cada uno tiene una cámara o está vacío, y una cámara puede no estar en ninguno.
+- **Dos acciones distintas para agrandar, con íconos distintos:**
+
+| Acción | Ícono | Qué hace | Quién lo lleva |
+|---|---|---|---|
+| Ampliar | `maximize-2` | Agranda la cámara **dentro del muro**: en la vista de 6 la pasa al lugar grande; en las de 4 y de 9, la deja sola | Vista de 6: las cinco chicas. Vistas de 4 y de 9: todas |
+| Ampliar a la izquierda / a la derecha | `arrow-up-left` / `arrow-up-right` | En la vista de 5, la pasa a uno de los dos lugares grandes | Vista de 5: las tres chicas |
+| Pantalla completa | `fullscreen` (para salir, `minimize`) | Esa cámara pasa a ser **lo único que se ve en el monitor**, sin nada de la interfaz, como un video | Todas, en todas las vistas |
+
+  - En la pantalla completa de una cámara la barra se muestra 3 segundos al entrar y vuelve cada vez que la persona mueve el mouse, toca la pantalla o usa el teclado (`.camara--controles`); ahí está el botón para salir. También se sale con `Esc`. Con el mouse quieto, el puntero se esconde.
+  - Si la página ya estaba en pantalla completa, al salir de la cámara se vuelve a la de la página.
+  - En celular no hay "Ampliar": las cámaras van una debajo de la otra y no hay lugar grande.
+  - El botón de pantalla completa lleva `hidden` y la página lo muestra si el navegador lo permite (en iPhone no existe para elementos de la página).
+- **Estados, con ícono y texto,** nunca solo color. Sobre la barra el texto es blanco y el ícono lleva el color del estado (los del semáforo en modo oscuro):
 
 | Estado | Ícono | Se ve |
 |---|---|---|
-| En vivo | `video` | Insignia de éxito |
-| Grabando | `disc` | Insignia de información, sin parpadeo. No en rojo: grabar no es un error |
-| Sin señal | `video-off` | Insignia de error, y en lugar del video una celda `capa` que dice "Sin señal" y qué hacer: "Cámara 04 desconectada. Avisá a Soporte Informático." |
+| En vivo | `video` | Ícono verde y "En vivo" |
+| Grabando | `disc` | Ícono celeste y "Grabando", sin parpadeo. No en rojo: grabar no es un error |
+| Sin señal | `video-off` | Ícono rojo y "Sin señal", y en lugar del video una celda `capa` que dice "Sin señal" y qué hacer: "Cámara 04 desconectada. Avisá a Soporte Informático." |
 
+- **Celdas chicas:** con menos de 340px de ancho, el estado y "Quitar" quedan solo con su ícono (el del estado es distinto en cada estado); con menos de 300px, "Sin señal" y el lugar vacío quedan sin la explicación. Los textos siguen estando para el lector de pantalla. Por eso el texto del estado va en `<span class="camara__estado">`.
 - Sin puntos que laten ni tramas: el movimiento solo responde a una acción (5.E).
-- **Lista de cámaras** (`.camaras-lista`) en la columna de 280px de `.grilla--lateral`, con buscador, dentro de un panel que se pliega (`details.acordeon.camaras-panel`, 0.4.2). Desde 1024px está siempre abierto y sin título, y si la lista es larga tiene su propio scroll. Con menos ancho va arriba del muro y **arranca plegado** ("Cámaras (9)"), para que al entrar se vean las cámaras y no la lista. Cada cámara es un botón con el ícono de su estado; el estado va también en texto para el lector de pantalla. La elegida lleva una marca `primario-texto` (no naranja: no es la navegación principal).
+- **Pantalla completa de la página** (no confundir con la de una cámara): botón secundario del panel, con el ícono `maximize` ("Pantalla completa") y `minimize` ("Salir de pantalla completa"). Pone **la página** en pantalla completa y esconde la cabecera, el banner de fase y el menú inferior. Se sale con el mismo botón o con `Esc`. Se muestra solo si el navegador lo permite (en iPhone no existe para páginas).
+- **Lista de cámaras** (`.camaras-lista`), dentro del panel y con su propio scroll si es larga. Cada renglón tiene el botón de la cámara (`.camaras-lista__camara`), con el ícono de su estado, y el ojo de las que se están viendo; el estado va también en texto para el lector de pantalla. La elegida lleva una marca `primario-texto` (no naranja: no es la navegación principal).
+- **Las grabaciones van debajo del visor,** a todo el ancho. La línea de tiempo no cambió.
 - **Línea de tiempo de grabaciones** (`.linea-tiempo`), sin depender de arrastrar (WCAG 2.2, 2.5.7):
   1. Botones de salto: "−15 min", "−1 min", "+1 min", "+15 min", y "Reproducir" / "Pausar".
   2. Un campo "Ir a la hora" (`input type="time"`).
@@ -1278,6 +1356,37 @@ Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripc
 - **Pie de páginas públicas** (6.C), con dirección, contacto y enlaces legales.
 - **El logo completo** (nivel L, 10.A) solo donde hay lugar para mostrarlo a 96px o más: una portada, no la banda.
 - **Sin siglas internas** sin explicar (sección 12): quien llega de afuera no sabe qué es SIU ni SUDOCU.
+
+### C. Portal de la Delegación (nuevo, sin número todavía)
+
+El portal institucional de la universidad lo maneja Comodoro. El de la Delegación es otra cosa: **chico, informativo y de consulta rápida**. Sirve para encontrar en un minuto dónde queda algo, a quién escribirle y por dónde se hace un trámite. No es un diario ni repite lo que ya está en el portal de la universidad: lo enlaza.
+
+Hay un prototipo: `muestra-portal.html`. Las reglas salen del estudio de los sitios de la UNC y la UBA (`REFERENCIAS-UNC-UBA.md`).
+
+- **Vale todo lo de las páginas públicas** (17.B): la misma banda, textos a 70 caracteres, pie de páginas públicas.
+- **Abre con las entradas** (`ul.entradas`): de **dos a cuatro** bloques grandes, nombrados por lo que la persona viene a hacer ("Estudiar en Trelew", "Trámites", "Herramientas"), no por el organigrama. Es la idea de las tres entradas del portal de la UNC.
+  - Son planos, sin foto, sin ícono y sin sombra. El **principal** (`.entradas__principal`) va en azul con texto blanco; los demás, en `capa` con texto `tinta`. Es la única excepción a "la banda es el único bloque grande de color" (13), y solo en esta portada.
+  - Cada uno lleva el título y una línea que dice qué hay adentro.
+  - **El naranja no se usa de relleno** (3.B). Texto blanco sobre celeste o naranja, como en los mosaicos de otros sitios, da 2:1.
+  - Con más de cuatro destinos no se suman bloques: va una lista de accesos (7.Q).
+- **Avisos antes que noticias.** Lo que cambia el día de alguien ("El lunes no hay clases") va como aviso (8.A), arriba. Las novedades, como una lista corta de título y fecha, con un enlace a "todas". Sin carrusel (7.P).
+- **Sin foto de apertura.** Si hay fotos, respetan los topes de 2.C.
+- **El acceso a la cuenta va en la banda,** en todas las páginas (el botón "Mi cuenta"). Es el puente entre informarse y hacer un trámite.
+- **Navegación de un solo nivel:** la sub-barra (6.A), con hasta 6 secciones. En el estudio había páginas con tres filas de menú antes del título.
+- **Contacto a la vista:** oficina, dirección, horario, teléfono y correo, como lista de resumen (7.L) dentro de un panel. Los teléfonos y correos son enlaces (`tel:`, `mailto:`).
+- **Pesa poco:** una página del portal no pasa de 1 MB (2.C).
+
+### D. Página de inicio de una cuenta (nuevo, sin número todavía)
+
+Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta con varias partes. Responde tres preguntas, en este orden. Es el orden de la página de inicio de MiUNC, con nuestras piezas:
+
+1. **Quién sos.** El título de la pantalla (6.D) saluda con el nombre de pila: "Hola, Rocío". En `titulo-1`, como cualquier otro título: no es más grande ni más fino.
+2. **Qué tenés pendiente.** Si falta algo que le puede traer un problema (un correo de recuperación sin confirmar, un turno por vencer), va **un** aviso (8.A) que diga qué falta, para qué sirve y el botón para resolverlo. Si no hay nada pendiente, no va nada: no se inventa un aviso.
+3. **A dónde ir.** Una lista de accesos (7.Q) con lo más usado, de 3 a 6 renglones.
+
+- **Los datos de la cuenta** van en otra pantalla: menú lateral (6.A) con las secciones y, a la derecha, una lista de resumen (7.L). Solo llevan "Cambiar" los datos que la persona puede cambiar; de los demás se dice quién los corrige.
+- **Avisos de seguridad** ("Nunca te vamos a pedir la contraseña") van como aviso, al lado del dato que protegen. No en letra chica ni en cursiva.
+- **No va:** una grilla de tarjetas con ícono (7.C), contadores o gráficos de relleno, ni un saludo con la hora del día.
 
 ## 18. Documentos e impresión (nuevo en 0.4.3)
 
@@ -1464,3 +1573,100 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 | Algo que haya que tocar | Nadie se acerca a una tele a hacer clic; para eso está el QR |
 | La grilla de la agenda | Es para comparar aulas sentado frente a una pantalla, no para leer de paso |
 | Más de dos avisos largos | Lo que no se lee en diez segundos, no se lee |
+
+## 21. Planos (nuevo en 0.4.4)
+
+Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (11 KB) y `unpsjb-planos.js` (31 KB; 10 KB comprimido). Ejemplo: `muestra-planos.html`.
+
+El plano muestra **el estado de ahora**. Para elegir un aula y un horario está la agenda (16.A): desde el aula elegida se llega a su agenda con un enlace (`data-agenda`).
+
+### A. El dibujo
+
+- **El plano es el fondo: va en neutros.** Muros en `tinta-2`, el resto (escaleras, cotas, mobiliario) en `linea-control`. **Nunca con los colores de CAD** (rojo, verde, cian, amarillo puros): chocan con el semáforo y no se ven en modo oscuro. El color queda para lo que se marca encima.
+- **Es un SVG de solo trazos,** con tres clases: `.plano-trazo` (muros, columnas, aberturas), `.plano-trazo--suave` (lo demás) y `.plano-trazo--rotulo` (los nombres escritos en el plano original). El color lo pone la hoja con `currentColor`; el archivo no trae colores.
+- **Nunca una imagen** (PNG, JPG) ni un PDF incrustado: se pixelan al acercar, no cambian con el tema y pesan más.
+- **Las líneas no engordan al acercar:** miden 1px a cualquier distancia. Es un plano, no una foto.
+- **Cómo se obtiene:** de un PDF de AutoCAD, con `pdftocairo -svg` y un paso de limpieza que cambia los colores por las tres clases, junta los trazos y recorta la hoja. Cada herramienta guarda su conversor junto a sus planos (el de Trelew: `herramientas/limpiar_svg.py`). Un plano de 9.000 trazos queda en menos de 500 KB (130 KB comprimido), y se trae solo la planta que se mira.
+- El rótulo de la hoja ("PLANTA BAJA") se quita del dibujo: el nombre de la planta lo dice la pantalla.
+
+### B. La pantalla
+
+| Pieza | Clase | Regla |
+|---|---|---|
+| Barra | `.plano__barra` | Las plantas (segmentado) a la izquierda; "Plano \| Lista" último, contra el borde derecho. En el medio, lo que aparece y desaparece: las capas (casillas "Antenas", "Aulas") y acercar. |
+| Lienzo | `.plano__lienzo` | Fondo `panel`, borde `linea`. El alto sale de la proporción del plano, sin pasar del 70 % de la ventana: la página se puede seguir moviendo por fuera. |
+| Detalle | `.plano__detalle` | Un panel fijo al costado (280px; debajo, con menos de 1024px) con la ficha de lo elegido, en una lista de resumen (7.L). **Sin cartel flotante** (7.P). |
+| Referencias | `.plano__referencias` | Debajo del plano: el ícono de cada estado con su nombre. Solo los que hay en esa planta. |
+| Lista | `.plano__lista` | Una tabla de antenas y otra de aulas de la planta, con los mismos datos. |
+
+- **Mover y acercar no dependen de arrastrar** (WCAG 2.2, 2.5.7). Se puede arrastrar y pellizcar, pero están siempre los botones "Acercar", "Alejar" y "Ver todo", y el teclado: con `Tab` se llega al plano, las flechas lo mueven, `+` y `−` acercan y alejan, y `0` muestra todo.
+- **La rueda del mouse sola mueve la página,** no el plano: si no, al bajar por la pantalla el plano atrapa el scroll. Para acercar con la rueda, `Ctrl` + rueda. Debajo del plano hay una nota fija que lo dice.
+- **"Ver todo" es un botón con texto,** no el ícono `maximize`: ese ícono ya significa "pantalla completa" en el visor de cámaras (16.B).
+- **Todo plano tiene su lista,** igual que todo gráfico tiene su tabla (15.D). Es la forma de usarlo con lector de pantalla y **en celular, donde se abre primero la lista**. El nombre de cada fila es un botón con aspecto de enlace que la elige.
+- **La planta y lo elegido van en la dirección** (`#planta=pb&antena=ap-03`), para poder mandarle a alguien el enlace a una antena.
+- El dibujo lleva `aria-hidden`: para el lector de pantalla, lo que informa son los botones y la lista.
+
+### C. Antenas
+
+Cada antena es un **botón** (`.plano-marca`): un círculo de 26px, fondo `panel`, con **el dibujo de su equipo** adentro y el borde del color de su estado. Mide lo mismo a cualquier distancia, y el área para el dedo es de 44px.
+
+| Equipo (`"equipo"`) | Dibujo |
+|---|---|
+| De plato (`plato`) | Redonda, de techo: dos círculos |
+| Exterior (`exterior`) | Rectangular, de bordes redondeados |
+| Módem o router (`router`) | Una caja con dos antenas |
+| Sin dato | El ícono `wifi` |
+
+Los tres dibujos son propios del módulo (Lucide no los tiene), con su mismo trazo. Dicen qué buscar en el techo o en la pared.
+
+| Estado | Borde | Aviso en la esquina |
+|---|---|---|
+| Activa | `exito-texto` | Ninguno |
+| Sin conexión | `error-texto` | `x` |
+| En mantenimiento | `advertencia-texto` | `wrench` |
+
+- **El estado no va solo en el color:** la que no está activa lleva un aviso de 14px en la esquina, con su ícono (`.plano-marca__aviso`). El nombre del botón lo dice entero ("Antena AP Hall, sin conexión"), y en el panel y en la lista va la insignia con texto.
+- Las referencias de abajo del plano muestran la misma marca, con su nombre.
+- **La elegida lleva un aro `primario-texto`** alrededor y conserva el color de su estado. **No naranja:** el naranja es el foco del teclado y "estás acá".
+- **Un clic en un lugar vacío del plano cierra la ficha** de lo elegido.
+- Sin puntos que laten ni círculos de alcance: el alcance real de una antena no es un círculo, y dibujarlo promete una cobertura que nadie midió.
+- **La IP (`"ip"`) es opcional** y se muestra en el panel y en la lista. Solo se carga si la herramienta se ve **únicamente desde la red interna**. Claves y contraseñas, nunca.
+
+### D. Aulas
+
+Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.plano-rotulo`, un botón): ícono, nombre y estado.
+
+| Estado | Ícono | Zona |
+|---|---|---|
+| Libre | `check` | `exito-texto`: borde y relleno al 10 % |
+| Ocupada | `clock` | `tinta-2`: borde y relleno al 22 %. **No en rojo:** un aula ocupada no es un error |
+| Sin dato | `square` | `primario-texto`: borde y relleno al 10 % |
+
+- El texto dice hasta cuándo, si se sabe: "Ocupada hasta las 16:00", "Libre hasta las 14:00".
+- **El rótulo nunca se sale de su aula.** Si no entra entero, se acorta de a un paso: sin el estado (`--medio`), solo el nombre (`--corto`), solo el ícono (`--chico`). Lo que deja de verse sigue en el nombre del botón, en el panel y en la lista. Al acercar, vuelve.
+- **No todo lo que tiene nombre se reserva.** La biblioteca, una oficina o un laboratorio de investigación también se marcan, para ubicarse, pero **sin estado**: llevan `"reservable": false` y `"tipo"` ("Oficina", "Laboratorio"…). Se dibujan más suaves (`.plano-zona--fija`, en `linea-control`), con el nombre solo, y en la lista dicen su tipo.
+- La zona también responde al clic, pero es un **atajo para el mouse**: con el teclado se llega al rótulo.
+- Sin tramas de relleno (15.C). La elegida lleva el borde `primario-texto` de 3px.
+- **El estado es un dato aparte** (`data-ocupacion`): el plano no sabe de reservas. Quien tenga las reservas arma `{ "id-del-aula": { "estado": "ocupada", "hasta": "16:00", "evento": "Álgebra I" } }` y se lo pasa (`plano.ocupacion(datos)`), sin volver a cargar la pantalla. Un aula que no figura queda "Sin dato".
+
+### E. Los datos
+
+Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con nombre); las posiciones van en las unidades del `viewBox` de cada dibujo. El formato completo está al principio de `unpsjb-planos.js`.
+
+- **El dibujo conserva las coordenadas de la hoja original** (su `viewBox` no arranca en cero). Así se puede **simplificar un plano** (quitarle una parte que no interesa) o volver a una versión más completa sin mover nada de lo marcado. Cada versión anterior de un plano se guarda: nunca se pisa.
+- Un espacio sin `puntos` figura en la lista pero no en el plano: sirve para cargar primero los nombres y ubicarlos después.
+- **El identificador de un aula no se cambia** una vez que lo usan las reservas: es lo que une el plano con la agenda. El nombre sí.
+- **Editar las posiciones es cosa de cada herramienta,** no del módulo: el módulo avisa dónde se hizo clic (`plano:clic`), deja sumar un formulario al panel (`plano:detalle`) y se vuelve a pintar (`plano.pintar()`). Un editor nunca depende solo de arrastrar: ofrece también "reubicar" con un clic y campos con la posición.
+- En React se puede usar el mismo script (`unpsjbPlanos.dibujar(elemento, datos)`) o armar un componente con estas clases.
+
+### F. Lo que no va
+
+| No va | Por qué |
+|---|---|
+| El plano con los colores de CAD, o como imagen | No funciona en oscuro, choca con el semáforo y se pixela (21.A) |
+| Cartel flotante al pasar el mouse | No existe en celular y tapa el plano (7.P): va el panel de detalle |
+| Mapa de calor o círculos de cobertura | Inventan una precisión que los datos no tienen |
+| Un mapa de calles de fondo (Leaflet, Google Maps) | Adentro de un edificio no aporta, y suma cientos de KB y un servicio externo |
+| Naranja para lo elegido | El naranja es foco y "estás acá" (sección 1) |
+| El estado solo con color | Siempre ícono y texto (3.E) |
+| Elegir horarios sobre el plano | Para eso está la agenda (16.A); el plano enlaza a ella |
