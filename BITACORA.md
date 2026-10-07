@@ -909,3 +909,18 @@ Lo que apareció:
 - **Medir el pie para saber dónde empezaría daba mal,** porque la regla nueva ya lo había corrido. Se mide desde donde termina el contenido.
 
 Verificado: 120 casos (cinco pantallas; ocho tamaños de ventana, de 320×640 a 2560×1440; al cargar, al navegar y con las notas plegadas): el pie queda al fondo o debajo del borde, nunca cortado. axe sin fallas en las cinco pantallas y los ocho tamaños. En las otras ocho muestras el pie sigue donde estaba, y en una ventana alta baja al fondo (`muestra-planos.html` a 1920×1200).
+
+## 2026-10-07 — Orden: carpeta renombrada, rama `en-curso` y copias viejas al archivo
+
+Sin número de sesión. No se tocó ninguna pieza: es orden de carpetas y de git.
+
+- **La carpeta se llama `unpsjb-design-system`,** como el repositorio (antes `ClaudeDesign`), y está en `~/Documents/UNPSJB/`.
+- **Todo lo que estaba sin registrar en `main` quedó en la rama `en-curso`,** con un commit por función: visor de cámaras, módulo de planos, estudio de referencias con el prototipo de portal, y uno último con los archivos que comparten (`unpsjb.css`, `DESIGN.md`, la skill, `CHANGELOG.md`, esta bitácora). Sin número de versión y sin subir a GitHub.
+- **Las copias de versiones anteriores salieron de la raíz** a `archivo/`, que no está en git: las `-v1`, `-v2`, `-v3.0` y `-0.3.2` y las tres páginas de comparación. Se comprobó que cada copia es igual a la de su etiqueta (`archivo/LEEME.md` tiene la tabla).
+- **La carpeta de trabajo de `ajustes-0.4.4`** (`.claude/worktrees/modulos-0.4.2`) había quedado apuntando a la ruta vieja; se reparó con `git worktree repair`.
+- `muestra-planos.html` pide `datos/planos.json` y `datos/ocupacion.json`, que no están acá: la herramienta completa es `planos-universidad`.
+
+Pendientes, en orden:
+- [ ] Integrar `ajustes-0.4.4` (cartelera, documentos y gráficos; un commit que no está en `main`).
+- [ ] Reordenar las carpetas (`sistema/`, `muestras/`, `notas/`, `fuentes/`) en un commit que solo mueva archivos.
+- [ ] De ahí en adelante, una rama por función.
