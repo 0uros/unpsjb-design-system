@@ -13,3 +13,7 @@ Thumbs.db
 
 # Carpetas de trabajo temporales de Claude Code
 .claude/worktrees/
+
+# Capturas de los sitios de referencia (pesan 11 MB y son de terceros; se regeneran con referencias/medir.js)
+referencias/unc/
+referencias/uba/

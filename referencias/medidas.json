@@ -1,0 +1,6623 @@
+{
+ "unc": {
+  "portada": {
+   "url": "https://www.unc.edu.ar/",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Universidad Nacional de Córdoba | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 285,
+     "colores": {
+      "fondos": 16,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x8",
+      "rgb(134, 151, 145)  x8",
+      "rgb(1, 55, 101)  x7",
+      "rgb(36, 47, 87)  x6",
+      "rgb(255, 192, 203)  x3",
+      "rgb(236, 236, 236)  x3",
+      "rgb(248, 248, 248)  x3",
+      "rgb(155, 186, 215)  x2",
+      "rgb(255, 255, 255)  x2",
+      "rgb(25, 56, 95)  x1",
+      "rgba(255, 255, 255, 0.23)  x1",
+      "rgb(36, 86, 128)  x1"
+     ],
+     "textos": [
+      "rgb(21, 49, 84)  x22",
+      "rgb(255, 255, 255)  x19",
+      "rgb(34, 34, 34)  x13",
+      "rgb(15, 27, 44)  x10",
+      "rgb(95, 95, 95)  x1"
+     ],
+     "bordes": [
+      "1px rgba(0, 0, 0, 0)  x1",
+      "1px rgb(0, 82, 136)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x49",
+      "Reforma DG 2018 Gris  x12",
+      "Reforma DG 2018 Negra  x4"
+     ],
+     "tamanios": [
+      "17px/300/25.5px  x20",
+      "14px/300/14px  x16",
+      "15px/300/21px  x8",
+      "24px/300/36px  x7",
+      "15px/500/15px  x6",
+      "18px/900/21.6px  x4",
+      "13px/300/19.5px  x2",
+      "16px/300/1.59998e+06px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "20px  x9",
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1",
+      "4px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.3) 0px 0px 3px 0px inset  x7",
+      "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset  x1"
+     ],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 0,
+      "ancho": 1140,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(114, 114, 115)",
+      "familia": "Reforma2018",
+      "ancho": 377,
+      "caracteresPorRenglon": 58
+     },
+     "h": "H2",
+     "h1": 0,
+     "lang": "es",
+     "landmarks": "header form footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 70,
+     "chicos": 37,
+     "imgs": 43,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 1812,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 64,
+     "kB": 22148,
+     "porTipoKB": {
+      "document": 85,
+      "stylesheet": 374,
+      "script": 390,
+      "image": 21165,
+      "font": 133
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button type=\"submit\" class=\"btn btn-primary\"><span class=\"icon glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n</button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"sf-depth-1 menuparent nolink sf-with-ul\" tabindex=\"0\">Facultades y colegios<span class=\"sf-sub-indicator\"> »</span></span>"
+      ]
+     },
+     {
+      "id": "label-title-only",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Form elements should have a visible label",
+      "tags": "best-practice",
+      "ej": [
+       "<input title=\"Escriba lo que quiere buscar.\" class=\"custom-search-box form-control form-text\" placeholder=\"Buscar\" type=\"text\" id=\"edit-sear"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 7,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"/comunicaci%C3%B3n/la-unc-distinguida-nivel-mundial-reconocimiento-la-innovaci%C3%B3n-social-de-la-extensi%C3%B3n\"><img typeof=\"foa",
+       "<a href=\"/comunicaci%C3%B3n/universidades-p%C3%BAblicas-y-legisladores-nacionales-por-c%C3%B3rdoba-analizaron-el\"><img typeof=\"foaf:Image\" c"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 6,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-md-12 text-center top-2025-rapido hidden-xs\">",
+       "<ul class=\"slides\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"#\" class=\"\">1</a>",
+       "<a href=\"#\" class=\"flex-active\">2</a>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.element-invisible",
+      "texto": "Pasar al contenido principal",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "menu nuevo 2025",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.miunc-btn-top",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "input.custom-search-box",
+      "texto": "",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.btn",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "span.sf-depth-1",
+      "texto": "Estudiar en la UNC\n»",
+      "contorno": "1px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Ingreso UNC",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de pregrado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de grado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de posgrados",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Escuela de Oficios",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Universidad Nacional de Córdoba | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 198,
+     "colores": {
+      "fondos": 9,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x9",
+      "rgb(248, 248, 248)  x8",
+      "rgba(0, 17, 41, 0.5)  x4",
+      "rgb(236, 236, 236)  x3",
+      "rgb(90, 72, 152)  x1",
+      "rgb(228, 15, 125)  x1",
+      "rgb(54, 166, 178)  x1",
+      "rgb(58, 0, 208)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(21, 49, 84)  x25",
+      "rgb(255, 255, 255)  x5",
+      "rgb(34, 34, 34)  x2",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "1px rgb(255, 255, 255)  x4",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x16",
+      "Reforma DG 2018 Blanca  x7",
+      "Reforma2018  x6",
+      "Arial  x4"
+     ],
+     "tamanios": [
+      "15px/300/22.5px  x9",
+      "15px/300/21px  x8",
+      "20px/700/30px  x4",
+      "40px/300/60px  x4",
+      "15px/500/22.5px  x4",
+      "13px/300/19.5px  x2",
+      "30px/700/33px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "4px  x5",
+      "1px  x3"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.05) 0px 1px 1px 0px  x4"
+     ],
+     "tamaniosDistintos": 5,
+     "header": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 0,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Reforma2018",
+      "ancho": 350,
+      "caracteresPorRenglon": 54
+     },
+     "h": "H4 H4 H4 H2 H2",
+     "h1": 0,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 40,
+     "chicos": 18,
+     "imgs": 43,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 3192,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 66,
+     "kB": 22575,
+     "porTipoKB": {
+      "document": 85,
+      "stylesheet": 374,
+      "script": 390,
+      "image": 21550,
+      "font": 175
+     }
+    },
+    "axe": [
+     {
+      "id": "aria-required-children",
+      "impacto": "critical",
+      "nodos": 2,
+      "ayuda": "Certain ARIA roles must contain particular children",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<div class=\"panel-group accordion-home-mobile\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">",
+       "<div class=\"panel-group accordion-home-mobile\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">"
+      ]
+     },
+     {
+      "id": "aria-required-parent",
+      "impacto": "critical",
+      "nodos": 3,
+      "ayuda": "Certain ARIA roles must be contained by particular parents",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<div class=\"panel-heading\" role=\"tab\" id=\"heading1\" style=\"background-image: url(/sites/all/themes/unc/images/2025/acceso-estudiar.png);\"><h",
+       "<div class=\"panel-heading\" role=\"tab\" id=\"heading2\" style=\"background-image: url(/sites/all/themes/unc/images/2025/acceso-facultades.png);\">"
+      ]
+     },
+     {
+      "id": "empty-heading",
+      "impacto": "minor",
+      "nodos": 3,
+      "ayuda": "Headings should not be empty",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"panel-title\"></h4>",
+       "<h4 class=\"panel-title\"></h4>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 3,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a alt=\"Estudiar en la UNC\" role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse1\" aria-expanded=\"false\" aria-contr",
+       "<a alt=\"Facultades y colegios\" role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse2\" aria-expanded=\"false\" aria-co"
+      ]
+     },
+     {
+      "id": "listitem",
+      "impacto": "serious",
+      "nodos": 7,
+      "ayuda": "<li> elements must be contained in a <ul> or <ol>",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<li><a href=\"https://boletin.unc.edu.ar\" target=\"_blank\">Boletin Oficial</a></li>",
+       "<li><a href=\"/sobre-la-unc/comisiones-paritarias-particulares\">Comisiones paritarias particulares</a></li>"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 5,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"container\" style=\"height: min-content; padding: 15px;\">",
+       "<div class=\"field field-name-body field-type-text-with-summary field-label-hidden\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\" style=\"font-size: small; color: #ffffff; text-align: center;\">+54 351 535 3700</a>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Universidad Nacional de Córdoba | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 198,
+     "colores": {
+      "fondos": 9,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x9",
+      "rgb(248, 248, 248)  x8",
+      "rgba(0, 17, 41, 0.5)  x4",
+      "rgb(236, 236, 236)  x3",
+      "rgb(90, 72, 152)  x1",
+      "rgb(228, 15, 125)  x1",
+      "rgb(54, 166, 178)  x1",
+      "rgb(58, 0, 208)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(21, 49, 84)  x25",
+      "rgb(255, 255, 255)  x5",
+      "rgb(34, 34, 34)  x2",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "1px rgb(255, 255, 255)  x4",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x16",
+      "Reforma DG 2018 Blanca  x7",
+      "Reforma2018  x6",
+      "Arial  x4"
+     ],
+     "tamanios": [
+      "15px/300/22.5px  x9",
+      "15px/300/21px  x8",
+      "20px/700/30px  x4",
+      "40px/300/60px  x4",
+      "15px/500/22.5px  x4",
+      "13px/300/19.5px  x2",
+      "30px/700/33px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "4px  x5",
+      "1px  x3"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.05) 0px 1px 1px 0px  x4"
+     ],
+     "tamaniosDistintos": 5,
+     "header": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 0,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Reforma2018",
+      "ancho": 280,
+      "caracteresPorRenglon": 43
+     },
+     "h": "H4 H4 H4 H2 H2",
+     "h1": 0,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 40,
+     "chicos": 17,
+     "imgs": 43,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 3250,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 66,
+     "kB": 22575,
+     "porTipoKB": {
+      "document": 85,
+      "stylesheet": 374,
+      "script": 390,
+      "image": 21550,
+      "font": 175
+     }
+    }
+   }
+  },
+  "noticia": {
+   "url": "https://www.unc.edu.ar/comunicaci%C3%B3n/la-unc-pone-en-marcha-una-aceleradora-para-internacionalizar-el-curr%C3%ADculo",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "La UNC pone en marcha una Aceleradora para internacionalizar el currículo | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 203,
+     "colores": {
+      "fondos": 12,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x8",
+      "rgb(36, 47, 87)  x6",
+      "rgb(255, 192, 203)  x3",
+      "rgb(83, 141, 63)  x3",
+      "rgb(155, 186, 215)  x2",
+      "rgb(25, 56, 95)  x1",
+      "rgba(255, 255, 255, 0.23)  x1",
+      "rgb(36, 86, 128)  x1",
+      "rgb(216, 216, 216)  x1",
+      "rgb(128, 171, 219)  x1",
+      "rgb(18, 33, 53)  x1",
+      "rgba(83, 141, 63, 0.8)  x1"
+     ],
+     "textos": [
+      "rgb(68, 68, 68)  x20",
+      "rgb(34, 34, 34)  x17",
+      "rgb(255, 255, 255)  x13",
+      "rgb(15, 27, 44)  x10",
+      "rgb(83, 141, 63)  x5",
+      "rgb(95, 95, 95)  x1"
+     ],
+     "bordes": [
+      "1px rgba(0, 0, 0, 0)  x1",
+      "1px rgb(187, 187, 187)  x1",
+      "1px rgb(0, 82, 136)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x49",
+      "Reforma1918  x17"
+     ],
+     "tamanios": [
+      "14px/300/14px  x36",
+      "17px/300/25.5px  x16",
+      "15px/500/15px  x6",
+      "17px/700/25.5px  x3",
+      "30px/500/33px  x2",
+      "13px/300/19.5px  x2",
+      "16px/300/1.59998e+06px  x1"
+     ],
+     "radios": [
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset  x1"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 151,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 653,
+      "caracteresPorRenglon": 77
+     },
+     "h": "H2 H2",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header form footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 55,
+     "chicos": 47,
+     "imgs": 26,
+     "imgsSinAlt": 3,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 5433,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 49,
+     "kB": 3062,
+     "porTipoKB": {
+      "document": 60,
+      "stylesheet": 363,
+      "image": 2104,
+      "script": 341,
+      "font": 194
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button type=\"submit\" class=\"btn btn-primary\"><span class=\"icon glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n</button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"sf-depth-1 menuparent nolink sf-with-ul\" tabindex=\"0\">Facultades y colegios<span class=\"sf-sub-indicator\"> »</span></span>",
+       "<h2 class=\"page-header-node\">La UNC pone en marcha una Aceleradora para internacionalizar el currículo</h2>"
+      ]
+     },
+     {
+      "id": "image-alt",
+      "impacto": "critical",
+      "nodos": 3,
+      "ayuda": "Images must have alternative text",
+      "tags": "wcag2a,wcag111",
+      "ej": [
+       "<img src=\"/sites/all/themes/unc/images/compartir_facebook.svg\" class=\"img-redes img-facebook\">",
+       "<img src=\"/sites/all/themes/unc/images/compartir_twitter.svg\" class=\"img-redes img-twitter\">"
+      ]
+     },
+     {
+      "id": "label-title-only",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Form elements should have a visible label",
+      "tags": "best-practice",
+      "ej": [
+       "<input title=\"Escriba lo que quiere buscar.\" class=\"custom-search-box form-control form-text\" placeholder=\"Buscar\" type=\"text\" id=\"edit-sear"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 25,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-md-12 text-center top-2025-rapido hidden-xs\">",
+       "<li id=\"menu-602-2\" class=\"middle even sf-item-8 sf-depth-1 sf-no-children\"><a href=\"/sobre-la-unc\" class=\"link-sobre-unc sf-depth-1\">La UNC"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\">+54 351 535 3700</a>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.element-invisible",
+      "texto": "Pasar al contenido principal",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "menu nuevo 2025",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.miunc-btn-top",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "input.custom-search-box",
+      "texto": "",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.btn",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "span.sf-depth-1",
+      "texto": "Estudiar en la UNC\n»",
+      "contorno": "1px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Ingreso UNC",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de pregrado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de grado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de posgrados",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Escuela de Oficios",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "La UNC pone en marcha una Aceleradora para internacionalizar el currículo | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 111,
+     "colores": {
+      "fondos": 4,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x3",
+      "rgb(83, 141, 63)  x3",
+      "rgba(83, 141, 63, 0.8)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x17",
+      "rgb(83, 141, 63)  x3",
+      "rgb(255, 255, 255)  x2",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "1px rgb(187, 187, 187)  x1",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x17",
+      "Reforma2018  x6"
+     ],
+     "tamanios": [
+      "15px/300/22.5px  x17",
+      "15px/700/22.5px  x3",
+      "13px/300/19.5px  x2",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "1px  x3",
+      "4px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 3,
+     "header": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "15px",
+      "inter": "22.5px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 360,
+      "caracteresPorRenglon": 48
+     },
+     "h": "H2",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 15,
+     "chicos": 8,
+     "imgs": 26,
+     "imgsSinAlt": 3,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 4785,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 45,
+     "kB": 3041,
+     "porTipoKB": {
+      "document": 60,
+      "stylesheet": 363,
+      "script": 341,
+      "image": 2101,
+      "font": 176
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 3,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h2 class=\"page-header-node\">La UNC pone en marcha una Aceleradora para internacionalizar el currículo</h2>",
+       "<em>"
+      ]
+     },
+     {
+      "id": "image-alt",
+      "impacto": "critical",
+      "nodos": 3,
+      "ayuda": "Images must have alternative text",
+      "tags": "wcag2a,wcag111",
+      "ej": [
+       "<img src=\"/sites/all/themes/unc/images/compartir_facebook.svg\" class=\"img-redes img-facebook\">",
+       "<img src=\"/sites/all/themes/unc/images/compartir_twitter.svg\" class=\"img-redes img-twitter\">"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 4,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"panel-pane pane-node-title titulo-nodo\">\n  \n      \n  \n  <div class=\"pane-content\">\n    <h2 class=\"page-header-node\">La UNC pone ",
+       "<div class=\"panel-pane pane-entity-field pane-node-field-descripcion\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\" style=\"font-size: small; color: #ffffff; text-align: center;\">+54 351 535 3700</a>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "La UNC pone en marcha una Aceleradora para internacionalizar el currículo | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 111,
+     "colores": {
+      "fondos": 4,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x3",
+      "rgb(83, 141, 63)  x3",
+      "rgba(83, 141, 63, 0.8)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x17",
+      "rgb(83, 141, 63)  x3",
+      "rgb(255, 255, 255)  x2",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "1px rgb(187, 187, 187)  x1",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x17",
+      "Reforma2018  x6"
+     ],
+     "tamanios": [
+      "15px/300/22.5px  x17",
+      "15px/700/22.5px  x3",
+      "13px/300/19.5px  x2",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "1px  x3",
+      "4px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 3,
+     "header": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "15px",
+      "inter": "22.5px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 290,
+      "caracteresPorRenglon": 39
+     },
+     "h": "H2",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 15,
+     "chicos": 8,
+     "imgs": 26,
+     "imgsSinAlt": 3,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 4921,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 45,
+     "kB": 3041,
+     "porTipoKB": {
+      "document": 60,
+      "stylesheet": 363,
+      "script": 341,
+      "image": 2101,
+      "font": 176
+     }
+    }
+   }
+  },
+  "noticias": {
+   "url": "https://www.unc.edu.ar/noticias",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Noticias | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 355,
+     "colores": {
+      "fondos": 13,
+      "textos": 7
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x28",
+      "rgb(15, 42, 74)  x20",
+      "rgb(255, 255, 255)  x11",
+      "rgb(36, 47, 87)  x6",
+      "rgb(255, 192, 203)  x3",
+      "rgb(155, 186, 215)  x2",
+      "rgb(25, 56, 95)  x1",
+      "rgba(255, 255, 255, 0.23)  x1",
+      "rgb(36, 86, 128)  x1",
+      "rgb(216, 216, 216)  x1",
+      "rgb(128, 171, 219)  x1",
+      "rgb(18, 33, 53)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x42",
+      "rgb(255, 255, 255)  x33",
+      "rgb(16, 27, 45)  x20",
+      "rgb(51, 122, 183)  x13",
+      "rgb(15, 27, 44)  x10",
+      "rgb(95, 95, 95)  x1",
+      "rgb(119, 119, 119)  x1"
+     ],
+     "bordes": [
+      "1px rgb(221, 221, 221)  x11",
+      "1px rgba(0, 0, 0, 0)  x1",
+      "1px rgb(51, 122, 183)  x1",
+      "1px rgb(0, 82, 136)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x120"
+     ],
+     "tamanios": [
+      "13px/300/19.5px  x22",
+      "17px/300/25.5px  x21",
+      "18px/500/22.5px  x20",
+      "10px/300/15px  x20",
+      "14px/300/14px  x16",
+      "17px/300/24.2857px  x12",
+      "15px/500/15px  x6",
+      "16px/300/1.59998e+06px  x1",
+      "30px/500/33px  x1",
+      "36px/500/39.6px  x1"
+     ],
+     "radios": [
+      "1px  x20",
+      "4px 0px 0px 4px  x2",
+      "0px 4px 4px 0px  x2",
+      "4px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset  x1"
+     ],
+     "tamaniosDistintos": 9,
+     "header": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 151,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(114, 114, 115)",
+      "familia": "Reforma2018",
+      "ancho": 377,
+      "caracteresPorRenglon": 58
+     },
+     "h": "H2 H1 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header form footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 101,
+     "chicos": 47,
+     "imgs": 37,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 2729,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 56,
+     "kB": 32295,
+     "porTipoKB": {
+      "document": 74,
+      "stylesheet": 363,
+      "script": 341,
+      "image": 31412,
+      "font": 104
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button type=\"submit\" class=\"btn btn-primary\"><span class=\"icon glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n</button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"sf-depth-1 menuparent nolink sf-with-ul\" tabindex=\"0\">Facultades y colegios<span class=\"sf-sub-indicator\"> »</span></span>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h3 class=\"card-title\">\n          <a href=\"#\"></a><a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-vi"
+      ]
+     },
+     {
+      "id": "label-title-only",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Form elements should have a visible label",
+      "tags": "best-practice",
+      "ej": [
+       "<input title=\"Escriba lo que quiere buscar.\" class=\"custom-search-box form-control form-text\" placeholder=\"Buscar\" type=\"text\" id=\"edit-sear"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 120,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-visibilizar-la-prevenci%C3%B3n-del\"></a>",
+       "<a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-visibilizar-la-prevenci%C3%B3n-del\">\n    </a>"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 2,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-md-12 text-center top-2025-rapido hidden-xs\">",
+       "<div class=\"main-container container\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\">+54 351 535 3700</a>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.element-invisible",
+      "texto": "Pasar al contenido principal",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "menu nuevo 2025",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.miunc-btn-top",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "input.custom-search-box",
+      "texto": "",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.btn",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "span.sf-depth-1",
+      "texto": "Estudiar en la UNC\n»",
+      "contorno": "1px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Ingreso UNC",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de pregrado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de grado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de posgrados",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Escuela de Oficios",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Noticias | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 283,
+     "colores": {
+      "fondos": 5,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x20",
+      "rgb(15, 42, 74)  x20",
+      "rgb(255, 255, 255)  x14",
+      "rgb(51, 122, 183)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x22",
+      "rgb(255, 255, 255)  x22",
+      "rgb(16, 27, 45)  x20",
+      "rgb(51, 122, 183)  x11",
+      "rgb(119, 119, 119)  x1",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "1px rgb(221, 221, 221)  x11",
+      "1px rgb(51, 122, 183)  x1",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x77"
+     ],
+     "tamanios": [
+      "15px/300/22.5px  x22",
+      "18px/500/22.5px  x20",
+      "10px/300/15px  x20",
+      "15px/300/21.4286px  x12",
+      "13px/300/19.5px  x2",
+      "36px/500/39.6px  x1"
+     ],
+     "radios": [
+      "1px  x23",
+      "4px  x2",
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Reforma2018",
+      "ancho": 350,
+      "caracteresPorRenglon": 54
+     },
+     "h": "H1 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 81,
+     "chicos": 28,
+     "imgs": 37,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 9452,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 52,
+     "kB": 32274,
+     "porTipoKB": {
+      "document": 74,
+      "stylesheet": 363,
+      "script": 341,
+      "image": 31409,
+      "font": 87
+     }
+    },
+    "axe": [
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h3 class=\"card-title\">\n          <a href=\"#\"></a><a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-vi"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 120,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-visibilizar-la-prevenci%C3%B3n-del\"></a>",
+       "<a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-visibilizar-la-prevenci%C3%B3n-del\">\n    </a>"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 42,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<h1 class=\"page-header\">Noticias</h1>",
+       "<h3 class=\"card-title\">\n          <a href=\"#\"></a><a href=\"/comunicaci%C3%B3n/octubre-rosa-la-unc-ilumina-el-pabell%C3%B3n-argentina-para-vi"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\" style=\"font-size: small; color: #ffffff; text-align: center;\">+54 351 535 3700</a>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Noticias | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 283,
+     "colores": {
+      "fondos": 5,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x20",
+      "rgb(15, 42, 74)  x20",
+      "rgb(255, 255, 255)  x14",
+      "rgb(51, 122, 183)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x22",
+      "rgb(255, 255, 255)  x22",
+      "rgb(16, 27, 45)  x20",
+      "rgb(51, 122, 183)  x11",
+      "rgb(119, 119, 119)  x1",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "1px rgb(221, 221, 221)  x11",
+      "1px rgb(51, 122, 183)  x1",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x77"
+     ],
+     "tamanios": [
+      "15px/300/22.5px  x22",
+      "18px/500/22.5px  x20",
+      "10px/300/15px  x20",
+      "15px/300/21.4286px  x12",
+      "13px/300/19.5px  x2",
+      "36px/500/39.6px  x1"
+     ],
+     "radios": [
+      "1px  x23",
+      "4px  x2",
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Reforma2018",
+      "ancho": 280,
+      "caracteresPorRenglon": 43
+     },
+     "h": "H1 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 81,
+     "chicos": 28,
+     "imgs": 37,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 9452,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 52,
+     "kB": 32274,
+     "porTipoKB": {
+      "document": 74,
+      "stylesheet": 363,
+      "script": 341,
+      "image": 31409,
+      "font": 87
+     }
+    }
+   }
+  },
+  "listado": {
+   "url": "https://www.unc.edu.ar/acad%C3%A9micas/facultades-de-la-unc",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Facultades de la UNC | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 414,
+     "colores": {
+      "fondos": 15,
+      "textos": 7
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x10",
+      "rgb(242, 242, 242)  x8",
+      "rgb(36, 47, 87)  x6",
+      "rgb(255, 192, 203)  x3",
+      "rgb(155, 186, 215)  x2",
+      "rgb(25, 56, 95)  x1",
+      "rgba(255, 255, 255, 0.23)  x1",
+      "rgb(36, 86, 128)  x1",
+      "rgb(216, 216, 216)  x1",
+      "rgb(128, 171, 219)  x1",
+      "rgb(18, 33, 53)  x1",
+      "rgb(196, 118, 41)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x113",
+      "rgb(196, 118, 41)  x47",
+      "rgb(68, 68, 68)  x33",
+      "rgb(255, 149, 2)  x15",
+      "rgb(255, 255, 255)  x14",
+      "rgb(15, 27, 44)  x10",
+      "rgb(95, 95, 95)  x1"
+     ],
+     "bordes": [
+      "1px rgba(0, 0, 0, 0)  x1",
+      "1px rgb(0, 82, 136)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x171",
+      "Reforma2018  x62"
+     ],
+     "tamanios": [
+      "17px/700/23.8px  x106",
+      "17px/300/23.8px  x65",
+      "14px/300/14px  x50",
+      "15px/500/15px  x6",
+      "30px/500/33px  x2",
+      "13px/300/19.5px  x2",
+      "17px/300/25.5px  x1",
+      "16px/300/1.59998e+06px  x1"
+     ],
+     "radios": [
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1",
+      "50%  x1"
+     ],
+     "sombras": [
+      "rgb(128, 128, 128) 1px 2px 8px -3px  x8",
+      "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset  x1"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 151,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [
+      "DIV.chat-window-wrapper.n8n-chat 64px"
+     ],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "23.8px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 495,
+      "caracteresPorRenglon": 58
+     },
+     "h": "H2 H2",
+     "h1": 2,
+     "lang": "es",
+     "landmarks": "header form footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 124,
+     "chicos": 103,
+     "imgs": 32,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 4764,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 13
+    },
+    "red": {
+     "pedidos": 60,
+     "kB": 12746,
+     "porTipoKB": {
+      "document": 72,
+      "stylesheet": 370,
+      "script": 887,
+      "image": 11255,
+      "font": 163,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button type=\"submit\" class=\"btn btn-primary\"><span class=\"icon glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n</button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 63,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"sf-depth-1 menuparent nolink sf-with-ul\" tabindex=\"0\">Facultades y colegios<span class=\"sf-sub-indicator\"> »</span></span>",
+       "<a href=\"/acad%C3%A9micas\" class=\"link-academicas sf-depth-1\">Académicas</a>"
+      ]
+     },
+     {
+      "id": "label-title-only",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Form elements should have a visible label",
+      "tags": "best-practice",
+      "ej": [
+       "<input title=\"Escriba lo que quiere buscar.\" class=\"custom-search-box form-control form-text\" placeholder=\"Buscar\" type=\"text\" id=\"edit-sear"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 24,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-md-12 text-center top-2025-rapido hidden-xs\">",
+       "<li id=\"menu-602-2\" class=\"middle even sf-item-8 sf-depth-1 sf-no-children\"><a href=\"/sobre-la-unc\" class=\"link-sobre-unc sf-depth-1\">La UNC"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\">+54 351 535 3700</a>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.element-invisible",
+      "texto": "Pasar al contenido principal",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "menu nuevo 2025",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.miunc-btn-top",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "input.custom-search-box",
+      "texto": "",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.btn",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "span.sf-depth-1",
+      "texto": "Estudiar en la UNC\n»",
+      "contorno": "1px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Ingreso UNC",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de pregrado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de grado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de posgrados",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Escuela de Oficios",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Facultades de la UNC | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 323,
+     "colores": {
+      "fondos": 5,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x13",
+      "rgba(175, 102, 39, 0.8)  x1",
+      "rgb(221, 221, 221)  x1",
+      "rgb(21, 49, 84)  x1",
+      "rgba(255, 149, 2, 0)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x113",
+      "rgb(196, 118, 41)  x46",
+      "rgb(255, 149, 2)  x15",
+      "rgb(68, 68, 68)  x14",
+      "rgb(255, 255, 255)  x2",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x171",
+      "Reforma2018  x20"
+     ],
+     "tamanios": [
+      "15px/700/21px  x106",
+      "15px/300/21px  x65",
+      "14px/300/14px  x14",
+      "15px/300/22.5px  x2",
+      "13px/300/19.5px  x2",
+      "15px/300/1.49998e+06px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "1px  x3",
+      "4px  x1",
+      "50%  x1"
+     ],
+     "sombras": [
+      "rgb(128, 128, 128) 1px 2px 8px -3px  x8"
+     ],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [
+      "DIV.chat-window-wrapper.n8n-chat 64px"
+     ],
+     "parrafo": {
+      "tam": "15px",
+      "inter": "21px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 280,
+      "caracteresPorRenglon": 37
+     },
+     "h": "H2",
+     "h1": 2,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 84,
+     "chicos": 64,
+     "imgs": 32,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 6909,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 13
+    },
+    "red": {
+     "pedidos": 57,
+     "kB": 12727,
+     "porTipoKB": {
+      "document": 72,
+      "stylesheet": 370,
+      "script": 887,
+      "image": 11253,
+      "font": 145,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 59,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<strong class=\"naranja\">ARQUITECTURA, URBANISMO Y DISEÑO</strong>",
+       "<a href=\"https://faud.unc.edu.ar/\" target=\"_blank\">https://faud.unc.edu.ar/</a>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 4,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"sf-accordion-toggle sf-style-none\"><a href=\"#\" id=\"superfish-2-toggle\"><span>Menú Ambientes</span></a></div>",
+       "<div class=\"panel-pane pane-block pane-superfish-1\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\" style=\"font-size: small; color: #ffffff; text-align: center;\">+54 351 535 3700</a>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Facultades de la UNC | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 323,
+     "colores": {
+      "fondos": 5,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x13",
+      "rgba(175, 102, 39, 0.8)  x1",
+      "rgb(221, 221, 221)  x1",
+      "rgb(21, 49, 84)  x1",
+      "rgba(255, 149, 2, 0)  x1"
+     ],
+     "textos": [
+      "rgb(34, 34, 34)  x113",
+      "rgb(196, 118, 41)  x46",
+      "rgb(255, 149, 2)  x15",
+      "rgb(68, 68, 68)  x14",
+      "rgb(255, 255, 255)  x2",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma1918  x171",
+      "Reforma2018  x20"
+     ],
+     "tamanios": [
+      "15px/700/21px  x106",
+      "15px/300/21px  x65",
+      "14px/300/14px  x14",
+      "15px/300/22.5px  x2",
+      "13px/300/19.5px  x2",
+      "15px/300/1.49998e+06px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "1px  x3",
+      "4px  x1",
+      "50%  x1"
+     ],
+     "sombras": [
+      "rgb(128, 128, 128) 1px 2px 8px -3px  x8"
+     ],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [
+      "DIV.chat-window-wrapper.n8n-chat 64px"
+     ],
+     "parrafo": {
+      "tam": "15px",
+      "inter": "21px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 226,
+      "caracteresPorRenglon": 30
+     },
+     "h": "H2",
+     "h1": 2,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 84,
+     "chicos": 64,
+     "imgs": 32,
+     "imgsSinAlt": 0,
+     "scrollW": 323,
+     "innerW": 323,
+     "altoPagina": 7659,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 13
+    },
+    "red": {
+     "pedidos": 57,
+     "kB": 12727,
+     "porTipoKB": {
+      "document": 72,
+      "stylesheet": 370,
+      "script": 887,
+      "image": 11253,
+      "font": 145,
+      "fetch": 0
+     }
+    }
+   }
+  },
+  "perfil": {
+   "url": "https://www.unc.edu.ar/estudiantes",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Estudiantes | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 263,
+     "colores": {
+      "fondos": 15,
+      "textos": 6
+     },
+     "fondos": [
+      "rgba(173, 36, 43, 0.1)  x14",
+      "rgb(255, 255, 255)  x14",
+      "rgb(242, 242, 242)  x8",
+      "rgb(36, 47, 87)  x6",
+      "rgba(173, 36, 43, 0.9)  x5",
+      "rgb(221, 220, 220)  x5",
+      "rgb(190, 189, 190)  x4",
+      "rgb(255, 192, 203)  x3",
+      "rgb(155, 186, 215)  x2",
+      "rgb(25, 56, 95)  x1",
+      "rgba(255, 255, 255, 0.23)  x1",
+      "rgb(36, 86, 128)  x1"
+     ],
+     "textos": [
+      "rgb(174, 35, 39)  x20",
+      "rgb(255, 255, 255)  x17",
+      "rgb(15, 27, 44)  x10",
+      "rgb(34, 34, 34)  x8",
+      "rgb(12, 60, 109)  x7",
+      "rgb(95, 95, 95)  x1"
+     ],
+     "bordes": [
+      "1px rgba(0, 0, 0, 0)  x1",
+      "4px rgb(255, 255, 255)  x1",
+      "1px rgb(221, 221, 221)  x1",
+      "1px rgb(0, 82, 136)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x63"
+     ],
+     "tamanios": [
+      "14px/300/14px  x23",
+      "16px/500/17.6px  x12",
+      "17px/300/25.5px  x6",
+      "15px/500/15px  x6",
+      "24px/300/36px  x5",
+      "17px/300/19.5px  x5",
+      "30px/500/33px  x2",
+      "13px/300/19.5px  x2",
+      "16px/300/1.59998e+06px  x1",
+      "36px/500/39.6px  x1"
+     ],
+     "radios": [
+      "20px  x5",
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1",
+      "4px  x1",
+      "4px 4px 0px 0px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.3) 0px 0px 3px 0px inset  x5",
+      "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset  x1"
+     ],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 151,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(114, 114, 115)",
+      "familia": "Reforma2018",
+      "ancho": 377,
+      "caracteresPorRenglon": 58
+     },
+     "h": "H2 H1 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H2",
+     "h1": 2,
+     "lang": "es",
+     "landmarks": "header form footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 71,
+     "chicos": 45,
+     "imgs": 23,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 1815,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 60,
+     "kB": 3393,
+     "porTipoKB": {
+      "document": 219,
+      "stylesheet": 430,
+      "script": 1241,
+      "image": 1359,
+      "font": 143,
+      "xhr": 0,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button type=\"submit\" class=\"btn btn-primary\"><span class=\"icon glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n</button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"sf-depth-1 menuparent nolink sf-with-ul\" tabindex=\"0\">Facultades y colegios<span class=\"sf-sub-indicator\"> »</span></span>"
+      ]
+     },
+     {
+      "id": "frame-title",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Frames must have an accessible name",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<iframe allowfullscreen=\"\" frameborder=\"0\" height=\"315\" src=\"https://www.youtube.com/embed/6LTRErTgPaY\" width=\"560\"></iframe>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"panel-title\">\n          <a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#views-bootstrap-accordion-1\" href=\"#coll"
+      ]
+     },
+     {
+      "id": "label-title-only",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Form elements should have a visible label",
+      "tags": "best-practice",
+      "ej": [
+       "<input title=\"Escriba lo que quiere buscar.\" class=\"custom-search-box form-control form-text\" placeholder=\"Buscar\" type=\"text\" id=\"edit-sear"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"/ciencia-y-tecnolog%C3%ADa/abre-la-convocatoria-becas-evc-cin-una-oportunidad-para-iniciar-la-carrera\"><img typeof=\"foaf:Image\" cla",
+       "<a href=\"/ciencia-y-tecnolog%C3%ADa/cronograma-de-actividades-del-encuentro-interdisciplinario-de-investigadores-en\"><img typeof=\"foaf:Image"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 18,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-md-12 text-center top-2025-rapido hidden-xs\">",
+       "<div class=\"panel-pane pane-block pane-superfish-3  visible-lg visible-md hidden-xs hidden-sm\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"#\" class=\"flex-active\">1</a>",
+       "<a href=\"#\">2</a>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.element-invisible",
+      "texto": "Pasar al contenido principal",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "menu nuevo 2025",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.miunc-btn-top",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "input.custom-search-box",
+      "texto": "",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.btn",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "span.sf-depth-1",
+      "texto": "Estudiar en la UNC\n»",
+      "contorno": "1px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Ingreso UNC",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de pregrado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de grado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de posgrados",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Escuela de Oficios",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Estudiantes | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 198,
+     "colores": {
+      "fondos": 6,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x17",
+      "rgba(173, 36, 43, 0.1)  x14",
+      "rgba(173, 36, 43, 0.9)  x5",
+      "rgb(221, 220, 220)  x5",
+      "rgb(190, 189, 190)  x4",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(174, 35, 39)  x18",
+      "rgb(34, 34, 34)  x8",
+      "rgb(255, 255, 255)  x6",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "4px rgb(255, 255, 255)  x1",
+      "1px rgb(221, 221, 221)  x1",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x33"
+     ],
+     "tamanios": [
+      "14px/500/15.4px  x12",
+      "15px/300/22.5px  x7",
+      "13px/300/19.5px  x7",
+      "17px/300/19.5px  x5",
+      "36px/500/39.6px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "20px  x5",
+      "1px  x3",
+      "4px  x2",
+      "4px 4px 0px 0px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.3) 0px 0px 3px 0px inset  x5"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Reforma2018",
+      "ancho": 350,
+      "caracteresPorRenglon": 54
+     },
+     "h": "H1 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H2",
+     "h1": 2,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 44,
+     "chicos": 25,
+     "imgs": 23,
+     "imgsSinAlt": 0,
+     "scrollW": 560,
+     "innerW": 560,
+     "altoPagina": 2482,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 57,
+     "kB": 3378,
+     "porTipoKB": {
+      "document": 219,
+      "stylesheet": 428,
+      "script": 1255,
+      "image": 1356,
+      "font": 120,
+      "xhr": 0,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "frame-title",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Frames must have an accessible name",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<iframe allowfullscreen=\"\" frameborder=\"0\" height=\"315\" src=\"https://www.youtube.com/embed/6LTRErTgPaY\" width=\"560\"></iframe>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"panel-title\">\n          <a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#views-bootstrap-accordion-1\" href=\"#coll"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"/ciencia-y-tecnolog%C3%ADa/abre-la-convocatoria-becas-evc-cin-una-oportunidad-para-iniciar-la-carrera\"><img typeof=\"foaf:Image\" cla",
+       "<a href=\"/ciencia-y-tecnolog%C3%ADa/cronograma-de-actividades-del-encuentro-interdisciplinario-de-investigadores-en\"><img typeof=\"foaf:Image"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 16,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"panel-pane pane-page-title\">\n  \n      \n  \n  <div class=\"pane-content\">\n    <h1 class=\"page-header-perfil\">Estudiantes</h1>\n  </d",
+       "<ul class=\"slides\">"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"#\" class=\"flex-active\">1</a>",
+       "<a href=\"#\">2</a>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Estudiantes | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 198,
+     "colores": {
+      "fondos": 6,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x17",
+      "rgba(173, 36, 43, 0.1)  x14",
+      "rgba(173, 36, 43, 0.9)  x5",
+      "rgb(221, 220, 220)  x5",
+      "rgb(190, 189, 190)  x4",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(174, 35, 39)  x18",
+      "rgb(34, 34, 34)  x8",
+      "rgb(255, 255, 255)  x6",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "4px rgb(255, 255, 255)  x1",
+      "1px rgb(221, 221, 221)  x1",
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x33"
+     ],
+     "tamanios": [
+      "14px/500/15.4px  x12",
+      "15px/300/22.5px  x7",
+      "13px/300/19.5px  x7",
+      "17px/300/19.5px  x5",
+      "36px/500/39.6px  x1",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "20px  x5",
+      "1px  x3",
+      "4px  x2",
+      "4px 4px 0px 0px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.3) 0px 0px 3px 0px inset  x5"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "13px",
+      "inter": "19.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Reforma2018",
+      "ancho": 280,
+      "caracteresPorRenglon": 43
+     },
+     "h": "H1 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H4 H2",
+     "h1": 2,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 44,
+     "chicos": 25,
+     "imgs": 23,
+     "imgsSinAlt": 0,
+     "scrollW": 560,
+     "innerW": 560,
+     "altoPagina": 2540,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 57,
+     "kB": 3378,
+     "porTipoKB": {
+      "document": 218,
+      "stylesheet": 428,
+      "script": 1255,
+      "image": 1356,
+      "font": 120,
+      "xhr": 0,
+      "fetch": 0
+     }
+    }
+   }
+  },
+  "tramite": {
+   "url": "https://www.unc.edu.ar/vida-estudiantil/becas-0",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Becas | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 302,
+     "colores": {
+      "fondos": 15,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x32",
+      "rgb(164, 29, 52)  x15",
+      "rgb(242, 242, 242)  x8",
+      "rgb(36, 47, 87)  x6",
+      "rgb(255, 192, 203)  x3",
+      "rgb(231, 231, 231)  x3",
+      "rgb(155, 186, 215)  x2",
+      "rgb(25, 56, 95)  x1",
+      "rgba(255, 255, 255, 0.23)  x1",
+      "rgb(36, 86, 128)  x1",
+      "rgb(216, 216, 216)  x1",
+      "rgb(128, 171, 219)  x1"
+     ],
+     "textos": [
+      "rgb(68, 68, 68)  x52",
+      "rgb(34, 34, 34)  x30",
+      "rgb(255, 255, 255)  x25",
+      "rgb(164, 29, 52)  x16",
+      "rgb(15, 27, 44)  x10",
+      "rgb(95, 95, 95)  x1"
+     ],
+     "bordes": [
+      "1px rgba(0, 0, 0, 0)  x1",
+      "1px rgb(0, 82, 136)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x92",
+      "Reforma1918  x42"
+     ],
+     "tamanios": [
+      "14px/300/14px  x80",
+      "17px/300/25.5px  x26",
+      "17px/700/25.5px  x17",
+      "15px/500/15px  x6",
+      "30px/500/33px  x2",
+      "13px/300/19.5px  x2",
+      "16px/300/1.59998e+06px  x1"
+     ],
+     "radios": [
+      "4px 0px 0px 4px  x1",
+      "0px 4px 4px 0px  x1"
+     ],
+     "sombras": [
+      "rgb(128, 128, 128) 1px 2px 8px -3px  x26",
+      "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset  x1"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 151,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 653,
+      "caracteresPorRenglon": 77
+     },
+     "h": "H2 H2",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header form footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 111,
+     "chicos": 80,
+     "imgs": 20,
+     "imgsSinAlt": 3,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 1719,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 42,
+     "kB": 1295,
+     "porTipoKB": {
+      "document": 64,
+      "stylesheet": 363,
+      "script": 343,
+      "image": 362,
+      "font": 163
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button type=\"submit\" class=\"btn btn-primary\"><span class=\"icon glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n</button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"sf-depth-1 menuparent nolink sf-with-ul\" tabindex=\"0\">Facultades y colegios<span class=\"sf-sub-indicator\"> »</span></span>"
+      ]
+     },
+     {
+      "id": "image-alt",
+      "impacto": "critical",
+      "nodos": 3,
+      "ayuda": "Images must have alternative text",
+      "tags": "wcag2a,wcag111",
+      "ej": [
+       "<img src=\"/sites/all/themes/unc/images/compartir_facebook.svg\" class=\"img-redes img-facebook\">",
+       "<img src=\"/sites/all/themes/unc/images/compartir_twitter.svg\" class=\"img-redes img-twitter\">"
+      ]
+     },
+     {
+      "id": "label-title-only",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Form elements should have a visible label",
+      "tags": "best-practice",
+      "ej": [
+       "<input title=\"Escriba lo que quiere buscar.\" class=\"custom-search-box form-control form-text\" placeholder=\"Buscar\" type=\"text\" id=\"edit-sear"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-in-text-block",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Links must be distinguishable without relying on color",
+      "tags": "wcag2a,wcag141",
+      "ej": [
+       "<a href=\"https://www.unc.edu.ar/vida-estudiantil/becas-nutrirse-2026\">clic aquí</a>",
+       "<a href=\"https://www.unc.edu.ar/vida-estudiantil/becas-de-conectividad-2026\">clic aquí</a>"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 26,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-md-12 text-center top-2025-rapido hidden-xs\">",
+       "<li id=\"menu-602-2\" class=\"middle even sf-item-8 sf-depth-1 sf-no-children\"><a href=\"/sobre-la-unc\" class=\"link-sobre-unc sf-depth-1\">La UNC"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\">+54 351 535 3700</a>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.element-invisible",
+      "texto": "Pasar al contenido principal",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "menu nuevo 2025",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.miunc-btn-top",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "input.custom-search-box",
+      "texto": "",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.btn",
+      "texto": "",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "span.sf-depth-1",
+      "texto": "Estudiar en la UNC\n»",
+      "contorno": "1px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Ingreso UNC",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de pregrado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de grado",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Carreras de posgrados",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     },
+     {
+      "el": "a.sf-depth-2",
+      "texto": "Escuela de Oficios",
+      "contorno": "5px rgb(16, 16, 16)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Becas | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 210,
+     "colores": {
+      "fondos": 6,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x35",
+      "rgb(164, 29, 52)  x14",
+      "rgb(231, 231, 231)  x3",
+      "rgba(164, 29, 52, 0.8)  x1",
+      "rgb(233, 233, 233)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(68, 68, 68)  x33",
+      "rgb(34, 34, 34)  x30",
+      "rgb(164, 29, 52)  x14",
+      "rgb(255, 255, 255)  x13",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x49",
+      "Reforma1918  x42"
+     ],
+     "tamanios": [
+      "14px/300/14px  x44",
+      "15px/300/22.5px  x27",
+      "15px/700/22.5px  x17",
+      "13px/300/19.5px  x2",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "1px  x3",
+      "4px  x1"
+     ],
+     "sombras": [
+      "rgb(128, 128, 128) 1px 2px 8px -3px  x26"
+     ],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "15px",
+      "inter": "22.5px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 360,
+      "caracteresPorRenglon": 48
+     },
+     "h": "H2",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 71,
+     "chicos": 41,
+     "imgs": 20,
+     "imgsSinAlt": 3,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 2681,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 38,
+     "kB": 1275,
+     "porTipoKB": {
+      "document": 64,
+      "stylesheet": 363,
+      "script": 343,
+      "image": 359,
+      "font": 145
+     }
+    },
+    "axe": [
+     {
+      "id": "image-alt",
+      "impacto": "critical",
+      "nodos": 3,
+      "ayuda": "Images must have alternative text",
+      "tags": "wcag2a,wcag111",
+      "ej": [
+       "<img src=\"/sites/all/themes/unc/images/compartir_facebook.svg\" class=\"img-redes img-facebook\">",
+       "<img src=\"/sites/all/themes/unc/images/compartir_twitter.svg\" class=\"img-redes img-twitter\">"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "link-in-text-block",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Links must be distinguishable without relying on color",
+      "tags": "wcag2a,wcag141",
+      "ej": [
+       "<a href=\"https://www.unc.edu.ar/vida-estudiantil/becas-nutrirse-2026\">clic aquí</a>",
+       "<a href=\"https://www.unc.edu.ar/vida-estudiantil/becas-de-conectividad-2026\">clic aquí</a>"
+      ]
+     },
+     {
+      "id": "page-has-heading-one",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Page should contain a level-one heading",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foa"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 5,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"panel-pane pane-block pane-superfish-1  visible-lg visible-md visible-xs visible-sm\">",
+       "<div class=\"panel-pane pane-node-title titulo-nodo\">\n  \n      \n  \n  <div class=\"pane-content\">\n    <h2 class=\"page-header-node\">Becas</h2>\n "
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a href=\"tel:+543515353700\" style=\"font-size: small; color: #ffffff; text-align: center;\">+54 351 535 3700</a>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Becas | Universidad Nacional de Córdoba",
+    "medidas": {
+     "elementos": 210,
+     "colores": {
+      "fondos": 6,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x35",
+      "rgb(164, 29, 52)  x14",
+      "rgb(231, 231, 231)  x3",
+      "rgba(164, 29, 52, 0.8)  x1",
+      "rgb(233, 233, 233)  x1",
+      "rgb(21, 49, 84)  x1"
+     ],
+     "textos": [
+      "rgb(68, 68, 68)  x33",
+      "rgb(34, 34, 34)  x30",
+      "rgb(164, 29, 52)  x14",
+      "rgb(255, 255, 255)  x13",
+      "rgb(247, 247, 247)  x1"
+     ],
+     "bordes": [
+      "2px rgb(255, 255, 255)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Reforma2018  x49",
+      "Reforma1918  x42"
+     ],
+     "tamanios": [
+      "14px/300/14px  x44",
+      "15px/300/22.5px  x27",
+      "15px/700/22.5px  x17",
+      "13px/300/19.5px  x2",
+      "30px/500/33px  x1"
+     ],
+     "radios": [
+      "1px  x3",
+      "4px  x1"
+     ],
+     "sombras": [
+      "rgb(128, 128, 128) 1px 2px 8px -3px  x26"
+     ],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 80,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 370,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "15px",
+      "inter": "22.5px",
+      "color": "rgb(34, 34, 34)",
+      "familia": "Reforma1918",
+      "ancho": 290,
+      "caracteresPorRenglon": 39
+     },
+     "h": "H2",
+     "h1": 1,
+     "lang": "es",
+     "landmarks": "header nav footer",
+     "saltar": true,
+     "enlacesMenu": 144,
+     "interactivos": 71,
+     "chicos": 40,
+     "imgs": 20,
+     "imgsSinAlt": 3,
+     "scrollW": 383,
+     "innerW": 383,
+     "altoPagina": 2749,
+     "viewport": "width=device-width, initial-scale=1.0",
+     "varsCss": 6
+    },
+    "red": {
+     "pedidos": 38,
+     "kB": 1275,
+     "porTipoKB": {
+      "document": 64,
+      "stylesheet": 363,
+      "script": 343,
+      "image": 359,
+      "font": 145
+     }
+    }
+   }
+  }
+ },
+ "uba": {
+  "portada": {
+   "url": "https://www.uba.ar/",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 275,
+     "colores": {
+      "fondos": 15,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(247, 166, 0)  x10",
+      "rgb(145, 189, 224)  x6",
+      "rgb(31, 39, 98)  x4",
+      "rgb(29, 37, 84)  x3",
+      "rgb(253, 205, 143)  x3",
+      "rgb(255, 255, 255)  x3",
+      "rgb(232, 193, 132)  x2",
+      "rgb(243, 164, 0)  x2",
+      "rgb(153, 182, 207)  x2",
+      "rgb(134, 171, 201)  x2",
+      "rgb(189, 216, 237)  x1",
+      "rgb(145, 189, 225)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x45",
+      "rgb(29, 37, 84)  x15",
+      "rgb(188, 215, 238)  x6",
+      "rgb(31, 39, 98)  x4",
+      "rgb(243, 164, 0)  x2"
+     ],
+     "bordes": [
+      "1px rgb(255, 255, 255)  x3",
+      "1px rgb(29, 37, 84)  x3"
+     ],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x37",
+      "bitterregular  x29",
+      "system-ui  x6"
+     ],
+     "tamanios": [
+      "16px/400/48px  x12",
+      "16px/400/24px  x10",
+      "32px/500/38.4px  x8",
+      "17px/400/25.5px  x4",
+      "16px/500/19.2px  x4",
+      "33px/500/39.6px  x3",
+      "29px/500/34.8px  x3",
+      "15px/500/18px  x3",
+      "27px/500/27px  x3",
+      "28px/500/33.6px  x3",
+      "76.8px/900/72.96px  x3",
+      "16px/900/16px  x3",
+      "15px/400/22.5px  x2",
+      "32px/800/35.84px  x2",
+      "24px/800/26.88px  x2",
+      "48px/500/57.6px  x1"
+     ],
+     "radios": [
+      "0px 0px 20px 20px  x3",
+      "6px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0.25) 1px -1px 25px -4px  x3",
+      "rgba(33, 37, 41, 0.15) 0px 8px 16px 0px  x1"
+     ],
+     "tamaniosDistintos": 16,
+     "header": {
+      "alto": 120,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 120,
+      "ancho": 1280,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 417,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [
+      "DIV.modal.fade 800px",
+      "DIV.modal-backdrop.fade 800px"
+     ],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "bitterregular",
+      "ancho": 913,
+      "caracteresPorRenglon": 107
+     },
+     "h": "H2 H2 H2 H2 H2 H2 H2 H1 H1 H2 H4 H3 H2 H5 H3 H2 H5 H3 H2 H5 H3 H5 H3 H5 H3 H5 H3 H2 H1 H1 H6 H6",
+     "h1": 4,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 52,
+     "chicos": 10,
+     "imgs": 9,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 5652,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 27,
+     "kB": 14489,
+     "porTipoKB": {
+      "document": 97,
+      "stylesheet": 69,
+      "image": 2391,
+      "script": 29,
+      "font": 162,
+      "media": 11742,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "aria-dialog-name",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "ARIA dialog and alertdialog nodes should have an accessible name",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"modal fade show\" id=\"popupContador182\" tabindex=\"-1\" aria-labelledby=\"popupContador182Label\" aria-modal=\"true\" role=\"dialog\" sty"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 26,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h2 style=\"text-transform: uppercase;\">\n                                    FACULTADES Y CARRERAS<br>\n                                </h2>",
+       "<h2 style=\"text-transform: uppercase;\">COLEGIOS</h2>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 8,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"mt-4\">Orgullo UBA</h4>",
+       "<h5>Festival Internacional de Cine de la UBA</h5>"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a class=\"nav-link\" href=\"#fullMenu\"><i class=\"bi bi-search\"></i></a>",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 18,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"carousel-inner\">",
+       "<div class=\"row\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.btn-close",
+      "texto": "Cerrar",
+      "contorno": "no",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 231,
+     "colores": {
+      "fondos": 15,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(247, 166, 0)  x10",
+      "rgb(145, 189, 224)  x6",
+      "rgb(31, 39, 98)  x4",
+      "rgb(29, 37, 84)  x3",
+      "rgb(253, 205, 143)  x3",
+      "rgb(255, 255, 255)  x3",
+      "rgb(189, 215, 237)  x2",
+      "rgb(232, 193, 132)  x2",
+      "rgb(243, 164, 0)  x2",
+      "rgb(153, 182, 207)  x2",
+      "rgb(134, 171, 201)  x2",
+      "rgb(189, 216, 237)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x26",
+      "rgb(29, 37, 84)  x17",
+      "rgb(188, 215, 238)  x6",
+      "rgb(31, 39, 98)  x4",
+      "rgb(243, 164, 0)  x2"
+     ],
+     "bordes": [
+      "1px rgb(255, 255, 255)  x3"
+     ],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x36",
+      "bitterregular  x15",
+      "system-ui  x4"
+     ],
+     "tamanios": [
+      "24.71px/500/29.652px  x8",
+      "16px/400/24px  x7",
+      "17px/400/25.5px  x4",
+      "16px/500/19.2px  x4",
+      "33px/500/39.6px  x3",
+      "29px/500/34.8px  x3",
+      "15px/500/18px  x3",
+      "27px/500/27px  x3",
+      "23.14px/500/27.768px  x3",
+      "35.2px/900/33.44px  x3",
+      "11.52px/900/11.52px  x3",
+      "16.8px/800/18.816px  x2",
+      "13.6px/800/15.232px  x2",
+      "14px/500/14px  x1",
+      "22px/500/26.4px  x1",
+      "22.4px/500/26.88px  x1"
+     ],
+     "radios": [
+      "6px  x2"
+     ],
+     "sombras": [
+      "rgba(33, 37, 41, 0.15) 0px 8px 16px 0px  x1"
+     ],
+     "tamaniosDistintos": 17,
+     "header": {
+      "alto": 115,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 115,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [
+      "DIV.modal.fade 780px",
+      "DIV.modal-backdrop.fade 780px"
+     ],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 304,
+      "caracteresPorRenglon": 36
+     },
+     "h": "H2 H2 H2 H2 H2 H2 H1 H1 H2 H4 H3 H2 H5 H3 H2 H5 H3 H2 H5 H3 H5 H3 H5 H3 H5 H3 H2 H1 H1 H6 H6",
+     "h1": 4,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 38,
+     "chicos": 10,
+     "imgs": 9,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 6483,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 27,
+     "kB": 14489,
+     "porTipoKB": {
+      "document": 97,
+      "stylesheet": 69,
+      "image": 2391,
+      "script": 29,
+      "font": 162,
+      "media": 11742,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "aria-dialog-name",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "ARIA dialog and alertdialog nodes should have an accessible name",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"modal fade show\" id=\"popupContador182\" tabindex=\"-1\" aria-labelledby=\"popupContador182Label\" aria-modal=\"true\" role=\"dialog\" sty"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 25,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h2 style=\"text-transform: uppercase;\">\n                                    FACULTADES Y CARRERAS<br>\n                                </h2>",
+       "<h2 style=\"text-transform: uppercase;\">COLEGIOS</h2>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 8,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"mt-4\">Orgullo UBA</h4>",
+       "<h5>Festival Internacional de Cine de la UBA</h5>"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 10,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"#fullMenu\" class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\">\n            <i class=\"bi bi-list\">",
+       "<a href=\"https://www.uba.ar/ubanoticias/home\" class=\"f-blanco\">\n                                            <span class=\"d-none d-md-inline-"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 29,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<video autoplay=\"\" loop=\"\" muted=\"\">\n                        <source src=\"https://uba.ar/videos/excelencia.mp4\" type=\"video/webm\">\n         ",
+       "<div class=\"row\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 231,
+     "colores": {
+      "fondos": 15,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(247, 166, 0)  x10",
+      "rgb(145, 189, 224)  x6",
+      "rgb(31, 39, 98)  x4",
+      "rgb(29, 37, 84)  x3",
+      "rgb(253, 205, 143)  x3",
+      "rgb(255, 255, 255)  x3",
+      "rgb(189, 215, 237)  x2",
+      "rgb(232, 193, 132)  x2",
+      "rgb(243, 164, 0)  x2",
+      "rgb(153, 182, 207)  x2",
+      "rgb(134, 171, 201)  x2",
+      "rgb(189, 216, 237)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x26",
+      "rgb(29, 37, 84)  x17",
+      "rgb(188, 215, 238)  x6",
+      "rgb(31, 39, 98)  x4",
+      "rgb(243, 164, 0)  x2"
+     ],
+     "bordes": [
+      "1px rgb(255, 255, 255)  x3"
+     ],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x36",
+      "bitterregular  x15",
+      "system-ui  x4"
+     ],
+     "tamanios": [
+      "24.08px/500/28.896px  x8",
+      "16px/400/24px  x7",
+      "17px/400/25.5px  x4",
+      "16px/500/19.2px  x4",
+      "33px/500/39.6px  x3",
+      "29px/500/34.8px  x3",
+      "15px/500/18px  x3",
+      "27px/500/27px  x3",
+      "22.72px/500/27.264px  x3",
+      "35.2px/900/33.44px  x3",
+      "11.52px/900/11.52px  x3",
+      "16.8px/800/18.816px  x2",
+      "13.6px/800/15.232px  x2",
+      "14px/500/14px  x1",
+      "22px/500/26.4px  x1",
+      "22.4px/500/26.88px  x1"
+     ],
+     "radios": [
+      "6px  x2"
+     ],
+     "sombras": [
+      "rgba(33, 37, 41, 0.15) 0px 8px 16px 0px  x1"
+     ],
+     "tamaniosDistintos": 17,
+     "header": {
+      "alto": 115,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 115,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [
+      "DIV.modal.fade 780px",
+      "DIV.modal-backdrop.fade 780px"
+     ],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 250,
+      "caracteresPorRenglon": 29
+     },
+     "h": "H2 H2 H2 H2 H2 H2 H1 H1 H2 H4 H3 H2 H5 H3 H2 H5 H3 H2 H5 H3 H5 H3 H5 H3 H5 H3 H2 H1 H1 H6 H6",
+     "h1": 4,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 38,
+     "chicos": 10,
+     "imgs": 9,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 6816,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 27,
+     "kB": 14489,
+     "porTipoKB": {
+      "document": 97,
+      "stylesheet": 69,
+      "image": 2391,
+      "script": 29,
+      "font": 162,
+      "media": 11742,
+      "fetch": 0
+     }
+    }
+   }
+  },
+  "noticia": {
+   "url": "https://www.uba.ar/ubanoticias/noticias/1385",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "UBA Noticias",
+    "medidas": {
+     "elementos": 106,
+     "colores": {
+      "fondos": 4,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(146, 209, 196)  x1",
+      "rgb(189, 215, 232)  x1",
+      "rgb(138, 183, 222)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x11",
+      "rgb(59, 195, 173)  x1",
+      "rgb(255, 255, 255)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x5",
+      "bitterregular  x5",
+      "bitterextrabold  x2",
+      "bittermedium  x1"
+     ],
+     "tamanios": [
+      "17px/400/25.5px  x3",
+      "16px/500/19.2px  x2",
+      "16px/500/48px  x1",
+      "20px/500/24px  x1",
+      "40px/500/48px  x1",
+      "21px/400/31.5px  x1",
+      "14px/500/14px  x1",
+      "14px/400/21px  x1",
+      "28px/500/33.6px  x1",
+      "13px/400/19.5px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 139,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 139,
+      "ancho": 1280,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 241,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 846,
+      "caracteresPorRenglon": 100
+     },
+     "h": "H6 H5 H1 H6 H5 H3 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 18,
+     "chicos": 8,
+     "imgs": 5,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 1752,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 21,
+     "kB": 1168,
+     "porTipoKB": {
+      "document": 27,
+      "stylesheet": 69,
+      "image": 832,
+      "script": 29,
+      "font": 211,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h6 class=\"seccion f-verde noticias\">Institucionales</h6>"
+      ]
+     },
+     {
+      "id": "empty-heading",
+      "impacto": "minor",
+      "nodos": 1,
+      "ayuda": "Headings should not be empty",
+      "tags": "best-practice",
+      "ej": [
+       "<h2></h2>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 3,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h6 class=\"seccion f-verde noticias\">Institucionales</h6>",
+       "<h6 class=\"fecha f-azul text-uppercase\">viernes 2 de octubre de 2026\n\n</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 14,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a class=\"nav-link f-azul\" href=\"#fullMenu\"><i class=\"bi bi-search\"></i></a>",
+       "<a class=\"nav-link f-azul\" href=\"#fullMenu\"><i class=\"bi bi-list\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 2,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"navbar-nav ps-xl-5\">\n      <a href=\"https://uba.ar/\" target=\"_blank\"><img src=\"/imgs/logoheaderright5e1f.png\" alt=\"UBA Universida",
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 3,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-12 col-md-9 px-3 px-md-5 pt-3 py-md-5\">",
+       "<div class=\"col-12 col-md-2 d-flex align-items-end justify-content-start pb-5 pb-md-5 compartir\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.navbar-brand",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-azul",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-azul",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-azul",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-azul",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-azul",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "MÁS NOTICIAS\n\nver todas las no",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.mb-2",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "UBA Noticias",
+    "medidas": {
+     "elementos": 87,
+     "colores": {
+      "fondos": 4,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(146, 209, 196)  x1",
+      "rgb(189, 215, 232)  x1",
+      "rgb(138, 183, 222)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x10",
+      "rgb(59, 195, 173)  x1",
+      "rgb(255, 255, 255)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterregular  x5",
+      "bitterbold  x4",
+      "bitterextrabold  x2",
+      "bittermedium  x1"
+     ],
+     "tamanios": [
+      "17px/400/25.5px  x3",
+      "16px/500/19.2px  x2",
+      "16px/500/48px  x1",
+      "20px/500/24px  x1",
+      "27.85px/500/33.42px  x1",
+      "21px/400/31.5px  x1",
+      "14px/400/21px  x1",
+      "23.14px/500/27.768px  x1",
+      "13px/400/19.5px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 70,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 70,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 244,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 334,
+      "caracteresPorRenglon": 39
+     },
+     "h": "H6 H5 H1 H6 H3 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 12,
+     "chicos": 8,
+     "imgs": 5,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 2011,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 21,
+     "kB": 1168,
+     "porTipoKB": {
+      "document": 27,
+      "stylesheet": 69,
+      "image": 832,
+      "script": 29,
+      "font": 211,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h6 class=\"seccion f-verde noticias\">Institucionales</h6>"
+      ]
+     },
+     {
+      "id": "empty-heading",
+      "impacto": "minor",
+      "nodos": 1,
+      "ayuda": "Headings should not be empty",
+      "tags": "best-practice",
+      "ej": [
+       "<h2></h2>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 3,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h6 class=\"seccion f-verde noticias\">Institucionales</h6>",
+       "<h6 class=\"fecha f-azul text-uppercase\">viernes 2 de octubre de 2026\n\n</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"#fullMenu\" class=\"me-3\"><i class=\"f-azul bi bi-list\"></i></a>",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 2,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"col-12 col-md-9 px-3 px-md-5 pt-3 py-md-5\">",
+       "<div class=\"row\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "UBA Noticias",
+    "medidas": {
+     "elementos": 87,
+     "colores": {
+      "fondos": 4,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(146, 209, 196)  x1",
+      "rgb(189, 215, 232)  x1",
+      "rgb(138, 183, 222)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x10",
+      "rgb(59, 195, 173)  x1",
+      "rgb(255, 255, 255)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterregular  x5",
+      "bitterbold  x4",
+      "bitterextrabold  x2",
+      "bittermedium  x1"
+     ],
+     "tamanios": [
+      "17px/400/25.5px  x3",
+      "16px/500/19.2px  x2",
+      "16px/500/48px  x1",
+      "20px/500/24px  x1",
+      "26.8px/500/32.16px  x1",
+      "21px/400/31.5px  x1",
+      "14px/400/21px  x1",
+      "22.72px/500/27.264px  x1",
+      "13px/400/19.5px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 70,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 70,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 244,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "17px",
+      "inter": "25.5px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 264,
+      "caracteresPorRenglon": 31
+     },
+     "h": "H6 H5 H1 H6 H3 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 12,
+     "chicos": 8,
+     "imgs": 5,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 2168,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 21,
+     "kB": 1168,
+     "porTipoKB": {
+      "document": 27,
+      "stylesheet": 69,
+      "image": 832,
+      "script": 29,
+      "font": 211,
+      "fetch": 0
+     }
+    }
+   }
+  },
+  "noticias": {
+   "url": "https://www.uba.ar/ubanoticias/home",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "UBA Noticias",
+    "medidas": {
+     "elementos": 166,
+     "colores": {
+      "fondos": 6,
+      "textos": 2
+     },
+     "fondos": [
+      "rgb(138, 183, 222)  x7",
+      "rgb(147, 209, 196)  x7",
+      "rgb(189, 214, 232)  x5",
+      "rgb(146, 209, 196)  x1",
+      "rgb(104, 100, 163)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x24",
+      "rgb(255, 255, 255)  x20"
+     ],
+     "bordes": [],
+     "degradados": [
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/storage/lOcrID3  x1",
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/imgs/img8.jpg\")  x1",
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/imgs/img9.jpg\")  x1"
+     ],
+     "familias": [
+      "bitterregular  x26",
+      "bitterbold  x16",
+      "system-ui  x2"
+     ],
+     "tamanios": [
+      "16px/400/24px  x12",
+      "16px/500/19.2px  x10",
+      "28px/500/33.6px  x9",
+      "17px/400/25.5px  x3",
+      "16px/700/24px  x3",
+      "30px/500/36px  x2",
+      "40px/500/48px  x2",
+      "17px/500/17px  x1",
+      "32px/500/38.4px  x1",
+      "13px/400/19.5px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 7,
+     "header": {
+      "alto": 139,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 139,
+      "ancho": 1280,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 241,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 331,
+      "caracteresPorRenglon": 41
+     },
+     "h": "H4 H3 H5 H2 H5 H3 H5 H3 H3 H3 H5 H3 H5 H3 H5 H3 H5 H3 H5 H3 H5 H3 H1 H1 H6",
+     "h1": 2,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 31,
+     "chicos": 9,
+     "imgs": 8,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 4553,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 25,
+     "kB": 2093,
+     "porTipoKB": {
+      "document": 46,
+      "stylesheet": 69,
+      "image": 1788,
+      "script": 29,
+      "font": 162,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 7,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #8ab7de; color: #FFFFFF;\">\n                        Festival Internacional",
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #93d1c4; color: #FFFFFF;\">\n                        Primavera 2026\n       "
+      ]
+     },
+     {
+      "id": "empty-heading",
+      "impacto": "minor",
+      "nodos": 1,
+      "ayuda": "Headings should not be empty",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"mt-4\"></h4>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 10,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #8ab7de; color: #FFFFFF;\">\n                        Festival Internacional",
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #93d1c4; color: #FFFFFF;\">\n                        Primavera 2026\n       "
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 12,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a class=\"nav-link f-azul\" href=\"#fullMenu\"><i class=\"bi bi-search\"></i></a>",
+       "<a class=\"nav-link f-azul\" href=\"#fullMenu\"><i class=\"bi bi-list\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 2,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"navbar-nav ps-xl-5\">\n      <a href=\"https://uba.ar/\" target=\"_blank\"><img src=\"/imgs/logoheaderright5e1f.png\" alt=\"UBA Universida",
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 23,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"carousel-item active\">",
+       "<div class=\"row align-items-stretch\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.navbar-brand",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "LA UBA NOMBRÓ DOCTOR HONORIS C",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.carousel-control-prev",
+      "texto": "Anterior",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.carousel-control-next",
+      "texto": "Siguiente",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "FESTIVAL INTERNACIONAL DE CINE",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "Se inauguró, a sala llena, la ",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "PRIMAVERA 2026\nEL FENÓMENO DE ",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "MEDIDA PREVENTIVA\nCIRCULACIÓN ",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "DE LOS LABORATORIOS DE LA UBA ",
+      "contorno": "no",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "UBA Noticias",
+    "medidas": {
+     "elementos": 161,
+     "colores": {
+      "fondos": 7,
+      "textos": 2
+     },
+     "fondos": [
+      "rgb(138, 183, 222)  x7",
+      "rgb(147, 209, 196)  x7",
+      "rgb(189, 214, 232)  x5",
+      "rgb(189, 215, 237)  x2",
+      "rgb(146, 209, 196)  x1",
+      "rgb(104, 100, 163)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x27",
+      "rgb(255, 255, 255)  x17"
+     ],
+     "bordes": [],
+     "degradados": [
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/storage/lOcrID3  x1",
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/imgs/img8.jpg\")  x1",
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/imgs/img9.jpg\")  x1"
+     ],
+     "familias": [
+      "bitterregular  x26",
+      "bitterbold  x16",
+      "system-ui  x2"
+     ],
+     "tamanios": [
+      "16px/400/24px  x12",
+      "16px/500/19.2px  x10",
+      "23.14px/500/27.768px  x9",
+      "17px/400/25.5px  x3",
+      "16px/700/24px  x3",
+      "22px/500/26.4px  x2",
+      "27.85px/500/33.42px  x2",
+      "14px/500/14px  x1",
+      "24.71px/500/29.652px  x1",
+      "13px/400/19.5px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 70,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 70,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 358,
+      "caracteresPorRenglon": 45
+     },
+     "h": "H4 H3 H5 H2 H5 H3 H5 H3 H3 H3 H5 H3 H5 H3 H5 H3 H5 H3 H5 H3 H5 H3 H1 H1 H6",
+     "h1": 2,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 30,
+     "chicos": 8,
+     "imgs": 8,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 6722,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 25,
+     "kB": 2093,
+     "porTipoKB": {
+      "document": 46,
+      "stylesheet": 69,
+      "image": 1788,
+      "script": 29,
+      "font": 162,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 7,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #8ab7de; color: #FFFFFF;\">\n                        Festival Internacional",
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #93d1c4; color: #FFFFFF;\">\n                        Primavera 2026\n       "
+      ]
+     },
+     {
+      "id": "empty-heading",
+      "impacto": "minor",
+      "nodos": 1,
+      "ayuda": "Headings should not be empty",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"mt-4\"></h4>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 10,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #8ab7de; color: #FFFFFF;\">\n                        Festival Internacional",
+       "<h5 class=\"mt-2 px-2 py-1 d-inline-block\" style=\"background-color: #93d1c4; color: #FFFFFF;\">\n                        Primavera 2026\n       "
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"#fullMenu\" class=\"me-3\"><i class=\"f-azul bi bi-list\"></i></a>",
+       "<a href=\"https://www.uba.ar/ubaciencia/noticias/1315\" class=\"d-flex h-100 w-100\">\n                        <img src=\"/storage/EFYHOH1WDgcXLIe"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 23,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"carousel-item active\">",
+       "<div class=\"row align-items-stretch\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "UBA Noticias",
+    "medidas": {
+     "elementos": 161,
+     "colores": {
+      "fondos": 7,
+      "textos": 2
+     },
+     "fondos": [
+      "rgb(138, 183, 222)  x7",
+      "rgb(147, 209, 196)  x7",
+      "rgb(189, 214, 232)  x5",
+      "rgb(189, 215, 237)  x2",
+      "rgb(146, 209, 196)  x1",
+      "rgb(104, 100, 163)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x27",
+      "rgb(255, 255, 255)  x17"
+     ],
+     "bordes": [],
+     "degradados": [
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/storage/lOcrID3  x1",
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/imgs/img8.jpg\")  x1",
+      "linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.45)), url(\"https://uba.ar/imgs/img9.jpg\")  x1"
+     ],
+     "familias": [
+      "bitterregular  x26",
+      "bitterbold  x16",
+      "system-ui  x2"
+     ],
+     "tamanios": [
+      "16px/400/24px  x12",
+      "16px/500/19.2px  x10",
+      "22.72px/500/27.264px  x9",
+      "17px/400/25.5px  x3",
+      "16px/700/24px  x3",
+      "22px/500/26.4px  x2",
+      "26.8px/500/32.16px  x2",
+      "14px/500/14px  x1",
+      "24.08px/500/28.896px  x1",
+      "13px/400/19.5px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 8,
+     "header": {
+      "alto": 70,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 70,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 288,
+      "caracteresPorRenglon": 36
+     },
+     "h": "H4 H3 H5 H2 H5 H3 H5 H3 H3 H3 H5 H3 H5 H3 H5 H3 H5 H3 H5 H3 H5 H3 H1 H1 H6",
+     "h1": 2,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 30,
+     "chicos": 8,
+     "imgs": 8,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 7205,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 25,
+     "kB": 2093,
+     "porTipoKB": {
+      "document": 46,
+      "stylesheet": 69,
+      "image": 1788,
+      "script": 29,
+      "font": 162,
+      "fetch": 0
+     }
+    }
+   }
+  },
+  "listado": {
+   "url": "https://www.uba.ar/facultades",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Facultades",
+    "medidas": {
+     "elementos": 131,
+     "colores": {
+      "fondos": 5,
+      "textos": 2
+     },
+     "fondos": [
+      "rgb(29, 37, 84)  x6",
+      "rgb(252, 205, 142)  x3",
+      "rgb(247, 166, 0)  x3",
+      "rgb(189, 215, 237)  x3",
+      "rgb(145, 189, 225)  x2"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x27",
+      "rgb(29, 37, 84)  x2"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x15",
+      "bitterregular  x14"
+     ],
+     "tamanios": [
+      "32px/500/38.4px  x13",
+      "16px/400/48px  x12",
+      "15px/400/22.5px  x1",
+      "16px/400/24px  x1",
+      "55px/500/66px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 107,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 107,
+      "ancho": 1280,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 417,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": null,
+     "h": "H1 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 39,
+     "chicos": 8,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 2378,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 17,
+     "kB": 790,
+     "porTipoKB": {
+      "document": 121,
+      "stylesheet": 69,
+      "image": 415,
+      "script": 24,
+      "font": 162
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button onclick=\"buscar()\" type=\"button\" id=\"buttonquery\"><i class=\"bi bi-search\"></i></button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h2>Agronomía\n</h2>",
+       "<h2>Arquitectura, Diseño y Urbanismo</h2>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h6 class=\"me-2\">seguinos!!!!</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a class=\"nav-link\" href=\"#fullMenu\"><i class=\"bi bi-search\"></i></a>",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 15,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"row\">",
+       "<input type=\"text\" id=\"busqueda_input\" class=\"form-control\" placeholder=\"BUSCÁ TU CARRERA\" aria-label=\"BUSCÁ TU CARRERA\" aria-describedby=\"b"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.navbar-brand",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "MENU",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "ES",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "input.form-control",
+      "texto": "BUSCÁ TU CARRERA",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "button.",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "AGRONOMÍA",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "ARQUITECTURA, DISEÑO Y URBANIS",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "CIENCIAS ECONÓMICAS",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "CIENCIAS EXACTAS Y NATURALES",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "CIENCIAS SOCIALES",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.stretched-link",
+      "texto": "CIENCIAS VETERINARIAS",
+      "contorno": "no",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Facultades",
+    "medidas": {
+     "elementos": 97,
+     "colores": {
+      "fondos": 5,
+      "textos": 1
+     },
+     "fondos": [
+      "rgb(29, 37, 84)  x6",
+      "rgb(252, 205, 142)  x3",
+      "rgb(247, 166, 0)  x3",
+      "rgb(189, 215, 237)  x3",
+      "rgb(145, 189, 225)  x2"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x15"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x15"
+     ],
+     "tamanios": [
+      "24.71px/500/29.652px  x13",
+      "21px/500/25.2px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 3,
+     "header": {
+      "alto": 54,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 54,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": null,
+     "h": "H1 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 25,
+     "chicos": 8,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 1897,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 16,
+     "kB": 768,
+     "porTipoKB": {
+      "document": 121,
+      "stylesheet": 69,
+      "image": 415,
+      "script": 24,
+      "font": 140
+     }
+    },
+    "axe": [
+     {
+      "id": "button-name",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Buttons must have discernible text",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<button onclick=\"buscar()\" type=\"button\" id=\"buttonquery\"><i class=\"bi bi-search\"></i></button>"
+      ]
+     },
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h2>Agronomía\n</h2>",
+       "<h2>Arquitectura, Diseño y Urbanismo</h2>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h6 class=\"me-2\">seguinos!!!!</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"#fullMenu\" class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\">\n            <i class=\"bi bi-list\">",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 15,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"row\">",
+       "<input type=\"text\" id=\"busqueda_input\" class=\"form-control\" placeholder=\"BUSCÁ TU CARRERA\" aria-label=\"BUSCÁ TU CARRERA\" aria-describedby=\"b"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Facultades",
+    "medidas": {
+     "elementos": 97,
+     "colores": {
+      "fondos": 5,
+      "textos": 1
+     },
+     "fondos": [
+      "rgb(29, 37, 84)  x6",
+      "rgb(252, 205, 142)  x3",
+      "rgb(247, 166, 0)  x3",
+      "rgb(189, 215, 237)  x3",
+      "rgb(145, 189, 225)  x2"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x15"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x15"
+     ],
+     "tamanios": [
+      "24.08px/500/28.896px  x13",
+      "21px/500/25.2px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 3,
+     "header": {
+      "alto": 54,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 54,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": null,
+     "h": "H1 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H2 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 25,
+     "chicos": 8,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 1861,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 16,
+     "kB": 768,
+     "porTipoKB": {
+      "document": 121,
+      "stylesheet": 69,
+      "image": 415,
+      "script": 24,
+      "font": 140
+     }
+    }
+   }
+  },
+  "perfil": {
+   "url": "https://www.uba.ar/ingresouba",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Ingreso a la Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 244,
+     "colores": {
+      "fondos": 5,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(29, 37, 84)  x5",
+      "rgb(168, 210, 239)  x5",
+      "rgb(255, 255, 255)  x4",
+      "rgb(247, 166, 0)  x2",
+      "rgb(252, 205, 142)  x2"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x31",
+      "rgb(255, 255, 255)  x18",
+      "rgb(247, 166, 0)  x13"
+     ],
+     "bordes": [
+      "1px rgb(232, 233, 237)  x5",
+      "1px rgb(29, 37, 84)  x2"
+     ],
+     "degradados": [],
+     "familias": [
+      "bitterregular  x25",
+      "bitterbold  x17",
+      "bittersemibold  x15",
+      "bitterlight  x5"
+     ],
+     "tamanios": [
+      "18px/400/27px  x21",
+      "16px/400/48px  x12",
+      "16px/400/24px  x11",
+      "22px/500/26.4px  x7",
+      "33px/500/39.6px  x5",
+      "25px/500/30px  x3",
+      "15px/400/22.5px  x1",
+      "55px/500/66px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [],
+     "sombras": [
+      "rgba(33, 37, 41, 0.15) 0px 8px 16px 0px  x4"
+     ],
+     "tamaniosDistintos": 7,
+     "header": {
+      "alto": 107,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 107,
+      "ancho": 1280,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 417,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "27px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterlight",
+      "ancho": 756,
+      "caracteresPorRenglon": 84
+     },
+     "h": "H1 H1 H1 H1 H1 H1 H3 H4 H4 H4 H3 H4 H4 H3 H4 H4 H6",
+     "h1": 6,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 39,
+     "chicos": 21,
+     "imgs": 7,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 4095,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 22,
+     "kB": 627,
+     "porTipoKB": {
+      "document": 74,
+      "stylesheet": 69,
+      "image": 249,
+      "script": 24,
+      "font": 211
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 13,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span>Plataforma de inscripciones</span>",
+       "<span>Preingreso a la UBA.</span>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 2,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h3>ORIENTATE</h3>",
+       "<h6 class=\"me-2\">seguinos!!!!</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a class=\"nav-link\" href=\"#fullMenu\"><i class=\"bi bi-search\"></i></a>",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 6,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"row\">",
+       "<div class=\"row\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.navbar-brand",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "MENU",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "ES",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "Plataforma de inscripciones",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "Preingreso a la UBA.",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "CBC",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "UBA XXI",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "aquí.",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "Dirección de Legalizaciones de",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "fecha correspondiente",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.f-celeste",
+      "texto": "programa UBA XXI",
+      "contorno": "no",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Ingreso a la Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 210,
+     "colores": {
+      "fondos": 5,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(29, 37, 84)  x5",
+      "rgb(168, 210, 239)  x5",
+      "rgb(255, 255, 255)  x4",
+      "rgb(247, 166, 0)  x2",
+      "rgb(252, 205, 142)  x2"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x29",
+      "rgb(247, 166, 0)  x13",
+      "rgb(255, 255, 255)  x6"
+     ],
+     "bordes": [
+      "1px rgb(232, 233, 237)  x5",
+      "1px rgb(29, 37, 84)  x2"
+     ],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x17",
+      "bittersemibold  x15",
+      "bitterregular  x11",
+      "bitterlight  x5"
+     ],
+     "tamanios": [
+      "18px/400/27px  x21",
+      "16px/400/24px  x10",
+      "22px/500/26.4px  x7",
+      "33px/500/39.6px  x5",
+      "25px/500/30px  x3",
+      "21px/500/25.2px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [
+      "rgba(33, 37, 41, 0.15) 0px 8px 16px 0px  x4"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 54,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 54,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "27px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterlight",
+      "ancho": 278,
+      "caracteresPorRenglon": 31
+     },
+     "h": "H1 H1 H1 H1 H1 H1 H3 H4 H4 H4 H3 H4 H4 H3 H4 H4 H6",
+     "h1": 6,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 25,
+     "chicos": 17,
+     "imgs": 7,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 6369,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 22,
+     "kB": 627,
+     "porTipoKB": {
+      "document": 74,
+      "stylesheet": 69,
+      "image": 249,
+      "script": 24,
+      "font": 211
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 13,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span>Plataforma de inscripciones</span>",
+       "<span>Preingreso a la UBA.</span>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 2,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h3>ORIENTATE</h3>",
+       "<h6 class=\"me-2\">seguinos!!!!</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"#fullMenu\" class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\">\n            <i class=\"bi bi-list\">",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 6,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"row\">",
+       "<div class=\"row\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Ingreso a la Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 210,
+     "colores": {
+      "fondos": 5,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(29, 37, 84)  x5",
+      "rgb(168, 210, 239)  x5",
+      "rgb(255, 255, 255)  x4",
+      "rgb(247, 166, 0)  x2",
+      "rgb(252, 205, 142)  x2"
+     ],
+     "textos": [
+      "rgb(29, 37, 84)  x29",
+      "rgb(247, 166, 0)  x13",
+      "rgb(255, 255, 255)  x6"
+     ],
+     "bordes": [
+      "1px rgb(232, 233, 237)  x5",
+      "1px rgb(29, 37, 84)  x2"
+     ],
+     "degradados": [],
+     "familias": [
+      "bitterbold  x17",
+      "bittersemibold  x15",
+      "bitterregular  x11",
+      "bitterlight  x5"
+     ],
+     "tamanios": [
+      "18px/400/27px  x21",
+      "16px/400/24px  x10",
+      "22px/500/26.4px  x7",
+      "33px/500/39.6px  x5",
+      "25px/500/30px  x3",
+      "21px/500/25.2px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [
+      "rgba(33, 37, 41, 0.15) 0px 8px 16px 0px  x4"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 54,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 54,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "27px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterlight",
+      "ancho": 208,
+      "caracteresPorRenglon": 23
+     },
+     "h": "H1 H1 H1 H1 H1 H1 H3 H4 H4 H4 H3 H4 H4 H3 H4 H4 H6",
+     "h1": 6,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 25,
+     "chicos": 17,
+     "imgs": 7,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 6666,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 22,
+     "kB": 627,
+     "porTipoKB": {
+      "document": 74,
+      "stylesheet": 69,
+      "image": 249,
+      "script": 24,
+      "font": 211
+     }
+    }
+   }
+  },
+  "tramite": {
+   "url": "https://www.uba.ar/tramites",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "UBA Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 99,
+     "colores": {
+      "fondos": 2,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(145, 189, 225)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x14",
+      "rgb(247, 166, 0)  x10",
+      "rgb(29, 37, 84)  x3"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterregular  x25",
+      "bitterbold  x2"
+     ],
+     "tamanios": [
+      "16px/400/48px  x12",
+      "18px/400/27px  x10",
+      "15px/400/22.5px  x1",
+      "16px/400/24px  x1",
+      "40px/500/48px  x1",
+      "18px/700/27px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [],
+     "sombras": [],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 107,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 107,
+      "ancho": 1280,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 417,
+      "ancho": 1280,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "27px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 1112,
+      "caracteresPorRenglon": 124
+     },
+     "h": "H1 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 34,
+     "chicos": 8,
+     "imgs": 2,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 1314,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 17,
+     "kB": 326,
+     "porTipoKB": {
+      "document": 63,
+      "stylesheet": 69,
+      "image": 4,
+      "script": 29,
+      "font": 162,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h1>Trámites académicos</h1>",
+       "<strong>Trámites A Distancia TAD.</strong>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h6 class=\"me-2\">seguinos!!!!</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a class=\"nav-link\" href=\"#fullMenu\"><i class=\"bi bi-search\"></i></a>",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"row\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.navbar-brand",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "MENU",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.nav-link",
+      "texto": "ES",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Trámites A Distancia TAD.",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Solicitud de constancia de tít",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Eximición de asignaturas del C",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Solicitud de certificado de re",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Solicitud de certificado de re",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Solicitud de nuevo diploma o n",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Solicitud de duplicado de dipl",
+      "contorno": "no",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "Solicitud de diploma postmorte",
+      "contorno": "no",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "UBA Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 65,
+     "colores": {
+      "fondos": 2,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(145, 189, 225)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(247, 166, 0)  x10",
+      "rgb(255, 255, 255)  x2",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterregular  x11",
+      "bitterbold  x2"
+     ],
+     "tamanios": [
+      "18px/400/27px  x10",
+      "27.85px/500/33.42px  x1",
+      "18px/700/27px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 3,
+     "header": {
+      "alto": 54,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 54,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "27px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 366,
+      "caracteresPorRenglon": 41
+     },
+     "h": "H1 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 20,
+     "chicos": 8,
+     "imgs": 2,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 1421,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 17,
+     "kB": 326,
+     "porTipoKB": {
+      "document": 63,
+      "stylesheet": 69,
+      "image": 4,
+      "script": 29,
+      "font": 162,
+      "fetch": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 11,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<h1>Trámites académicos</h1>",
+       "<strong>Trámites A Distancia TAD.</strong>"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h6 class=\"me-2\">seguinos!!!!</h6>"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "link-name",
+      "impacto": "serious",
+      "nodos": 8,
+      "ayuda": "Links must have discernible text",
+      "tags": "wcag2a,wcag244,wcag412",
+      "ej": [
+       "<a href=\"#fullMenu\" class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\">\n            <i class=\"bi bi-list\">",
+       "<a alt=\"\" target=\"_blank\" href=\"https://www.instagram.com/uba_ar/\"><i class=\"bi bi-instagram\"></i></a>"
+      ]
+     },
+     {
+      "id": "list",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+      "tags": "wcag2a,wcag131",
+      "ej": [
+       "<ul class=\"nav col-md-6 list-unstyled redes\">"
+      ]
+     },
+     {
+      "id": "meta-viewport",
+      "impacto": "critical",
+      "nodos": 1,
+      "ayuda": "Zooming and scaling must not be disabled",
+      "tags": "wcag2aa,wcag144",
+      "ej": [
+       "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"row\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "UBA Universidad de Buenos Aires",
+    "medidas": {
+     "elementos": 65,
+     "colores": {
+      "fondos": 2,
+      "textos": 3
+     },
+     "fondos": [
+      "rgb(145, 189, 225)  x1",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "textos": [
+      "rgb(247, 166, 0)  x10",
+      "rgb(255, 255, 255)  x2",
+      "rgb(29, 37, 84)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "bitterregular  x11",
+      "bitterbold  x2"
+     ],
+     "tamanios": [
+      "18px/400/27px  x10",
+      "26.8px/500/32.16px  x1",
+      "18px/700/27px  x1",
+      "16px/500/19.2px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 3,
+     "header": {
+      "alto": 54,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 54,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 243,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(29, 37, 84)"
+     },
+     "fijos": [],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "27px",
+      "color": "rgb(29, 37, 84)",
+      "familia": "bitterregular",
+      "ancho": 296,
+      "caracteresPorRenglon": 33
+     },
+     "h": "H1 H6",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header nav footer",
+     "saltar": false,
+     "enlacesMenu": 6,
+     "interactivos": 20,
+     "chicos": 8,
+     "imgs": 2,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 1633,
+     "viewport": "width=device-width, maximum-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 17,
+     "kB": 326,
+     "porTipoKB": {
+      "document": 63,
+      "stylesheet": 69,
+      "image": 4,
+      "script": 29,
+      "font": 162,
+      "fetch": 0
+     }
+    }
+   }
+  }
+ }
+}

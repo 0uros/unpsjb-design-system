@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Delegación Trelew · prototipo de portal · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="unpsjb.css">
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-portal-bajada { font: var(--texto-grande); color: var(--color-tinta-2); margin-bottom: var(--espacio-6); }
+    .ext-portal-entradas { margin-block: var(--espacio-6) 0; }
+    .ext-portal-barra { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-3) var(--espacio-4); margin-bottom: var(--espacio-4); }
+    .ext-portal-barra .buscador { flex: 1 1 280px; max-width: 420px; }
+    .ext-portal-barra p { margin: 0; }
+    .ext-portal-contacto { max-width: 880px; }
+    .ext-portal-mas { margin-top: var(--espacio-4); }
+    /* Las notas del estudio: solo en el prototipo */
+    .ext-portal-estudio { margin-top: var(--espacio-12); }
+    .ext-portal-estudio .acordeon__cuerpo { padding-left: 0; }
+    .ext-portal-estudio .tabla :is(th, td) { white-space: normal; vertical-align: top; }
+    @media (min-width: 640px) { .ext-portal-estudio .tabla td:nth-child(2) { white-space: nowrap; } }
+    @media print { .ext-portal-estudio { display: none; } }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="cabecera">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-building"/></svg>Delegación Trelew</p>
+          <div class="banda__acciones">
+            <a class="boton boton--icono" href="#cuenta" aria-label="Mi cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="secciones" aria-label="Secciones">
+      <div class="contenedor secciones__lista">
+        <a href="#inicio" data-seccion="inicio" aria-current="page">Inicio</a>
+        <a href="#tramites" data-seccion="tramites">Trámites</a>
+        <a href="#herramientas" data-seccion="herramientas">Herramientas</a>
+        <a href="#cuenta" data-seccion="cuenta">Mi cuenta</a>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la página">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Prototipo</strong>
+      <p>Portal de la Delegación, con datos de ejemplo. Aplica lo que salió del estudio de los sitios de la UNC y la UBA (<code>REFERENCIAS-UNC-UBA.md</code>): al final de cada pantalla dice qué se tomó y de dónde. <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido">
+
+    <!-- 1. Portada del portal (DESIGN.md, 17.C) -->
+    <section data-vista="inicio" aria-labelledby="t-inicio">
+      <div class="encabezado">
+        <h1 id="t-inicio" tabindex="-1">Delegación Trelew</h1>
+      </div>
+      <p class="ext-portal-bajada">Universidad Nacional de la Patagonia San Juan Bosco. Acá encontrás por dónde se hace cada trámite, las herramientas de la Sede y a quién escribirle.</p>
+
+      <!-- Lo que cambia el día de alguien va como aviso, arriba. No como ventana ni carrusel. -->
+      <div class="aviso" role="status">
+        <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg></div>
+        <div class="aviso__cuerpo">
+          <p class="aviso__titulo">El lunes 12 de octubre la Sede está cerrada</p>
+          <p>Es feriado. Las clases y la atención al público vuelven el martes 13.</p>
+        </div>
+      </div>
+
+      <!-- Entradas: de dos a cuatro, por lo que la persona viene a hacer -->
+      <ul class="entradas ext-portal-entradas">
+        <li><a class="entradas__principal" href="#inicio"><span class="entradas__titulo">Estudiar en Trelew</span><span>Carreras, ingreso y calendario académico</span></a></li>
+        <li><a href="#tramites"><span class="entradas__titulo">Trámites</span><span>Certificados, reservas y pedidos</span></a></li>
+        <li><a href="#herramientas"><span class="entradas__titulo">Herramientas</span><span>Campus, correo, agenda de aulas y más</span></a></li>
+      </ul>
+
+      <h2 id="t-novedades">Novedades</h2>
+      <ul class="accesos" aria-labelledby="t-novedades">
+        <li><a class="accesos__nombre" href="#inicio">Abre la inscripción a las mesas de examen de noviembre</a><p><time datetime="2026-10-06">6 de octubre de 2026</time></p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#inicio">Nuevo horario de la biblioteca</a><p><time datetime="2026-10-01">1 de octubre de 2026</time></p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#inicio">Jornada de puertas abiertas para ingresantes<span class="solo-lector"> (abre otro sitio)</span></a><p><time datetime="2026-09-24">24 de septiembre de 2026</time> · En el portal de la universidad</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
+      </ul>
+      <p class="ext-portal-mas"><a href="#inicio">Todas las novedades, en el portal de la universidad</a></p>
+
+      <h2 id="t-contacto">Contacto</h2>
+      <div class="panel ext-portal-contacto">
+        <dl class="resumen" aria-labelledby="t-contacto">
+          <div><dt>Mesa de entradas</dt><dd>Lunes a viernes, de 8 a 14 h</dd></div>
+          <div><dt>Dirección</dt><dd>Dirección de la Sede, Trelew, Chubut</dd></div>
+          <div><dt>Teléfono</dt><dd><a href="tel:+542804421234">(0280) 442-1234</a></dd></div>
+          <div><dt>Correo</dt><dd><a href="mailto:ejemplo@tw.unp.edu.ar">ejemplo@tw.unp.edu.ar</a></dd></div>
+          <div><dt>Soporte informático</dt><dd><a href="muestra-mesa-ayuda.html">Abrir una solicitud en la mesa de ayuda</a></dd></div>
+        </dl>
+      </div>
+
+      <!-- Nota del prototipo: no va en la página real -->
+      <details class="acordeon ext-portal-estudio" open>
+        <summary>Qué sale del estudio en esta pantalla</summary>
+        <div class="acordeon__cuerpo">
+          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale del estudio en esta pantalla">
+            <table class="tabla tabla--tarjetas">
+              <thead><tr><th scope="col">Qué vimos</th><th scope="col">Dónde</th><th scope="col">Qué hicimos acá</th></tr></thead>
+              <tbody>
+            <tr><td>Tres entradas arriba de todo, por lo que la persona viene a hacer</td><td data-columna="Dónde">UNC, portada</td><td data-columna="Qué hicimos acá">Las entradas: tres bloques con el nombre de la tarea y una línea que dice qué hay adentro.</td></tr>
+            <tr><td>Mosaico de bloques planos de color, con texto blanco sobre celeste y naranja (2:1)</td><td data-columna="Dónde">UBA, facultades</td><td data-columna="Qué hicimos acá">Los mismos bloques planos, con contraste: el principal en azul con blanco, los demás en neutro con texto oscuro.</td></tr>
+            <tr><td>Carrusel de fotos y una ventana que se abre sola al entrar</td><td data-columna="Dónde">UNC y UBA, portada</td><td data-columna="Qué hicimos acá">No van. Lo urgente está arriba como aviso y las novedades son una lista de tres.</td></tr>
+            <tr><td>Portadas de 22 MB y de 14,5 MB, por las fotos y un video</td><td data-columna="Dónde">UNC y UBA, portada</td><td data-columna="Qué hicimos acá">Sin foto de apertura ni video. Si se suman fotos, hasta 200 KB cada una.</td></tr>
+            <tr><td>El acceso a la cuenta, en la cabecera de todas las páginas</td><td data-columna="Dónde">UNC</td><td data-columna="Qué hicimos acá">El botón “Mi cuenta” de la banda.</td></tr>
+            <tr><td>Tres filas de menú antes del título</td><td data-columna="Dónde">UNC, becas</td><td data-columna="Qué hicimos acá">Un solo nivel: la sub-barra, con cuatro secciones.</td></tr>
+            <tr><td>Recuadro con oficina, horario, teléfono y correo</td><td data-columna="Dónde">UNC, becas</td><td data-columna="Qué hicimos acá">“Contacto”, como lista de resumen. El teléfono y el correo son enlaces.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 2. Lista de trámites, en dos grupos (DESIGN.md, 7.Q) -->
+    <section data-vista="tramites" aria-labelledby="t-tramites">
+      <div class="encabezado">
+        <h1 id="t-tramites" tabindex="-1">Trámites</h1>
+      </div>
+      <p class="ext-portal-bajada">Los que se pueden hacer desde acá. Para los demás, escribí a mesa de entradas.</p>
+
+      <h2 id="t-pedidos">Los más pedidos</h2>
+      <ul class="accesos" aria-labelledby="t-pedidos">
+        <li><h3 class="accesos__nombre">Certificado de alumno regular</h3><p>Se descarga en el momento, con código de verificación.</p><a class="boton boton--secundario" href="muestra-documentos.html">Iniciar trámite<span class="solo-lector">: certificado de alumno regular</span></a></li>
+        <li><h3 class="accesos__nombre">Reserva de aula</h3><p>Para una clase, una reunión o un evento. Responde Bedelía.</p><a class="boton boton--secundario" href="muestra-agenda.html">Iniciar trámite<span class="solo-lector">: reserva de aula</span></a></li>
+        <li><h3 class="accesos__nombre">Pedido a soporte informático</h3><p>Una cuenta, un equipo que no anda, el wifi.</p><a class="boton boton--secundario" href="muestra-mesa-ayuda.html">Iniciar trámite<span class="solo-lector">: pedido a soporte informático</span></a></li>
+      </ul>
+
+      <h2 id="t-otros">Otros trámites</h2>
+      <ul class="accesos" aria-labelledby="t-otros">
+        <li><h3 class="accesos__nombre">Constancia de examen</h3><p>Para presentar en el trabajo el día que rendís.</p><a class="boton boton--secundario" href="#tramites">Iniciar trámite<span class="solo-lector">: constancia de examen</span></a></li>
+        <li><h3 class="accesos__nombre">Wifi para visitas</h3><p>Acceso por un día para quien viene a dar una charla o a un evento.</p><a class="boton boton--secundario" href="#tramites">Iniciar trámite<span class="solo-lector">: wifi para visitas</span></a></li>
+        <li><h3 class="accesos__nombre">Préstamo de equipo</h3><p>Proyector, notebook o parlantes, con devolución en el día.</p><a class="boton boton--secundario" href="#tramites">Iniciar trámite<span class="solo-lector">: préstamo de equipo</span></a></li>
+      </ul>
+
+      <!-- Nota del prototipo: no va en la página real -->
+      <details class="acordeon ext-portal-estudio" open>
+        <summary>Qué sale del estudio en esta pantalla</summary>
+        <div class="acordeon__cuerpo">
+          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale del estudio en esta pantalla">
+            <table class="tabla tabla--tarjetas">
+              <thead><tr><th scope="col">Qué vimos</th><th scope="col">Dónde</th><th scope="col">Qué hicimos acá</th></tr></thead>
+              <tbody>
+            <tr><td>Dos grupos, “destacados” y “otros”, con un solo botón por trámite</td><td data-columna="Dónde">MiUNC, trámites</td><td data-columna="Qué hicimos acá">Igual: “Los más pedidos” y “Otros trámites”, cada uno con “Iniciar trámite”.</td></tr>
+            <tr><td>Cada trámite con su logo y su color: la página parece un collage</td><td data-columna="Dónde">MiUNC, trámites</td><td data-columna="Qué hicimos acá">Sin logos. El nombre y una línea que dice para qué sirve.</td></tr>
+            <tr><td>Botones con degradado y texto blanco sobre celeste (3,12:1)</td><td data-columna="Dónde">MiUNC, trámites</td><td data-columna="Qué hicimos acá">El botón secundario del sistema, plano.</td></tr>
+            <tr><td>Lista de enlaces en naranja sobre blanco (2,07:1)</td><td data-columna="Dónde">UBA, trámites</td><td data-columna="Qué hicimos acá">La lista se mantiene; el naranja no se usa para texto.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 3. Listado de herramientas con buscador (DESIGN.md, 7.Q y 7.I) -->
+    <section data-vista="herramientas" aria-labelledby="t-herramientas">
+      <div class="encabezado">
+        <h1 id="t-herramientas" tabindex="-1">Herramientas</h1>
+      </div>
+      <div class="ext-portal-barra">
+        <div class="buscador">
+          <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
+          <input class="input" type="search" id="buscar" aria-label="Buscar herramienta" autocomplete="off">
+        </div>
+        <p class="texto-secundario" id="cuantas" role="status">9 herramientas</p>
+      </div>
+
+      <ul class="accesos accesos--columnas" id="lista-herramientas" aria-labelledby="t-herramientas">
+        <li><a class="accesos__nombre" href="muestra-agenda.html">Agenda de aulas</a><p>Qué hay en cada aula, hoy y en la semana.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#herramientas">Biblioteca<span class="solo-lector"> (abre otro sitio)</span></a><p>Catálogo, préstamos y renovaciones.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
+        <li><a class="accesos__nombre" href="#herramientas">Campus virtual<span class="solo-lector"> (abre otro sitio)</span></a><p>Las aulas virtuales de cada materia.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
+        <li><a class="accesos__nombre" href="muestra-cartelera-celular.html">Cartelera</a><p>Las actividades del día, como en la tele del hall.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#herramientas">Correo institucional<span class="solo-lector"> (abre otro sitio)</span></a><p>Tu casilla de la universidad.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
+        <li><a class="accesos__nombre" href="muestra-documentos.html">Documentos y certificados</a><p>Constancias para descargar o verificar.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#herramientas">Expedientes<span class="solo-lector"> (abre otro sitio)</span></a><p>Seguimiento de notas y expedientes (sistema SUDOCU).</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
+        <li><a class="accesos__nombre" href="#herramientas">Inscripciones y notas<span class="solo-lector"> (abre otro sitio)</span></a><p>Materias, exámenes e historia académica (sistema Guaraní).</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
+        <li><a class="accesos__nombre" href="muestra-mesa-ayuda.html">Mesa de ayuda</a><p>Pedidos a soporte informático y su seguimiento.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+      </ul>
+
+      <div class="vacio" id="sin-resultados" hidden>
+        <svg class="icono" aria-hidden="true"><use href="#i-search"/></svg>
+        <p class="vacio__titulo">No hay herramientas con ese nombre</p>
+        <p>Probá con otra palabra, o mirá la lista completa.</p>
+        <button class="boton boton--secundario" type="button" id="borrar-busqueda">Borrar búsqueda</button>
+      </div>
+
+      <!-- Nota del prototipo: no va en la página real -->
+      <details class="acordeon ext-portal-estudio" open>
+        <summary>Qué sale del estudio en esta pantalla</summary>
+        <div class="acordeon__cuerpo">
+          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale del estudio en esta pantalla">
+            <table class="tabla tabla--tarjetas">
+              <thead><tr><th scope="col">Qué vimos</th><th scope="col">Dónde</th><th scope="col">Qué hicimos acá</th></tr></thead>
+              <tbody>
+            <tr><td>Listado de aplicaciones con buscador y contador</td><td data-columna="Dónde">MiUNC, aplicaciones</td><td data-columna="Qué hicimos acá">Igual, pero filtra mientras se escribe (allá hay que apretar “Buscar”).</td></tr>
+            <tr><td>Un ícono que avisa que el enlace sale del sitio</td><td data-columna="Dónde">MiUNC, aplicaciones</td><td data-columna="Qué hicimos acá">El mismo ícono, y además se lo dice al lector de pantalla.</td></tr>
+            <tr><td>Grilla de tarjetas con ícono, sombra y radio de 20px</td><td data-columna="Dónde">MiUNC, aplicaciones</td><td data-columna="Qué hicimos acá">Una lista en columnas: entra más en menos lugar y se recorre mejor con la vista.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 4. Página de inicio de una cuenta (DESIGN.md, 17.D) -->
+    <section data-vista="cuenta" aria-labelledby="t-cuenta">
+      <div class="encabezado">
+        <h1 id="t-cuenta" tabindex="-1">Hola, Rocío</h1>
+      </div>
+
+      <!-- Qué tenés pendiente: un solo aviso, que dice para qué sirve y cómo resolverlo -->
+      <div class="aviso aviso--advertencia" role="status">
+        <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-triangle-alert"/></svg></div>
+        <div class="aviso__cuerpo">
+          <p class="aviso__titulo">Falta confirmar tu correo de recuperación</p>
+          <p>Es el que usamos para devolverte el acceso si olvidás la contraseña. Tiene que ser personal, no uno compartido.</p>
+          <a class="boton boton--tranquilo boton--compacto aviso__accion" href="#datos">Confirmar correo</a>
+        </div>
+      </div>
+
+      <h2 id="t-accesos">A dónde ir</h2>
+      <ul class="accesos" aria-labelledby="t-accesos">
+        <li><a class="accesos__nombre" href="#datos">Mis datos</a><p>Nombre, documento y formas de contacto.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#tramites">Trámites</a><p>Iniciar uno nuevo o ver cómo va el que pediste.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#herramientas">Herramientas</a><p>Campus, correo, agenda de aulas y las demás.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+        <li><a class="accesos__nombre" href="#datos">Contraseña y seguridad</a><p>Cambiar la contraseña y el correo de recuperación.</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
+      </ul>
+
+      <!-- Nota del prototipo: no va en la página real -->
+      <details class="acordeon ext-portal-estudio" open>
+        <summary>Qué sale del estudio en esta pantalla</summary>
+        <div class="acordeon__cuerpo">
+          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale del estudio en esta pantalla">
+            <table class="tabla tabla--tarjetas">
+              <thead><tr><th scope="col">Qué vimos</th><th scope="col">Dónde</th><th scope="col">Qué hicimos acá</th></tr></thead>
+              <tbody>
+            <tr><td>El orden: saludo, lo que falta resolver y los accesos</td><td data-columna="Dónde">MiUNC, inicio</td><td data-columna="Qué hicimos acá">El mismo orden: quién sos, qué tenés pendiente, a dónde ir.</td></tr>
+            <tr><td>Un aviso que explica para qué sirve el correo de recuperación</td><td data-columna="Dónde">MiUNC, inicio</td><td data-columna="Qué hicimos acá">Un aviso del sistema, con el botón para resolverlo.</td></tr>
+            <tr><td>Saludo a 40px en letra fina</td><td data-columna="Dónde">MiUNC, inicio</td><td data-columna="Qué hicimos acá">El título de pantalla de siempre.</td></tr>
+            <tr><td>Accesos armados con &lt;div&gt;: no se llega con el teclado, y el foco no se ve</td><td data-columna="Dónde">MiUNC, inicio</td><td data-columna="Qué hicimos acá">Enlaces de verdad. Con Tab, el foco marca el renglón entero.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Datos de la cuenta: menú lateral + lista de resumen (DESIGN.md, 17.D) -->
+    <section data-vista="datos" data-seccion="cuenta" aria-labelledby="t-datos">
+      <nav class="migas" aria-label="Ruta">
+        <ol><li><a href="#cuenta">Mi cuenta</a></li><li aria-current="page">Mis datos</li></ol>
+      </nav>
+      <div class="encabezado">
+        <h1 id="t-datos" tabindex="-1">Mis datos</h1>
+      </div>
+
+      <div class="grilla grilla--lateral">
+        <nav class="menu-lateral" aria-label="Mi cuenta">
+          <a href="#datos" aria-current="page">Datos personales</a>
+          <a href="#datos">Contacto de emergencia</a>
+          <a href="#datos">Contraseña y seguridad</a>
+          <a href="#datos">Historial de cambios</a>
+        </nav>
+        <div>
+          <dl class="resumen" aria-label="Datos personales">
+            <div><dt>Nombre y apellido</dt><dd>Rocío Ejemplo</dd></div>
+            <div><dt>Documento</dt><dd>00.000.000</dd></div>
+            <div><dt>Correo institucional</dt><dd>rocio.ejemplo@tw.unp.edu.ar</dd></div>
+            <div><dt>Correo de recuperación</dt><dd>Sin confirmar</dd><dd class="resumen__accion"><a href="#datos">Cambiar<span class="solo-lector"> correo de recuperación</span></a></dd></div>
+            <div><dt>Teléfono</dt><dd>(0280) 15 400-0000</dd><dd class="resumen__accion"><a href="#datos">Cambiar<span class="solo-lector"> teléfono</span></a></dd></div>
+          </dl>
+          <p class="texto-secundario ext-portal-mas">El nombre y el documento los corrige la oficina de Alumnos, con el DNI a la vista.</p>
+
+          <!-- El aviso de seguridad va como aviso, no en letra chica -->
+          <div class="aviso" role="note">
+            <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg></div>
+            <div class="aviso__cuerpo">
+              <p class="aviso__titulo">Nunca te vamos a pedir la contraseña</p>
+              <p>Ni por correo ni por teléfono. Si alguien te la pide, no la compartas y avisá a soporte informático.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nota del prototipo: no va en la página real -->
+      <details class="acordeon ext-portal-estudio" open>
+        <summary>Qué sale del estudio en esta pantalla</summary>
+        <div class="acordeon__cuerpo">
+          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale del estudio en esta pantalla">
+            <table class="tabla tabla--tarjetas">
+              <thead><tr><th scope="col">Qué vimos</th><th scope="col">Dónde</th><th scope="col">Qué hicimos acá</th></tr></thead>
+              <tbody>
+            <tr><td>Columna con las secciones de la cuenta y los datos a la derecha</td><td data-columna="Dónde">MiUNC, perfil</td><td data-columna="Qué hicimos acá">Menú lateral y lista de resumen, que ya existían.</td></tr>
+            <tr><td>“Historial de cambios” y “Datos de emergencia” como secciones propias</td><td data-columna="Dónde">MiUNC, perfil</td><td data-columna="Qué hicimos acá">Están en el menú lateral.</td></tr>
+            <tr><td>El lápiz solo al lado del dato que se puede editar</td><td data-columna="Dónde">MiUNC, perfil</td><td data-columna="Qué hicimos acá">“Cambiar” solo donde se puede; de los demás se dice quién los corrige.</td></tr>
+            <tr><td>El recordatorio contra el fraude, en cursiva, gris y a 13px</td><td data-columna="Dónde">MiUNC, seguridad</td><td data-columna="Qué hicimos acá">Como aviso, al lado de los datos.</td></tr>
+            <tr><td>Datos a 13px</td><td data-columna="Dónde">MiUNC, perfil</td><td data-columna="Qué hicimos acá">A 16px, como todo el texto.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <footer class="pie pie--publico">
+      <div class="pie__bloques">
+        <div>
+          <h2 class="pie__titulo">UNPSJB · Sede Trelew</h2>
+          <address>Dirección de la Sede<br>Trelew, Chubut</address>
+        </div>
+        <div>
+          <h2 class="pie__titulo">Contacto</h2>
+          <ul><li>Teléfono: <a href="tel:+542804421234">(0280) 442-1234</a></li><li><a href="#inicio">Escribir a la Sede</a></li></ul>
+        </div>
+        <div>
+          <h2 class="pie__titulo">Sobre este sitio</h2>
+          <ul><li><a href="#inicio">Accesibilidad</a></li><li><a href="#inicio">Privacidad y datos personales</a></li><li><a href="#inicio">Reportar un problema</a></li></ul>
+        </div>
+      </div>
+      <p>© 2026 Universidad Nacional de la Patagonia San Juan Bosco</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <nav class="menu-inferior" aria-label="Secciones">
+    <a href="#inicio" data-seccion="inicio" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-building"/></svg>Inicio</a>
+    <a href="#tramites" data-seccion="tramites"><svg class="icono" aria-hidden="true"><use href="#i-file"/></svg>Trámites</a>
+    <a href="#herramientas" data-seccion="herramientas"><svg class="icono" aria-hidden="true"><use href="#i-list"/></svg>Herramientas</a>
+    <a href="#cuenta" data-seccion="cuenta"><svg class="icono" aria-hidden="true"><use href="#i-user"/></svg>Mi cuenta</a>
+  </nav>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+
+    // En este prototipo las cinco pantallas están en un solo archivo y se muestra una
+    // por vez. En el sitio real cada una es su propia página. Sin JavaScript se ven
+    // todas, una debajo de la otra.
+    // Las pantallas no llevan id a propósito: si lo llevaran, el navegador correría
+    // la página hasta ese punto al cambiar de pantalla.
+    const vistas = [...document.querySelectorAll('[data-vista]')];
+    const titulo = document.title;
+    function mostrar(mover) {
+      const pedida = location.hash.slice(1);
+      const vista = vistas.find(v => v.dataset.vista === pedida) || vistas[0];
+      const seccion = vista.dataset.seccion || vista.dataset.vista;
+      vistas.forEach(v => { v.hidden = v !== vista; });
+      document.querySelectorAll('.secciones a, .menu-inferior a').forEach(a => {
+        if (a.dataset.seccion === seccion) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+      const h1 = vista.querySelector('h1');
+      document.title = h1.textContent + ' · ' + titulo;
+      if (mover) { window.scrollTo(0, 0); h1.focus({ preventScroll: true }); }
+    }
+    // El pie no queda cortado al entrar. En una página corta ya baja solo hasta el
+    // borde de la ventana (unpsjb.css, "Pie al fondo"). Si entra una parte sola, se
+    // le da alto a la pantalla para que el pie empiece justo debajo del borde y haya
+    // que bajar para verlo.
+    const pie = document.querySelector('main > footer.pie');
+    const menuInferior = document.querySelector('.menu-inferior');
+    function acomodarPie() {
+      const vista = vistas.find(v => !v.hidden);
+      vista.style.minHeight = '';
+      const borde = window.innerHeight - menuInferior.offsetHeight;
+      // Dónde empezaría el pie: se mide desde el contenido, no desde el pie, que
+      // puede estar corrido por la regla "Pie al fondo"
+      const caja = vista.getBoundingClientRect();
+      const arriba = caja.bottom + window.scrollY + parseFloat(getComputedStyle(pie).marginTop);
+      if (arriba < borde && arriba + pie.offsetHeight > borde + 1) {
+        vista.style.minHeight = (caja.height + borde - arriba) + 'px';
+      }
+    }
+    window.addEventListener('hashchange', () => { mostrar(true); acomodarPie(); });
+    window.addEventListener('resize', acomodarPie);
+    document.querySelectorAll('.ext-portal-estudio').forEach(d => d.addEventListener('toggle', acomodarPie));
+    if (document.fonts) document.fonts.ready.then(acomodarPie);
+    mostrar(false);
+    acomodarPie();
+
+    // Buscador de herramientas: filtra mientras se escribe, sin distinguir tildes
+    const buscar = document.getElementById('buscar');
+    const renglones = [...document.querySelectorAll('#lista-herramientas > li')];
+    const cuantas = document.getElementById('cuantas');
+    const sinResultados = document.getElementById('sin-resultados');
+    const llano = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    function filtrar() {
+      const q = llano(buscar.value.trim());
+      let n = 0;
+      renglones.forEach(li => {
+        const va = !q || llano(li.textContent).includes(q);
+        li.hidden = !va;
+        if (va) n++;
+      });
+      cuantas.textContent = q ? n + ' de ' + renglones.length : renglones.length + ' herramientas';
+      sinResultados.hidden = n > 0;
+      acomodarPie();
+    }
+    buscar.addEventListener('input', filtrar);
+    document.getElementById('borrar-busqueda').onclick = () => { buscar.value = ''; filtrar(); buscar.focus(); };
+  </script>
+</body>
+</html>
