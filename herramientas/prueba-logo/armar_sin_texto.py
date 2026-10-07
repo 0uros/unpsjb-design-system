@@ -1,11 +1,11 @@
 """PRUEBA: versiones del logo sin el texto curvo "Universidad Nacional de la
-Patagonia San Juan Bosco". Parte de assets/logo-unpsjb-trelew.svg (ahí el texto
+Patagonia San Juan Bosco". Parte de sistema/assets/logo-unpsjb-trelew.svg (ahí el texto
 curvo tiene su propio color, #231f20) y de la foto liviana de la versión blanca.
-Uso: python3 prueba-logo/armar_sin_texto.py  (desde la carpeta del proyecto)"""
+Uso: python3 herramientas/prueba-logo/armar_sin_texto.py  (desde la carpeta del proyecto)"""
 import re
 
-color = open('assets/logo-unpsjb-trelew.svg').read()
-blanco = open('assets/logo-unpsjb-trelew-blanco.svg').read()
+color = open('sistema/assets/logo-unpsjb-trelew.svg').read()
+blanco = open('sistema/assets/logo-unpsjb-trelew-blanco.svg').read()
 img_liviana = re.search(r'<image [^>]*/>', blanco).group(0)
 
 # 1. Quitar el texto curvo y los recortes que solo usaba él
@@ -28,7 +28,7 @@ def svg(nombre, vb, cuerpo, img, texto):
     out = re.sub(r'viewBox="[^"]*"', f'viewBox="{vb}"', cabeza)
     out = out.replace('#3b3a36', texto)
     cuerpo = cuerpo.replace('#3b3a36', texto)
-    open(f'prueba-logo/{nombre}', 'w').write(out + img + '\n' + cuerpo + '\n</svg>\n')
+    open(f'herramientas/prueba-logo/{nombre}', 'w').write(out + img + '\n' + cuerpo + '\n</svg>\n')
     print(nombre, len(out + img + cuerpo) // 1024, 'KB')
 
 # A. Mismo lugar: solo se quita el texto

@@ -921,6 +921,7 @@ Sin número de sesión. No se tocó ninguna pieza: es orden de carpetas y de git
 - `muestra-planos.html` pide `datos/planos.json` y `datos/ocupacion.json`, que no están acá: la herramienta completa es `planos-universidad`.
 
 Pendientes, en orden:
-- [ ] Integrar `ajustes-0.4.4` (cartelera, documentos y gráficos; un commit que no está en `main`).
-- [ ] Reordenar las carpetas (`sistema/`, `muestras/`, `notas/`, `fuentes/`) en un commit que solo mueva archivos.
+- [x] Integrar `ajustes-0.4.4` (cartelera, documentos y gráficos). Quedó unida dentro de `en-curso`, no en `main`: sale todo junto en la próxima versión, cuando el módulo de planos esté terminado.
+- [x] Reordenar las carpetas. Quedaron `sistema/` (lo que se publica: la hoja, los módulos, `fonts/` y `assets/`), `muestras/`, `notas/` y `herramientas/` (logo, emojis, QR y las pruebas de logo, con el EPS). Un commit que solo mueve y otro que corrige las rutas. Comprobado: las 163 rutas de las muestras, las hojas y las pruebas de logo resuelven, y `herramientas/logo/generar.sh` vuelve a generar los cinco logos idénticos. Las entradas anteriores de esta bitácora y de `CHANGELOG.md` nombran los archivos donde estaban entonces.
+- [ ] Documentar lo que vino de `ajustes-0.4.4` en `DESIGN.md` y `CHANGELOG.md`, probar los gráficos nuevos y unificar el número de versión (hoy "0.4.4" nombra solo al módulo de planos).
 - [ ] De ahí en adelante, una rama por función.

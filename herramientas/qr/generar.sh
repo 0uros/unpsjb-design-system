@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Genera un código QR como SVG, para la cartelera (unpsjb-cartelera.css) y para
 # el pie de verificación de los documentos (unpsjb-documentos.css).
-# Uso:  ./qr/generar.sh "https://direccion-a-codificar" assets/qr-cartelera.svg "Agenda de hoy en tu celular"
+# Uso:  ./herramientas/qr/generar.sh "https://direccion-a-codificar" sistema/assets/qr-cartelera.svg "Agenda de hoy en tu celular"
 #       El tercer dato (opcional) es el texto que lee el lector de pantalla.
 #
 # Reglas (DESIGN.md, secciones 18.E y 20.D):

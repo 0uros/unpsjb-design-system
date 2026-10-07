@@ -13,7 +13,7 @@
         "rule": "flat-type-hierarchy",
         "value": "*",
         "files": [
-          "muestra.html"
+          "muestras/muestra.html"
         ],
         "createdAt": "2026-09-29T17:01:53.930Z",
         "reason": "false positive: Chrome computed h1 32px, h2 24px, h3 19px; detector does not resolve font shorthand with var()"
@@ -22,7 +22,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "muestra.html"
+          "muestras/muestra.html"
         ],
         "createdAt": "2026-09-29T17:01:53.934Z",
         "reason": "false positive: table cells carry 16px padding inside .tabla-wrap; underline tabs sit on their rule by design"
@@ -43,7 +43,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "muestra-documentos.html"
+          "muestras/muestra-documentos.html"
         ],
         "createdAt": "2026-10-02T18:57:23.418Z",
         "reason": "falso positivo, igual que en muestra.html: son piezas de unpsjb.css. La banda solo lleva borde al imprimir; las celdas de .tabla-marco y las opciones de .segmentado traen su propio relleno (medido en las capturas)"
@@ -52,7 +52,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "muestra-graficos.html"
+          "muestras/muestra-graficos.html"
         ],
         "createdAt": "2026-10-02T18:57:23.426Z",
         "reason": "falso positivo, igual que en muestra.html: son piezas de unpsjb.css. La banda solo lleva borde al imprimir; las celdas de .tabla-marco y las opciones de .segmentado traen su propio relleno (medido en las capturas)"
@@ -61,7 +61,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "muestra-mesa-ayuda.html"
+          "muestras/muestra-mesa-ayuda.html"
         ],
         "createdAt": "2026-10-02T18:57:23.433Z",
         "reason": "falso positivo, igual que en muestra.html: son piezas de unpsjb.css. La banda solo lleva borde al imprimir; las celdas de .tabla-marco y las opciones de .segmentado traen su propio relleno (medido en las capturas)"
@@ -70,7 +70,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "muestra-cartelera-celular.html"
+          "muestras/muestra-cartelera-celular.html"
         ],
         "createdAt": "2026-10-02T18:57:23.441Z",
         "reason": "falso positivo, igual que en muestra.html: son piezas de unpsjb.css. La banda solo lleva borde al imprimir; las celdas de .tabla-marco y las opciones de .segmentado traen su propio relleno (medido en las capturas)"
@@ -79,7 +79,7 @@
         "rule": "flat-type-hierarchy",
         "value": "*",
         "files": [
-          "muestra-graficos.html"
+          "muestras/muestra-graficos.html"
         ],
         "createdAt": "2026-10-02T18:57:23.448Z",
         "reason": "falso positivo, igual que en muestra.html: el detector no resuelve font con var() ni calc(); en el navegador h1 mide 32px y h2 24px (en la cartelera, 42 u y 30 u)"
@@ -88,7 +88,7 @@
         "rule": "flat-type-hierarchy",
         "value": "*",
         "files": [
-          "muestra-cartelera.html"
+          "muestras/muestra-cartelera.html"
         ],
         "createdAt": "2026-10-02T18:57:23.454Z",
         "reason": "falso positivo, igual que en muestra.html: el detector no resuelve font con var() ni calc(); en el navegador h1 mide 32px y h2 24px (en la cartelera, 42 u y 30 u)"
@@ -97,7 +97,7 @@
         "rule": "tight-leading",
         "value": "*",
         "files": [
-          "muestra-documentos.html"
+          "muestras/muestra-documentos.html"
         ],
         "createdAt": "2026-10-02T18:57:23.461Z",
         "reason": "falso positivo: el detector divide un interlineado sin unidad por un tamaño en pt o en calc() y da 0,12; los valores reales son 1,25 o más en todo lo que ocupa más de un renglón"
@@ -106,7 +106,7 @@
         "rule": "tight-leading",
         "value": "*",
         "files": [
-          "muestra-cartelera.html"
+          "muestras/muestra-cartelera.html"
         ],
         "createdAt": "2026-10-02T18:57:23.468Z",
         "reason": "falso positivo: el detector divide un interlineado sin unidad por un tamaño en pt o en calc() y da 0,12; los valores reales son 1,25 o más en todo lo que ocupa más de un renglón"
@@ -145,7 +145,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "muestra-portal.html"
+          "muestras/muestra-portal.html"
         ],
         "createdAt": "2026-10-07T14:59:41.187Z",
         "reason": "falso positivo, igual que en las otras muestras: son piezas de unpsjb.css (la banda, que solo lleva borde al imprimir, y las opciones de .segmentado, que traen su propio relleno); revisado en las capturas a 1280 y 390px"

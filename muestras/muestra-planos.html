@@ -7,13 +7,13 @@
   <title>Planos · muestra del módulo · UNPSJB</title>
   <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
   <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
-  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="unpsjb.css">
+  <link rel="preload" href="../sistema/fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../sistema/fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../sistema/assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../sistema/unpsjb.css">
   <!-- El módulo va después de la hoja central: su hoja y su script -->
-  <link rel="stylesheet" href="unpsjb-planos.css">
-  <script src="unpsjb-planos.js" defer></script>
+  <link rel="stylesheet" href="../sistema/unpsjb-planos.css">
+  <script src="../sistema/unpsjb-planos.js" defer></script>
   <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
   <style>
     .ext-muestra-ficha { margin-top: var(--espacio-8); }
@@ -40,8 +40,8 @@
     <div class="banda">
       <div class="contenedor">
         <div class="banda__fila">
-          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
-          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <img class="banda__logo banda__logo--escritorio" src="../sistema/assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="../sistema/assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
           <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-map"/></svg>Planos de la sede</p>
           <div class="banda__acciones">
             <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
@@ -124,9 +124,9 @@
           <div><dt>Accesibilidad</dt><dd><ul><li>Todo plano tiene su lista ("Plano | Lista"), con los mismos datos. En celular se abre la lista.</li><li>Mover y acercar no dependen de arrastrar: están los botones y el teclado (flechas, <kbd>+</kbd>, <kbd>−</kbd> y <kbd>0</kbd> para ver todo).</li><li>Las antenas y los rótulos de las aulas son botones: se llega con <kbd>Tab</kbd>, y si quedaron fuera de la vista el plano se mueve hasta ahí.</li><li>El estado nunca va solo en color: cada uno tiene su ícono, y el texto está en el rótulo, en el panel y en la lista.</li><li>No hay carteles flotantes: los datos de lo elegido van en el panel del costado.</li><li>El dibujo del plano es decorativo para el lector de pantalla (<code>aria-hidden</code>): lo que informa son los botones y la lista.</li></ul></dd></div>
           <div><dt>El dibujo</dt><dd>Un SVG de solo trazos, con las clases <code>.plano-trazo</code> (muros), <code>.plano-trazo--suave</code> (lo demás) y <code>.plano-trazo--rotulo</code> (textos). Nunca con los colores de CAD ni como imagen: así se ve bien en claro, en oscuro y al acercar.</dd></div>
         </dl>
-        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: plano"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
-&lt;link rel="stylesheet" href="unpsjb-planos.css"&gt;
-&lt;script src="unpsjb-planos.js" defer&gt;&lt;/script&gt;
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: plano"><code>&lt;link rel="stylesheet" href="../sistema/unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="../sistema/unpsjb-planos.css"&gt;
+&lt;script src="../sistema/unpsjb-planos.js" defer&gt;&lt;/script&gt;
 
 &lt;section class="plano" aria-label="Plano de la sede"
          data-plano="datos/planos.json"

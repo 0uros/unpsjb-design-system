@@ -8,12 +8,12 @@
   <!-- La tele no tiene dónde elegir el tema: se fija en la dirección, con ?tema=oscuro o ?tema=claro.
        Sin eso, sigue al sistema. -->
   <script>try{var t=new URLSearchParams(location.search).get("tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
-  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="unpsjb.css">
+  <link rel="preload" href="../sistema/fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../sistema/fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../sistema/assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../sistema/unpsjb.css">
   <!-- El módulo va después de la hoja central -->
-  <link rel="stylesheet" href="unpsjb-cartelera.css">
+  <link rel="stylesheet" href="../sistema/unpsjb-cartelera.css">
 </head>
 <body class="cartelera">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -25,7 +25,7 @@
   </svg>
 
   <header class="cartelera__banda">
-    <img class="cartelera__logo" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="168" height="80">
+    <img class="cartelera__logo" src="../sistema/assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="168" height="80">
     <h1 class="cartelera__lugar">Edificio de Aulas <span>Actividades de hoy</span></h1>
     <p class="cartelera__fecha">Martes 13 de octubre</p>
     <p class="cartelera__reloj"><time id="reloj" datetime="10:15">10:15</time> h</p>
@@ -126,7 +126,7 @@
       </div>
       <section class="cartelera-qr">
         <!-- QR de ejemplo: la dirección todavía no existe. Se rehace con qr/generar.sh -->
-        <img src="assets/qr-ejemplo-cartelera.svg" alt="" width="300" height="300">
+        <img src="../sistema/assets/qr-ejemplo-cartelera.svg" alt="" width="300" height="300">
         <p><b>Mirá las actividades en tu celular</b> agenda.tw.unp.edu.ar/hoy</p>
       </section>
     </aside>

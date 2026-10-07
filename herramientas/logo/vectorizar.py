@@ -1,7 +1,7 @@
-"""Vectoriza la gaviota del EPS en su versión plana y la guarda en logo/gaviota-plana.svg.
+"""Vectoriza la gaviota del EPS en su versión plana y la guarda en herramientas/logo/gaviota-plana.svg.
 
-Se corre con logo/vectorizar.sh, solo cuando cambia el EPS: el resultado queda
-guardado y logo/generar.sh lo usa sin necesitar estas librerías.
+Se corre con herramientas/logo/vectorizar.sh, solo cuando cambia el EPS: el resultado queda
+guardado y herramientas/logo/generar.sh lo usa sin necesitar estas librerías.
 
 1. Separa por color: cuerpo (todo lo que no es azul), puntas oscuras de las alas
    y pico amarillo (las patas y la mancha de la cola se descartan).
@@ -67,7 +67,7 @@ d_puntas = trazar(puntas, 400)   # sin la mancha de la cola: solo las puntas de 
 d_pico = trazar(pico, 8)
 
 svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82.75 103.33">\n'
-       '<!-- Gaviota plana: generada por logo/vectorizar.sh. No editar a mano. -->\n'
+       '<!-- Gaviota plana: generada por herramientas/logo/vectorizar.sh. No editar a mano. -->\n'
        f'<path fill="#ffffff" fill-rule="evenodd" d="{d_cuerpo}"/>\n'
        f'<path fill="{OSCURO}" fill-rule="evenodd" d="{d_puntas}"/>\n'
        f'<path fill="{AMARILLO}" fill-rule="evenodd" d="{d_pico}"/>\n'

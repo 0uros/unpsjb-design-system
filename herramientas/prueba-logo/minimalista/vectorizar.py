@@ -3,21 +3,21 @@
 1. Separa por color: cuerpo (todo lo que no es azul), puntas oscuras de las alas,
    pico y patas amarillos.
 2. Suaviza cada máscara (desenfoque + umbral) para borrar el detalle de las plumas.
-3. La vectoriza con potrace y arma los SVG con la barra y "Sede Trelew" de assets/.
+3. La vectoriza con potrace y arma los SVG con la barra y "Sede Trelew" de sistema/assets/.
 
 Uso (desde la carpeta del proyecto):
   python3 -m venv /tmp/venv && /tmp/venv/bin/pip install numpy pillow potracer
   gs -q -dSAFER -dBATCH -dNOPAUSE -dEPSCrop -sDEVICE=png16m -r1200 \
-     -sOutputFile=/tmp/logo-1200.png "logo unpsjb_SEDE TW.eps"
+     -sOutputFile=/tmp/logo-1200.png "herramientas/logo/logo unpsjb_SEDE TW.eps"
   magick /tmp/logo-1200.png -crop 1379x1722+0+0 +repage /tmp/oval.png
-  /tmp/venv/bin/python prueba-logo/minimalista/vectorizar.py /tmp/oval.png
+  /tmp/venv/bin/python herramientas/prueba-logo/minimalista/vectorizar.py /tmp/oval.png
 """
 import re, sys
 import numpy as np
 from PIL import Image, ImageFilter
 import potrace
 
-SALIDA = 'prueba-logo/minimalista/'
+SALIDA = 'herramientas/prueba-logo/minimalista/'
 AZUL_OVALO = '#347ebb'
 OSCURO = '#4e4d49'
 AMARILLO = '#eab645'
@@ -71,8 +71,8 @@ d_cuerpo = trazar(cuerpo, 60)
 d_puntas = trazar(puntas, 400)   # sin la mancha de la cola: solo las puntas de las alas
 d_pico = trazar(pico, 8)
 
-oval_d = re.search(r'<clipPath id="ovalo"><path d="([^"]+)"', open('assets/logo-unpsjb-trelew.svg').read()).group(1)
-marca = re.search(r'<g transform=.*?</g>', open('assets/logo-unpsjb-trelew.svg').read(), re.S).group(0)
+oval_d = re.search(r'<clipPath id="ovalo"><path d="([^"]+)"', open('sistema/assets/logo-unpsjb-trelew.svg').read()).group(1)
+marca = re.search(r'<g transform=.*?</g>', open('sistema/assets/logo-unpsjb-trelew.svg').read(), re.S).group(0)
 TITULO = 'Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew'
 
 def ovalo(nivel):

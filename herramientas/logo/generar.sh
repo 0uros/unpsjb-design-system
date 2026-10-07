@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # Genera las versiones web del logo de la Sede Trelew a partir del EPS original.
-# La gaviota plana sale de logo/gaviota-plana.svg (si cambia el EPS, correr antes
+# La gaviota plana sale de herramientas/logo/gaviota-plana.svg (si cambia el EPS, correr antes
 # ./logo/vectorizar.sh); la versión completa usa la foto original del EPS.
-# Uso:  ./logo/generar.sh "logo unpsjb_SEDE TW.eps"
-# Salida: assets/logo-unpsjb-trelew.svg, assets/logo-unpsjb-trelew-blanco.svg (sin texto curvo),
-#         assets/escudo-unpsjb-blanco.svg (solo el óvalo),
-#         assets/logo-unpsjb-trelew-completo.svg (con el texto curvo, para usos grandes) y
-#         assets/logo-unpsjb-trelew-una-tinta.svg (todo en negro, para impresión a una tinta)
+# Uso:  ./herramientas/logo/generar.sh "herramientas/logo/logo unpsjb_SEDE TW.eps"
+# Salida: sistema/assets/logo-unpsjb-trelew.svg, sistema/assets/logo-unpsjb-trelew-blanco.svg (sin texto curvo),
+#         sistema/assets/escudo-unpsjb-blanco.svg (solo el óvalo),
+#         sistema/assets/logo-unpsjb-trelew-completo.svg (con el texto curvo, para usos grandes) y
+#         sistema/assets/logo-unpsjb-trelew-una-tinta.svg (todo en negro, para impresión a una tinta)
 # Requiere: ghostscript (gs), poppler (pdftocairo), ImageMagick (magick), python3.
 set -euo pipefail
 EPS="${1:?Falta el archivo EPS del logo}"
 AQUI="$(cd "$(dirname "$0")" && pwd)"
-cd "$AQUI/.."
+cd "$AQUI/../.."
 export TMPLOGO="$(mktemp -d)"
 trap 'rm -rf "$TMPLOGO"' EXIT
-mkdir -p assets
+mkdir -p sistema/assets
 
 # 1. EPS -> PDF -> SVG (para leer los trazos vectoriales de los textos y la forma del óvalo)
 gs -q -dSAFER -dBATCH -dNOPAUSE -dEPSCrop -sDEVICE=pdfwrite -sOutputFile="$TMPLOGO/logo.pdf" "$EPS"

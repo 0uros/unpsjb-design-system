@@ -75,7 +75,7 @@ Los tres sitios se ven cuidados y los tres fallan en lo mismo que nosotros ya re
 
 - **Portales públicos:** Chrome sin ventana, seis páginas por sitio (portada, una noticia, el listado de noticias, un listado, una página para un público y una de trámite), a **1280, 390 y 320px**. De cada una: captura entera, estilos efectivos (`getComputedStyle`), peso de la descarga, **axe 4.10.2** (WCAG 2.0, 2.1 y 2.2 A/AA y buenas prácticas) a 1280 y 390px, y doce pasos de Tab en la portada.
 - **MiUNC:** en el navegador con la sesión del usuario, solo mirando: inicio, perfil, aplicaciones, trámites y seguridad. No se tocó ningún dato ni se inició ningún trámite. El ancho de celular se probó cargando las páginas en marcos de 390 y 320px. **No se guardaron capturas de MiUNC** porque muestran datos personales (nombre, DNI, CUIL, correo).
-- Todo lo crudo está en `referencias/`: `medidas.json`, el programa `medir.js` y las capturas en `referencias/unc/` y `referencias/uba/` (`<página>-<ancho>.jpg` es la página entera; `-arriba` es lo que se ve al entrar).
+- Todo lo crudo está en `notas/referencias/`: `medidas.json`, el programa `medir.js` y las capturas en `notas/referencias/unc/` y `notas/referencias/uba/` (`<página>-<ancho>.jpg` es la página entera; `-arriba` es lo que se ve al entrar).
 
 Límites: el peso es aproximado (suma lo que declara cada respuesta). El alto de la cabecera de la UNC se tomó de la captura porque la página tiene un `<header>` vacío. No se probó lector de pantalla, ni Firefox ni Safari. De cada sitio se miraron seis páginas, no todo.
 

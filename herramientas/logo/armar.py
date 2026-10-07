@@ -1,7 +1,7 @@
-"""Arma los SVG del logo (ver logo/generar.sh). Lee los archivos intermedios de $TMPLOGO.
+"""Arma los SVG del logo (ver herramientas/logo/generar.sh). Lee los archivos intermedios de $TMPLOGO.
 
 Desde la sesión 11 la gaviota de las versiones web es la PLANA y vectorial
-(logo/gaviota-plana.svg, hecha con logo/vectorizar.sh): óvalo azul, gaviota blanca,
+(herramientas/logo/gaviota-plana.svg, hecha con herramientas/logo/vectorizar.sh): óvalo azul, gaviota blanca,
 puntas oscuras y pico amarillo. La versión completa conserva la foto original.
 
 Desde la sesión 9 las versiones web van SIN el texto curvo ("Universidad Nacional
@@ -78,9 +78,9 @@ def armar(nombre, titulo, jpg, color_texto, color_curvo=None, forma='compacto', 
     print(nombre, len(svg), 'bytes')
 
 t = 'Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew'
-armar('assets/logo-unpsjb-trelew.svg', t, None, '#3b3a36')
-armar('assets/logo-unpsjb-trelew-blanco.svg', t, None, '#ffffff')
-armar('assets/escudo-unpsjb-blanco.svg', 'Universidad Nacional de la Patagonia San Juan Bosco', None, '#ffffff', forma='escudo')
-armar('assets/logo-unpsjb-trelew-completo.svg', t, T + '/oval-800.jpg', '#3b3a36', '#231f20', forma='completo')
+armar('sistema/assets/logo-unpsjb-trelew.svg', t, None, '#3b3a36')
+armar('sistema/assets/logo-unpsjb-trelew-blanco.svg', t, None, '#ffffff')
+armar('sistema/assets/escudo-unpsjb-blanco.svg', 'Universidad Nacional de la Patagonia San Juan Bosco', None, '#ffffff', forma='escudo')
+armar('sistema/assets/logo-unpsjb-trelew-completo.svg', t, T + '/oval-800.jpg', '#3b3a36', '#231f20', forma='completo')
 # A una tinta (documentos impresos en negro, sellos): óvalo, barra y "Sede Trelew" en negro
-armar('assets/logo-unpsjb-trelew-una-tinta.svg', t, None, '#000000', tinta='#000000')
+armar('sistema/assets/logo-unpsjb-trelew-una-tinta.svg', t, None, '#000000', tinta='#000000')

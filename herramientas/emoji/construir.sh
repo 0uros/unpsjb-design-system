@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Construye la fuente "Twemoji UNPSJB" (fonts/TwemojiUNPSJB.woff2) a partir
+# Construye la fuente "Twemoji UNPSJB" (sistema/fonts/TwemojiUNPSJB.woff2) a partir
 # de los SVG de jdecked/twemoji, el fork mantenido de los emojis de Twitter.
 #
-# Uso:   ./emoji/construir.sh 17.0.3 17.0.0
+# Uso:   ./herramientas/emoji/construir.sh 17.0.3 17.0.0
 #        (versión de Twemoji y versión de Unicode que cubre)
 # Cuándo: cada vez que jdecked/twemoji publique una versión nueva
 #        (https://github.com/jdecked/twemoji/releases).
@@ -12,7 +12,7 @@ set -euo pipefail
 TWEMOJI="${1:?Falta la versión de Twemoji, ej.: 17.0.3}"
 UNICODE="${2:?Falta la versión de Unicode, ej.: 17.0.0}"
 AQUI="$(cd "$(dirname "$0")" && pwd)"
-DESTINO="$AQUI/../fonts"
+DESTINO="$AQUI/../../sistema/fonts"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 

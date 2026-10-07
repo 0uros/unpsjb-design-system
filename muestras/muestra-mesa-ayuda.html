@@ -7,12 +7,12 @@
   <title>Mesa de ayuda · muestra del módulo · UNPSJB</title>
   <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
   <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
-  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="unpsjb.css">
+  <link rel="preload" href="../sistema/fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../sistema/fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../sistema/assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../sistema/unpsjb.css">
   <!-- El módulo va después de la hoja central -->
-  <link rel="stylesheet" href="unpsjb-mesa-ayuda.css">
+  <link rel="stylesheet" href="../sistema/unpsjb-mesa-ayuda.css">
   <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
   <style>
     .ext-muestra-vista { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2) var(--espacio-3); margin-bottom: var(--espacio-6); font: var(--texto-detalle); color: var(--color-tinta-2); }
@@ -58,8 +58,8 @@
     <div class="banda">
       <div class="contenedor">
         <div class="banda__fila">
-          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
-          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <img class="banda__logo banda__logo--escritorio" src="../sistema/assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="../sistema/assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
           <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-life-buoy"/></svg>Mesa de ayuda</p>
           <div class="banda__acciones">
             <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
@@ -256,8 +256,8 @@
           <div><dt>No lo uses cuando</dt><dd><ul><li>Es un trámite con pasos fijos y sin conversación: van el indicador de pasos y la lista de resumen.</li><li>Es un registro técnico de cambios (quién editó qué): va una tabla.</li><li>Es un chat en vivo: es otra herramienta.</li></ul></dd></div>
           <div><dt>Accesibilidad</dt><dd><ul><li>Cada día es un título y cada mensaje un <code>&lt;article&gt;</code> con el nombre de quien escribe: con lector de pantalla se salta de mensaje en mensaje.</li><li>Las horas van en <code>&lt;time&gt;</code>, con la fecha completa.</li><li>El estado es siempre ícono y palabra; la nota interna, candado y texto.</li><li>Al enviar, el mensaje aparece al final del historial y un toast lo confirma ("Respuesta enviada").</li></ul></dd></div>
         </dl>
-        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: historial de una solicitud"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
-&lt;link rel="stylesheet" href="unpsjb-mesa-ayuda.css"&gt;
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: historial de una solicitud"><code>&lt;link rel="stylesheet" href="../sistema/unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="../sistema/unpsjb-mesa-ayuda.css"&gt;
 
 &lt;h2 class="hilo__dia"&gt;Jueves 1 de octubre&lt;/h2&gt;
 &lt;ol class="hilo"&gt;

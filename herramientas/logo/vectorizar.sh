@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Vectoriza la gaviota del EPS (versión plana) y la guarda en logo/gaviota-plana.svg.
-# Solo hace falta si cambia el EPS; después se corre logo/generar.sh.
-# Uso:  ./logo/vectorizar.sh "logo unpsjb_SEDE TW.eps"
+# Vectoriza la gaviota del EPS (versión plana) y la guarda en herramientas/logo/gaviota-plana.svg.
+# Solo hace falta si cambia el EPS; después se corre herramientas/logo/generar.sh.
+# Uso:  ./herramientas/logo/vectorizar.sh "herramientas/logo/logo unpsjb_SEDE TW.eps"
 # Requiere: ghostscript (gs), ImageMagick (magick), python3. Las librerías de Python
 # (numpy, pillow, potracer) se instalan solas la primera vez en ~/.cache/unpsjb-logo/
 # (fuera del proyecto, para no copiarlas al servidor).
 set -euo pipefail
 EPS="${1:?Falta el archivo EPS del logo}"
 AQUI="$(cd "$(dirname "$0")" && pwd)"
-cd "$AQUI/.."
+cd "$AQUI/../.."
 TMPV="$(mktemp -d)"
 trap 'rm -rf "$TMPV"' EXIT
 

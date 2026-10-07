@@ -7,13 +7,13 @@
   <title>Gráficos · muestra del módulo · UNPSJB</title>
   <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
   <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
-  <link rel="preload" href="fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="icon" href="assets/favicon-unpsjb.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="unpsjb.css">
+  <link rel="preload" href="../sistema/fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../sistema/fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../sistema/assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../sistema/unpsjb.css">
   <!-- El módulo va después de la hoja central: su hoja y su script -->
-  <link rel="stylesheet" href="unpsjb-graficos.css">
-  <script src="unpsjb-graficos.js" defer></script>
+  <link rel="stylesheet" href="../sistema/unpsjb-graficos.css">
+  <script src="../sistema/unpsjb-graficos.js" defer></script>
   <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
   <style>
     .ext-muestra-ficha { margin-top: var(--espacio-8); }
@@ -40,8 +40,8 @@
     <div class="banda">
       <div class="contenedor">
         <div class="banda__fila">
-          <img class="banda__logo banda__logo--escritorio" src="assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
-          <img class="banda__logo banda__logo--movil" src="assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <img class="banda__logo banda__logo--escritorio" src="../sistema/assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="../sistema/assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
           <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-chart"/></svg>Informes</p>
           <div class="banda__acciones">
             <button class="boton boton--icono" type="button" aria-label="Ayuda"><svg class="icono" aria-hidden="true"><use href="#i-help"/></svg></button>
@@ -395,9 +395,9 @@
           <div><dt>No lo uses cuando</dt><dd><ul><li>Se comparan cosas, no momentos (sedes, estados): van barras.</li><li>Es un número solo: va un indicador.</li><li>Hay más de cinco series: va una tabla, o un gráfico por serie.</li><li>Hay dos medidas con escalas distintas: van dos gráficos, nunca dos ejes.</li><li>Hay un solo momento: no hay línea que dibujar.</li></ul></dd></div>
           <div><dt>Accesibilidad</dt><dd><ul><li>El gráfico es una imagen con una descripción (<code>data-descripcion</code>) que dice lo importante.</li><li>La tabla con todos los valores está siempre, detrás del selector "Gráfico | Tabla".</li><li>Con <kbd>Tab</kbd> se llega al gráfico y con las flechas se recorre: el lector de pantalla dice el momento y el valor de cada serie.</li><li>El color nunca va solo: cada serie tiene su nombre en la lectura de arriba, y el texto va en tinta.</li><li>No hay carteles flotantes: la lectura queda fija arriba del gráfico.</li></ul></dd></div>
         </dl>
-        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: un gráfico a partir de una tabla"><code>&lt;link rel="stylesheet" href="unpsjb.css"&gt;
-&lt;link rel="stylesheet" href="unpsjb-graficos.css"&gt;
-&lt;script src="unpsjb-graficos.js" defer&gt;&lt;/script&gt;
+        <pre class="ext-muestra-codigo" tabindex="0" role="region" aria-label="Código de ejemplo: un gráfico a partir de una tabla"><code>&lt;link rel="stylesheet" href="../sistema/unpsjb.css"&gt;
+&lt;link rel="stylesheet" href="../sistema/unpsjb-graficos.css"&gt;
+&lt;script src="../sistema/unpsjb-graficos.js" defer&gt;&lt;/script&gt;
 
 &lt;figure class="grafico panel"&gt;
   &lt;figcaption class="grafico__cabecera"&gt;

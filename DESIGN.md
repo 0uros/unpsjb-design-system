@@ -920,7 +920,7 @@ Las herramientas automáticas y las listas no reemplazan ver a alguien usarlo. C
 
 ### A. Logotipo institucional (fuente única)
 
-El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Delegación (en Proxmox), por ejemplo `https://recursos.tw.unp.edu.ar/assets/`. Todas las versiones se generan con `logo/generar.sh` a partir del original de Illustrator (`logo unpsjb_SEDE TW.eps`).
+El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Delegación (en Proxmox), por ejemplo `https://recursos.tw.unp.edu.ar/assets/`. Todas las versiones se generan con `herramientas/logo/generar.sh` a partir del original de Illustrator (`logo unpsjb_SEDE TW.eps`).
 
 **En pantalla, la gaviota es plana y vectorial:** óvalo azul, gaviota blanca, puntas de las alas `#4e4d49` y pico `#eab645`, sin el detalle de las plumas. Se ve nítida a cualquier tamaño (incluso como ícono de 16px, donde la foto era una mancha gris) y pesa diez veces menos.
 
@@ -935,7 +935,7 @@ El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Deleg
 | `logo-unpsjb-trelew-una-tinta.svg` | **Impresión a una tinta** (nuevo en 0.4.3): óvalo, barra y "Sede Trelew" en negro; la gaviota entera en blanco, sin gris ni amarillo. Lo usa la hoja `.hoja--una-tinta` (sección 18). | ~3KB |
 
 - **Los colores del óvalo no se modifican:** el azul (`#347EBB`), el gris de las puntas y el amarillo del pico se tomaron de la foto original. Son parte de la marca, no colores de interfaz: no se usan en botones ni textos.
-- **De dónde sale la gaviota plana:** en el EPS la gaviota es una foto (JPEG en CMYK). `logo/vectorizar.sh` la separa por color, borra el detalle y la vectoriza; el resultado queda guardado en `logo/gaviota-plana.svg`. Solo hay que volver a correrlo si cambia el EPS (instala sus librerías de Python en `~/.cache/unpsjb-logo/`). `logo/generar.sh` usa esa gaviota guardada y no necesita nada extra. **No se edita a mano:** si hay que afinar la forma, se ajusta `logo/vectorizar.py` o se reemplaza por un dibujo hecho por un diseñador.
+- **De dónde sale la gaviota plana:** en el EPS la gaviota es una foto (JPEG en CMYK). `herramientas/logo/vectorizar.sh` la separa por color, borra el detalle y la vectoriza; el resultado queda guardado en `herramientas/logo/gaviota-plana.svg`. Solo hay que volver a correrlo si cambia el EPS (instala sus librerías de Python en `~/.cache/unpsjb-logo/`). `herramientas/logo/generar.sh` usa esa gaviota guardada y no necesita nada extra. **No se edita a mano:** si hay que afinar la forma, se ajusta `herramientas/logo/vectorizar.py` o se reemplaza por un dibujo hecho por un diseñador.
 - Todos los SVG llevan `<title>` ("Universidad Nacional de la Patagonia San Juan Bosco, Sede Trelew"); en el HTML se usan con `alt="UNPSJB Sede Trelew"`.
 
 **Tres tamaños, tres versiones (nuevo en 0.3).** Un mismo dibujo no funciona igual a 200px que a 16px:
@@ -948,7 +948,7 @@ El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Deleg
 
 - **Tamaño mínimo:** el nivel M no se usa por debajo de 32px de alto (el óvalo se vuelve una mancha); por debajo va el S.
 - **Área de resguardo:** alrededor del logo queda libre un margen igual a **la mitad del ancho del óvalo**. Ahí no entran textos, íconos ni bordes. En la banda, ese aire es el que ya dan los 8px de arriba y abajo y los 24px hasta el separador.
-- **A una tinta:** para impresión en negro o sellos, el óvalo y los textos en un solo color y la gaviota entera en blanco, sin gris ni amarillo. Lo genera `logo/generar.sh` desde la 0.4.3 (`logo-unpsjb-trelew-una-tinta.svg`, en negro). Como las demás versiones del logo, falta que lo confirme quien maneja la marca.
+- **A una tinta:** para impresión en negro o sellos, el óvalo y los textos en un solo color y la gaviota entera en blanco, sin gris ni amarillo. Lo genera `herramientas/logo/generar.sh` desde la 0.4.3 (`logo-unpsjb-trelew-una-tinta.svg`, en negro). Como las demás versiones del logo, falta que lo confirme quien maneja la marca.
 - **Favicon:** `<link rel="icon" href="https://recursos.tw.unp.edu.ar/assets/favicon-unpsjb.svg" type="image/svg+xml">`. Es el mismo para todas las herramientas: lo que distingue a cada herramienta es su ícono de instalación (10.B).
 - **Qué ave es:** DESIGN.md la llama **gaviota**, como en el manual de marca. Algunas fuentes externas la describen como albatros; se mantiene "gaviota" hasta que lo confirme el responsable de la marca.
 
@@ -977,7 +977,7 @@ Los emojis que escriben las personas se ven igual en Windows, Linux, macOS, Andr
 - **Paquete:** `jdecked/twemoji`, el fork que mantiene la comunidad y se actualiza con cada versión nueva de Emoji de Unicode. El original de Twitter está abandonado.
 - **Cómo funciona:** los SVG de Twemoji se convierten en una **fuente de color** (`fonts/TwemojiUNPSJB.woff2`, formato COLRv0, que funciona en Chrome, Edge, Firefox y Safari). `unpsjb.css` la declara después de las fuentes de texto, así que cualquier emoji de la página, en textos, `input` o `textarea`, se dibuja con Twemoji sin una línea de JavaScript.
 - **Liviano:** la fuente se declara con `unicode-range`, así que el navegador solo la descarga en páginas que tienen emojis.
-- **Actualización:** cuando salga una versión nueva de `jdecked/twemoji`, se corre `emoji/construir.sh <versión Twemoji> <versión Unicode>` y se reemplaza el archivo de la fuente en el servidor de recursos.
+- **Actualización:** cuando salga una versión nueva de `jdecked/twemoji`, se corre `herramientas/emoji/construir.sh <versión Twemoji> <versión Unicode>` y se reemplaza el archivo de la fuente en el servidor de recursos.
 - **Desactivar en una herramienta:** si una herramienta necesita los emojis del sistema, redefine `--fuente-texto` y `--fuente-titulo` sin `"Twemoji UNPSJB"`.
 
 ## 11. Inteligencia artificial
@@ -1432,7 +1432,7 @@ Casi toda herramienta termina en un papel: una constancia, un certificado, un co
 
 - Al pie de la hoja (`.verificacion`): dónde se comprueba que el documento es auténtico. **La dirección y el código van escritos**; el QR es un atajo a esa misma dirección.
 - El QR mide 20 mm: es el mínimo para escanear en papel con comodidad. Lleva `alt=""`, porque lo que dice ya está en el texto.
-- Todo QR del sistema se genera con `qr/generar.sh <dirección> <archivo.svg>`: negro sobre blanco, con su margen de 4 módulos y corrección de errores media. La dirección, lo más corta posible: cuanto más corta, más grandes los cuadraditos.
+- Todo QR del sistema se genera con `herramientas/qr/generar.sh <dirección> <archivo.svg>`: negro sobre blanco, con su margen de 4 módulos y corrección de errores media. La dirección, lo más corta posible: cuanto más corta, más grandes los cuadraditos.
 - Falta: el servicio que verifica. El módulo da el lugar; la dirección de los ejemplos (`verificar.tw.unp.edu.ar`) no existe.
 
 ### F. Certificado
@@ -1546,7 +1546,7 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 - **El QR lleva a las mismas actividades en el celular** (`.cartelera-qr`), para quien quiere mirar con calma, buscar su materia o ver otro día.
 - **Mide 300 u:** en una tele de 43 pulgadas son unos 15 cm, que se escanean a un metro y medio. Va siempre negro sobre blanco, con su margen, también con la tele en modo oscuro.
 - **Al lado, la dirección escrita,** para quien no puede escanear.
-- Se genera con `qr/generar.sh` (18.E). **El de los ejemplos es de prueba:** la dirección `agenda.tw.unp.edu.ar/hoy` todavía no existe. Cuando esté la definitiva, se corre el script y se reemplaza el archivo.
+- Se genera con `herramientas/qr/generar.sh` (18.E). **El de los ejemplos es de prueba:** la dirección `agenda.tw.unp.edu.ar/hoy` todavía no existe. Cuando esté la definitiva, se corre el script y se reemplaza el archivo.
 - **La vista de solo lectura** es una página pública común (17.B): la banda, un contenedor angosto y el pie de páginas públicas. Usa la lista y la fila de días del módulo de agenda (16.A), dentro de `.solo-lectura`.
   - **No pide cuenta** y no tiene nada para reservar ni cambiar. Las actividades no son links.
   - Tiene un **buscador** por materia o aula, que no distingue tildes.
