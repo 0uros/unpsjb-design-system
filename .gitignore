@@ -17,3 +17,6 @@ Thumbs.db
 # Capturas de los sitios de referencia (pesan 11 MB y son de terceros; se regeneran con referencias/medir.js)
 referencias/unc/
 referencias/uba/
+
+# Copias de versiones anteriores (cada una tiene su etiqueta; ver archivo/LEEME.md)
+archivo/
