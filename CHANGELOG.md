@@ -21,6 +21,25 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## En curso · modo edición del módulo de planos · 2026-10-08 · sin número todavía
+
+El modo edición que tenía la herramienta de planos de la sede pasa al módulo, para que el diseño se trabaje en un solo lugar. La herramienta lo trae del sistema como el resto del módulo.
+
+### Nuevo
+
+- **`unpsjb-planos-editor.js`** (23 KB; 7 KB comprimido), opcional: con `?editar` arma la barra de edición arriba del plano (`.plano-editor`) y el formulario de lo elegido en el panel de detalle (`.plano-form`). Agregar antenas, ubicar las que no tienen lugar, marcar aulas (rectángulo o forma irregular), reubicar, borrar, borrador en el navegador y descarga de `planos.json`. `DESIGN.md`, 21.G.
+- `unpsjb-planos.css` suma la pieza 7, "Modo edición" (pasa de 11 a 17 KB).
+- `plano.listo`: vale `true` cuando el plano ya cargó, para el código que llega después del evento `plano:listo`.
+- `muestra-planos.html`: botón "Editar antenas y aulas", el modo edición, y datos de ejemplo que cubren los casos que tiene una herramienta real: antenas sin ubicar, espacios que no se reservan, uno sin ubicación, uno por revisar y uno de forma irregular. Usa el contenedor ancho, como la herramienta.
+
+### Cambiado
+
+- Las clases del modo edición dejan el prefijo de la herramienta: `.ext-planos-editor` → `.plano-editor`, `.ext-planos-form` → `.plano-form`, `.ext-planos-equipo` → `.plano-form__equipo`, `.ext-planos-borrador` → `.plano-borrador`, `.ext-planos--marcando` → `.plano--marcando`.
+
+### Corregido
+
+- El modo edición no arrancaba cuando los datos venían dentro de la página (`data-plano="#…"`): el plano terminaba de cargar antes de que el editor escuchara `plano:listo`.
+
 ## En curso · piezas del estudio de referencia · 2026-10-07 · sin número todavía
 
 Sale del estudio de los sitios de la UNC y la UBA y del portal MiUNC (`REFERENCIAS-UNC-UBA.md`). Se tomó estructura, no aspecto. No cambia nada de lo que ya existía: son dos piezas y cuatro reglas nuevas. Falta darle número y registrarlo en git.

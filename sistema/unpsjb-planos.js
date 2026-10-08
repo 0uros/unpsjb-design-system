@@ -51,6 +51,7 @@
      plano.elegir('antena', id)    elige (y muestra) una antena o un 'aula'
      plano.pintar()                vuelve a dibujar después de cambiar plano.datos
      plano.aPlano(evento)          el punto del plano [x, y] que se tocó
+     plano.listo                   true cuando ya cargó (después de plano:listo)
    Eventos, sobre el elemento: plano:listo, plano:planta, plano:elegir,
    plano:detalle (se rearmó el panel de detalle) y plano:clic (un clic sobre
    el plano; detail.x, detail.y; se puede cancelar).
@@ -590,6 +591,7 @@
       const el = tipo && buscar(tipo, pedido.get(tipo));
       return cambiarPlanta(el ? el.planta : pedido.get('planta')).then(() => {
         if (el) elegir(tipo, el.id);
+        plano.listo = true;       // para quien llega después del evento (con datos en la página, es enseguida)
         raiz.dispatchEvent(new CustomEvent('plano:listo', { detail: { plano } }));
       });
     }).catch(fallo);

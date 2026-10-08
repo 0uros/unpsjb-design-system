@@ -925,3 +925,22 @@ Pendientes, en orden:
 - [x] Reordenar las carpetas. Quedaron `sistema/` (lo que se publica: la hoja, los módulos, `fonts/` y `assets/`), `muestras/`, `notas/` y `herramientas/` (logo, emojis, QR y las pruebas de logo, con el EPS). Un commit que solo mueve y otro que corrige las rutas. Comprobado: las 163 rutas de las muestras, las hojas y las pruebas de logo resuelven, y `herramientas/logo/generar.sh` vuelve a generar los cinco logos idénticos. Las entradas anteriores de esta bitácora y de `CHANGELOG.md` nombran los archivos donde estaban entonces.
 - [ ] Documentar lo que vino de `ajustes-0.4.4` en `DESIGN.md` y `CHANGELOG.md`, probar los gráficos nuevos y unificar el número de versión (hoy "0.4.4" nombra solo al módulo de planos).
 - [ ] De ahí en adelante, una rama por función.
+
+## 2026-10-08 — Planos: el modo edición pasa al módulo, y la muestra queda a la par de la herramienta
+
+Pedido del usuario: el repositorio da solo el sistema de diseño y las implementaciones van aparte; las muestras son referencia y prototipo. Con eso, la muestra de planos tenía que mostrar lo mismo que la herramienta de la sede (`planos-universidad`), que estaba más avanzada, para seguir trabajando el diseño acá. Rama `planos`, que sale de `en-curso`.
+
+Qué faltaba en la muestra: todo el modo edición (vivía en la herramienta, en `editor.js` y en estilos `.ext-planos-` dentro de su `index.html`), el contenedor ancho y los casos que solo aparecían con los datos reales.
+
+- **El modo edición es ahora parte del módulo:** `sistema/unpsjb-planos-editor.js` y la pieza 7 de `unpsjb-planos.css`, con las clases renombradas a `.plano-editor` y `.plano-form`. Regla nueva: 21.G. Se eligió esto en lugar de copiarlo a la muestra para no tener dos copias que se separen: la herramienta lo trae del sistema.
+- **`muestra-planos.html`** tiene el botón, la barra y datos de ejemplo que cubren antenas sin ubicar, espacios que no se reservan, uno sin ubicación, uno por revisar y uno de forma irregular. Todo inventado; las IP son del rango reservado para ejemplos (`192.0.2.0/24`).
+- **Apareció un error al probar:** con los datos dentro de la página el plano termina de cargar antes de que el editor empiece a escuchar, y la barra quedaba sin funcionar. En la herramienta no pasaba porque los datos llegan por la red. Arreglo: `plano.listo`.
+- **En `planos-universidad`** (repositorio local aparte, sin remoto): se borró `editor.js` y los estilos propios, y `herramientas/traer-sistema.sh` trae también el editor.
+
+Verificado en Chrome sin ventana, sin errores de consola ni de red: la muestra y la herramienta, en vista y en edición, a 1366 px y a 400 px. En edición, con el teclado: agregar una antena, ubicar una pendiente y marcar un aula; con el mouse, entrar y salir de "forma irregular". No se probó: arrastrar ni marcar con clics reales sobre el plano, lector de pantalla, axe, Firefox ni Safari.
+
+Pendientes del módulo de planos:
+- [ ] Mover arrastrando, corregir una forma esquina por esquina y deshacer.
+- [ ] Pasar axe a la muestra en modo edición.
+- [ ] Los textos de la barra nombran `planos.json` y la carpeta `datos`: hacerlos configurables si otra herramienta usa otros nombres.
+- [ ] El ícono de aplicación de la herramienta sigue con la franja naranja (decidir sobre 10.B).
