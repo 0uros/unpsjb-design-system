@@ -21,6 +21,31 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## En curso · rediseño del plano y del modo edición · 2026-10-08 · sin número todavía
+
+Sale de una revisión de diseño hecha con los datos reales de la sede: en una planta con 31 espacios, 12 rótulos quedaban reducidos a un ícono sin nombre, y lo que más resaltaba era lo que no tenía dato. Cambia cómo se ve el módulo; el HTML de la página no cambia.
+
+### Cambiado
+
+- **Las aulas pesan según lo que tienen para decir.** "Sin dato" y lo que no se reserva pasan a un borde fino en neutro, sin relleno (antes, borde y relleno azules). Libre y ocupada conservan su color, con algo más de relleno. `DESIGN.md`, 21.D.
+- **El azul queda solo para lo elegido.** Ningún estado lo usa.
+- **Los rótulos:** libre es una caja hueca con borde verde; ocupada, una caja llena; sin dato, el nombre solo, sin caja ni ícono y sin repetir "Sin dato" en cada aula.
+- **El nombre es lo último que se pierde.** `--corto` muestra el ícono y el nombre breve ("17"); `--chico`, el nombre breve solo. Antes `--chico` dejaba el ícono solo.
+- **Las referencias** de las aulas muestran un recorte de la zona (`.plano__muestra`) en lugar del ícono suelto.
+- **La barra del modo edición es una tira pegada al plano** (de 420 a 94px de alto en escritorio), y en edición el panel muestra el formulario sin repetir la ficha (de 1.460 a 780px con una antena elegida).
+- El tipo de equipo se elige en una fila de tres opciones.
+
+### Nuevo
+
+- `"corto"` en los datos de un aula: el nombre que se muestra cuando se ve chica. Se carga también desde el modo edición.
+- `.plano-rotulo--de-pie`: en un local angosto y alto, el nombre va de pie.
+- `.plano-rotulo__breve`, `.plano__muestra`, `.plano--editando`.
+
+### Eliminado
+
+- `.plano-editor__cabecera`, `__titulo`, `__grupos`, `__subtitulo`, `__linea` y `.plano-form__equipo-ayuda`.
+- En el rótulo, el ícono `square` de "sin dato" y `door-closed` de lo que no se reserva.
+
 ## En curso · modo edición del módulo de planos · 2026-10-08 · sin número todavía
 
 El modo edición que tenía la herramienta de planos de la sede pasa al módulo, para que el diseño se trabaje en un solo lugar. La herramienta lo trae del sistema como el resto del módulo.

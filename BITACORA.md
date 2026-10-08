@@ -944,3 +944,28 @@ Pendientes del módulo de planos:
 - [ ] Pasar axe a la muestra en modo edición.
 - [ ] Los textos de la barra nombran `planos.json` y la carpeta `datos`: hacerlos configurables si otra herramienta usa otros nombres.
 - [ ] El ícono de aplicación de la herramienta sigue con la franja naranja (decidir sobre 10.B).
+
+## 2026-10-08 — Planos: revisión de diseño y primera pasada (rótulos, color de las zonas, modo edición)
+
+El usuario dio la funcionalidad por buena y pidió trabajar el diseño ("muy mejorable"). Se hizo una crítica mirando la muestra y, sobre todo, la herramienta con los datos reales: ahí aparecen los problemas. Puntaje: 25 de 40. El informe quedó en `.impeccable/critique/`. El usuario eligió empezar por el plano, hacer los tres problemas graves y que "sin dato" quede casi invisible.
+
+Qué se encontró y qué se hizo:
+
+- **El plano no se leía con datos reales.** En Nivel 1, 12 de 31 rótulos eran un cuadradito sin nombre (y el cuadrado de "sin dato" parece una casilla para tildar). Ahora el nombre es lo último que se pierde: "17" por "Aula 17", y nunca el ícono solo. Medido después: los 31 rótulos tienen texto; 12 entran enteros.
+- **El color estaba al revés.** "Sin dato" es casi todo el plano y llevaba el azul de "elegido". Ahora es un borde fino en neutro, sin relleno, y el azul es solo para lo elegido.
+- **El modo edición sacaba el plano de la vista.** La barra pasó de 420 a 94px y el panel dejó de mostrar cada dato dos veces.
+
+Decisiones:
+- **En el paso más chico del rótulo el estado no lleva ícono:** se ve por la caja (hueca, llena o sin caja), que es una diferencia de forma y no solo de color. El estado con texto está en el nombre del botón, el panel y la lista.
+- **Los nombres largos se cortan con puntos suspensivos** ("Faculta…") cuando no hay forma breve. La salida es cargarles `"corto"` (campo nuevo en el modo edición), no inventar una sigla.
+- **Los nombres de pie** aparecieron al probar: los cuatro laboratorios chicos de Nivel 1 miden 25px de ancho.
+
+Verificado en Chrome sin ventana, sin errores: muestra y herramienta, vista y edición, claro y oscuro, 1366 y 390 px. Dos rondas, como máximo. No se pasó axe ni se midió el contraste de la caja de "ocupada" con una herramienta (a mano: blanco sobre `tinta-2`, cerca de 7:1 en claro).
+
+Lo que quedó sin hacer de la crítica:
+- [ ] **Barra del plano** (P2): acercar, alejar y "ver todo" dentro del plano; capas en las referencias. En celular sigue ocupando cuatro renglones.
+- [ ] **Panel de detalle en vista** (P2): con nada elegido, mostrar el resumen de la planta.
+- [ ] En celular, con el plano entero, los rótulos chicos se enciman: decidir si se ocultan los que no entran hasta acercar.
+- [ ] Los textos chicos del dibujo de AutoCAD ("CIRCULACIÓN", cotas) compiten con los rótulos: sacarlos en el conversor de la herramienta.
+- [ ] El título repetido en la banda y en el `h1`; las columnas casi vacías de la lista; las antenas sin ubicar no figuran fuera de edición.
+- [ ] En la herramienta de la sede, el dibujo de Nivel 1 corta la fila de aulas de arriba (es del SVG, no del módulo), y faltan los nombres cortos de las oficinas.

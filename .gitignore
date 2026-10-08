@@ -20,3 +20,6 @@ notas/referencias/uba/
 
 # Copias de versiones anteriores (cada una tiene su etiqueta; ver archivo/LEEME.md)
 archivo/
+
+# Informes de revisión de diseño (se regeneran)
+.impeccable/critique/
