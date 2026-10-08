@@ -1238,7 +1238,7 @@ Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no 
 | Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
 | Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
 | Cartelera (0.4.3) | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
-| Planos (0.4.4) | `unpsjb-planos.css` + `unpsjb-planos.js` | `muestra-planos.html` | 11 KB + 31 KB | 21 |
+| Planos (0.4.4) | `unpsjb-planos.css` + `unpsjb-planos.js` (+ `unpsjb-planos-editor.js`, opcional) | `muestra-planos.html` | 17 KB + 31 KB (+ 23 KB) | 21 |
 
 Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases. En el ejemplo de la agenda los eventos son siempre los mismos: al cambiar de fecha o de aula cambian los títulos y los días.
 
@@ -1576,7 +1576,7 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 
 ## 21. Planos (nuevo en 0.4.4)
 
-Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (11 KB) y `unpsjb-planos.js` (31 KB; 10 KB comprimido). Ejemplo: `muestra-planos.html`.
+Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (17 KB) y `unpsjb-planos.js` (31 KB; 10 KB comprimido), más el modo edición, opcional (21.G). Ejemplo: `muestra-planos.html`.
 
 El plano muestra **el estado de ahora**. Para elegir un aula y un horario está la agenda (16.A): desde el aula elegida se llega a su agenda con un enlace (`data-agenda`).
 
@@ -1670,3 +1670,17 @@ Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con
 | Naranja para lo elegido | El naranja es foco y "estás acá" (sección 1) |
 | El estado solo con color | Siempre ícono y texto (3.E) |
 | Elegir horarios sobre el plano | Para eso está la agenda (16.A); el plano enlaza a ella |
+
+### G. Modo edición
+
+Para marcar antenas y aulas sobre el plano sin tocar el archivo de datos a mano. Es **opcional**: `unpsjb-planos-editor.js` (23 KB; 7 KB comprimido) se carga después de `unpsjb-planos.js` y solo hace algo cuando la dirección lleva `?editar`. Sus estilos están en `unpsjb-planos.css`. Ejemplo: `muestra-planos.html?editar`.
+
+- **Se entra con un botón secundario en el encabezado** ("Editar antenas y aulas", `#ir-a-editar`), que en modo edición pasa a "Salir de la edición".
+- **La barra (`.plano-editor`) va arriba del plano,** en un panel, y tiene tres partes, de arriba abajo: qué es esto y cómo se publica, con "Descargar planos.json" (primario) y "Descartar los cambios"; qué se puede agregar, en dos grupos con su título (`.plano-editor__grupo`: "Antenas" y "Aulas y otros espacios"); y qué está pasando ahora (`.plano-editor__ahora`, con `role="status"`), donde aparecen "Cancelar" y "Cerrar la forma" mientras se marca.
+- **Las antenas que están en los datos pero no tienen lugar** se eligen de un desplegable ("Antenas sin ubicar") y se ubican con un clic en el plano.
+- **Un aula se marca con dos clics** (una esquina y la opuesta). Para una forma irregular, un clic por esquina y "Cerrar la forma". Lo que se va marcando se dibuja en `primario-texto` (`.plano-borrador`).
+- **Los datos de lo elegido se editan en el panel de detalle,** debajo de la ficha (`.plano-form`): no hay ventana aparte. El tipo de equipo de una antena se elige entre tres opciones con su dibujo (`.plano-form__equipo`).
+- **Todo se puede hacer sin mouse** (WCAG 2.2, 2.5.7): con el teclado, lo nuevo aparece en el centro de lo que se ve y se ajusta con los campos de posición. `Esc` cancela lo que se está marcando.
+- **No hay servidor.** Los cambios quedan como borrador en el navegador y "Descargar planos.json" entrega el archivo que reemplaza al publicado. Si lo publicado cambió después de empezar el borrador, manda lo publicado y se ofrece recuperar el borrador.
+- **Borrar y descartar piden confirmación** en un modal (7.G), nunca con `confirm()`.
+- Todavía no tiene: mover arrastrando, corregir una forma irregular esquina por esquina, ni deshacer.
