@@ -918,7 +918,7 @@ Sin número de sesión. No se tocó ninguna pieza: es orden de carpetas y de git
 - **Todo lo que estaba sin registrar en `main` quedó en la rama `en-curso`,** con un commit por función: visor de cámaras, módulo de planos, estudio de referencias con el prototipo de portal, y uno último con los archivos que comparten (`unpsjb.css`, `DESIGN.md`, la skill, `CHANGELOG.md`, esta bitácora). Sin número de versión y sin subir a GitHub.
 - **Las copias de versiones anteriores salieron de la raíz** a `archivo/`, que no está en git: las `-v1`, `-v2`, `-v3.0` y `-0.3.2` y las tres páginas de comparación. Se comprobó que cada copia es igual a la de su etiqueta (`archivo/LEEME.md` tiene la tabla).
 - **La carpeta de trabajo de `ajustes-0.4.4`** (`.claude/worktrees/modulos-0.4.2`) había quedado apuntando a la ruta vieja; se reparó con `git worktree repair`.
-- `muestra-planos.html` pide `datos/planos.json` y `datos/ocupacion.json`, que no están acá: la herramienta completa es `planos-universidad`.
+- `muestra-planos.html` funciona sola, con un edificio y datos inventados que trae dentro de la página (`#datos-ejemplo`); la mención a `datos/planos.json` es un ejemplo de código. La herramienta con los planos y los datos reales de la sede es `planos-universidad`, que va en un repositorio aparte: acá no entra ningún dato real. (Corrige lo que decía esta línea y el mensaje del commit ff5ea9d, que daban la muestra por rota.)
 
 Pendientes, en orden:
 - [x] Integrar `ajustes-0.4.4` (cartelera, documentos y gráficos). Quedó unida dentro de `en-curso`, no en `main`: sale todo junto en la próxima versión, cuando el módulo de planos esté terminado.
