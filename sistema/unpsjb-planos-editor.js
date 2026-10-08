@@ -46,37 +46,28 @@
   irAEditar.href = location.pathname;
   irAEditar.textContent = 'Salir de la edición';
   caja.hidden = false;
-  caja.className = 'panel plano-editor';
+  caja.className = 'plano-editor';
   caja.setAttribute('role', 'region');
   caja.setAttribute('aria-label', 'Edición del plano');
-  // Tres partes, de arriba abajo: qué es esto y cómo se publica; qué se puede agregar,
-  // separado en antenas y aulas; y qué está pasando ahora.
+  // Una tira pegada al plano, para que el plano no se vaya de la vista: arriba las
+  // herramientas (qué agregar | lo que falta ubicar | publicar) y abajo qué está pasando.
   caja.innerHTML =
-    '<div class="plano-editor__cabecera">' +
-      '<div><h2 class="plano-editor__titulo">Estás editando</h2>' +
-      '<p>Los cambios quedan guardados en este navegador. Para publicarlos, descargá <code>planos.json</code> y reemplazá el de la carpeta <code>datos</code>.</p></div>' +
-      '<div class="plano-editor__publicar">' +
-        '<button class="boton boton--primario" type="button" data-accion="descargar"><svg class="icono" aria-hidden="true"><use href="#i-download"/></svg>Descargar planos.json</button>' +
-        '<button class="boton boton--tranquilo" type="button" data-accion="descartar">Descartar los cambios</button>' +
-        '<button class="boton boton--tranquilo" type="button" data-accion="recuperar" hidden>Recuperar el borrador anterior</button>' +
+    '<h2 class="solo-lector">Edición del plano</h2>' +
+    '<div class="plano-editor__fila">' +
+      '<div class="plano-editor__grupo" role="group" aria-label="Agregar">' +
+        '<button class="boton boton--secundario boton--compacto" type="button" data-accion="antena"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Antena</button>' +
+        '<button class="boton boton--secundario boton--compacto" type="button" data-accion="rectangulo"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Aula</button>' +
+        '<button class="boton boton--tranquilo boton--compacto" type="button" data-accion="forma">Aula de forma irregular</button>' +
       '</div>' +
-    '</div>' +
-    '<div class="plano-editor__grupos">' +
-      '<div class="plano-editor__grupo">' +
-        '<h3 class="plano-editor__subtitulo">Antenas</h3>' +
-        '<button class="boton boton--secundario" type="button" data-accion="antena"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Agregar antena</button>' +
-        '<div class="plano-editor__sin-ubicar" id="editor-sin-ubicar" hidden>' +
-          '<label class="label" for="editor-pendiente">Antenas sin ubicar</label>' +
-          '<div class="plano-editor__linea"><select class="select" id="editor-pendiente"></select>' +
-          '<button class="boton boton--secundario" type="button" data-accion="ubicar">Ubicar en esta planta</button></div>' +
-        '</div>' +
+      '<div class="plano-editor__grupo plano-editor__sin-ubicar" id="editor-sin-ubicar" role="group" aria-labelledby="editor-pendiente-nombre" hidden>' +
+        '<label class="plano-editor__rotulo" id="editor-pendiente-nombre" for="editor-pendiente">Sin ubicar</label>' +
+        '<select class="select select--compacto" id="editor-pendiente"></select>' +
+        '<button class="boton boton--secundario boton--compacto" type="button" data-accion="ubicar">Ubicar acá</button>' +
       '</div>' +
-      '<div class="plano-editor__grupo">' +
-        '<h3 class="plano-editor__subtitulo">Aulas y otros espacios</h3>' +
-        '<div class="plano-editor__linea">' +
-          '<button class="boton boton--secundario" type="button" data-accion="rectangulo"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Marcar aula</button>' +
-          '<button class="boton boton--tranquilo" type="button" data-accion="forma">Marcar aula de forma irregular</button>' +
-        '</div>' +
+      '<div class="plano-editor__grupo plano-editor__publicar" role="group" aria-label="Publicar">' +
+        '<button class="boton boton--tranquilo boton--compacto" type="button" data-accion="recuperar" hidden>Recuperar el borrador anterior</button>' +
+        '<button class="boton boton--tranquilo boton--compacto" type="button" data-accion="descartar">Descartar</button>' +
+        '<button class="boton boton--primario boton--compacto" type="button" data-accion="descargar"><svg class="icono" aria-hidden="true"><use href="#i-download"/></svg>Descargar planos.json</button>' +
       '</div>' +
     '</div>' +
     '<div class="plano-editor__ahora">' +
@@ -84,6 +75,7 @@
       '<button class="boton boton--secundario boton--compacto" type="button" data-accion="cerrar" hidden>Cerrar la forma</button>' +
       '<button class="boton boton--tranquilo boton--compacto" type="button" data-accion="cancelar" hidden>Cancelar</button>' +
     '</div>';
+  raiz.classList.add('plano--editando');     // en edición, el panel muestra el formulario y no la ficha
   const estado = caja.querySelector('#editor-estado');
   const boton = accion => caja.querySelector(`[data-accion="${accion}"]`);
 
@@ -120,7 +112,7 @@
     const sel = caja.querySelector('#editor-pendiente');
     const antes = sel.value;
     caja.querySelector('#editor-sin-ubicar').hidden = !lista.length;
-    caja.querySelector('[for="editor-pendiente"]').textContent = `Antenas sin ubicar (${lista.length})`;
+    caja.querySelector('[for="editor-pendiente"]').textContent = `Sin ubicar (${lista.length})`;
     sel.innerHTML = lista.map(a => `<option value="${limpio(a.id)}">${limpio(a.nombre || a.id)}${a.modelo ? ' · ' + limpio(a.modelo) : ''}</option>`).join('');
     if (lista.some(a => a.id === antes)) sel.value = antes;
   }
@@ -133,7 +125,8 @@
     plano.elegir('antena', id);
   }
   function decir(texto) {
-    const base = cambios ? 'Hay cambios sin descargar.' : 'Sin cambios todavía.';
+    const base = cambios ? 'Hay cambios sin descargar. Para publicarlos, descargá planos.json y reemplazá el de la carpeta datos.'
+      : 'Sin cambios todavía. Lo que marques queda guardado en este navegador.';
     estado.textContent = texto || base;
   }
   // Una línea por antena y por aula: el archivo se lee y se compara mejor
@@ -149,6 +142,7 @@
     puntos = [];
     plano.extra.textContent = '';
     raiz.classList.toggle('plano--marcando', !!m);
+    caja.classList.toggle('plano--marcando-barra', !!m);
     boton('cancelar').hidden = !m;
     boton('cerrar').hidden = m !== 'forma';
     decir(texto);
@@ -273,13 +267,15 @@
     f.setAttribute('aria-label', 'Editar ' + (d.nombre || d.id));
     let h = `<p class="plano-form__id">Identificador: ${limpio(d.id)}` +
       (d.origen === 'unifi' ? ' · viene de UniFi' : elegido.tipo === 'antena' ? ' · cargada a mano' : '') + '</p>' + campo('nombre', 'Nombre', d.nombre);
+    if (elegido.tipo !== 'antena') h += campo('corto', 'Nombre corto <span class="opcional">(opcional)</span>', d.corto || '', 'maxlength="12" aria-describedby="ed-corto-ayuda"') +
+      '<p class="plano-form__ayuda" id="ed-corto-ayuda">El que se muestra cuando el aula se ve chica.</p>';
     if (elegido.tipo === 'antena') {
       const opcion = (v, t) => `<option value="${v}"${d.estado === v ? ' selected' : ''}>${t}</option>`;
       h += '<div class="campo"><label class="label" for="ed-estado">Estado</label><select class="select" id="ed-estado" name="estado">' +
         (d.estado && d.estado !== 'sin-dato' ? '' : '<option value="" selected>Sin dato</option>') + opcion('activa', 'Activa') + opcion('sin-conexion', 'Sin conexión') + opcion('mantenimiento', 'En mantenimiento') + '</select></div>' +
-        '<fieldset class="plano-form__equipos"><legend class="label">Tipo de equipo</legend>' +
+        '<fieldset class="plano-form__equipos"><legend class="label">Tipo de equipo</legend><div class="plano-form__equipos-fila">' +
         Object.keys(unpsjbPlanos.equipos).map(k => { const q = unpsjbPlanos.equipos[k]; return `<label class="plano-form__equipo"><input class="solo-lector" type="radio" name="equipo" value="${k}"${d.equipo === k ? ' checked' : ''}>` +
-          `${unpsjbPlanos.dibujoEquipo(k)}<span><strong>${q.texto}</strong><span class="plano-form__equipo-ayuda">${q.ayuda}</span></span></label>`; }).join('') + '</fieldset>' +
+          `${unpsjbPlanos.dibujoEquipo(k)}<span>${k === 'router' ? 'Router' : q.texto}<span class="solo-lector">: ${q.ayuda}</span></span></label>`; }).join('') + '</div></fieldset>' +
         campo('modelo', 'Modelo <span class="opcional">(opcional)</span>', d.modelo) +
         campo('ip', 'IP <span class="opcional">(opcional)</span>', d.ip || '', 'inputmode="decimal" autocomplete="off" spellcheck="false"') +
         campo('nota', 'Nota <span class="opcional">(opcional)</span>', d.nota) +
@@ -316,6 +312,7 @@
   function aplicar(e) {
     const d = elegido.dato, c = e.target, v = c.value;
     if (['nombre', 'modelo', 'nota', 'estado', 'tipo', 'equipo', 'ip'].includes(c.name)) d[c.name] = v.trim();
+    else if (c.name === 'corto') { if (v.trim()) d.corto = v.trim(); else delete d.corto; }
     else if (c.name === 'reservable') d.reservable = c.checked;
     else if (c.name === 'revisar') { if (c.checked) d.revisar = true; else delete d.revisar; }
     else if (c.name === 'capacidad') d.capacidad = v === '' ? null : Math.max(0, Math.round(+v));

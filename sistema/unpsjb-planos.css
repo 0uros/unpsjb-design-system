@@ -78,24 +78,32 @@
 .plano-trazo--suave { color: var(--color-linea-control); stroke-width: 0.75px; }
 
 /* 3. Aulas ----------------------------------------------------------------- */
-/* La forma del aula (un polígono del SVG) y su rótulo (un botón). El estado va
-   en el ícono y en el texto del rótulo; el color acompaña.
-   Ocupada no es un error: va en neutro, no en rojo. */
+/* La forma del aula (un polígono del SVG) y su rótulo (un botón).
+   Lo que resalta es lo que tiene algo que decir:
+   - Sin dato y lo que no se reserva: un borde fino en neutro, sin relleno. Es
+     casi todo el plano, así que casi no pesa.
+   - Libre: verde. Ocupada: en neutro oscuro (no es un error: no va en rojo).
+   - Elegida: azul, y es lo único azul del plano. */
 .plano-zona {
-  --zona: var(--color-primario-texto);
-  fill: color-mix(in srgb, var(--zona) 10%, transparent);
+  --zona: var(--color-linea-control);
+  fill: transparent;                      /* sin relleno, pero se puede tocar toda */
   stroke: var(--zona);
-  stroke-width: 1.5px;
+  stroke-width: 1px;
   vector-effect: non-scaling-stroke;
   cursor: pointer;
   transition: fill var(--duracion-rapida) var(--curva);
 }
-.plano-zona--libre { --zona: var(--color-exito-texto); }
-.plano-zona--ocupada { --zona: var(--color-tinta-2); fill: color-mix(in srgb, var(--zona) 22%, transparent); }
-/* Lo que no se reserva (una oficina, la biblioteca): sin estado, casi sin relleno */
-.plano-zona--fija { --zona: var(--color-linea-control); fill: color-mix(in srgb, var(--zona) 8%, transparent); stroke-width: 1px; }
-.plano-zona:hover { fill: color-mix(in srgb, var(--zona) 28%, transparent); }
-.plano-zona--elegida { stroke: var(--color-primario-texto); stroke-width: 3px; }
+.plano-zona--libre { --zona: var(--color-exito-texto); fill: color-mix(in srgb, var(--zona) 14%, transparent); stroke-width: 1.5px; }
+.plano-zona--ocupada { --zona: var(--color-tinta-2); fill: color-mix(in srgb, var(--zona) 24%, transparent); stroke-width: 1.5px; }
+/* Lo que no se reserva (una oficina, la biblioteca): todavía más liviano */
+.plano-zona--fija { --zona: var(--color-linea); }
+.plano-zona:hover { fill: color-mix(in srgb, var(--color-primario-texto) 10%, transparent); }
+.plano-zona--elegida,
+.plano-zona--elegida:hover {
+  stroke: var(--color-primario-texto);
+  stroke-width: 2.5px;
+  fill: color-mix(in srgb, var(--color-primario-texto) 16%, transparent);
+}
 
 /* Rótulo y marca comparten cómo se ubican: el script pasa el punto en --x, --y */
 .plano-rotulo, .plano-marca {
@@ -111,43 +119,67 @@
 .plano-rotulo:focus-visible, .plano-marca:focus-visible { outline: 0; box-shadow: var(--anillo-foco); z-index: 2; }
 
 /* <button class="plano-rotulo plano-rotulo--libre"><svg class="icono">…</svg>
-     <span class="plano-rotulo__nombre">Aula 1</span>
-     <span class="plano-rotulo__estado">Libre</span></button> */
+     <span class="plano-rotulo__nombre">Aula 17</span>
+     <span class="plano-rotulo__breve">17</span>
+     <span class="plano-rotulo__estado">Libre hasta las 14:00</span></button>
+   El rótulo pesa según lo que dice. Sin dato: el nombre solo, sin caja. Libre: caja
+   blanca con borde verde y su tilde. Ocupada: caja llena, oscura. Así libre y ocupada
+   se distinguen también sin color (una es hueca y la otra llena). */
 .plano-rotulo {
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
-  min-height: 28px;
-  padding: 0 var(--espacio-2);
-  font: 700 0.8125rem/1.2 var(--fuente-texto);
+  min-height: 24px;
+  padding: 0 6px;
+  font: 600 0.8125rem/1.2 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
   color: var(--color-tinta);
-  background: var(--color-panel);
-  border: 1px solid var(--color-linea-control);
+  background: color-mix(in srgb, var(--color-panel) 86%, transparent);   /* tapa las líneas del plano que pasan por detrás */
+  border: 1px solid transparent;
   border-radius: var(--radio-control);
 }
-.plano-rotulo .icono { width: 14px; height: 14px; color: var(--color-tinta-2); }
-.plano-rotulo--libre .icono { color: var(--color-exito-texto); }
-.plano-rotulo__estado { font-weight: 400; color: var(--color-tinta-2); }
+.plano-rotulo .icono { flex: none; width: 14px; height: 14px; }
+.plano-rotulo__nombre, .plano-rotulo__breve { overflow: hidden; text-overflow: ellipsis; }
+.plano-rotulo__breve { display: none; }
+.plano-rotulo__estado { font-weight: 400; }
 .plano-rotulo__estado::before { content: "· "; }
+.plano-rotulo--fija { font-weight: 400; color: var(--color-tinta-2); }
+.plano-rotulo--libre { font-weight: 700; background: var(--color-panel); border-color: var(--color-exito-texto); }
+.plano-rotulo--libre .icono { color: var(--color-exito-texto); }
+.plano-rotulo--libre .plano-rotulo__estado { color: var(--color-tinta-2); }
+.plano-rotulo--ocupada { font-weight: 700; color: var(--color-panel); background: var(--color-tinta-2); border-color: var(--color-tinta-2); }
 /* Cuando el aula se ve chica, el rótulo se acorta para no salirse de ella:
-   --medio  sin el estado      --corto  solo el nombre      --chico  solo el ícono
-   El nombre y el estado siguen estando para el lector de pantalla (aria-label). */
+   --medio  sin el estado     --corto  ícono y nombre breve     --chico  el nombre breve solo
+   El nombre es lo último que se pierde: nunca queda el ícono solo. El nombre entero y el
+   estado siguen estando para el lector de pantalla (aria-label) y al pasar el mouse (title). */
 .plano-rotulo--medio .plano-rotulo__estado,
 .plano-rotulo--corto .plano-rotulo__estado,
-.plano-rotulo--corto .icono,
 .plano-rotulo--chico .plano-rotulo__estado,
-.plano-rotulo--chico .plano-rotulo__nombre { display: none; }
-/* Lo que no se reserva no tiene estado: su ícono aparece solo cuando no entra el nombre */
-.plano-rotulo--fija:not(.plano-rotulo--chico) .icono { display: none; }
-.plano-rotulo--corto { padding: 0 var(--espacio-1); }
-.plano-rotulo--chico { padding: 0; width: 28px; justify-content: center; }
+.plano-rotulo--corto .plano-rotulo__nombre,
+.plano-rotulo--chico .plano-rotulo__nombre,
+.plano-rotulo--chico .icono { display: none; }
+.plano-rotulo--corto .plano-rotulo__breve,
+.plano-rotulo--chico .plano-rotulo__breve { display: block; }
+.plano-rotulo--corto, .plano-rotulo--chico { padding: 0 var(--espacio-1); }
+.plano-rotulo--chico { min-height: 20px; min-width: 20px; justify-content: center; font-size: 0.75rem; }
+/* Un local angosto y alto: el nombre va de pie, de abajo hacia arriba, como en un plano */
+.plano-rotulo--de-pie {
+  writing-mode: vertical-rl;
+  transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%)) rotate(180deg);
+  min-width: 20px;
+  min-height: 0;
+  padding: var(--espacio-1) 0;
+}
 .plano-rotulo:hover { border-color: var(--color-primario-texto); }
 .plano-rotulo[aria-pressed="true"] {
+  color: var(--color-tinta);
   border-color: var(--color-primario-texto);
   background: color-mix(in srgb, var(--color-primario-texto) 14%, var(--color-panel));
   outline: 1px solid var(--color-primario-texto);
+  z-index: 1;
 }
+.plano-rotulo[aria-pressed="true"] .icono { color: var(--color-primario-texto); }
 
 /* 4. Antenas --------------------------------------------------------------- */
 /* <button class="plano-marca plano-marca--sin-conexion" aria-label="Antena AP Hall, sin conexión">
@@ -208,6 +240,20 @@
 }
 .plano__referencias li { display: inline-flex; align-items: center; gap: var(--espacio-2); }
 .plano__referencias > li > .icono { width: 16px; height: 16px; }
+/* La referencia de un aula: un recorte de su zona, con el ícono si lo lleva */
+.plano__muestra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 18px;
+  border: 1px solid var(--color-linea-control);
+  border-radius: 2px;
+}
+.plano__muestra .icono { width: 12px; height: 12px; }
+.plano__muestra--libre { color: var(--color-exito-texto); border-color: currentColor; background: color-mix(in srgb, currentColor 14%, transparent); }
+.plano__muestra--ocupada { color: var(--color-panel); border-color: var(--color-tinta-2); background: var(--color-tinta-2); }
 .plano__referencia--exito .icono { color: var(--color-exito-texto); }
 .plano__referencia--error .icono { color: var(--color-error-texto); }
 .plano__referencia--advertencia .icono { color: var(--color-advertencia-texto); }
@@ -257,7 +303,9 @@
 }
 @media (forced-colors: active) {
   .plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { color: CanvasText; }
-  .plano-zona { fill: none; stroke: ButtonText; }
+  .plano-zona { fill: transparent; stroke: ButtonText; }
+  .plano-rotulo { background: ButtonFace; border-color: ButtonText; }
+  .plano-rotulo--ocupada { background: ButtonText; color: ButtonFace; }
   .plano-zona--elegida { stroke: Highlight; }
   .plano-marca[aria-pressed="true"], .plano-rotulo[aria-pressed="true"] { outline-color: Highlight; }
   .plano-marca__aviso { background: ButtonText; color: ButtonFace; }
@@ -265,68 +313,73 @@
 
 /* 7. Modo edición ---------------------------------------------------------- */
 /* Lo arma unpsjb-planos-editor.js cuando la dirección lleva ?editar. Reglas: 21.G.
-   La barra va arriba del plano y tiene tres partes, de arriba abajo: qué es esto y
-   cómo se publica; qué se puede agregar (antenas | aulas); y qué está pasando ahora. */
-.plano-editor { margin-bottom: var(--espacio-6); }
-.plano-editor p { margin: 0; }
-.plano-editor__cabecera { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--espacio-4) var(--espacio-8); }
-.plano-editor__cabecera > :first-child { flex: 1 1 320px; max-width: var(--medida-lectura); }
-.plano-editor__titulo { margin: 0 0 var(--espacio-2); font: var(--texto-titulo-3); }
-.plano-editor__publicar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2); }
-.plano-editor__grupos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--espacio-6) var(--espacio-12);
-  margin-top: var(--espacio-6);
-  padding-top: var(--espacio-6);
-  border-top: 1px solid var(--color-linea);
+   Una tira pegada al plano, para que el plano no se vaya de la vista: arriba las
+   herramientas (qué agregar | lo que falta ubicar | publicar, contra el borde
+   derecho) y abajo, en una franja, qué está pasando ahora. */
+.plano-editor {
+  margin-bottom: var(--espacio-3);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
 }
-.plano-editor__grupo { display: flex; flex-direction: column; align-items: flex-start; gap: var(--espacio-3); min-width: 0; }
-.plano-editor__subtitulo { margin: 0; font: var(--texto-label); color: var(--color-tinta-2); }
-.plano-editor__sin-ubicar { display: flex; flex-direction: column; gap: var(--espacio-1); width: 100%; margin-top: var(--espacio-3); }
-.plano-editor__linea { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2); max-width: 100%; }
-.plano-editor__linea .select { flex: 1 1 200px; width: auto; min-width: 0; }
+.plano-editor p { margin: 0; }
+.plano-editor__fila { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2) var(--espacio-6); padding: var(--espacio-2) var(--espacio-3); }
+.plano-editor__grupo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2); min-width: 0; }
+.plano-editor__grupo[hidden] { display: none; }
+.plano-editor__publicar { margin-left: auto; }
+.plano-editor__rotulo { font: var(--texto-label); color: var(--color-tinta-2); white-space: nowrap; }
+.plano-editor__sin-ubicar .select { width: auto; min-width: 0; max-width: 240px; min-height: 36px; padding-block: 0; }
 /* Qué está pasando ahora: el aviso y, mientras se marca, "Cerrar la forma" y "Cancelar" */
 .plano-editor__ahora {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--espacio-2) var(--espacio-4);
-  min-height: var(--alto-control);
-  margin-top: var(--espacio-6);
-  padding: var(--espacio-2) var(--espacio-4);
+  gap: var(--espacio-2) var(--espacio-3);
+  min-height: 40px;
+  padding: var(--espacio-1) var(--espacio-3);
   background: var(--color-capa);
-  border-radius: var(--radio-control);
+  border-top: 1px solid var(--color-linea);
+  border-radius: 0 0 calc(var(--radio-contenedor) - 1px) calc(var(--radio-contenedor) - 1px);
 }
-.plano-editor__estado { flex: 1 1 240px; font: var(--texto-label); color: var(--color-tinta); max-width: none; }
+.plano-editor__estado { flex: 1 1 240px; font: var(--texto-detalle); color: var(--color-tinta); max-width: none; }
+/* Mientras se marca, la franja avisa con el color de lo que se está dibujando */
+.plano--marcando-barra .plano-editor__ahora { background: color-mix(in srgb, var(--color-primario-texto) 12%, var(--color-panel)); }
+.plano--marcando-barra .plano-editor__estado { font-weight: 700; }
 
-/* El formulario de lo elegido: va dentro del panel de detalle, debajo de la ficha */
+/* En edición, el panel de lo elegido muestra el formulario y no la ficha: los datos
+   no van dos veces. Queda el nombre como título. */
+.plano--editando .plano__detalle .resumen,
+.plano--editando .plano__detalle .plano__tipo,
+.plano--editando .plano__detalle .plano__acciones { display: none; }
+.plano--editando .plano__detalle .plano-form { margin-top: var(--espacio-2); padding-top: 0; border-top: 0; }
 .plano-form { margin-top: var(--espacio-4); padding-top: var(--espacio-4); border-top: 1px solid var(--color-linea); }
 .plano-form .campo { margin-bottom: var(--espacio-3); }
 .plano-form__par { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espacio-2); }
 .plano-form__id { margin: 0 0 var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); overflow-wrap: anywhere; }
-/* El tipo de equipo de una antena: tres opciones, cada una con su dibujo */
+.plano-form__ayuda { margin: calc(var(--espacio-2) * -1) 0 var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); }
+/* El tipo de equipo de una antena: tres opciones en una fila, el dibujo arriba y el nombre abajo */
 .plano-form__equipos { margin: 0 0 var(--espacio-3); padding: 0; border: 0; min-width: 0; }
 .plano-form__equipos legend { padding: 0; margin-bottom: var(--espacio-1); }
+.plano-form__equipos-fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espacio-1); }
 .plano-form__equipo {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--espacio-3);
-  min-height: var(--alto-control);
-  padding: var(--espacio-2) var(--espacio-3);
-  margin-top: var(--espacio-1);
+  gap: 2px;
+  padding: var(--espacio-2) var(--espacio-1);
   font: var(--texto-detalle);
+  text-align: center;
   color: var(--color-tinta);
   background: var(--color-panel);
   border: 1px solid var(--color-linea-control);
   border-radius: var(--radio-control);
   cursor: pointer;
 }
-.plano-form__equipo strong { display: block; }
-.plano-form__equipo-ayuda { color: var(--color-tinta-2); }
+.plano-form__equipo .plano__dibujo { width: 28px; height: 28px; }
 .plano-form__equipo:hover { border-color: var(--color-primario-texto); }
 .plano-form__equipo:has(input:checked) {
+  font-weight: 700;
   border-color: var(--color-primario-texto);
   outline: 1px solid var(--color-primario-texto);
   background: color-mix(in srgb, var(--color-primario-texto) 10%, var(--color-panel));

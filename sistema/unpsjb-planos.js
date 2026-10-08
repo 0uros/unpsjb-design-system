@@ -39,6 +39,8 @@
    - "aulas" son todos los espacios con nombre. "tipo" (opcional) dice qué es:
      "Laboratorio", "Oficina"… Sin tipo, es un aula. Con "reservable": false no
      lleva estado. Sin "puntos" figura en la lista pero no en el plano.
+   - "corto" (opcional): el nombre que se muestra cuando el aula se ve chica
+     ("Jurídicas"). Sin él, "Aula 17" pasa a "17" y "Laboratorio de…" a "Lab. …".
 
    La ocupación
      { "pb-aula-1": { "estado": "ocupada", "hasta": "16:00", "evento": "Álgebra I" },
@@ -250,11 +252,18 @@
         b.style.setProperty('--x', ((+b.dataset.x - vista.x) * e).toFixed(1) + 'px');
         b.style.setProperty('--y', ((+b.dataset.y - vista.y) * e).toFixed(1) + 'px');
         if (b.dataset.ancho) {
-          // El rótulo no se sale de su aula. Si no entra entero se va el estado; después
-          // el ícono; y si tampoco entra el nombre, queda el ícono solo.
+          // El rótulo no se sale de su aula. Si no entra entero se va el estado; después el
+          // nombre pasa a su forma breve ("17"); después se va el ícono. El nombre es lo último
+          // que se pierde: si ni el breve entra, se corta con puntos suspensivos.
           const lugar = +b.dataset.ancho * e - 6;
           const talla = lugar >= +b.dataset.entero ? '' : lugar >= +b.dataset.medio ? 'medio' : lugar >= +b.dataset.corto ? 'corto' : 'chico';
           ['medio', 'corto', 'chico'].forEach(t => b.classList.toggle('plano-rotulo--' + t, t === talla));
+          // Un local angosto y alto (un laboratorio chico, un depósito): el nombre va de pie
+          const alto = +b.dataset.alto * e - 6;
+          const dePie = talla === 'chico' && +b.dataset.chico > lugar && alto > lugar * 1.5;
+          b.classList.toggle('plano-rotulo--de-pie', dePie);
+          b.style.maxWidth = talla === 'chico' && !dePie ? Math.max(24, lugar).toFixed(0) + 'px' : '';
+          b.style.maxHeight = dePie ? Math.max(24, alto).toFixed(0) + 'px' : '';
         }
       });
     }
@@ -274,10 +283,18 @@
         texto: base.texto + (o.hasta && base !== ESTADOS_AULA[''] ? ' hasta las ' + o.hasta : '')
       };
     }
+    // El nombre que entra en un aula chica: "17" por "Aula 17", "Lab. Física" por "Laboratorio de Física".
+    // Los datos pueden traer el suyo en "corto".
+    function breve(a) {
+      if (a.corto) return String(a.corto);
+      const n = String(a.nombre || a.id);
+      const aula = /^Aula\s+(\d+\s?[a-zñ]?)$/i.exec(n);
+      return aula ? aula[1] : n.replace(/^Laboratorio(\s+de)?\s+/i, 'Lab. ');
+    }
     function centro(puntos) {
       const xs = puntos.map(p => p[0]), ys = puntos.map(p => p[1]);
       const x1 = Math.min(...xs), x2 = Math.max(...xs), y1 = Math.min(...ys), y2 = Math.max(...ys);
-      return { x: (x1 + x2) / 2, y: (y1 + y2) / 2, ancho: x2 - x1 };
+      return { x: (x1 + x2) / 2, y: (y1 + y2) / 2, ancho: x2 - x1, alto: y2 - y1 };
     }
 
     // --- Pintar: zonas, marcas, referencias y lista de la planta actual ----
@@ -293,16 +310,22 @@
         const e = estadoAula(a);
         const p = document.createElementNS(NS, 'polygon');
         p.setAttribute('points', a.puntos.map(q => q.join(',')).join(' '));
-        p.setAttribute('class', 'plano-zona' + (e.clave ? ' plano-zona--' + e.clave : '') + (es('aula', a.id) ? ' plano-zona--elegida' : ''));
+        p.setAttribute('class', 'plano-zona plano-zona--' + (e.clave || 'sin-dato') + (es('aula', a.id) ? ' plano-zona--elegida' : ''));
         p.dataset.id = a.id;
         gZonas.append(p);
         const c = centro(a.puntos);
-        const b = crear('button', 'plano-rotulo' + (e.clave ? ' plano-rotulo--' + e.clave : ''),
-          icono(e.icono) + `<span class="plano-rotulo__nombre">${limpio(a.nombre)}</span>` +
-          (e.texto ? `<span class="plano-rotulo__estado">${limpio(e.texto)}</span>` : ''));
+        // Solo lo libre y lo ocupado llevan ícono y estado: lo demás es el nombre y nada más,
+        // para que en el plano resalte lo que tiene algo que decir
+        const conEstado = e.clave === 'libre' || e.clave === 'ocupada';
+        const corto = breve(a);
+        const b = crear('button', 'plano-rotulo plano-rotulo--' + (e.clave || 'sin-dato'),
+          (conEstado ? icono(e.icono) : '') + `<span class="plano-rotulo__nombre">${limpio(a.nombre)}</span>` +
+          `<span class="plano-rotulo__breve">${limpio(corto)}</span>` +
+          (conEstado ? `<span class="plano-rotulo__estado">${limpio(e.texto)}</span>` : ''));
+        if (corto !== a.nombre) b.title = a.nombre;
         b.type = 'button';
         b.dataset.tipo = 'aula'; b.dataset.id = a.id;
-        b.dataset.x = c.x; b.dataset.y = c.y; b.dataset.ancho = c.ancho;
+        b.dataset.x = c.x; b.dataset.y = c.y; b.dataset.ancho = c.ancho; b.dataset.alto = c.alto;
         b.setAttribute('aria-label', a.nombre + (e.texto ? ', ' + e.texto.toLowerCase() : ''));
         b.setAttribute('aria-pressed', es('aula', a.id));
         encima.append(b);
@@ -321,10 +344,10 @@
       // Cuánto mide cada rótulo en cada talla, para saber cuál entra en su aula
       const rotulos = Array.from(encima.querySelectorAll('.plano-rotulo'));
       const medir = (talla, dato) => {
-        rotulos.forEach(b => { b.className = b.className.replace(/ plano-rotulo--(medio|corto|chico)/g, '') + (talla ? ' plano-rotulo--' + talla : ''); });
+        rotulos.forEach(b => { b.style.maxWidth = b.style.maxHeight = ''; b.className = b.className.replace(/ plano-rotulo--(medio|corto|chico|de-pie)(?![a-z-])/g, '') + (talla ? ' plano-rotulo--' + talla : ''); });
         rotulos.forEach(b => { b.dataset[dato] = b.offsetWidth; });
       };
-      medir('', 'entero'); medir('medio', 'medio'); medir('corto', 'corto');
+      medir('', 'entero'); medir('medio', 'medio'); medir('corto', 'corto'); medir('chico', 'chico');
       ubicar();
 
       // Referencias: solo de lo que hay en esta planta
@@ -337,7 +360,12 @@
         // La referencia de una antena es su misma marca, en chico
         refs.push([{ tono: '', html: `<span class="plano-marca plano-marca--muestra${ESTADOS_ANTENA[a.estado] ? ' plano-marca--' + a.estado : ''}">${marca({ equipo: 'plato' }, e)}</span>` }, 'Antena: ' + e.texto.toLowerCase()]);
       });
-      aulas.forEach(a => { const e = ESTADOS_AULA[estadoAula(a).clave]; if (e && !vistos.has('u' + e.texto)) { vistos.add('u' + e.texto); refs.push([e, 'Aula: ' + e.texto.toLowerCase()]); } });
+      // La referencia de un aula es un recorte de su zona, con el ícono si lo lleva
+      ['libre', 'ocupada', ''].forEach(clave => {
+        if (!aulas.some(a => a.puntos && a.puntos.length > 2 && estadoAula(a).clave === clave)) return;
+        const e = ESTADOS_AULA[clave];
+        refs.push([{ tono: '', html: `<span class="plano__muestra plano__muestra--${clave || 'sin-dato'}">${clave ? icono(e.icono) : ''}</span>` }, 'Aula: ' + e.texto.toLowerCase()]);
+      });
       referencias.innerHTML = refs.map(([e, t]) => `<li class="${e.tono ? 'plano__referencia--' + e.tono : ''}">${e.html || icono(e.icono)}${limpio(t)}</li>`).join('');
       referencias.hidden = !refs.length;
 
