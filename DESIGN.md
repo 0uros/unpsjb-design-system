@@ -1582,7 +1582,8 @@ El plano muestra **el estado de ahora**. Para elegir un aula y un horario está 
 
 ### A. El dibujo
 
-- **El plano es el fondo: va en neutros.** Muros en `tinta-2`, el resto (escaleras, cotas, mobiliario) en `linea-control`. **Nunca con los colores de CAD** (rojo, verde, cian, amarillo puros): chocan con el semáforo y no se ven en modo oscuro. El color queda para lo que se marca encima.
+- **Es un mapa, no un plano de obra.** El lienzo es el piso (pasillos, exterior) y va en un tono; los locales con nombre se rellenan en otro, más claro (21.D). Así el edificio tiene cuerpo y se ve de un vistazo qué es local y qué es paso. Un plano de arquitectura puesto tal cual sobre blanco no cumple ese trabajo: todo pesa lo mismo.
+- **El dibujo queda de fondo, apagado.** Muros en `linea-control`; el resto (escaleras, cotas, mobiliario, textos del original) en el mismo tono al 45 %. La forma del edificio la dan los locales rellenos, no los muros. **Nunca con los colores de CAD** (rojo, verde, cian, amarillo puros): chocan con el semáforo y no se ven en modo oscuro. El color queda para lo que se marca encima.
 - **Es un SVG de solo trazos,** con tres clases: `.plano-trazo` (muros, columnas, aberturas), `.plano-trazo--suave` (lo demás) y `.plano-trazo--rotulo` (los nombres escritos en el plano original). El color lo pone la hoja con `currentColor`; el archivo no trae colores.
 - **Nunca una imagen** (PNG, JPG) ni un PDF incrustado: se pixelan al acercar, no cambian con el tema y pesan más.
 - **Las líneas no engordan al acercar:** miden 1px a cualquier distancia. Es un plano, no una foto.
@@ -1594,7 +1595,7 @@ El plano muestra **el estado de ahora**. Para elegir un aula y un horario está 
 | Pieza | Clase | Regla |
 |---|---|---|
 | Barra | `.plano__barra` | Las plantas (segmentado) a la izquierda; "Plano \| Lista" último, contra el borde derecho. En el medio, lo que aparece y desaparece: las capas (casillas "Antenas", "Aulas") y acercar. |
-| Lienzo | `.plano__lienzo` | Fondo `panel`, borde `linea`. El alto sale de la proporción del plano, sin pasar del 70 % de la ventana: la página se puede seguir moviendo por fuera. |
+| Lienzo | `.plano__lienzo` | Fondo `--plano-suelo` (`capa` en claro, `fondo` en oscuro), borde `linea`. El alto sale de la proporción del plano, sin pasar del 70 % de la ventana: la página se puede seguir moviendo por fuera. |
 | Detalle | `.plano__detalle` | Un panel fijo al costado (280px; debajo, con menos de 1024px) con la ficha de lo elegido, en una lista de resumen (7.L). **Sin cartel flotante** (7.P). |
 | Referencias | `.plano__referencias` | Debajo del plano: el ícono de cada estado con su nombre. Solo los que hay en esa planta. |
 | Lista | `.plano__lista` | Una tabla de antenas y otra de aulas de la planta, con los mismos datos. |
@@ -1634,20 +1635,20 @@ Los tres dibujos son propios del módulo (Lucide no los tiene), con su mismo tra
 
 ### D. Aulas
 
-Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.plano-rotulo`, un botón). **Pesa según lo que tiene para decir:** lo que resalta en el plano es lo libre, lo ocupado y lo elegido; lo demás casi no se ve.
+Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.plano-rotulo`, un botón). **Toda zona se rellena con el tono de local** (`--plano-local`: `panel` en claro, `capa` en oscuro): tapa el dibujo que tiene debajo y se despega del piso. Encima de eso, **pesa según lo que tiene para decir:** lo que resalta es lo libre y lo elegido.
 
 | Estado | Zona | Rótulo |
 |---|---|---|
-| Libre | `exito-texto`: borde de 1,5px y relleno al 14 % | Caja `panel` con borde `exito-texto`, ícono `check`, nombre y hasta cuándo |
-| Ocupada | `tinta-2`: borde de 1,5px y relleno al 24 %. **No en rojo:** un aula ocupada no es un error | Caja llena en `tinta-2` con el texto en `panel`, ícono `clock`, nombre y hasta cuándo |
-| Sin dato | `linea-control`: borde de 1px, **sin relleno** | El nombre solo, sin caja ni ícono |
-| No se reserva | `linea`: borde de 1px, sin relleno | El nombre solo, en `tinta-2` y sin negrita |
+| Libre | `exito-texto`: borde de 1,5px y relleno al 16 % sobre el tono de local | **Caja llena** en `exito` con el texto en blanco (5.5:1), ícono `check`, nombre y hasta cuándo. Es lo que se busca: es lo que primero se ve |
+| Ocupada | `tinta-2`: borde de 1px y relleno al 14 %. **No en rojo:** un aula ocupada no es un error | **Caja hueca:** fondo `panel`, borde `linea-control`, ícono `clock` en `tinta-2`, nombre y hasta cuándo |
+| Sin dato | El tono de local, con borde `linea-control` de 1px | El nombre solo, sin caja ni ícono |
+| No se reserva | A medio camino entre el local y el piso, con borde `linea-control` de 1px | El nombre solo, en `tinta-2` y sin negrita |
 
 - **"Sin dato" suele ser casi todo el plano:** por eso no lleva color, ni ícono, ni dice "Sin dato" en cada aula. El estado está en el panel, en la lista y en el nombre del botón.
 - **El azul (`primario-texto`) es solo para lo elegido:** borde de 2,5px y relleno al 16 % en la zona, y el rótulo con borde y fondo azulados. Ningún estado lo usa.
-- **Libre y ocupada se distinguen también sin color:** una caja es hueca y la otra llena, y cada una tiene su ícono.
+- **Libre y ocupada se distinguen también sin color:** una caja es llena y la otra hueca, y cada una tiene su ícono.
 - El texto dice hasta cuándo, si se sabe: "Ocupada hasta las 16:00", "Libre hasta las 14:00".
-- **El rótulo nunca se sale de su aula, y el nombre es lo último que se pierde.** Si no entra entero, se acorta de a un paso: sin el estado (`--medio`); con el ícono y el **nombre breve** (`--corto`); el nombre breve solo (`--chico`). **Nunca queda el ícono solo.** En el paso más chico el estado se ve por la caja (hueca, llena o sin caja). Lo que deja de verse sigue en el nombre del botón, en el panel y en la lista. Al acercar, vuelve.
+- **El rótulo nunca se sale de su aula, y el nombre es lo último que se pierde.** Si no entra entero, se acorta de a un paso: sin el estado (`--medio`); con el ícono y el **nombre breve** (`--corto`); el nombre breve solo (`--chico`). **Nunca queda el ícono solo.** En el paso más chico el estado se ve por la caja (llena, hueca o sin caja). Lo que deja de verse sigue en el nombre del botón, en el panel y en la lista. Al acercar, vuelve.
 - **El nombre breve** sale solo: "17" por "Aula 17", "Lab. Física" por "Laboratorio de Física". Para los demás, los datos pueden traer el suyo en `"corto"` ("Jurídicas" por "Facultad de Ciencias Jurídicas"). Si ni el breve entra, se corta con puntos suspensivos; el nombre entero aparece al pasar el mouse.
 - **En un local angosto y alto, el nombre va de pie** (`--de-pie`), de abajo hacia arriba, como en un plano.
 - **No todo lo que tiene nombre se reserva.** La biblioteca, una oficina o un laboratorio de investigación también se marcan, para ubicarse, pero **sin estado**: llevan `"reservable": false` y `"tipo"` ("Oficina", "Laboratorio"…), y en la lista dicen su tipo.

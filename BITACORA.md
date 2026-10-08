@@ -969,3 +969,23 @@ Lo que quedó sin hacer de la crítica:
 - [ ] Los textos chicos del dibujo de AutoCAD ("CIRCULACIÓN", cotas) compiten con los rótulos: sacarlos en el conversor de la herramienta.
 - [ ] El título repetido en la banda y en el `h1`; las columnas casi vacías de la lista; las antenas sin ubicar no figuran fuera de edición.
 - [ ] En la herramienta de la sede, el dibujo de Nivel 1 corta la fila de aulas de arriba (es del SVG, no del módulo), y faltan los nombres cortos de las oficinas.
+
+## 2026-10-08 — Planos: el plano en modo claro pasa a ser un mapa (piso y locales)
+
+Pedido del usuario: "el mapa en modo claro se ve raro, no me gustan los colores"; sugirió buscar referencias. Rama `planos-claro`, que sale de `planos`.
+
+Qué pasaba, mirando la herramienta con los datos reales: en oscuro el plano funciona como cianotipo (líneas claras sobre fondo profundo); en claro era el dibujo de AutoCAD tal cual, en pizarra sobre blanco. Aulas, pasillos y exterior eran el mismo blanco, los muros dobles pesaban más que las aulas, y "ocupada" en gris oscuro parecía deshabilitada.
+
+Referencias que se miraron: el estilo de mapas de interiores de Mappedin (locales rellenos en un tono claro, muros finos, casi sin color; el color queda para lo que se busca) y los planos de las herramientas de reserva (Robin, Joan, Humly, Flowscape, Teem: verde para libre; rojo o gris para ocupado).
+
+- **Piso y locales en dos tonos** (`--plano-suelo`, `--plano-local`, que salen de `capa`/`panel` en claro y `fondo`/`capa` en oscuro). Toda zona se rellena: tapa el ruido del dibujo que tiene debajo.
+- **El dibujo de AutoCAD se apaga:** muros en `linea-control`, lo demás al 45 %.
+- **Libre es lo que se busca:** caja llena en verde. Ocupada pasa a caja hueca en neutro. Sigue valiendo "se distinguen sin color" (llena y hueca), al revés que antes.
+- Reglas tocadas: 21.A, 21.B (lienzo) y 21.D.
+
+Verificado en Chrome sin ventana: herramienta real (las tres plantas en claro, Planta baja y Nivel 1 en oscuro, un aula elegida, a 1366 px) y la muestra en claro y oscuro. No se miró el plano en celular (a 390 px abre la lista), ni se pasó axe, ni se probó impresión ni alto contraste.
+
+Sin decidir (se le mostraron al usuario capturas de las dos):
+- [ ] **Ocupada en rojo,** como todas las herramientas de reserva. Hoy lo prohíbe 21.D.
+- [ ] **Color por tipo de local** (laboratorio, oficina, biblioteca, sala) con los tonos de categoría, y el estado solo en el rótulo. Pide `data-tipo` en la zona y referencias de tipo.
+
