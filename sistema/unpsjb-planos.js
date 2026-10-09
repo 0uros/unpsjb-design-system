@@ -63,6 +63,7 @@
 
   const NS = 'http://www.w3.org/2000/svg';
   const ZOOM_MAX = 12;
+  const ZOOM_DETALLE = 2;          // desde cuánto acercamiento se ve el detalle del dibujo
   const ICONOS = {
     'wifi': '<path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/>',
     'wifi-off': '<path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/>',
@@ -213,6 +214,8 @@
       vista.x = cx - vista.w / 2;
       vista.y = cy - vista.h / 2;
       svg.setAttribute('viewBox', `${vista.x} ${vista.y} ${vista.w} ${vista.h}`);
+      // El detalle del dibujo (escaleras, mobiliario, textos del original) aparece recién al acercar
+      raiz.classList.toggle('plano--cerca', anchoTodo() / vista.w >= ZOOM_DETALLE);
       ubicar();
     }
     function centrar(cx, cy, w) {
@@ -291,10 +294,58 @@
       const aula = /^Aula\s+(\d+\s?[a-zñ]?)$/i.exec(n);
       return aula ? aula[1] : n.replace(/^Laboratorio(\s+de)?\s+/i, 'Lab. ');
     }
+    // Qué tan adentro del local está un punto: la distancia al borde más cercano (negativa si está afuera)
+    function adentro(puntos, x, y) {
+      let dentro = false, d2 = Infinity;
+      for (let i = 0, j = puntos.length - 1; i < puntos.length; j = i++) {
+        const [ax, ay] = puntos[i], [bx, by] = puntos[j];
+        if ((ay > y) !== (by > y) && x < (bx - ax) * (y - ay) / (by - ay) + ax) dentro = !dentro;
+        const vx = bx - ax, vy = by - ay;
+        const t = entre(((x - ax) * vx + (y - ay) * vy) / (vx * vx + vy * vy || 1), 0, 1);
+        d2 = Math.min(d2, (x - ax - t * vx) ** 2 + (y - ay - t * vy) ** 2);
+      }
+      return (dentro ? 1 : -1) * Math.sqrt(d2);
+    }
+    // El lugar libre a cada lado de un punto, a lo ancho (eje 0) o a lo alto (eje 1), sin salir del local
+    function lugarEn(puntos, x, y, eje) {
+      const p = eje ? x : y, q = eje ? y : x;
+      let antes = -Infinity, despues = Infinity;
+      for (let i = 0, j = puntos.length - 1; i < puntos.length; j = i++) {
+        const a = puntos[i], b = puntos[j], a1 = a[1 - eje], b1 = b[1 - eje];
+        if ((a1 > p) === (b1 > p)) continue;
+        const corte = a[eje] + (p - a1) * (b[eje] - a[eje]) / (b1 - a1);
+        if (corte <= q) antes = Math.max(antes, corte); else despues = Math.min(despues, corte);
+      }
+      return 2 * Math.min(q - antes, despues - q);
+    }
+    // Dónde va el rótulo de un local y cuánto lugar tiene. En un rectángulo es el medio. En un
+    // local en L o en U el medio puede caer afuera o contra una pared: ahí se busca, en una
+    // grilla, el punto más alejado de todos los bordes (el "polo de inaccesibilidad"). Como lo
+    // que hay que ubicar es un nombre, entre los puntos que están bien adentro gana el que
+    // tiene más lugar a lo ancho: en una L, el brazo largo y no la esquina.
     function centro(puntos) {
       const xs = puntos.map(p => p[0]), ys = puntos.map(p => p[1]);
       const x1 = Math.min(...xs), x2 = Math.max(...xs), y1 = Math.min(...ys), y2 = Math.max(...ys);
-      return { x: (x1 + x2) / 2, y: (y1 + y2) / 2, ancho: x2 - x1, alto: y2 - y1 };
+      const medio = { x: (x1 + x2) / 2, y: (y1 + y2) / 2, ancho: x2 - x1, alto: y2 - y1 };
+      const enElMedio = adentro(puntos, medio.x, medio.y);
+      const N = 24, grilla = [];
+      let polo = enElMedio;
+      for (let i = 1; i < N; i++) for (let j = 1; j < N; j++) {
+        const x = x1 + medio.ancho * i / N, y = y1 + medio.alto * j / N, d = adentro(puntos, x, y);
+        if (d > 0) { grilla.push({ x, y, d }); polo = Math.max(polo, d); }
+      }
+      // Si el medio está casi tan adentro como el mejor punto, se queda en el medio
+      let p = medio;
+      if (enElMedio < polo * 0.9) {
+        let ancho = -1;
+        grilla.forEach(g => {
+          if (g.d < polo * 0.6) return;
+          const a = lugarEn(puntos, g.x, g.y, 0);
+          if (a > ancho + 0.01 || (a > ancho - 0.01 && g.d > p.d)) { ancho = Math.max(a, ancho); p = g; }
+        });
+      }
+      if (adentro(puntos, p.x, p.y) <= 0) return medio;       // un polígono mal cerrado: como antes
+      return { x: p.x, y: p.y, ancho: Math.min(medio.ancho, lugarEn(puntos, p.x, p.y, 0)), alto: Math.min(medio.alto, lugarEn(puntos, p.x, p.y, 1)) };
     }
 
     // --- Pintar: zonas, marcas, referencias y lista de la planta actual ----
