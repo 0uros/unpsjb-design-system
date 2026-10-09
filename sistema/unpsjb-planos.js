@@ -83,7 +83,10 @@
     'plus': '<path d="M5 12h14"/><path d="M12 5v14"/>',
     'minus': '<path d="M5 12h14"/>',
     'x': '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
-    'circle-x': '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>'
+    'circle-x': '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
+    'ayuda': '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+    'arrow-left': '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+    'map': '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/>'
   };
   const ESTADOS_ANTENA = {
     'activa': { texto: 'Activa', icono: 'wifi', tono: 'exito', aviso: '' },
@@ -128,6 +131,11 @@
   const icono = nombre => `<svg class="icono" viewBox="0 0 24 24" aria-hidden="true">${ICONOS[nombre] || ''}</svg>`;
   const limpio = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const entre = (v, min, max) => Math.min(max, Math.max(min, v));
+  // Para buscar: sin mayúsculas ni tildes
+  const llano = t => String(t == null ? '' : t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  // El nombre de una planta en su botón: "PB", "1", "2". Los datos pueden traer el suyo en "corto".
+  const plantaBreve = p => p.corto || (/baja/i.test(p.nombre) ? 'PB' : /subsuelo/i.test(p.nombre) ? 'SS' : (/\d+/.exec(p.nombre) || [])[0] ||
+    (/primer/i.test(p.nombre) ? '1' : /segund/i.test(p.nombre) ? '2' : /tercer/i.test(p.nombre) ? '3' : String(p.nombre || p.id).slice(0, 3)));
   function crear(etiqueta, clase, html) {
     const e = document.createElement(etiqueta);
     if (clase) e.className = clase;
@@ -170,31 +178,36 @@
     let vista = { x: 0, y: 0, w: 100, h: 100 };
     let modo = window.matchMedia('(max-width: 767px)').matches ? 'lista' : 'plano';
     const capas = { antenas: true, aulas: true };
+    let consulta = '';                // lo que se escribió en el buscador
     const dibujos = {};               // dibujos ya traídos, por planta
 
     // --- Estructura -------------------------------------------------------
+    // Un panel al costado (buscar, qué se muestra, la lista y la ficha de lo elegido) y el
+    // plano. Sobre el plano van solo los controles de la vista: planta, acercar y referencias.
     raiz.textContent = '';
-    const barra = crear('div', 'plano__barra');
-    const selPlanta = crear('fieldset', 'segmentado', '<legend class="solo-lector">Planta</legend>');
+    // Solo en pantallas angostas: se ve la lista o el plano
+    const selModo = crear('fieldset', 'segmentado plano__modo', '<legend class="solo-lector">Forma de verlo</legend>' +
+      `<label><input type="radio" name="plano-modo-${n}" value="lista"> Lista</label>` +
+      `<label><input type="radio" name="plano-modo-${n}" value="plano"> Plano</label>`);
+
+    const panel = crear('div', 'plano__panel');
+    const cajaBuscar = crear('div', 'plano__buscar', `<label class="solo-lector" for="plano-buscar-${n}">Buscar en el plano</label>` +
+      `<input class="input" type="search" id="plano-buscar-${n}" placeholder="Buscar aula, oficina o antena" autocomplete="off" spellcheck="false">`);
+    const campoBuscar = cajaBuscar.querySelector('input');
     const selCapas = crear('div', 'plano__capas');
     selCapas.setAttribute('role', 'group');
     selCapas.setAttribute('aria-label', 'Qué se muestra');
-    selCapas.innerHTML = '<label class="casilla"><input type="checkbox" value="antenas" checked> Antenas</label>' +
-      '<label class="casilla"><input type="checkbox" value="aulas" checked> Aulas</label>';
-    const zoom = crear('div', 'plano__zoom');
-    zoom.setAttribute('role', 'group');
-    zoom.setAttribute('aria-label', 'Acercar y alejar');
-    zoom.innerHTML = `<button class="boton boton--icono" type="button" data-zoom="1.5" aria-label="Acercar">${icono('plus')}</button>` +
-      `<button class="boton boton--icono" type="button" data-zoom="0.667" aria-label="Alejar">${icono('minus')}</button>` +
-      '<button class="boton boton--secundario boton--compacto" type="button" data-zoom="todo">Ver todo</button>';
-    const selModo = crear('fieldset', 'segmentado', '<legend class="solo-lector">Forma de verlo</legend>' +
-      `<label><input type="radio" name="plano-modo-${n}" value="plano"> Plano</label>` +
-      `<label><input type="radio" name="plano-modo-${n}" value="lista"> Lista</label>`);
-    barra.append(selPlanta, selCapas, zoom, selModo);
+    selCapas.innerHTML = '<label class="plano__filtro"><input type="checkbox" value="aulas" checked><span>Aulas y espacios</span></label>' +
+      '<label class="plano__filtro"><input type="checkbox" value="antenas" checked><span>Antenas</span></label>';
+    const resumen = crear('p', 'plano__resumen');
+    resumen.setAttribute('role', 'status');
+    const lista = crear('div', 'plano__lista');
+    const detalle = crear('div', 'plano__detalle');
+    detalle.setAttribute('aria-live', 'polite');
+    detalle.setAttribute('aria-label', 'Datos de lo elegido');
+    panel.append(cajaBuscar, selCapas, resumen, lista, detalle);
 
-    const cuerpo = crear('div', 'plano__cuerpo');
-    const principal = crear('div', 'plano__principal');
-    const vistaPlano = crear('div', 'plano__vista');
+    const principal = crear('div', 'plano__mapa');
     const lienzo = crear('div', 'plano__lienzo');
     lienzo.tabIndex = 0;
     lienzo.setAttribute('role', 'group');
@@ -209,17 +222,27 @@
     const cargando = crear('p', 'plano__cargando', 'Cargando el plano…');
     cargando.setAttribute('role', 'status');
     lienzo.append(svg, encima, cargando);
+    // Los controles de la vista van sobre el plano, pero fuera del lienzo: tocarlos no lo mueve
+    const selPlanta = crear('fieldset', 'plano__plantas', '<legend class="solo-lector">Planta</legend>');
+    const zoom = crear('div', 'plano__zoom');
+    zoom.setAttribute('role', 'group');
+    zoom.setAttribute('aria-label', 'Acercar y alejar');
+    zoom.innerHTML = `<div class="plano__zoom-par"><button type="button" data-zoom="1.5" aria-label="Acercar" title="Acercar">${icono('plus')}</button>` +
+      `<button type="button" data-zoom="0.667" aria-label="Alejar" title="Alejar">${icono('minus')}</button></div>` +
+      '<button class="plano__ver-todo" type="button" data-zoom="todo">Ver todo</button>';
+    // Cómo se mueve el plano: una ayuda que se abre, para no ocupar lugar todo el tiempo
+    const ayuda = crear('details', 'plano__ayuda', `<summary aria-label="Cómo mover el plano" title="Cómo mover el plano">${icono('ayuda')}</summary>` +
+      '<p class="plano__nota">Arrastrá para mover el plano. Para acercar: los botones, <kbd>Ctrl</kbd> + la rueda del mouse o dos dedos. Con el teclado: las flechas mueven, <kbd>+</kbd> y <kbd>−</kbd> acercan y alejan, y <kbd>0</kbd> muestra todo.</p>');
+    const marco = crear('div', 'plano__marco');
+    marco.append(lienzo, selPlanta, zoom, ayuda);
+    // Las referencias van en una tira debajo del plano: siempre a la vista y sin taparlo
     const referencias = crear('ul', 'plano__referencias');
     referencias.setAttribute('aria-label', 'Referencias');
-    const nota = crear('p', 'plano__nota', 'Arrastrá para mover el plano. Para acercar: los botones, <kbd>Ctrl</kbd> + la rueda del mouse o dos dedos. Con el teclado: las flechas mueven, <kbd>+</kbd> y <kbd>−</kbd> acercan y alejan.');
-    vistaPlano.append(lienzo, referencias, nota);
-    const lista = crear('div', 'plano__lista');
-    principal.append(vistaPlano, lista);
-    const detalle = crear('aside', 'plano__detalle panel');
-    detalle.setAttribute('aria-live', 'polite');
-    detalle.setAttribute('aria-label', 'Datos de lo elegido');
-    cuerpo.append(principal, detalle);
-    raiz.append(barra, cuerpo);
+    principal.append(marco, referencias);
+
+    const cuerpo = crear('div', 'plano__cuerpo');
+    cuerpo.append(panel, principal);
+    raiz.append(selModo, cuerpo);
     plano.extra = gExtra;
     plano.detalle = detalle;
 
@@ -381,6 +404,11 @@
     function pintar() {
       const antenas = capas.antenas ? deLaPlanta(plano.datos.antenas) : [];
       const aulas = capas.aulas ? deLaPlanta(plano.datos.aulas) : [];
+      // Lo que se busca: en el plano, lo que no coincide queda tenue
+      const q = llano(consulta).trim();
+      const coincide = (x, ...mas) => !q || [x.nombre, x.id, x.corto, x.modelo, x.ip, ...mas].some(t => t && llano(t).includes(q));
+      const coincideAula = a => coincide(a, tipoDe(a));
+      const coincideLugar = l => coincide(l, lugarDe(l).texto);
       const es = (tipo, id) => !!plano.elegido && plano.elegido.tipo === tipo && plano.elegido.id === id;
 
       gZonas.textContent = '';
@@ -392,7 +420,7 @@
         p.setAttribute('points', a.puntos.map(q => q.join(',')).join(' '));
         // El estado manda sobre el tipo: un laboratorio libre va en verde, no en su color
         const cat = e.clave === 'libre' || e.clave === 'ocupada' ? 0 : categoria(a);
-        p.setAttribute('class', 'plano-zona plano-zona--' + (e.clave || 'sin-dato') + (cat ? ' plano-zona--cat-' + cat : '') + (es('aula', a.id) ? ' plano-zona--elegida' : ''));
+        p.setAttribute('class', 'plano-zona plano-zona--' + (e.clave || 'sin-dato') + (cat ? ' plano-zona--cat-' + cat : '') + (coincideAula(a) ? '' : ' plano-zona--tenue') + (es('aula', a.id) ? ' plano-zona--elegida' : ''));
         p.dataset.id = a.id;
         gZonas.append(p);
         const c = centro(a.puntos);
@@ -400,7 +428,7 @@
         // para que en el plano resalte lo que tiene algo que decir
         const conEstado = e.clave === 'libre' || e.clave === 'ocupada';
         const corto = breve(a);
-        const b = crear('button', 'plano-rotulo plano-rotulo--' + (e.clave || 'sin-dato'),
+        const b = crear('button', 'plano-rotulo plano-rotulo--' + (e.clave || 'sin-dato') + (coincideAula(a) ? '' : ' plano--tenue'),
           (conEstado ? icono(e.icono) : '') + `<span class="plano-rotulo__nombre">${limpio(a.nombre)}</span>` +
           `<span class="plano-rotulo__breve">${limpio(corto)}</span>` +
           (conEstado ? `<span class="plano-rotulo__estado">${limpio(e.texto)}</span>` : ''));
@@ -415,7 +443,7 @@
       antenas.forEach(a => {
         if (typeof a.x !== 'number' || typeof a.y !== 'number') return;    // sin ubicar: solo en la lista
         const e = estadoAntena(a);
-        const b = crear('button', 'plano-marca' + (ESTADOS_ANTENA[a.estado] ? ' plano-marca--' + a.estado : ''), marca(a, e));
+        const b = crear('button', 'plano-marca' + (ESTADOS_ANTENA[a.estado] ? ' plano-marca--' + a.estado : '') + (coincide(a) ? '' : ' plano--tenue'), marca(a, e));
         b.type = 'button';
         b.dataset.tipo = 'antena'; b.dataset.id = a.id;
         b.dataset.x = a.x; b.dataset.y = a.y;
@@ -427,7 +455,7 @@
       const lugares = deLaPlanta(plano.datos.lugares).filter(l => typeof l.x === 'number' && typeof l.y === 'number');
       lugares.forEach(l => {
         const t = lugarDe(l), nombre = l.nombre || t.texto;
-        const b = crear('button', 'plano-lugar', dibujoLugar(l.tipo) + `<span class="plano-lugar__nombre">${limpio(nombre)}</span>`);
+        const b = crear('button', 'plano-lugar' + (coincideLugar(l) ? '' : ' plano--tenue'), dibujoLugar(l.tipo) + `<span class="plano-lugar__nombre">${limpio(nombre)}</span>`);
         b.type = 'button';
         b.title = nombre;
         b.dataset.tipo = 'lugar'; b.dataset.id = l.id;
@@ -439,7 +467,7 @@
       // Cuánto mide cada rótulo en cada talla, para saber cuál entra en su aula
       const rotulos = Array.from(encima.querySelectorAll('.plano-rotulo'));
       const medir = (talla, dato) => {
-        rotulos.forEach(b => { b.style.maxWidth = b.style.maxHeight = ''; b.className = b.className.replace(/ plano-rotulo--(medio|corto|chico|de-pie)(?![a-z-])/g, '') + (talla ? ' plano-rotulo--' + talla : ''); });
+        rotulos.forEach(b => { b.style.maxWidth = b.style.maxHeight = ''; ['medio', 'corto', 'chico', 'de-pie'].forEach(t => b.classList.toggle('plano-rotulo--' + t, t === talla)); });
         rotulos.forEach(b => { b.dataset[dato] = b.offsetWidth; });
       };
       medir('', 'entero'); medir('medio', 'medio'); medir('corto', 'corto'); medir('chico', 'chico');
@@ -479,30 +507,42 @@
       referencias.innerHTML = refs.map(([e, t]) => `<li class="${e.tono ? 'plano__referencia--' + e.tono : ''}">${e.html || icono(e.icono)}${limpio(t)}</li>`).join('');
       referencias.hidden = !refs.length;
 
-      // Lista
+      // Lista: lo de esta planta o, si se está buscando, lo que coincide en todo el edificio
       const nombre = plantaActual().nombre || '';
-      const fila = (tipo, a, celdas) => `<tr aria-selected="${es(tipo, a.id)}" data-tipo="${tipo}" data-id="${limpio(a.id)}">` +
-        `<th scope="row"><button type="button" class="plano__ir">${limpio(a.nombre || a.id)}</button></th>${celdas}</tr>`;
-      const tabla = (titulo, cabeza, filas, vacio) => `<section><h3 class="plano__subtitulo">${limpio(titulo)}</h3>` +
-        (filas.length
-          ? `<div class="tabla-marco" tabindex="0" role="region" aria-label="${limpio(titulo)}"><table class="tabla"><thead><tr>${cabeza}</tr></thead><tbody>${filas.join('')}</tbody></table></div>`
-          : `<p class="plano__vacio">${vacio}</p>`) + '</section>';
-      let html = '';
-      if (capas.antenas) {
-        html += tabla(`Antenas de ${nombre}`, '<th scope="col">Antena</th><th scope="col">Estado</th><th scope="col">Equipo</th><th scope="col">Modelo</th><th scope="col">IP</th><th scope="col">Nota</th>',
-          antenas.map(a => fila('antena', a, `<td>${insignia(estadoAntena(a))}</td><td>${EQUIPOS[a.equipo] ? EQUIPOS[a.equipo].texto : '—'}</td><td>${limpio(a.modelo) || '—'}</td><td>${limpio(a.ip) || '—'}</td><td>${limpio(a.nota) || '—'}</td>`)),
-          'No hay antenas marcadas en esta planta.');
+      const nombrePlanta = id => (plano.datos.plantas.find(p => p.id === id) || {}).nombre || '';
+      const porNombre = (a, b) => String(a.nombre || a.id).localeCompare(String(b.nombre || b.id), 'es', { numeric: true });
+      const donde = x => q ? nombrePlanta(x.planta) : '';
+      const item = (tipo, x, titulo, dato, e) => `<li><button type="button" class="plano__item" data-tipo="${tipo}" data-id="${limpio(x.id)}" aria-current="${es(tipo, x.id)}">` +
+        `<span class="plano__item-texto"><span class="plano__item-nombre">${limpio(titulo)}</span>` +
+        (dato ? `<span class="plano__item-dato">${limpio(dato)}</span>` : '') + '</span>' +
+        (e && e.texto ? insignia(e) : '') + '</button></li>';
+      const grupo = (titulo, items) => items.length ? `<section><h3 class="plano__subtitulo">${limpio(titulo)} <span class="plano__cuenta">${items.length}</span></h3><ul class="plano__items">${items.join('')}</ul></section>` : '';
+      const junto = (...partes) => partes.filter(Boolean).join(' · ');
+      const todas = lista_ => (q ? (lista_ || []) : deLaPlanta(lista_));
+      const lAulas = capas.aulas ? todas(plano.datos.aulas).filter(coincideAula).sort(porNombre) : [];
+      // Las antenas que todavía no tienen lugar en el plano también se listan: existen
+      const lAntenas = capas.antenas ? (plano.datos.antenas || []).filter(a => (q || a.planta === plano.planta || !a.planta) && coincide(a)).sort(porNombre) : [];
+      const lLugares = todas(plano.datos.lugares).filter(l => typeof l.x === 'number' && coincideLugar(l));
+      lista.innerHTML = grupo('Aulas y espacios', lAulas.map(a => { const e = estadoAula(a); return item('aula', a, a.nombre || a.id, junto(tipoDe(a) === 'Aula' ? '' : tipoDe(a), donde(a), a.puntos && a.puntos.length > 2 ? '' : 'sin ubicar'), e.clave === 'libre' || e.clave === 'ocupada' ? e : null); })) +
+        grupo('Antenas', lAntenas.filter(a => q || a.planta).map(a => item('antena', a, a.nombre || a.id, junto(a.modelo, a.planta ? donde(a) : 'sin ubicar'), ESTADOS_ANTENA[a.estado] && a.estado !== 'activa' ? estadoAntena(a) : null))) +
+        grupo('Puntos de referencia', lLugares.map(l => item('lugar', l, l.nombre || lugarDe(l).texto, junto(l.nombre ? lugarDe(l).texto : '', donde(l)))));
+      if (!q) lista.insertAdjacentHTML('beforeend', grupo('Antenas sin ubicar', lAntenas.filter(a => !a.planta).map(a => item('antena', a, a.nombre || a.id, a.modelo, ESTADOS_ANTENA[a.estado] && a.estado !== 'activa' ? estadoAntena(a) : null))));
+      const total = lAulas.length + lAntenas.length + lLugares.length;
+      if (q) {
+        resumen.textContent = total ? `${total} ${total === 1 ? 'resultado' : 'resultados'} en todo el edificio` : `Nada coincide con “${consulta.trim()}”. Probá con otro nombre o con el número del aula.`;
+      } else if (!capas.aulas && !capas.antenas) {
+        resumen.textContent = 'Elegí qué mostrar: aulas, antenas o las dos.';
+      } else {
+        const libres = lAulas.filter(a => estadoAula(a).clave === 'libre').length, ocupadas = lAulas.filter(a => estadoAula(a).clave === 'ocupada').length;
+        const aca = lAntenas.filter(a => a.planta === plano.planta), sinLugar = lAntenas.length - aca.length;
+        const conProblema = aca.filter(a => a.estado === 'sin-conexion' || a.estado === 'mantenimiento').length;
+        resumen.textContent = junto(nombre,
+          capas.aulas && `${lAulas.length} ${lAulas.length === 1 ? 'espacio' : 'espacios'}`,
+          libres && `${libres} ${libres === 1 ? 'libre' : 'libres'}`, ocupadas && `${ocupadas} ${ocupadas === 1 ? 'ocupada' : 'ocupadas'}`,
+          capas.antenas && `${aca.length} ${aca.length === 1 ? 'antena' : 'antenas'}`,
+          conProblema && `${conProblema} con problemas`,
+          sinLugar && `${sinLugar} sin ubicar`);
       }
-      if (capas.aulas) {
-        html += tabla(`Aulas y otros espacios de ${nombre}`, '<th scope="col">Espacio</th><th scope="col">Tipo</th><th scope="col">Estado</th><th scope="col" class="num">Lugares</th><th scope="col">Evento</th>',
-          aulas.map(a => { const e = estadoAula(a); return fila('aula', a, `<td>${limpio(tipoDe(a))}</td><td>${e.texto ? insignia(e) : '—'}</td><td class="num">${a.capacidad || '—'}</td><td>${limpio(e.evento) || '—'}</td>`); }),
-          'No hay aulas marcadas en esta planta.');
-      }
-      if (lugares.length) {
-        html += tabla(`Puntos de referencia de ${nombre}`, '<th scope="col">Lugar</th><th scope="col">Tipo</th>',
-          lugares.map(l => fila('lugar', Object.assign({}, l, { nombre: l.nombre || lugarDe(l).texto }), `<td>${limpio(lugarDe(l).texto)}</td>`)), '');
-      }
-      lista.innerHTML = html || '<p class="plano__vacio">Elegí qué mostrar: antenas, aulas o las dos.</p>';
 
       pintarDetalle();
     }
@@ -519,7 +559,8 @@
       const el = plano.elegido && buscar(plano.elegido.tipo, plano.elegido.id);
       if (!el) {
         plano.elegido = null;
-        detalle.innerHTML = '<p class="plano__vacio">Elegí una antena o un aula, en el plano o en la lista, para ver sus datos.</p>';
+        detalle.textContent = '';       // sin nada elegido, el panel muestra la lista: nunca queda vacío
+        raiz.classList.remove('plano--con-elegido');
         return;
       }
       const planta = (plano.datos.plantas.find(p => p.id === el.planta) || {}).nombre || '';
@@ -539,9 +580,12 @@
         if (agenda && el.reservable !== false) acciones = `<a class="boton boton--secundario" href="${limpio(agenda.replace('{id}', encodeURIComponent(el.id)))}">Ver la agenda del aula</a>`;
       }
       const esLugar = plano.elegido.tipo === 'lugar';
-      detalle.innerHTML = `<h2 class="plano__titulo">${limpio(el.nombre || (esLugar ? lugarDe(el).texto : el.id))}</h2>` +
+      raiz.classList.add('plano--con-elegido');
+      detalle.innerHTML = `<button class="plano__volver" type="button">${icono('arrow-left')}Volver a la lista</button>` +
+        `<h2 class="plano__titulo">${limpio(el.nombre || (esLugar ? lugarDe(el).texto : el.id))}</h2>` +
         `<p class="plano__tipo">${plano.elegido.tipo === 'antena' ? 'Antena de wifi' : esLugar ? limpio(lugarDe(el).texto) : limpio(tipoDe(el))}</p>` +
-        `<dl class="resumen">${filas}</dl><div class="plano__acciones">${acciones}</div>`;
+        `<dl class="resumen">${filas}</dl><div class="plano__acciones">${acciones}` +
+        `<button class="boton boton--secundario plano__ver-plano" type="button">${icono('map')}Ver en el plano</button></div>`;
     }
 
     // --- Elegir ------------------------------------------------------------
@@ -550,7 +594,7 @@
       plano.elegido = el ? { tipo, id } : null;
       const sigue = () => {
         pintar();
-        if (el && modo === 'plano') {
+        if (el && lienzo.clientWidth) {
           const c = tipo !== 'aula' ? (typeof el.x === 'number' ? el : null) : el.puntos && el.puntos.length ? centro(el.puntos) : null;
           if (c) irA(c.x, c.y);
         }
@@ -604,14 +648,14 @@
 
     function ocupacion(datos) { estados = datos || {}; pintar(); }
 
+    // En pantallas angostas se ve la lista o el plano; en las anchas, las dos cosas a la vez
     function ponerModo(m) {
       modo = m;
       selModo.querySelectorAll('input').forEach(r => { r.checked = r.value === m; });
-      vistaPlano.hidden = m !== 'plano';
-      lista.hidden = m !== 'lista';
-      zoom.hidden = m !== 'plano';
+      raiz.classList.toggle('plano--lista', m === 'lista');
+      raiz.classList.toggle('plano--plano', m === 'plano');
       // Al volver al plano se pinta de nuevo: los rótulos se miden, y escondidos miden cero
-      if (m === 'plano') { pintar(); ajustar(); }
+      if (lienzo.clientWidth) { pintar(); ajustar(); }
     }
 
     // --- Lo que hace la persona -------------------------------------------
@@ -638,14 +682,32 @@
       if (b && b.matches(':focus-visible')) irA(+b.dataset.x, +b.dataset.y);
     });
     lista.addEventListener('click', e => {
-      const b = e.target.closest('.plano__ir');
-      if (!b) return;
-      const f = b.closest('tr');
-      const { tipo, id } = f.dataset;
-      elegir(tipo, id).then(() => {
-        const otro = lista.querySelector(`tr[data-tipo="${tipo}"][data-id="${CSS.escape(id)}"] .plano__ir`);
-        if (otro) otro.focus();
-      });
+      const b = e.target.closest('.plano__item');
+      if (b) elegir(b.dataset.tipo, b.dataset.id).then(() => { const v = detalle.querySelector('.plano__volver'); if (v) v.focus(); });
+    });
+    // Buscar: la lista pasa a mostrar lo que coincide en todo el edificio
+    campoBuscar.addEventListener('input', () => {
+      consulta = campoBuscar.value;
+      plano.elegido = null;
+      pintar();
+      enlace();
+    });
+    campoBuscar.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && campoBuscar.value) { e.preventDefault(); campoBuscar.value = ''; campoBuscar.dispatchEvent(new Event('input')); }
+    });
+    detalle.addEventListener('click', e => {
+      if (e.target.closest('.plano__volver')) {
+        const antes = plano.elegido;
+        elegir(null).then(() => {
+          const b = antes && lista.querySelector(`.plano__item[data-tipo="${antes.tipo}"][data-id="${CSS.escape(antes.id)}"]`);
+          (b || campoBuscar).focus();
+        });
+      } else if (e.target.closest('.plano__ver-plano')) {
+        ponerModo('plano');
+        const b = plano.elegido && encima.querySelector(`[data-tipo="${plano.elegido.tipo}"][data-id="${CSS.escape(plano.elegido.id)}"]`);
+        if (b) { irA(+b.dataset.x, +b.dataset.y); b.focus({ preventScroll: true }); }
+        principal.scrollIntoView({ block: 'nearest' });
+      }
     });
 
     // Arrastrar, pellizcar y clic
@@ -710,14 +772,14 @@
       };
       if (teclas[e.key]) { e.preventDefault(); teclas[e.key](); }
     });
-    new ResizeObserver(() => { if (modo === 'plano') ajustar(); }).observe(lienzo);
+    new ResizeObserver(() => { if (lienzo.clientWidth) ajustar(); }).observe(lienzo);
 
     // --- Arranque ----------------------------------------------------------
     function fallo(error) {
       cuerpo.innerHTML = `<div class="aviso aviso--error" role="alert"><div class="aviso__placa">${icono('circle-x')}</div>` +
         '<div class="aviso__cuerpo"><p class="aviso__titulo">No se pudo cargar el plano</p>' +
         '<p>Probá de nuevo en unos minutos. Si sigue sin verse, avisá a Soporte Informático.</p></div></div>';
-      barra.hidden = true;
+      selModo.hidden = true;
       console.error('unpsjb-planos:', error);
     }
     Promise.all([
@@ -726,8 +788,9 @@
     ]).then(([datos, ocup]) => {
       plano.datos = Object.assign({ plantas: [], antenas: [], aulas: [], lugares: [] }, datos);
       estados = ocup || {};
-      selPlanta.insertAdjacentHTML('beforeend', plano.datos.plantas.map(p =>
-        `<label><input type="radio" name="plano-planta-${n}" value="${limpio(p.id)}"> ${limpio(p.nombre)}</label>`).join(''));
+      // De arriba hacia abajo, como el edificio: la planta más alta primero
+      selPlanta.insertAdjacentHTML('beforeend', plano.datos.plantas.slice().reverse().map(p =>
+        `<label title="${limpio(p.nombre)}"><input type="radio" name="plano-planta-${n}" value="${limpio(p.id)}"><span aria-hidden="true">${limpio(plantaBreve(p))}</span><span class="solo-lector">${limpio(p.nombre)}</span></label>`).join(''));
       selPlanta.hidden = plano.datos.plantas.length < 2;
       ponerModo(modo);
       // Lo que diga la dirección: #planta=pb&antena=ap-03
