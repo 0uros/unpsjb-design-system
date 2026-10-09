@@ -35,6 +35,9 @@
      Salen de los tokens del sistema; cambian con el tema igual que ellos. */
   --plano-suelo: var(--color-capa);
   --plano-local: var(--color-panel);
+  /* El borde de un local: es lo que lo separa del piso, así que tiene que dar 3:1 contra
+     los dos tonos (WCAG 1.4.11). `linea-control` solo da 2.9:1 sobre `capa`. */
+  --plano-borde: color-mix(in srgb, var(--color-linea-control) 70%, var(--color-tinta-2));
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) .plano { --plano-suelo: var(--color-fondo); --plano-local: var(--color-capa); }
@@ -84,10 +87,18 @@
    .plano-trazo           muros, columnas, aberturas
    .plano-trazo--rotulo   nombres escritos en el plano original
    .plano-trazo--suave    lo demás: escaleras, cotas, mobiliario
-   Va apagado: la forma del edificio la dan los locales rellenos, no los muros. */
+   Va apagado: la forma del edificio la dan los locales rellenos, no los muros.
+   Con el plano entero se ven solo los muros; lo demás aparece al acercar (.plano--cerca,
+   que pone el script): de lejos no se lee y compite con los rótulos. */
 .plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { vector-effect: non-scaling-stroke; stroke-width: 1px; }
 .plano-trazo { color: var(--color-linea-control); }
-.plano-trazo--rotulo, .plano-trazo--suave { color: color-mix(in srgb, var(--color-linea-control) 45%, transparent); stroke-width: 0.75px; }
+.plano-trazo--rotulo, .plano-trazo--suave {
+  color: color-mix(in srgb, var(--color-linea-control) 45%, transparent);
+  stroke-width: 0.75px;
+  opacity: 0;
+  transition: opacity var(--duracion-normal) var(--curva);
+}
+.plano--cerca .plano-trazo--rotulo, .plano--cerca .plano-trazo--suave { opacity: 1; }
 
 /* 3. Aulas ----------------------------------------------------------------- */
 /* La forma del aula (un polígono del SVG) y su rótulo (un botón).
@@ -98,7 +109,7 @@
    - Libre: verde. Ocupada: en neutro (no es un error: no va en rojo).
    - Elegida: azul, y es lo único azul del plano. */
 .plano-zona {
-  --zona: var(--color-linea-control);
+  --zona: var(--plano-borde);
   fill: var(--plano-local);
   stroke: var(--zona);
   stroke-width: 1px;
@@ -264,7 +275,7 @@
   border-radius: 2px;
 }
 .plano__muestra .icono { width: 12px; height: 12px; }
-.plano__muestra--sin-dato { background: var(--plano-local); }
+.plano__muestra--sin-dato { background: var(--plano-local); border-color: var(--plano-borde); }
 .plano__muestra--libre { color: #ffffff; border-color: var(--color-exito); background: var(--color-exito); }
 .plano__muestra--ocupada { color: var(--color-tinta-2); border-color: var(--color-tinta-2); background: color-mix(in srgb, var(--color-tinta-2) 14%, var(--plano-local)); }
 .plano__referencia--exito .icono { color: var(--color-exito-texto); }
@@ -307,9 +318,10 @@
   .plano__barra > :last-child { margin-left: 0; }
   .plano__lienzo { max-height: 60vh; }
 }
-@media (prefers-reduced-motion: reduce) { .plano-zona { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .plano-zona, .plano-trazo--rotulo, .plano-trazo--suave { transition: none; } }
 @media print {
   .plano { --plano-suelo: transparent; }
+  .plano-trazo--rotulo, .plano-trazo--suave { opacity: 1; }      /* en papel va el dibujo entero */
   .plano__barra, .plano__nota { display: none; }
   .plano__lienzo { max-height: none; border-color: var(--color-linea-control); break-inside: avoid; }
   .plano__lista[hidden] { display: block; }          /* en papel van el plano y la lista */

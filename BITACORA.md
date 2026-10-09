@@ -989,3 +989,19 @@ Sin decidir (se le mostraron al usuario capturas de las dos):
 - [ ] **Ocupada en rojo,** como todas las herramientas de reserva. Hoy lo prohíbe 21.D.
 - [ ] **Color por tipo de local** (laboratorio, oficina, biblioteca, sala) con los tonos de categoría, y el estado solo en el rótulo. Pide `data-tipo` en la zona y referencias de tipo.
 
+## 2026-10-09 — Planos: borde con contraste, rótulos en locales irregulares y detalle al acercar
+
+El usuario armó un cuaderno con fuentes sobre cartografía de interiores (31 fuentes; entre ellas Chen y Clarke, "Indoor cartography", la guía de mapas accesibles del estado de Minnesota y WCAG 2.2). De consultarlo salieron tres cambios, que aprobó. Rama `planos-claro`.
+
+- **El borde de los locales no llegaba a 3:1 contra el piso** (2.9:1): lo había dejado así el cambio del 8/10, al pasar el lienzo de blanco a `capa`. Ahora es `--plano-borde`. Medido en el navegador: 3.57:1 contra el piso y 4.16:1 contra el local en claro; 5.75:1 y 4.49:1 en oscuro.
+- **El rótulo ya no usa el medio de la caja del local.** En una L o una U caía afuera. Se probó primero el polo de inaccesibilidad tal cual (es lo que hace Polylabel), pero en una L elige la esquina, con 35 de ancho, y no el brazo, con 100: por eso gana el punto más ancho entre los que están bien adentro. En un rectángulo no cambia nada. Sin librería.
+- **El detalle del dibujo aparece desde el doble de acercamiento.** En la vista general quedan los muros.
+
+Verificado: seis formas de prueba (rectángulo, rectángulo largo, L, U, trapecio y un polígono sin área); la herramienta real en las tres plantas, claro y oscuro, a 1366 px, vista general y acercada. **Con los datos reales ninguno de los 59 rótulos cambió de lugar ni de ancho disponible:** en todos los locales ubicados el medio ya servía. El caso irregular solo se probó con formas inventadas. No se miró el plano en celular ni se pasó axe.
+
+Lo que el cuaderno no respalda ni desmiente: rojo o gris para "ocupada" (no hay estudios; solo que no vaya solo en el color). Lo que apoya, como guía de diseño: color por tipo de local, hasta 6 u 8 categorías con su nombre.
+
+Pendiente, con respaldo de estudios con usuarios:
+- [ ] **Puntos de referencia** (escaleras, ascensores, baños, entradas) como capa propia, con pictograma y nombre. Hay que poder marcarlos en el modo edición.
+- [ ] En el dibujo de Trelew las escaleras y los sanitarios están en la clase de los muros: por eso siguen en la vista general. Revisar en el conversor qué va a cada clase.
+

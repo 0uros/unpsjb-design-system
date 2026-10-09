@@ -1583,7 +1583,9 @@ El plano muestra **el estado de ahora**. Para elegir un aula y un horario está 
 ### A. El dibujo
 
 - **Es un mapa, no un plano de obra.** El lienzo es el piso (pasillos, exterior) y va en un tono; los locales con nombre se rellenan en otro, más claro (21.D). Así el edificio tiene cuerpo y se ve de un vistazo qué es local y qué es paso. Un plano de arquitectura puesto tal cual sobre blanco no cumple ese trabajo: todo pesa lo mismo.
-- **El dibujo queda de fondo, apagado.** Muros en `linea-control`; el resto (escaleras, cotas, mobiliario, textos del original) en el mismo tono al 45 %. La forma del edificio la dan los locales rellenos, no los muros. **Nunca con los colores de CAD** (rojo, verde, cian, amarillo puros): chocan con el semáforo y no se ven en modo oscuro. El color queda para lo que se marca encima.
+- **El dibujo queda de fondo, apagado.** Muros en `linea-control`; el resto (escaleras, cotas, mobiliario, textos del original) en el mismo tono al 45 %. La forma del edificio la dan los locales rellenos, no los muros.
+- **El detalle aparece al acercar.** Con el plano entero se ven solo los muros (`.plano-trazo`); lo demás (`--suave` y `--rotulo`) aparece desde el doble de acercamiento (`.plano--cerca`, que pone el script). De lejos ese detalle no se lee y compite con los rótulos. En papel va el dibujo entero.
+- **Nunca con los colores de CAD** (rojo, verde, cian, amarillo puros): chocan con el semáforo y no se ven en modo oscuro. El color queda para lo que se marca encima.
 - **Es un SVG de solo trazos,** con tres clases: `.plano-trazo` (muros, columnas, aberturas), `.plano-trazo--suave` (lo demás) y `.plano-trazo--rotulo` (los nombres escritos en el plano original). El color lo pone la hoja con `currentColor`; el archivo no trae colores.
 - **Nunca una imagen** (PNG, JPG) ni un PDF incrustado: se pixelan al acercar, no cambian con el tema y pesan más.
 - **Las líneas no engordan al acercar:** miden 1px a cualquier distancia. Es un plano, no una foto.
@@ -1641,9 +1643,11 @@ Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.pl
 |---|---|---|
 | Libre | `exito-texto`: borde de 1,5px y relleno al 16 % sobre el tono de local | **Caja llena** en `exito` con el texto en blanco (5.5:1), ícono `check`, nombre y hasta cuándo. Es lo que se busca: es lo que primero se ve |
 | Ocupada | `tinta-2`: borde de 1px y relleno al 14 %. **No en rojo:** un aula ocupada no es un error | **Caja hueca:** fondo `panel`, borde `linea-control`, ícono `clock` en `tinta-2`, nombre y hasta cuándo |
-| Sin dato | El tono de local, con borde `linea-control` de 1px | El nombre solo, sin caja ni ícono |
-| No se reserva | A medio camino entre el local y el piso, con borde `linea-control` de 1px | El nombre solo, en `tinta-2` y sin negrita |
+| Sin dato | El tono de local, con borde `--plano-borde` de 1px | El nombre solo, sin caja ni ícono |
+| No se reserva | A medio camino entre el local y el piso, con borde `--plano-borde` de 1px | El nombre solo, en `tinta-2` y sin negrita |
 
+- **El borde de un local da 3:1 contra el piso y contra el local** (WCAG 1.4.11): es lo que los separa. `--plano-borde` es `linea-control` al 70 % con `tinta-2`: 3.6:1 sobre `capa` y 4.2:1 sobre `panel`; en oscuro, 5.7:1 y 4.5:1. `linea-control` sola da 2.9:1 sobre `capa`.
+- **El rótulo va donde hay lugar para un nombre.** En un rectángulo, en el medio. En un local en L o en U el medio puede caer afuera: va al punto más ancho entre los que están bien adentro (se parte del "polo de inaccesibilidad", el punto más alejado de todos los bordes). El lugar disponible se mide ahí, no en la caja que rodea al local.
 - **"Sin dato" suele ser casi todo el plano:** por eso no lleva color, ni ícono, ni dice "Sin dato" en cada aula. El estado está en el panel, en la lista y en el nombre del botón.
 - **El azul (`primario-texto`) es solo para lo elegido:** borde de 2,5px y relleno al 16 % en la zona, y el rótulo con borde y fondo azulados. Ningún estado lo usa.
 - **Libre y ocupada se distinguen también sin color:** una caja es llena y la otra hueca, y cada una tiene su ícono.
