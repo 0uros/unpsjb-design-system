@@ -58,6 +58,7 @@
         '<button class="boton boton--secundario boton--compacto" type="button" data-accion="antena"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Antena</button>' +
         '<button class="boton boton--secundario boton--compacto" type="button" data-accion="rectangulo"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Aula</button>' +
         '<button class="boton boton--tranquilo boton--compacto" type="button" data-accion="forma">Aula de forma irregular</button>' +
+        '<button class="boton boton--secundario boton--compacto" type="button" data-accion="lugar"><svg class="icono" aria-hidden="true"><use href="#i-plus"/></svg>Punto de referencia</button>' +
       '</div>' +
       '<div class="plano-editor__grupo plano-editor__sin-ubicar" id="editor-sin-ubicar" role="group" aria-labelledby="editor-pendiente-nombre" hidden>' +
         '<label class="plano-editor__rotulo" id="editor-pendiente-nombre" for="editor-pendiente">Sin ubicar</label>' +
@@ -101,7 +102,7 @@
   function guardar() {
     cambios = true;
     if (borradorViejo) { borradorViejo = null; boton('recuperar').hidden = true; }
-    try { localStorage.setItem(BORRADOR, JSON.stringify({ base, antenas: plano.datos.antenas, aulas: plano.datos.aulas })); } catch (e) { /* sin lugar: queda en memoria */ }
+    try { localStorage.setItem(BORRADOR, JSON.stringify({ base, antenas: plano.datos.antenas, aulas: plano.datos.aulas, lugares: plano.datos.lugares || [] })); } catch (e) { /* sin lugar: queda en memoria */ }
     listarSinUbicar();
     decir();
   }
@@ -133,7 +134,10 @@
   function comoArchivo() {
     const lineas = lista => lista.length ? '[\n' + lista.map(x => '    ' + JSON.stringify(x)).join(',\n') + '\n  ]' : '[]';
     return '{\n  "plantas": ' + lineas(plano.datos.plantas) + ',\n  "antenas": ' + lineas(plano.datos.antenas) +
-      ',\n  "aulas": ' + lineas(plano.datos.aulas) + '\n}\n';
+      ',\n  "aulas": ' + lineas(plano.datos.aulas) +
+      // Lo que el archivo ya traía y el editor no toca ("tipos") se conserva
+      (plano.datos.tipos ? ',\n  "tipos": ' + JSON.stringify(plano.datos.tipos) : '') +
+      ((plano.datos.lugares || []).length ? ',\n  "lugares": ' + lineas(plano.datos.lugares) : '') + '\n}\n';
   }
 
   // --- Marcar en el plano --------------------------------------------------
@@ -167,6 +171,14 @@
     ponerModo(null, 'Aula marcada. Completá sus datos en el panel.');
     plano.elegir('aula', id).then(() => enfocar('nombre'));
   }
+  function agregarLugar(x, y) {
+    if (!plano.datos.lugares) plano.datos.lugares = [];
+    const [id] = siguienteId(plano.datos.lugares, plano.planta + '-lugar-');
+    plano.datos.lugares.push({ id, tipo: 'escalera', nombre: '', planta: plano.planta, x: redondo(x), y: redondo(y) });
+    guardar();
+    ponerModo(null, 'Punto de referencia agregado. Elegí qué es en el panel.');
+    plano.elegir('lugar', id).then(() => enfocar('tipo'));
+  }
   const rectangulo = (a, b) => [[a[0], a[1]], [b[0], a[1]], [b[0], b[1]], [a[0], b[1]]];
   function dibujarBorrador() {
     plano.extra.textContent = '';
@@ -183,6 +195,7 @@
     e.preventDefault();
     const p = [e.detail.x, e.detail.y];
     if (modo === 'antena') return agregarAntena(p[0], p[1]);
+    if (modo === 'lugar') return agregarLugar(p[0], p[1]);
     if (modo === 'reubicar') return reubicar(p);
     if (modo === 'ubicar') return ubicar(pendiente, p[0], p[1]);
     puntos.push(p);
@@ -200,6 +213,10 @@
       case 'antena':
         if (conTeclado) { const c = centro(); agregarAntena(c[0], c[1]); }
         else ponerModo('antena', 'Hacé clic en el plano, en el lugar donde está la antena.');
+        break;
+      case 'lugar':
+        if (conTeclado) { const c = centro(); agregarLugar(c[0], c[1]); }
+        else ponerModo('lugar', 'Hacé clic en el plano, donde está la escalera, el ascensor, el baño o la entrada.');
         break;
       case 'rectangulo':
         if (conTeclado) { const c = centro(); agregarAula(rectangulo([c[0] - 40, c[1] - 25], [c[0] + 40, c[1] + 25])); }
@@ -220,6 +237,7 @@
       case 'recuperar':
         plano.datos.antenas = borradorViejo.antenas;
         plano.datos.aulas = borradorViejo.aulas;
+        if (Array.isArray(borradorViejo.lugares)) plano.datos.lugares = borradorViejo.lugares;
         borradorViejo = null;
         b.hidden = true;
         guardar();
@@ -266,8 +284,9 @@
     f.className = 'plano-form';
     f.setAttribute('aria-label', 'Editar ' + (d.nombre || d.id));
     let h = `<p class="plano-form__id">Identificador: ${limpio(d.id)}` +
-      (d.origen === 'unifi' ? ' · viene de UniFi' : elegido.tipo === 'antena' ? ' · cargada a mano' : '') + '</p>' + campo('nombre', 'Nombre', d.nombre);
-    if (elegido.tipo !== 'antena') h += campo('corto', 'Nombre corto <span class="opcional">(opcional)</span>', d.corto || '', 'maxlength="12" aria-describedby="ed-corto-ayuda"') +
+      (d.origen === 'unifi' ? ' · viene de UniFi' : elegido.tipo === 'antena' ? ' · cargada a mano' : '') + '</p>' +
+      campo('nombre', elegido.tipo === 'lugar' ? 'Nombre <span class="opcional">(opcional)</span>' : 'Nombre', d.nombre || '');
+    if (elegido.tipo === 'aula') h += campo('corto', 'Nombre corto <span class="opcional">(opcional)</span>', d.corto || '', 'maxlength="12" aria-describedby="ed-corto-ayuda"') +
       '<p class="plano-form__ayuda" id="ed-corto-ayuda">El que se muestra cuando el aula se ve chica.</p>';
     if (elegido.tipo === 'antena') {
       const opcion = (v, t) => `<option value="${v}"${d.estado === v ? ' selected' : ''}>${t}</option>`;
@@ -279,6 +298,11 @@
         campo('modelo', 'Modelo <span class="opcional">(opcional)</span>', d.modelo) +
         campo('ip', 'IP <span class="opcional">(opcional)</span>', d.ip || '', 'inputmode="decimal" autocomplete="off" spellcheck="false"') +
         campo('nota', 'Nota <span class="opcional">(opcional)</span>', d.nota) +
+        `<div class="plano-form__par">${numero('x', 'Posición X', d.x == null ? '' : d.x)}${numero('y', 'Posición Y', d.y == null ? '' : d.y)}</div>`;
+    } else if (elegido.tipo === 'lugar') {
+      const L = unpsjbPlanos.lugares;
+      h += '<div class="campo"><label class="label" for="ed-tipo">Qué es</label><select class="select" id="ed-tipo" name="tipo">' +
+        Object.keys(L).filter(k => k).map(k => `<option value="${k}"${d.tipo === k ? ' selected' : ''}>${L[k].texto}</option>`).join('') + '</select></div>' +
         `<div class="plano-form__par">${numero('x', 'Posición X', d.x == null ? '' : d.x)}${numero('y', 'Posición Y', d.y == null ? '' : d.y)}</div>`;
     } else {
       const tipos = ['Aula', 'Laboratorio', 'Sala', 'Oficina', 'Biblioteca', 'Servicio'];
@@ -303,7 +327,7 @@
     f.addEventListener('click', ev => {
       const b = ev.target.closest('[data-hacer]');
       if (!b) return;
-      if (b.dataset.hacer === 'reubicar') ponerModo('reubicar', elegido.tipo === 'antena' ? 'Hacé clic en el lugar nuevo de la antena.' : 'Hacé clic donde va el centro del aula.');
+      if (b.dataset.hacer === 'reubicar') ponerModo('reubicar', elegido.tipo === 'antena' ? 'Hacé clic en el lugar nuevo de la antena.' : elegido.tipo === 'lugar' ? 'Hacé clic en el lugar nuevo.' : 'Hacé clic donde va el centro del aula.');
       else borrar();
     });
     plano.detalle.append(f);
@@ -317,7 +341,7 @@
     else if (c.name === 'revisar') { if (c.checked) d.revisar = true; else delete d.revisar; }
     else if (c.name === 'capacidad') d.capacidad = v === '' ? null : Math.max(0, Math.round(+v));
     else if (v !== '' && isFinite(+v)) {
-      if (elegido.tipo === 'antena') d[c.name] = +v;
+      if (elegido.tipo !== 'aula') d[c.name] = +v;
       else {
         const f = c.form, n = k => +f.elements[k].value;
         d.puntos = rectangulo([n('x'), n('y')], [n('x') + Math.max(1, n('ancho')), n('y') + Math.max(1, n('alto'))]);
@@ -337,7 +361,7 @@
   function reubicar(p) {
     const d = elegido && elegido.dato;
     if (!d) return ponerModo(null);
-    if (elegido.tipo === 'antena') { d.x = redondo(p[0]); d.y = redondo(p[1]); d.planta = plano.planta; }
+    if (elegido.tipo !== 'aula') { d.x = redondo(p[0]); d.y = redondo(p[1]); d.planta = plano.planta; }
     else if (!d.puntos || d.puntos.length < 3) {
       // Estaba en la lista sin ubicar: aparece como un rectángulo, para ajustarlo con los campos
       d.puntos = rectangulo([redondo(p[0] - 25), redondo(p[1] - 15)], [redondo(p[0] + 25), redondo(p[1] + 15)]);
@@ -353,10 +377,10 @@
   }
   function borrar() {
     const { tipo, dato } = elegido;
-    confirmar(`¿Borrar ${dato.nombre || dato.id}?`, tipo === 'antena' ? 'La antena deja de aparecer en el plano.' : 'El aula deja de aparecer en el plano. Su identificador puede estar en uso en las reservas.', 'Borrar')
+    confirmar(`¿Borrar ${dato.nombre || dato.id}?`, tipo === 'antena' ? 'La antena deja de aparecer en el plano.' : tipo === 'lugar' ? 'El punto de referencia deja de aparecer en el plano.' : 'El aula deja de aparecer en el plano. Su identificador puede estar en uso en las reservas.', 'Borrar')
       .then(si => {
         if (!si) return;
-        const lista = tipo === 'antena' ? plano.datos.antenas : plano.datos.aulas;
+        const lista = tipo === 'antena' ? plano.datos.antenas : tipo === 'lugar' ? plano.datos.lugares : plano.datos.aulas;
         lista.splice(lista.indexOf(dato), 1);
         guardar();
         plano.elegir(null);
@@ -381,7 +405,7 @@
         // Si lo publicado cambió después de empezar el borrador, manda lo publicado:
         // el borrador taparía lo nuevo (antenas precargadas, aulas corregidas). Se ofrece recuperarlo.
         if (viejo) borradorViejo = b;
-        else { plano.datos.antenas = b.antenas; plano.datos.aulas = b.aulas; cambios = true; plano.pintar(); }
+        else { plano.datos.antenas = b.antenas; plano.datos.aulas = b.aulas; if (Array.isArray(b.lugares)) plano.datos.lugares = b.lugares; cambios = true; plano.pintar(); }
       }
     } catch (e) { /* borrador ilegible: se sigue con lo publicado */ }
     listarSinUbicar();

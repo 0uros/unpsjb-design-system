@@ -24,6 +24,7 @@
    2. Lienzo y dibujo (.plano__lienzo, .plano-trazo)
    3. Aulas (.plano-zona, .plano-rotulo)
    4. Antenas (.plano-marca)
+      y puntos de referencia (.plano-lugar)
    5. Referencias, detalle y lista
    6. Celular, impresión y alto contraste
    7. Modo edición (.plano-editor, .plano-form): va con unpsjb-planos-editor.js
@@ -120,6 +121,16 @@
 .plano-zona--libre { --zona: var(--color-exito-texto); fill: color-mix(in srgb, var(--zona) 16%, var(--plano-local)); stroke-width: 1.5px; }
 .plano-zona--ocupada { --zona: var(--color-tinta-2); fill: color-mix(in srgb, var(--zona) 14%, var(--plano-local)); }
 .plano-zona--fija { fill: color-mix(in srgb, var(--plano-local) 55%, var(--plano-suelo)); }
+ /* El tipo de local (laboratorio, biblioteca, sala): un tinte de su categoría (3.H). Solo en
+   los locales sin estado: el estado manda. Siempre con su nombre en las referencias. */
+.plano-zona--cat-1 { --cat: var(--color-cat-1); }
+.plano-zona--cat-2 { --cat: var(--color-cat-2); }
+.plano-zona--cat-3 { --cat: var(--color-cat-3); }
+.plano-zona--cat-4 { --cat: var(--color-cat-4); }
+.plano-zona[class*="plano-zona--cat-"] {
+  --zona: color-mix(in srgb, var(--cat) 55%, var(--plano-borde));
+  fill: color-mix(in srgb, var(--cat) 14%, var(--plano-local));
+}
 .plano-zona:hover { fill: color-mix(in srgb, var(--color-primario-texto) 10%, var(--plano-local)); }
 .plano-zona--elegida,
 .plano-zona--elegida:hover {
@@ -128,8 +139,8 @@
   fill: color-mix(in srgb, var(--color-primario-texto) 18%, var(--plano-local));
 }
 
-/* Rótulo y marca comparten cómo se ubican: el script pasa el punto en --x, --y */
-.plano-rotulo, .plano-marca {
+/* Rótulo, marca y punto de referencia comparten cómo se ubican: el script pasa el punto en --x, --y */
+.plano-rotulo, .plano-marca, .plano-lugar {
   position: absolute;
   left: 0;
   top: 0;
@@ -138,8 +149,8 @@
   font: inherit;
   cursor: pointer;
 }
-.plano-rotulo::after, .plano-marca::after { content: ""; position: absolute; inset: -8px; }  /* área para el dedo */
-.plano-rotulo:focus-visible, .plano-marca:focus-visible { outline: 0; box-shadow: var(--anillo-foco); z-index: 2; }
+.plano-rotulo::after, .plano-marca::after, .plano-lugar::after { content: ""; position: absolute; inset: -8px; }  /* área para el dedo */
+.plano-rotulo:focus-visible, .plano-marca:focus-visible, .plano-lugar:focus-visible { outline: 0; box-shadow: var(--anillo-foco); z-index: 2; }
 
 /* <button class="plano-rotulo plano-rotulo--libre"><svg class="icono">…</svg>
      <span class="plano-rotulo__nombre">Aula 17</span>
@@ -245,6 +256,35 @@
 .plano-marca__aviso .icono { width: 10px; height: 10px; stroke-width: 3; }
 /* La elegida: un aro azul alrededor. Conserva el color de su estado. */
 .plano-marca[aria-pressed="true"] { outline: 3px solid var(--color-primario-texto); outline-offset: 2px; }
+/* Puntos de referencia: escaleras, ascensores, baños, entradas. Es lo que se busca con la
+   vista para ubicarse.
+   <button class="plano-lugar"><svg class="icono">…</svg><span class="plano-lugar__nombre">Escalera</span></button>
+   Un cuadrado de 24px con su dibujo: cuadrado, para no confundirlo con una antena (redonda),
+   y en neutro, porque no tiene estado. El nombre aparece al acercar. */
+.plano-lugar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-width: 24px;
+  height: 24px;
+  padding: 0 3px;
+  font: 400 0.8125rem/1 var(--fuente-texto);
+  white-space: nowrap;
+  color: var(--color-tinta);
+  background: var(--color-panel);
+  border: 1px solid var(--plano-borde);
+  border-radius: var(--radio-control);
+  z-index: 1;
+}
+.plano-lugar::after { inset: -10px; }
+.plano-lugar .icono { flex: none; width: 16px; height: 16px; }
+.plano-lugar__nombre { display: none; padding-right: 2px; }
+.plano--cerca .plano-lugar__nombre { display: inline; }
+.plano-lugar:hover { border-color: var(--color-primario-texto); }
+.plano-lugar[aria-pressed="true"] { outline: 3px solid var(--color-primario-texto); outline-offset: 2px; }
+.plano-lugar--muestra { position: relative; transform: none; cursor: default; flex: none; }
+.plano-lugar--muestra::after { content: none; }
+
 /* La misma marca en las referencias, sin ubicar */
 .plano-marca--muestra { position: relative; transform: none; cursor: default; flex-shrink: 0; margin-right: var(--espacio-1); }
 .plano-marca--muestra::after { content: none; }
@@ -276,6 +316,11 @@
 }
 .plano__muestra .icono { width: 12px; height: 12px; }
 .plano__muestra--sin-dato { background: var(--plano-local); border-color: var(--plano-borde); }
+.plano__muestra--cat-1 { --cat: var(--color-cat-1); }
+.plano__muestra--cat-2 { --cat: var(--color-cat-2); }
+.plano__muestra--cat-3 { --cat: var(--color-cat-3); }
+.plano__muestra--cat-4 { --cat: var(--color-cat-4); }
+.plano__muestra[class*="plano__muestra--cat-"] { border-color: color-mix(in srgb, var(--cat) 55%, var(--plano-borde)); background: color-mix(in srgb, var(--cat) 14%, var(--plano-local)); }
 .plano__muestra--libre { color: #ffffff; border-color: var(--color-exito); background: var(--color-exito); }
 .plano__muestra--ocupada { color: var(--color-tinta-2); border-color: var(--color-tinta-2); background: color-mix(in srgb, var(--color-tinta-2) 14%, var(--plano-local)); }
 .plano__referencia--exito .icono { color: var(--color-exito-texto); }
@@ -325,15 +370,15 @@
   .plano__barra, .plano__nota { display: none; }
   .plano__lienzo { max-height: none; border-color: var(--color-linea-control); break-inside: avoid; }
   .plano__lista[hidden] { display: block; }          /* en papel van el plano y la lista */
-  .plano-zona, .plano-marca, .plano-rotulo { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .plano-zona, .plano-marca, .plano-rotulo, .plano-lugar { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
 @media (forced-colors: active) {
   .plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { color: CanvasText; }
   .plano-zona { fill: transparent; stroke: ButtonText; }
-  .plano-rotulo { background: ButtonFace; border-color: ButtonText; }
+  .plano-rotulo, .plano-lugar { background: ButtonFace; border-color: ButtonText; }
   .plano-rotulo--libre { background: ButtonText; color: ButtonFace; }
   .plano-zona--elegida { stroke: Highlight; }
-  .plano-marca[aria-pressed="true"], .plano-rotulo[aria-pressed="true"] { outline-color: Highlight; }
+  .plano-marca[aria-pressed="true"], .plano-rotulo[aria-pressed="true"], .plano-lugar[aria-pressed="true"] { outline-color: Highlight; }
   .plano-marca__aviso { background: ButtonText; color: ButtonFace; }
 }
 
@@ -423,7 +468,7 @@
 }
 .plano--marcando .plano__lienzo { cursor: crosshair; }
 /* Mientras se marca, los rótulos y las antenas no atajan el clic: se puede marcar encima de ellos */
-.plano--marcando .plano-rotulo, .plano--marcando .plano-marca { pointer-events: none; }
+.plano--marcando .plano-rotulo, .plano--marcando .plano-marca, .plano--marcando .plano-lugar { pointer-events: none; }
 @media print { .plano-editor, .plano-form { display: none; } }
 @media (forced-colors: active) {
   .plano-form__equipo:has(input:checked) { outline: 2px solid Highlight; }

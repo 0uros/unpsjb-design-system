@@ -1648,6 +1648,8 @@ Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.pl
 
 - **El borde de un local da 3:1 contra el piso y contra el local** (WCAG 1.4.11): es lo que los separa. `--plano-borde` es `linea-control` al 70 % con `tinta-2`: 3.6:1 sobre `capa` y 4.2:1 sobre `panel`; en oscuro, 5.7:1 y 4.5:1. `linea-control` sola da 2.9:1 sobre `capa`.
 - **El rótulo va donde hay lugar para un nombre.** En un rectángulo, en el medio. En un local en L o en U el medio puede caer afuera: va al punto más ancho entre los que están bien adentro (se parte del "polo de inaccesibilidad", el punto más alejado de todos los bordes). El lugar disponible se mide ahí, no en la caja que rodea al local.
+- **Un local sin estado puede llevar el color de su tipo.** Biblioteca (`cat-1`), laboratorio (`cat-2`) y sala (`cat-4`) llevan un tinte de su categoría (3.H) al 14 % y el borde hacia ese tono. **Las aulas y las oficinas no llevan color:** son casi todo el edificio, y si todo tiene color nada se distingue. Máximo cuatro tipos con color, y cada uno con su nombre en las referencias. Una herramienta puede definir los suyos en los datos (`"tipos"`).
+- **El estado manda sobre el tipo.** Un laboratorio libre va en verde y uno ocupado en neutro, no en su color: el relleno dice una sola cosa por vez. Su tipo sigue en el nombre, en el panel y en la lista.
 - **"Sin dato" suele ser casi todo el plano:** por eso no lleva color, ni ícono, ni dice "Sin dato" en cada aula. El estado está en el panel, en la lista y en el nombre del botón.
 - **El azul (`primario-texto`) es solo para lo elegido:** borde de 2,5px y relleno al 16 % en la zona, y el rótulo con borde y fondo azulados. Ningún estado lo usa.
 - **Libre y ocupada se distinguen también sin color:** una caja es llena y la otra hueca, y cada una tiene su ícono.
@@ -1661,11 +1663,23 @@ Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.pl
 - **Las referencias de abajo del plano** muestran un recorte de cada zona (`.plano__muestra`), con su ícono si lo lleva.
 - **El estado es un dato aparte** (`data-ocupacion`): el plano no sabe de reservas. Quien tenga las reservas arma `{ "id-del-aula": { "estado": "ocupada", "hasta": "16:00", "evento": "Álgebra I" } }` y se lo pasa (`plano.ocupacion(datos)`), sin volver a cargar la pantalla. Un aula que no figura queda "Sin dato".
 
+### H. Puntos de referencia
+
+Escaleras, ascensores, baños y entradas: lo que se busca con la vista para ubicarse. Es lo que más ayuda a encontrar un lugar cuando no hay posicionamiento (hay estudios con usuarios que lo miden).
+
+- Cada uno es un **botón** (`.plano-lugar`): un cuadrado de 24px, fondo `panel` y borde `--plano-borde`, con su dibujo. **Cuadrado y en neutro,** para no confundirlo con una antena (redonda, con el color de su estado): un punto de referencia no tiene estado.
+- **El nombre aparece al acercar** (`.plano--cerca`); de lejos va el dibujo solo. El nombre entero está siempre en el nombre del botón, al pasar el mouse y en la lista.
+- **Siempre se ven:** no son una capa que se apaga.
+- Tipos: `escalera`, `ascensor`, `sanitario` y `entrada`. Los dibujos de la escalera y del ascensor son propios del módulo. Sin tipo conocido, un marcador genérico.
+- El nombre es opcional: "Escalera" alcanza; "Entrada principal" o "Escalera norte" cuando hay más de una.
+- Figuran en las referencias (los tipos que hay en esa planta) y en la lista, en su propia tabla. Se pueden enlazar: `#planta=pb&lugar=pb-lugar-01`.
+
 ### E. Los datos
 
 Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con nombre); las posiciones van en las unidades del `viewBox` de cada dibujo. El formato completo está al principio de `unpsjb-planos.js`.
 
 - **El dibujo conserva las coordenadas de la hoja original** (su `viewBox` no arranca en cero). Así se puede **simplificar un plano** (quitarle una parte que no interesa) o volver a una versión más completa sin mover nada de lo marcado. Cada versión anterior de un plano se guarda: nunca se pisa.
+- `"lugares"` (opcional) son los puntos de referencia (21.H): `{ "id", "tipo", "nombre", "planta", "x", "y" }`. `"tipos"` (opcional) dice qué tipos de local llevan color: `{ "Taller": 3 }`.
 - Un espacio sin `puntos` figura en la lista pero no en el plano: sirve para cargar primero los nombres y ubicarlos después.
 - `"corto"` (opcional) es el nombre que se muestra cuando el aula se ve chica (21.D).
 - **El identificador de un aula no se cambia** una vez que lo usan las reservas: es lo que une el plano con la agenda. El nombre sí.
@@ -1691,6 +1705,7 @@ Para marcar antenas y aulas sobre el plano sin tocar el archivo de datos a mano.
 - **Se entra con un botón secundario en el encabezado** ("Editar antenas y aulas", `#ir-a-editar`), que en modo edición pasa a "Salir de la edición".
 - **La barra (`.plano-editor`) es una tira pegada al plano,** no un panel aparte: **el plano no se va de la vista mientras se edita.** Arriba, en una fila de botones compactos: qué agregar ("Antena", "Aula", "Aula de forma irregular"), lo que falta ubicar, y contra el borde derecho "Descartar" y "Descargar planos.json" (el único primario). Abajo, una franja (`.plano-editor__ahora`, con `role="status"`) dice qué está pasando y cómo se publica; mientras se marca cambia de color y muestra "Cerrar la forma" y "Cancelar".
 - **Las antenas que están en los datos pero no tienen lugar** se eligen de un desplegable ("Antenas sin ubicar") y se ubican con un clic en el plano.
+- **Un punto de referencia se agrega con un clic** ("Punto de referencia") y en el panel se elige qué es. El nombre es opcional.
 - **Un aula se marca con dos clics** (una esquina y la opuesta). Para una forma irregular, un clic por esquina y "Cerrar la forma". Lo que se va marcando se dibuja en `primario-texto` (`.plano-borrador`).
 - **Los datos de lo elegido se editan en el panel de detalle** (`.plano-form`): no hay ventana aparte. **En edición el panel muestra el formulario y no la ficha:** ningún dato va dos veces. El tipo de equipo de una antena se elige entre tres opciones en una fila, cada una con su dibujo (`.plano-form__equipo`). Un aula puede llevar su nombre corto.
 - **Todo se puede hacer sin mouse** (WCAG 2.2, 2.5.7): con el teclado, lo nuevo aparece en el centro de lo que se ve y se ajusta con los campos de posición. `Esc` cancela lo que se está marcando.

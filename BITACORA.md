@@ -1005,3 +1005,18 @@ Pendiente, con respaldo de estudios con usuarios:
 - [ ] **Puntos de referencia** (escaleras, ascensores, baños, entradas) como capa propia, con pictograma y nombre. Hay que poder marcarlos en el modo edición.
 - [ ] En el dibujo de Trelew las escaleras y los sanitarios están en la clase de los muros: por eso siguen en la vista general. Revisar en el conversor qué va a cada clase.
 
+## 2026-10-09 — Planos: color por tipo de local y puntos de referencia
+
+El usuario comparó la herramienta de antes con la rama y aprobó seguir: se unió `planos-claro` a `planos` y se trajo a `planos-universidad`. Después, en `planos-claro`, estos dos cambios (sin unir todavía: los mira antes).
+
+- **Color por tipo de local.** Biblioteca, laboratorio y sala llevan un tinte de su categoría; aulas y oficinas, no. Se descartó dar color a las oficinas: en Nivel 2 son 8 de 13 locales y la planta entera quedaba teñida. Se descartó también que el tipo reemplazara al estado en el relleno (la opción que se le había mostrado el 8/10): se perdía el verde de las aulas libres, que es lo que se busca. Quedó "el estado manda sobre el tipo".
+- **Puntos de referencia** (`"lugares"`): escaleras, ascensores, baños y entradas, como botones cuadrados en neutro, con el nombre al acercar. Entran en las referencias, en la lista y en el modo edición. Regla nueva: 21.H.
+- El dibujo de los baños se rehízo: con dos figuras detalladas no se leía a 16px.
+
+Verificado en Chrome sin ventana, sin errores: la muestra en vista y en edición (agregar un punto con el teclado, cambiarle el tipo y el nombre, borrador guardado), claro y oscuro; la herramienta real con los tipos en Planta baja y Nivel 1. No se probó: marcar un punto con un clic real sobre el plano, reubicar, borrar, el archivo descargado, celular, lector de pantalla ni axe. **La herramienta real todavía no tiene ningún punto de referencia cargado.**
+
+Pendientes:
+- [ ] Marcar los puntos de referencia de la sede en el modo edición.
+- [ ] Cargar `"corto"` a las oficinas ("Faculta…" tres veces en Nivel 1).
+- [ ] Controles de acercar y referencias dentro del lienzo; resumen de la planta en el panel vacío; búsqueda.
+
