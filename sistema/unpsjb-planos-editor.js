@@ -412,9 +412,12 @@
     boton('recuperar').hidden = !viejo;
     decir(viejo ? 'Hay un borrador anterior, hecho sobre datos que ya cambiaron. Estás viendo lo publicado. Si editás algo, ese borrador se pierde.'
       : cambios ? 'Se recuperó un borrador con cambios sin descargar.' : '');
+    // Si ya había algo elegido (se llegó con un enlace), su ficha se armó antes de que el editor
+    // estuviera listo: se vuelve a pintar para que aparezca el formulario
+    if (plano.elegido) plano.pintar();
   }
   // Con los datos dentro de la página, el plano puede estar listo antes de que cargue este archivo
   const ya = window.unpsjbPlanos && unpsjbPlanos.de(raiz);
-  if (ya && ya.listo) { empezar(ya); if (ya.elegido) ya.pintar(); }
+  if (ya && ya.listo) empezar(ya);
   else raiz.addEventListener('plano:listo', e => empezar(e.detail.plano));
 })();
