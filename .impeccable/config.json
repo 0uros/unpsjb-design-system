@@ -158,6 +158,42 @@
         ],
         "createdAt": "2026-10-14T15:45:12.853Z",
         "reason": "Claude, medido en Chrome: todos los textos pasan AA en claro y oscuro (franja 6.05:1, botón 8.87:1, mínimo 5.78:1)"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "muestras/muestra-difusion.html"
+        ],
+        "createdAt": "2026-10-14T15:47:06.471Z",
+        "reason": "Claude, falso positivo: Chrome mide h1 56px, h2 24px, cuerpo 16px; el detector no resuelve font con var()/clamp() (leyó 176px en todos)"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "muestras/muestra-difusion.html"
+        ],
+        "createdAt": "2026-10-14T15:47:06.477Z",
+        "reason": "Claude, falso positivo: las secciones tienen 48-64px de relleno bajo el borde (var(--espacio-12/16)); banda y selector de tema son piezas de unpsjb.css"
+      },
+      {
+        "rule": "oversized-h1",
+        "value": "*",
+        "files": [
+          "muestras/muestra-difusion.html"
+        ],
+        "createdAt": "2026-10-14T15:47:06.482Z",
+        "reason": "Claude: tamaño de titulo-portada propuesto en DESIGN.md 17.E; capturas a 390 y 1280px muestran el botón principal visible sin bajar"
+      },
+      {
+        "rule": "monotonous-spacing",
+        "value": "*",
+        "files": [
+          "muestras/muestra-difusion.html"
+        ],
+        "createdAt": "2026-10-14T15:47:06.488Z",
+        "reason": "Claude, falso positivo: el detector no resuelve los tokens de espaciado; la página usa la escala de 4 a 64px"
       }
     ]
   }
