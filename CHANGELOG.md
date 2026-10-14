@@ -30,7 +30,13 @@ Las reglas de las herramientas dejaban una landing (una carrera, el ingreso, una
 - **Páginas de difusión** (17.E, `data-registro="difusion"`): un título de portada de 40 a 56px, una foto real al lado del título (nunca detrás), una franja `primario` de cierre y que cada sección aparezca una vez al entrar en pantalla (solo CSS, nada con `prefers-reduced-motion`). Lista de lo que sigue prohibido y un orden recomendado de siete partes.
 - Una excepción en 5.E que remite a 17.E, y una fila en la sección 13.
 
-Pendiente si se aprueba: el token `titulo-portada` en el encabezado del documento y en `unpsjb.css`, el atributo en la hoja y una muestra (`muestra-difusion.html`) con datos inventados.
+- **Módulo `unpsjb-difusion.css`** y **`muestra-difusion.html`**: la página de una carrera inventada, con las siete partes. Las fotos son lugares marcados: falta probarla con fotos reales de la Sede.
+
+### Corregido (dentro de la propuesta)
+
+- **La aparición al entrar en pantalla** se hace con un script corto (`IntersectionObserver`) y no con `animation-timeline: view()`: esa animación sigue al scroll, va y vuelve, y no cumplía "una vez, en 240ms".
+
+Pendiente si se aprueba: pasar el token `titulo-portada` al encabezado del documento y sumar el módulo a la lista de 2.A.
 
 ## En curso · revisión de diseño y textos · 2026-10-14 · sin número todavía
 

@@ -149,6 +149,15 @@
         ],
         "createdAt": "2026-10-07T14:59:41.187Z",
         "reason": "falso positivo, igual que en las otras muestras: son piezas de unpsjb.css (la banda, que solo lleva borde al imprimir, y las opciones de .segmentado, que traen su propio relleno); revisado en las capturas a 1280 y 390px"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "muestras/muestra-difusion.html"
+        ],
+        "createdAt": "2026-10-14T15:45:12.853Z",
+        "reason": "Claude, medido en Chrome: todos los textos pasan AA en claro y oscuro (franja 6.05:1, botón 8.87:1, mínimo 5.78:1)"
       }
     ]
   }
