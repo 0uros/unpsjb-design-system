@@ -925,3 +925,18 @@ Pendientes, en orden:
 - [x] Reordenar las carpetas. Quedaron `sistema/` (lo que se publica: la hoja, los módulos, `fonts/` y `assets/`), `muestras/`, `notas/` y `herramientas/` (logo, emojis, QR y las pruebas de logo, con el EPS). Un commit que solo mueve y otro que corrige las rutas. Comprobado: las 163 rutas de las muestras, las hojas y las pruebas de logo resuelven, y `herramientas/logo/generar.sh` vuelve a generar los cinco logos idénticos. Las entradas anteriores de esta bitácora y de `CHANGELOG.md` nombran los archivos donde estaban entonces.
 - [ ] Documentar lo que vino de `ajustes-0.4.4` en `DESIGN.md` y `CHANGELOG.md`, probar los gráficos nuevos y unificar el número de versión (hoy "0.4.4" nombra solo al módulo de planos).
 - [ ] De ahí en adelante, una rama por función.
+
+## 2026-10-14 — Skills de diseño para agentes: qué se toma y qué no
+
+Sin número de sesión. Rama `textos-y-revision`, salida de `en-curso`.
+
+El usuario pasó un tweet con diez repositorios "que convierten a Claude Code en diseñador de interfaces" y preguntó si valía la pena instalarlos. No se instaló ninguno:
+
+- **Siete son librerías de efectos** para React o Tailwind (WebGL, shaders, animación de cursor, texto que se escribe solo, animaciones de entrada). Van contra 5.E (el movimiento solo responde a la persona), 3.G (fondos limpios), el principio 3 (liviano) y 7.P/sección 13 (nada de texto que corre).
+- **Better Design** trae 31 temas copiados de marcas (Stripe, Linear…): el sistema ya tiene identidad propia.
+- **Superdesign** necesita cuenta y manda el código a su servicio.
+- **design-taste** tiene reglas buenas, pero repite lo que ya hacen las skills instaladas (impeccable, ui-ux-pro-max) y, en accesibilidad, este documento ya va más lejos.
+
+Lo que sí se tomó, como texto (ver `CHANGELOG.md`): la revisión de diseño por niveles (14.G), errores en tres partes (12) y lo que se lee incluye lo que se ve (9). Mucho de lo que se pensaba sumar ya estaba: los estados vacíos de 8.D ya siguen el esquema de tres partes de design-taste, y la sección 12 ya pedía errores con qué pasó y cómo se arregla.
+
+Verificado: `skill/design-md-unpsjb/SKILL.md` sigue siendo una copia exacta de `DESIGN.md` debajo de su encabezado. No se tocó CSS ni muestras.
