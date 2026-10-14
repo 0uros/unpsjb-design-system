@@ -21,6 +21,17 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## Propuesta · páginas de difusión · 2026-10-14 · sin aprobar
+
+Las reglas de las herramientas dejaban una landing (una carrera, el ingreso, una jornada) correcta pero muda. Se propone un registro aparte, solo para esas páginas. No cambia nada de lo que ya existe. Va en un commit aparte: si no se aprueba, se revierte solo.
+
+### Nuevo
+
+- **Páginas de difusión** (17.E, `data-registro="difusion"`): un título de portada de 40 a 56px, una foto real al lado del título (nunca detrás), una franja `primario` de cierre y que cada sección aparezca una vez al entrar en pantalla (solo CSS, nada con `prefers-reduced-motion`). Lista de lo que sigue prohibido y un orden recomendado de siete partes.
+- Una excepción en 5.E que remite a 17.E, y una fila en la sección 13.
+
+Pendiente si se aprueba: el token `titulo-portada` en el encabezado del documento y en `unpsjb.css`, el atributo en la hoja y una muestra (`muestra-difusion.html`) con datos inventados.
+
 ## En curso · revisión de diseño y textos · 2026-10-14 · sin número todavía
 
 Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.

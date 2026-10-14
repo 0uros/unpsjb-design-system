@@ -940,3 +940,11 @@ El usuario pasó un tweet con diez repositorios "que convierten a Claude Code en
 Lo que sí se tomó, como texto (ver `CHANGELOG.md`): la revisión de diseño por niveles (14.G), errores en tres partes (12) y lo que se lee incluye lo que se ve (9). Mucho de lo que se pensaba sumar ya estaba: los estados vacíos de 8.D ya siguen el esquema de tres partes de design-taste, y la sección 12 ya pedía errores con qué pasó y cómo se arregla.
 
 Verificado: `skill/design-md-unpsjb/SKILL.md` sigue siendo una copia exacta de `DESIGN.md` debajo de su encabezado. No se tocó CSS ni muestras.
+
+## 2026-10-14 — Propuesta: páginas de difusión
+
+Misma rama. El usuario planteó que 5.E (movimiento) y las reglas que la acompañan quedan cortas para una landing de la universidad. Tiene razón en algo concreto: 17.B y 17.C tratan cualquier página pública como una herramienta, y una landing tiene otro trabajo (que alguien de afuera se imagine acá).
+
+Se escribió 17.E como **propuesta, sin aprobar**, en un commit aparte: cuatro licencias (título de portada, una foto real, una franja azul de cierre, aparición de secciones una vez), cada una con su límite, y lo que sigue prohibido. Lo de los repos del tweet que sigue afuera también acá: texto que se escribe, cursor, shaders, parallax, contadores.
+
+Sin verificar en el navegador: no hay CSS ni muestra todavía. `animation-timeline: view()` no anda en todos los navegadores; por eso la regla pide que la página se vea completa sin él.
