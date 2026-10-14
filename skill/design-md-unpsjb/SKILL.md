@@ -450,6 +450,7 @@ No hay sombras para crear jerarquía. **La única excepción es lo que flota sob
 - El movimiento solo **responde a algo que hizo la persona**: abrir, cerrar, confirmar. No hay animaciones de entrada de secciones ni efectos al pasar el mouse por tarjetas.
 - Duraciones: 120ms para cambios de color (hover), 180ms para aparecer o desaparecer (toasts, menús, modales). Curva: `cubic-bezier(0.2, 0, 0, 1)` (arranca rápido y frena suave).
 - Con `prefers-reduced-motion` se elimina todo desplazamiento; quedan solo los cambios de opacidad.
+- **Excepción (propuesta, sin aprobar):** las páginas de difusión pueden mostrar cada sección al entrar en pantalla, una vez y con límites (17.E). Las herramientas, el portal y las páginas públicas comunes, no.
 
 ### F. Breakpoints
 
@@ -1082,6 +1083,7 @@ Las palabras son parte del diseño.
 | Mostrar un solo registro como lista de resumen. | Armar una tabla de una fila o campos deshabilitados. |
 | Listar destinos como lista de accesos: nombre, una línea y una flecha o un botón. | Una grilla de tarjetas con ícono, o un logo y un color por trámite. |
 | En la portada de un portal, de 2 a 4 entradas por tarea, planas. | Carrusel, foto de apertura, ventana al entrar o bloques con texto blanco sobre un color claro. |
+| En una página de difusión, una foto real al lado del título y un solo botón que se repite al cierre (17.E). | Texto sobre una foto, fotos de banco o animaciones que la página necesita para verse. |
 | Fotos de hasta 200 KB y páginas de hasta 1 MB. | Subir la foto como sale de la cámara, o un video que arranca solo. |
 | Usar el acordeón para lo secundario. | Esconder campos obligatorios o avisos importantes. |
 | En gráficos, los colores de serie, en orden, y el valor escrito. | Pintar series con el semáforo o con las categorías. |
@@ -1415,6 +1417,33 @@ Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta 
 - **Los datos de la cuenta** van en otra pantalla: menú lateral (6.A) con las secciones y, a la derecha, una lista de resumen (7.L). Solo llevan "Cambiar" los datos que la persona puede cambiar; de los demás se dice quién los corrige.
 - **Avisos de seguridad** ("Nunca te vamos a pedir la contraseña") van como aviso, al lado del dato que protegen. No en letra chica ni en cursiva.
 - **No va:** una grilla de tarjetas con ícono (7.C), contadores o gráficos de relleno, ni un saludo con la hora del día.
+
+### E. Páginas de difusión (propuesta, sin aprobar)
+
+La página de una carrera, del ingreso, de una jornada o de una convocatoria. No es una herramienta ni el portal: su trabajo es que alguien de afuera entienda en un minuto qué se ofrece, **se imagine acá** y dé un paso (inscribirse, pedir información). Con las reglas de las herramientas sale correcta pero muda: no muestra el lugar ni a la gente.
+
+Vale todo 17.B (la misma banda, el pie de páginas públicas, sin siglas internas), la accesibilidad (9) y el tope de 1 MB (2.C). Llevan `data-registro="difusion"` en el `<body>`, y **solo ahí** cambian estas reglas:
+
+| Regla | En una herramienta | En difusión | Límite |
+|---|---|---|---|
+| **Título** (4.B) | `titulo-1`, 32px | `titulo-portada`: Montserrat 800, de 40px en celular a 56px en escritorio (`clamp`) | Una vez por página, en la apertura. El interlineado de 1.25 (4.C) sigue. |
+| **Foto** (17.C, 2.C) | Sin foto de apertura | Una foto **real** de la sede o de su gente, al lado o debajo del título | Nunca detrás del texto (el contraste cambia con cada foto). Nunca de un banco de imágenes. 200 KB, con `width`, `height` y `fetchpriority="high"`. |
+| **Color** (13) | La banda es el único bloque grande de color | Una franja `primario` a todo el ancho para el cierre, con texto blanco | Una por página. El naranja sigue sin ser relleno (3.B). |
+| **Movimiento** (5.E) | Solo responde a la persona | Cada sección puede aparecer una vez al entrar en pantalla: de transparente a visible, subiendo 8px, en 240ms con la curva del sistema | Solo CSS (`animation-timeline: view()`). La apertura aparece quieta. Sin escalonar elementos. Con `prefers-reduced-motion`, nada. |
+
+**El contenido nunca depende de la animación para verse.** Si el navegador no entiende `animation-timeline`, la página se ve completa y quieta; no se esconde nada con CSS esperando un script.
+
+**Sigue sin ir,** también acá: video que arranca solo, nada que se repita en bucle, parallax, texto que se escribe o que rota, efectos de cursor, números que suben solos, fondos animados (shaders, WebGL), librerías de animación, carrusel y ventana al entrar (7.P).
+
+**Orden recomendado:**
+
+1. **Apertura:** el título dice qué es y para quién ("Licenciatura en Sistemas, en Trelew"), una línea con lo esencial (duración, modalidad, si es gratuita), **un** botón primario ("Inscribite") y, como mucho, un enlace ("Ver el plan de estudios"). La foto, al lado en escritorio y debajo en celular.
+2. **Qué vas a hacer:** lista de accesos (7.Q) o dos o tres paneles con lo concreto (materias, salida laboral). Sin íconos de relleno.
+3. **Cómo es:** fotos de la sede y, si hay, palabras de estudiantes o graduados **reales**, con nombre, carrera y permiso por escrito. En las muestras van inventadas y lo dicen.
+4. **En números:** una fila de indicadores (15.B) con cifras verificables. Escritos, sin contadores animados.
+5. **Cómo se entra:** los pasos, numerados, con sus fechas.
+6. **Preguntas frecuentes:** acordeón (7.M).
+7. **Cierre:** la franja `primario` con el mismo botón de la apertura.
 
 ## 18. Documentos e impresión (nuevo en 0.4.3)
 
