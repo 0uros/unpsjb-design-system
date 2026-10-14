@@ -1020,6 +1020,21 @@ Pendientes:
 - [ ] Cargar `"corto"` a las oficinas ("Faculta…" tres veces en Nivel 1).
 - [ ] Controles de acercar y referencias dentro del lienzo; resumen de la planta en el panel vacío; búsqueda.
 
+## 2026-10-14 — Skills de diseño para agentes: qué se toma y qué no
+
+Sin número de sesión. Rama `textos-y-revision`, salida de `en-curso`.
+
+El usuario pasó un tweet con diez repositorios "que convierten a Claude Code en diseñador de interfaces" y preguntó si valía la pena instalarlos. No se instaló ninguno:
+
+- **Siete son librerías de efectos** para React o Tailwind (WebGL, shaders, animación de cursor, texto que se escribe solo, animaciones de entrada). Van contra 5.E (el movimiento solo responde a la persona), 3.G (fondos limpios), el principio 3 (liviano) y 7.P/sección 13 (nada de texto que corre).
+- **Better Design** trae 31 temas copiados de marcas (Stripe, Linear…): el sistema ya tiene identidad propia.
+- **Superdesign** necesita cuenta y manda el código a su servicio.
+- **design-taste** tiene reglas buenas, pero repite lo que ya hacen las skills instaladas (impeccable, ui-ux-pro-max) y, en accesibilidad, este documento ya va más lejos.
+
+Lo que sí se tomó, como texto (ver `CHANGELOG.md`): la revisión de diseño por niveles (14.G), errores en tres partes (12) y lo que se lee incluye lo que se ve (9). Mucho de lo que se pensaba sumar ya estaba: los estados vacíos de 8.D ya siguen el esquema de tres partes de design-taste, y la sección 12 ya pedía errores con qué pasó y cómo se arregla.
+
+Verificado: `skill/design-md-unpsjb/SKILL.md` sigue siendo una copia exacta de `DESIGN.md` debajo de su encabezado. No se tocó CSS ni muestras.
+
 ## 2026-10-15 — Se arma la 0.4.5, sin unir a `main`
 
 Sin número de sesión. No se tocó ninguna pieza: número de versión y registro.

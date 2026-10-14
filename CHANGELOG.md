@@ -23,6 +23,19 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## En curso · revisión de diseño y textos · 2026-10-14 · sin número todavía
+
+Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.
+
+### Nuevo
+
+- **Revisión de diseño de una pantalla** (14.G): capturas a 390, 768 y 1280px en claro y oscuro, con datos como los reales; una lectura de cinco segundos; el recorrido contra la sección 13, y cada hallazgo con su nivel (bloquea, importante, detalle, gusto) y cuándo se arregla. Una fila nueva en la sección 13.
+- **Un punto más en "Antes de publicar"** (sección 9, lector de pantalla): lo que se lee incluye lo que se ve (WCAG 2.5.3) y ningún botón ni enlace queda sin nombre.
+
+### Cambiado
+
+- **Errores en tres partes** (sección 12): qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. Antes la regla pedía dos; el porqué ya estaba en los ejemplos de 8.A y 8.J.
+
 ## 0.4.6 · 2026-11-03 · oficial
 
 El módulo de planos rediseñado con los datos reales de la sede y el modo edición dentro del módulo (PR #1, rama `planos`). Tiene dos partes, cada una con su registro. Al cambiar a esta versión, una herramienta que use el modo edición tiene que renombrar las clases `.ext-planos-*` (ver "El modo edición pasa al módulo").
