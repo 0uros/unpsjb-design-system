@@ -948,3 +948,18 @@ Misma rama. El usuario planteó que 5.E (movimiento) y las reglas que la acompa�
 Se escribió 17.E como **propuesta, sin aprobar**, en un commit aparte: cuatro licencias (título de portada, una foto real, una franja azul de cierre, aparición de secciones una vez), cada una con su límite, y lo que sigue prohibido. Lo de los repos del tweet que sigue afuera también acá: texto que se escribe, cursor, shaders, parallax, contadores.
 
 Sin verificar en el navegador: no hay CSS ni muestra todavía. `animation-timeline: view()` no anda en todos los navegadores; por eso la regla pide que la página se vea completa sin él.
+
+## 2026-10-14 — Muestra de la página de difusión
+
+Misma rama. `muestra-difusion.html` (una licenciatura inventada) y el módulo `unpsjb-difusion.css`.
+
+- **Se corrigió la propia propuesta:** `animation-timeline: view()` no anima "una vez": sigue al scroll. Ahora lo hace un script corto que solo esconde si va a poder mostrar. 17.E y el registro lo dicen.
+- **`<main>` sin `.contenedor`:** cada sección trae el suyo, para que la franja de cierre vaya de borde a borde. El pie es `footer.pie.pie--publico.contenedor`, hijo directo de `<main>`, así sigue valiendo "pie al fondo".
+
+Verificado:
+- Capturas sin ventana a 390 y 1280px, en claro y oscuro.
+- Contraste medido en Chrome, todos los textos y los dos temas: pasan AA. Lo nuevo: franja 6,05:1, botón blanco sobre la franja 8,87:1, fechas de los pasos 8,1:1, lugar de la foto 5,78:1. Una primera pasada dio 2,4:1 en el selector de tema: era la transición de color a medio camino; medido de nuevo, 7,9:1.
+- El detector de impeccable marcó contraste bajo sin decir dónde; con la medición de arriba se silenció solo para este archivo (`.impeccable/config.json`).
+- La aparición: al cargar solo queda visible lo que está en pantalla; al bajar, cada sección aparece una vez.
+
+Sin probar: con fotos reales, con lector de pantalla, axe, teclado de punta a punta, impresión y en un celular real.

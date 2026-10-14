@@ -1429,9 +1429,11 @@ Vale todo 17.B (la misma banda, el pie de páginas públicas, sin siglas interna
 | **Título** (4.B) | `titulo-1`, 32px | `titulo-portada`: Montserrat 800, de 40px en celular a 56px en escritorio (`clamp`) | Una vez por página, en la apertura. El interlineado de 1.25 (4.C) sigue. |
 | **Foto** (17.C, 2.C) | Sin foto de apertura | Una foto **real** de la sede o de su gente, al lado o debajo del título | Nunca detrás del texto (el contraste cambia con cada foto). Nunca de un banco de imágenes. 200 KB, con `width`, `height` y `fetchpriority="high"`. |
 | **Color** (13) | La banda es el único bloque grande de color | Una franja `primario` a todo el ancho para el cierre, con texto blanco | Una por página. El naranja sigue sin ser relleno (3.B). |
-| **Movimiento** (5.E) | Solo responde a la persona | Cada sección puede aparecer una vez al entrar en pantalla: de transparente a visible, subiendo 8px, en 240ms con la curva del sistema | Solo CSS (`animation-timeline: view()`). La apertura aparece quieta. Sin escalonar elementos. Con `prefers-reduced-motion`, nada. |
+| **Movimiento** (5.E) | Solo responde a la persona | Cada sección puede aparecer una vez al entrar en pantalla: de transparente a visible, subiendo 8px, en 240ms con la curva del sistema | Una vez por sección (`.difusion-aparece`, toda la sección junta, sin escalonar). La apertura aparece quieta. Con `prefers-reduced-motion`, nada. |
 
-**El contenido nunca depende de la animación para verse.** Si el navegador no entiende `animation-timeline`, la página se ve completa y quieta; no se esconde nada con CSS esperando un script.
+**El contenido nunca depende de la animación para verse.** Lo esconde un script de unas quince líneas (`IntersectionObserver`), y solo si va a poder mostrarlo: sin script, sin `IntersectionObserver` o con "reducir movimiento", la página se ve completa y quieta. Lo que ya está en pantalla al cargar no se anima. Al imprimir, todo visible. (Se descartó `animation-timeline: view()`, que es solo CSS: la animación sigue al scroll, va y vuelve al subir y bajar, y no anda en todos los navegadores.)
+
+**Módulo:** `unpsjb-difusion.css` (propuesta), con el ejemplo completo en `muestra-difusion.html`. Usa los tokens de la hoja central; la franja de cierre toma los colores de la banda, así que en oscuro no hay que hacer nada aparte.
 
 **Sigue sin ir,** también acá: video que arranca solo, nada que se repita en bucle, parallax, texto que se escribe o que rota, efectos de cursor, números que suben solos, fondos animados (shaders, WebGL), librerías de animación, carrusel y ventana al entrar (7.P).
 
