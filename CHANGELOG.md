@@ -76,9 +76,23 @@ Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas qu
 
 - `.camara__pie` (ahora `.camara__barra`), `.camaras-panel`, `.camaras-panel__cuerpo` y `.encabezado--visor`. El visor ya no usa `.grilla--lateral`.
 
+### Corregido
+
+Salen de probar los gráficos nuevos con `muestras/prueba-graficos.html`, una página de casos límite con datos inventados (no es una muestra para copiar).
+
+- **Barras y columnas con todos los valores negativos** se dibujaban fuera del gráfico: el eje no llegaba al cero. Ahora el cero entra siempre en el eje.
+- **El valor de una barra o columna negativa** va en su punta (a la izquierda o abajo), no del lado del cero, y la punta redondeada queda del lado del valor. En columnas, la línea fuerte del eje es la del cero.
+- **Torta con todo en cero:** quedaba una caja vacía y la tabla oculta. Ahora queda la tabla, sin el selector "Gráfico | Tabla". Lo mismo si se vuelve a dibujar con datos que ya no se pueden graficar.
+- **"Otros" en la torta** va una sola vez y al final: junta las filas que se llaman así en la tabla y, si hay más de cinco partes, las que sobran. Antes podía haber dos grises ("Otros" y "Otros (2)") y la fila "Otros" le sacaba un color a las demás.
+- **Una porción que se ve en la torta nunca dice "0 %"**: dice "<1 %", y la parte grande, ">99 %" en vez de "100 %".
+- En barras con todos los valores negativos, el último número del eje se cortaba en el borde derecho.
+
 ### Pendiente
 
-- Probar los gráficos de barras, columnas y torta: se escribieron y no se probaron.
+- Probado en Chrome a 1366 y 390 px, en claro y oscuro: nada fuera del dibujo y sin errores. Falta `axe`, lector de pantalla, otros navegadores e impresión.
+- El eje elige pasos de 2,5 cuando el rango es 12 (0; 2,5; 5,0…), y entonces escribe todas las marcas con decimales. Ya pasaba antes; sería más claro con pasos de 2 o de 3.
+- `DESIGN.md` 15.A dice que no se usan tortas de más de 3 partes, pero el módulo acepta hasta 5 más "Otros" y la muestra tiene una de 6. Hay que decidir cuál vale.
+- Documentar barras, columnas y torta en `DESIGN.md` (15.E describe solo las líneas).
 - `axe` y lector de pantalla en el visor, el portal, la cartelera en el celular y los gráficos.
 - Los ajustes de planos de las ramas `planos` y `planos-claro` no entran todavía.
 

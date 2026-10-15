@@ -937,5 +937,7 @@ Sin número de sesión. No se tocó ninguna pieza: número de versión y registr
 
 Pendientes, en orden:
 - [ ] Decidir qué más entra en la 0.4.5 (por ejemplo, los ajustes de `planos` o la revisión de `textos-y-revision`).
-- [ ] Probar los gráficos de barras, columnas y torta, y documentarlos en `DESIGN.md` (15.E solo describe las líneas).
+- [x] Probar los gráficos de barras, columnas y torta. Con `muestras/prueba-graficos.html` (24 casos límite, datos inventados) en Chrome sin ventana a 1366 y 390 px, claro y oscuro. Aparecieron y se arreglaron: todo negativo se dibujaba fuera del gráfico, el valor de las negativas iba del lado del cero, la torta en cero dejaba una caja vacía, "Otros" podía salir dos veces y una porción visible decía "0 %". `muestra-graficos.html` sigue igual.
+- [ ] Decidir el tope de partes de la torta: `DESIGN.md` 15.A dice 3 y el módulo acepta 5 más "Otros".
+- [ ] Documentar barras, columnas y torta en `DESIGN.md` (15.E solo describe las líneas).
 - [ ] Unir `version-0.4.5` a `main` y subirla.

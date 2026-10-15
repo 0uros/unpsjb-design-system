@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Gráficos · casos límite · UNPSJB</title>
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="../sistema/fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../sistema/fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../sistema/assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../sistema/unpsjb.css">
+  <link rel="stylesheet" href="../sistema/unpsjb-graficos.css">
+  <script src="../sistema/unpsjb-graficos.js" defer></script>
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-prueba-espera { margin: var(--espacio-2) 0 0; font-size: 0.875rem; color: var(--color-tinta); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <aside class="fase" aria-label="Estado de la página">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Prueba</strong>
+      <p>Casos límite de barras, columnas y torta (<code>unpsjb-graficos.js</code>), con datos inventados. No es una muestra para copiar: la muestra es <a href="muestra-graficos.html">muestra-graficos.html</a>.</p>
+    </div>
+  </aside>
+
+  <main class="contenedor" id="contenido">
+    <div class="encabezado">
+      <h1>Gráficos: casos límite</h1>
+    </div>
+    <p>Cada gráfico dice debajo qué debería verse. Probalo también angosto (las columnas pasan a barras debajo de 480px), en oscuro y al imprimir.</p>
+
+    <h2 id="barras">Barras horizontales</h2>
+    <div class="grilla grilla--2" id="barras-casos"></div>
+
+    <h2 id="columnas">Columnas</h2>
+    <div class="grilla grilla--2" id="columnas-casos"></div>
+
+    <h2 id="torta">Torta</h2>
+    <div class="grilla grilla--2" id="torta-casos"></div>
+
+    <h2 id="cambio">Datos que cambian</h2>
+    <p>El botón reescribe la tabla y llama a <code>unpsjbGraficos.dibujar(tabla)</code>, como haría una herramienta al recibir datos nuevos.</p>
+    <div class="grilla grilla--2" id="cambio-casos"></div>
+    <p><button class="boton boton--secundario" type="button" id="cambiar">Cambiar los datos</button></p>
+
+    <footer class="pie">
+      <p>© 2026 UNPSJB - Soporte Informático, Delegación Trelew</p>
+      <div class="pie__derecha">
+        <div class="selector-tema">
+          <span aria-hidden="true">Tema</span>
+          <fieldset class="segmentado segmentado--compacto">
+            <legend class="solo-lector">Tema</legend>
+            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+            <label><input type="radio" name="tema" value="claro"> Claro</label>
+            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+          </fieldset>
+        </div>
+        <span>v0.4.5</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Los casos se arman acá, antes de que corra el módulo (que va con defer).
+    // Cada uno: [título, atributos de la tabla, encabezados, filas, qué debería verse]
+    const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const casos = {
+      'barras-casos': [
+        ['Una sola fila', { grafico: 'barras' }, ['Aula', 'Reservas'], [['Aula 101', '23']],
+          'Una barra sola, con 23 en la punta.'],
+        ['Un cero y un dato que falta', { grafico: 'barras' }, ['Aula', 'Reservas'], [['Aula 101', '18'], ['Aula 102', '0'], ['Aula 103', '—'], ['Aula 104', '7']],
+          'El Aula 102 con una barra mínima y 0; el Aula 103 sin barra (en la tabla dice "—").'],
+        ['Nombres muy largos', { grafico: 'barras' }, ['Área', 'Pedidos'], [['Secretaría de Ciencia, Técnica y Extensión Universitaria', '31'], ['Departamento de Ingeniería en Informática y Sistemas', '24'], ['Bienestar', '9']],
+          'Los dos primeros nombres cortados con "…"; con el mouse encima se lee entero. Nada encima de las barras.'],
+        ['Cinco series', { grafico: 'barras' }, ['Turno', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie'], [['Mañana', '16', '18', '17', '15', '14'], ['Tarde', '11', '13', '12', '10', '9'], ['Noche', '21', '22', '20', '21', '19']],
+          'Cinco barras por fila, con la leyenda arriba y los cinco colores distintos.'],
+        ['Seis series (una de más)', { grafico: 'barras' }, ['Turno', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'], [['Mañana', '16', '18', '17', '15', '14', '6'], ['Tarde', '11', '13', '12', '10', '9', '2']],
+          'Solo cinco series: el sábado queda en la tabla y no en el gráfico.'],
+        ['Decimales, miles y porcentaje', { grafico: 'barras', unidad: '%' }, ['Sede', 'Asistencia'], [['Trelew', '87,5'], ['Puerto Madryn', '91'], ['Esquel', '1.234,5']],
+          'Valores con un decimal y "%": 87,5 %, 91,0 %, 1.234,5 %. El eje con números redondos.'],
+        ['Negativos y positivos', { grafico: 'barras' }, ['Aula', 'Variación'], [['Aula 101', '12'], ['Aula 102', '-8'], ['Aula 103', '−3'], ['Aula 104', '5']],
+          'El cero en el medio: las barras de 102 y 103 van a la izquierda (el 103 lleva el signo menos tipográfico).'],
+        ['Todos negativos', { grafico: 'barras' }, ['Aula', 'Variación'], [['Aula 101', '-12'], ['Aula 102', '-8'], ['Aula 103', '-3']],
+          'El cero a la derecha del eje y las barras hacia la izquierda, adentro del gráfico.'],
+      ],
+      'columnas-casos': [
+        ['Doce meses', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Eventos'], MESES.map((m, i) => [m, String([6, 9, 7, 3, 11, 14, 8, 2, 12, 15, 10, 4][i])]),
+          'Doce columnas. Si los nombres no entran, uno cada tantos, siempre con el último.'],
+        ['Cinco series, pocos períodos', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Trelew', 'Madryn', 'Esquel', 'Comodoro', 'Ushuaia'], [['Jul', '12', '9', '7', '15', '4'], ['Ago', '14', '8', '6', '17', '5'], ['Sep', '11', '10', '8', '16', '3']],
+          'Grupos de cinco columnas; la lectura de arriba cambia al pasar el mouse.'],
+        ['Negativos y positivos', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Variación'], [['Jul', '4'], ['Ago', '-6'], ['Sep', '2'], ['Oct', '-1']],
+          'El cero en el medio del eje: agosto y octubre bajan desde el cero.'],
+        ['Todos negativos', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Variación'], [['Jul', '-4'], ['Ago', '-6'], ['Sep', '-2']],
+          'El cero arriba y las columnas hacia abajo, adentro del gráfico.'],
+        ['Una sola columna', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Eventos'], [['Septiembre', '14']],
+          'Una columna centrada, con 14 arriba.'],
+        ['Alto a mano (data-alto="180")', { grafico: 'barras', orientacion: 'vertical', alto: '180' }, ['Mes', 'Eventos'], [['Jul', '3'], ['Ago', '11'], ['Sep', '14']],
+          'Más bajo que los demás: 180px.'],
+      ],
+      'torta-casos': [
+        ['Dos partes', { grafico: 'torta' }, ['Estado', 'Aulas'], [['Ocupadas', '17'], ['Libres', '7']],
+          'Dos porciones: 71 % y 29 %.'],
+        ['Una sola parte con valor', { grafico: 'torta' }, ['Estado', 'Aulas'], [['Ocupadas', '24'], ['Libres', '0']],
+          'Un círculo entero y solo "Ocupadas, 100 %" en la lista.'],
+        ['Tres iguales', { grafico: 'torta' }, ['Turno', 'Horas'], [['Mañana', '10'], ['Tarde', '10'], ['Noche', '10']],
+          'Los porcentajes suman 100: 34 %, 33 % y 33 %.'],
+        ['Una parte diminuta', { grafico: 'torta' }, ['Tipo', 'Horas'], [['Clases', '995'], ['Otros', '5']],
+          'Una astilla gris para "Otros". La lista dice "<1 %" y ">99 %", nunca "0 %" ni "100 %".'],
+        ['"Otros" en el medio y más de seis filas', { grafico: 'torta' }, ['Quién pide', 'Reservas'], [['Departamentos', '86'], ['Otros', '20'], ['Secretaría', '41'], ['Extensión', '27'], ['Centro de Estudiantes', '16'], ['Bienestar', '9'], ['Biblioteca', '7']],
+          'Cinco partes de color y un solo "Otros" gris, al final: junta la fila "Otros" de la tabla (20) con Biblioteca (7), 27 en total.'],
+        ['Todo en cero', { grafico: 'torta' }, ['Estado', 'Aulas'], [['Ocupadas', '0'], ['Libres', '0']],
+          'No hay nada que dibujar: debería quedar la tabla, no una caja vacía.'],
+        ['Ya son porcentajes (data-unidad="%")', { grafico: 'torta', unidad: '%' }, ['Respuesta', 'Porcentaje'], [['Sí', '62'], ['No', '30'], ['No sabe', '8']],
+          'La lista dice 62 %, 30 % y 8 %, sin repetir el porcentaje.'],
+        ['Con decimales', { grafico: 'torta', unidad: 'h' }, ['Tipo', 'Horas'], [['Clases', '12,5'], ['Exámenes', '4,25'], ['Reuniones', '3']],
+          'Valores con un decimal: 12,5 h, 4,3 h, 3,0 h.'],
+      ],
+      'cambio-casos': [
+        ['Columnas que cambian', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Eventos'], [['Jul', '3'], ['Ago', '11'], ['Sep', '14']],
+          'Con el botón: cuatro meses y otros valores, sin duplicar el selector "Gráfico | Tabla".'],
+        ['Torta que cambia', { grafico: 'torta' }, ['Estado', 'Aulas'], [['Ocupadas', '17'], ['Libres', '7']],
+          'Con el botón: tres partes, con su lista rehecha (no una lista nueva debajo de la vieja).'],
+      ],
+    };
+
+    const filaHtml = (celdas, encabezado) => '<tr>' + celdas.map((c, i) => i === 0
+      ? `<th scope="${encabezado ? 'col' : 'row'}">${c}</th>`
+      : `<${encabezado ? 'th scope="col"' : 'td'} class="num">${c}</${encabezado ? 'th' : 'td'}>`).join('') + '</tr>';
+
+    for (const [lugar, lista] of Object.entries(casos)) {
+      const destino = document.getElementById(lugar);
+      lista.forEach(([titulo, atributos, encabezados, filas, espera], i) => {
+        const datos = Object.entries(atributos).map(([k, v]) => ` data-${k.replace(/[A-Z]/g, l => '-' + l.toLowerCase())}="${v}"`).join('');
+        destino.insertAdjacentHTML('beforeend', `
+          <figure class="grafico panel" id="${lugar}-${i + 1}">
+            <figcaption class="grafico__cabecera"><h3 class="grafico__titulo">${titulo}</h3></figcaption>
+            <div class="tabla-marco" tabindex="0" role="region" aria-label="${titulo}">
+              <table class="tabla tabla--compacta"${datos} data-descripcion="Caso de prueba: ${titulo}.">
+                <thead>${filaHtml(encabezados, true)}</thead>
+                <tbody>${filas.map(f => filaHtml(f, false)).join('')}</tbody>
+              </table>
+            </div>
+            <p class="ext-prueba-espera"><b>Debería verse:</b> ${espera}</p>
+          </figure>`);
+      });
+    }
+
+    document.getElementById('cambiar').onclick = () => {
+      const [columnas, torta] = document.querySelectorAll('#cambio-casos table');
+      columnas.tBodies[0].innerHTML = [['Jul', '5'], ['Ago', '2'], ['Sep', '9'], ['Oct', '13']].map(f => filaHtml(f, false)).join('');
+      torta.tBodies[0].innerHTML = [['Ocupadas', '12'], ['Libres', '8'], ['En arreglo', '4']].map(f => filaHtml(f, false)).join('');
+      unpsjbGraficos.dibujar(columnas);
+      unpsjbGraficos.dibujar(torta);
+    };
+
+    const html = document.documentElement;
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+  </script>
+</body>
+</html>
