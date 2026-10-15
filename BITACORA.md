@@ -925,3 +925,17 @@ Pendientes, en orden:
 - [x] Reordenar las carpetas. Quedaron `sistema/` (lo que se publica: la hoja, los módulos, `fonts/` y `assets/`), `muestras/`, `notas/` y `herramientas/` (logo, emojis, QR y las pruebas de logo, con el EPS). Un commit que solo mueve y otro que corrige las rutas. Comprobado: las 163 rutas de las muestras, las hojas y las pruebas de logo resuelven, y `herramientas/logo/generar.sh` vuelve a generar los cinco logos idénticos. Las entradas anteriores de esta bitácora y de `CHANGELOG.md` nombran los archivos donde estaban entonces.
 - [ ] Documentar lo que vino de `ajustes-0.4.4` en `DESIGN.md` y `CHANGELOG.md`, probar los gráficos nuevos y unificar el número de versión (hoy "0.4.4" nombra solo al módulo de planos).
 - [ ] De ahí en adelante, una rama por función.
+
+## 2026-10-15 — Se arma la 0.4.5, sin unir a `main`
+
+Sin número de sesión. No se tocó ninguna pieza: número de versión y registro.
+
+- **La rama `version-0.4.5` sale de `en-curso`** y lleva todo lo que había ahí: el visor de cámaras rehecho, las piezas del estudio de referencia con el prototipo de portal, lo que vino de `ajustes-0.4.4` (cartelera en el celular, logo original en documentos, barras, columnas y torta) y el reordenamiento de carpetas. El módulo de planos entra como quedó en la 0.4.4; los ajustes de `planos` y `planos-claro` no.
+- **La 0.4.4 queda como estaba en el registro** (el módulo de planos). Nunca llegó a `main`: al unir la 0.4.5 entran las dos juntas.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `muestra.html` y `muestra-video.html` dicen 0.4.5, y lo que decía "sin número todavía" dice 0.4.5. En `CHANGELOG.md`, las dos entradas "En curso" pasan a ser la 0.4.5, que suma lo de `ajustes-0.4.4`, que no estaba registrado.
+- Sin subir a GitHub ni unir a `main`: falta decidir qué más entra.
+
+Pendientes, en orden:
+- [ ] Decidir qué más entra en la 0.4.5 (por ejemplo, los ajustes de `planos` o la revisión de `textos-y-revision`).
+- [ ] Probar los gráficos de barras, columnas y torta, y documentarlos en `DESIGN.md` (15.E solo describe las líneas).
+- [ ] Unir `version-0.4.5` a `main` y subirla.

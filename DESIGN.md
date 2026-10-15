@@ -1,6 +1,6 @@
 ---
 name: UNPSJB MII 2.0 · Señalética
-version: 0.4.4
+version: 0.4.5
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -143,7 +143,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB (MII 2.0)
 
-**Delegación Trelew · 2026 · versión 0.4.4 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.5 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `archivo/` (`DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`; fuera de git, la etiqueta es `v0.2.1`). Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `archivo/comparar-v3.html` (0.2.1 y la actual) y `archivo/comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -203,7 +203,7 @@ Regla práctica: si la herramienta empieza a necesitar más de una pantalla, o h
 - **DOM poco profundo:** prohibido anidar contenedores (`div`) sin necesidad. Preferir etiquetas semánticas (`header`, `main`, `nav`, `section`, `footer`).
 - **Sin Tailwind por CDN:** el script de Tailwind por CDN pesa cientos de KB y no está pensado para producción. En React se permite Tailwind **compilado**, configurado con los mismos tokens de `unpsjb.css`.
 - **Fuentes:** solo en formato `woff2` variable, un archivo por familia, con `font-display: swap`.
-- **Fotos y video (nuevo, sin número todavía).** Las páginas con fotos son las que más pesan: en el estudio de referencia (`REFERENCIAS-UNC-UBA.md`), la portada de una universidad bajaba 22 MB, casi todo imágenes sin reducir, y la de otra, 11,7 MB de un video. Topes:
+- **Fotos y video (nuevo en 0.4.5).** Las páginas con fotos son las que más pesan: en el estudio de referencia (`REFERENCIAS-UNC-UBA.md`), la portada de una universidad bajaba 22 MB, casi todo imágenes sin reducir, y la de otra, 11,7 MB de un video. Topes:
   - **Una página no pasa de 1 MB** en total la primera vez que se abre.
   - **Cada foto, 200 KB como máximo,** en `webp` o `avif`, y con el tamaño en que se muestra, no el de la cámara. Con `width` y `height` escritos, para que la página no salte al cargar.
   - **`loading="lazy"`** en toda foto que no se ve al entrar.
@@ -512,7 +512,7 @@ A la derecha, antes de la versión, va el **selector de tema** (sección 3.F). E
 
 La herramienta suma sola lo que ya sabe (quién reporta, en qué pantalla, con qué navegador): no se le pide a la persona. Qué se hace con cada reporte está en la sección 14.F.
 
-**El pie va al fondo (nuevo, sin número todavía).** En una pantalla con poco contenido, el pie baja hasta el borde de abajo de la ventana: no queda flotando a mitad de pantalla con un hueco debajo. Lo hace la hoja sola, sin clase ni script, para el `<footer class="pie">` que cierra `<main>`. En una página larga no cambia nada: el pie va después del contenido.
+**El pie va al fondo (nuevo en 0.4.5).** En una pantalla con poco contenido, el pie baja hasta el borde de abajo de la ventana: no queda flotando a mitad de pantalla con un hueco debajo. Lo hace la hoja sola, sin clase ni script, para el `<footer class="pie">` que cierra `<main>`. En una página larga no cambia nada: el pie va después del contenido.
 
 - **El pie no entra cortado.** Si al abrir la página el pie entra solo en parte, es mejor que no se vea: se le da alto al contenido para que el pie empiece justo debajo del borde de la ventana, y se llega bajando. Importa sobre todo con el pie de las páginas públicas, que es alto. Esto sí necesita un script chico (quince líneas, en `muestra-portal.html`): es una mejora y, si no está, la página funciona igual.
 - En el celular, el borde de abajo es el del menú inferior.
@@ -722,9 +722,9 @@ Para no volver a discutirlo cada vez:
 | Ventana que se abre sola al entrar | Tapa todo en el celular y atrapa el foco antes de que la persona haya visto la página. | Un aviso (8.A) arriba del contenido |
 | Asistente de chat flotante | Es otro elemento fijo que tapa contenido en el celular. | Un enlace a la mesa de ayuda (sección 19) |
 
-Las últimas tres filas son nuevas (sin número todavía) y salen del estudio de referencia.
+Las últimas tres filas son nuevas (0.4.5) y salen del estudio de referencia.
 
-### Q. Lista de accesos (nuevo, sin número todavía)
+### Q. Lista de accesos (nuevo en 0.4.5)
 
 **A dónde se puede ir desde acá** (`ul.accesos`). Cada renglón es un destino: el nombre, una línea que dice para qué sirve y, a la derecha, una flecha o un botón. Es lo que va donde otros sitios ponen una grilla de tarjetas con ícono, título y texto (prohibida en 7.C): la misma información, en menos lugar y fácil de recorrer con la vista.
 
@@ -898,7 +898,7 @@ Una lista corta que se recorre en cada versión nueva. Se anota el resultado en 
 4. **Contraste:** los colores nuevos que no estén en este documento se miden (4.5:1 texto, 3:1 controles), en claro **y** en oscuro.
 5. **Lector de pantalla:** el recorrido principal con **Orca** (Linux), **NVDA** (Windows) o VoiceOver (macOS/iOS). Los botones dicen qué hacen, los errores y toasts se anuncian solos y los íconos decorativos no se leen.
 6. **Celular real:** un recorrido en un teléfono, con los campos de 16px (sin zoom automático) y el menú inferior sin tapar contenido.
-7. **Lo básico de la página (nuevo, sin número todavía):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
+7. **Lo básico de la página (nuevo en 0.4.5):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
    - `<html lang="es">`. Con otro idioma declarado, el lector de pantalla pronuncia todo mal.
    - El `viewport` es `width=device-width, initial-scale=1`, **sin** `maximum-scale` ni `user-scalable=no`: bloquean el zoom con los dedos.
    - Al entrar no se abre ninguna ventana encima del contenido (7.P).
@@ -1116,7 +1116,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.4), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.5), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1233,7 +1233,7 @@ Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no 
 | Módulo | Hoja | Ejemplo | Peso | Reglas |
 |---|---|---|---|---|
 | Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB | 16.A |
-| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
+| Visor de cámaras (rehecho en 0.4.5) | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
 | Gráficos de líneas (0.4.3) | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 5 KB + 16 KB | 15.E |
 | Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
 | Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
@@ -1269,7 +1269,7 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 
 ### B. Visor de cámaras
 
-Rehecho el 6 de octubre de 2026 (todavía sin número de versión), a partir de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
+Rehecho el 6 de octubre de 2026 (0.4.5), a partir de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
 
 - **Lo primero es el tamaño de las cámaras.** Todo lo demás se acomoda a eso: nada le saca alto al muro. No hay encabezado de pantalla ni barra de herramientas arriba, y el nombre de cada cámara va encima de la imagen, no debajo.
 - **El video va siempre sobre negro** (`#000`), en claro y en oscuro. El resto de la pantalla respeta el tema elegido: el visor **no** fuerza el modo oscuro. Los únicos colores propios del módulo son los del video: el negro, y lo que se escribe encima de la imagen.
@@ -1357,7 +1357,7 @@ Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripc
 - **El logo completo** (nivel L, 10.A) solo donde hay lugar para mostrarlo a 96px o más: una portada, no la banda.
 - **Sin siglas internas** sin explicar (sección 12): quien llega de afuera no sabe qué es SIU ni SUDOCU.
 
-### C. Portal de la Delegación (nuevo, sin número todavía)
+### C. Portal de la Delegación (nuevo en 0.4.5)
 
 El portal institucional de la universidad lo maneja Comodoro. El de la Delegación es otra cosa: **chico, informativo y de consulta rápida**. Sirve para encontrar en un minuto dónde queda algo, a quién escribirle y por dónde se hace un trámite. No es un diario ni repite lo que ya está en el portal de la universidad: lo enlaza.
 
@@ -1376,7 +1376,7 @@ Hay un prototipo: `muestra-portal.html`. Las reglas salen del estudio de los sit
 - **Contacto a la vista:** oficina, dirección, horario, teléfono y correo, como lista de resumen (7.L) dentro de un panel. Los teléfonos y correos son enlaces (`tel:`, `mailto:`).
 - **Pesa poco:** una página del portal no pasa de 1 MB (2.C).
 
-### D. Página de inicio de una cuenta (nuevo, sin número todavía)
+### D. Página de inicio de una cuenta (nuevo en 0.4.5)
 
 Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta con varias partes. Responde tres preguntas, en este orden. Es el orden de la página de inicio de MiUNC, con nuestras piezas:
 
