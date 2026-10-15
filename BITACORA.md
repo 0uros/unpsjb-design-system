@@ -946,3 +946,7 @@ Pendientes, en orden:
 - [x] `axe` en las 12 muestras, a 1366 y 390 px, claro y oscuro. Apareció un contraste: `--color-advertencia-texto` sobre `capa` (4,3:1); pasa a `#a64c08`. Quedan dos avisos en `muestra-planos.html`, que se ven al unir `planos-claro`.
 - [ ] Lector de pantalla: necesita una persona.
 - [ ] Unir `version-0.4.5` a `main` y subirla.
+
+## 2026-10-15 — Se publica la 0.4.5
+
+A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.

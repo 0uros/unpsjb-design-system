@@ -22,9 +22,9 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.4.5 · 2026-10-15 · lista, sin unir a `main`
+## 0.4.5 · 2026-10-15 · oficial
 
-Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo". Está lista en la rama `version-0.4.5`; todavía no está en `main` ni publicada.
+Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo".
 
 ### Nuevo
 
@@ -113,7 +113,7 @@ Salen de probar los gráficos nuevos con `muestras/prueba-graficos.html`, una p�
 - Los ajustes de planos de las ramas `planos` y `planos-claro` no entran en esta versión.
 - Subir `skill/design-md-unpsjb/SKILL.md` a claude.ai.
 
-## 0.4.4 · 2026-10-05 · oficial
+## 0.4.4 · 2026-10-05 · anterior (no se publicó sola: salió dentro de la 0.4.5)
 
 Un módulo nuevo: planos. Sube el último número: es un agregado, y nada de lo anterior cambia. `unpsjb.css` no cambia (solo su número), y los demás módulos tampoco.
 
@@ -127,7 +127,7 @@ Un módulo nuevo: planos. Sube el último número: es un agregado, y nada de lo 
 
 - `DESIGN.md`: 2.A y la tabla de módulos (sección 16) listan los siete.
 
-## 0.4.3 · 2026-10-02 · oficial
+## 0.4.3 · 2026-10-02 · anterior
 
 Cuatro módulos nuevos. Sube el último número: son agregados, y nada de lo anterior cambia. `unpsjb.css` no cambia (solo su número), y los módulos de agenda y de video tampoco: siguen como en la 0.4.2.
 
