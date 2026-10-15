@@ -1,6 +1,6 @@
 /* ==========================================================================
    unpsjb-graficos.js — Módulo de gráficos · v0.4.5
-   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 15.
+   Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 15.
 
    Dibuja un gráfico A PARTIR DE UNA TABLA. Los datos se escriben una sola vez,
    en la tabla; el gráfico se arma solo. Sin JavaScript queda la tabla.
@@ -22,8 +22,8 @@
    - "barras": cantidades de cosas para comparar. Primera columna, la cosa.
      Horizontales; con data-orientacion="vertical", columnas (en pantallas
      angostas vuelven a ser horizontales).
-   - "torta": partes de un total. Una sola columna de valores, hasta 5 partes
-     más "Otros" (si hay más filas, las que sobran se suman en "Otros").
+   - "torta": partes de un total. Una sola columna de valores, hasta 6 porciones:
+     5 de color y una gris. La gris junta las filas "Otros" y las que sobran.
 
    Qué lee de la tabla
    - Primera columna: el nombre de cada fila. Las demás: una serie cada una,
@@ -71,12 +71,14 @@
     return limpio === '' || isNaN(limpio) ? null : Number(limpio);
   };
 
-  // Marcas del eje en números redondos: 0, 100, 200… (nunca 0, 87, 174…)
-  const marcas = (minimo, maximo, cuantas) => {
+  // Marcas del eje en números redondos: 0, 100, 200… (nunca 0, 87, 174…).
+  // Si los datos son enteros, las marcas también: 0, 5, 10, y no 0; 2,5; 5,0
+  const marcas = (minimo, maximo, cuantas, enteros) => {
+    if (maximo <= minimo) maximo = minimo + 1;          // todo igual (por ejemplo, todo en cero): igual hay eje
     const rango = (maximo - minimo) || 1;
     const bruto = rango / cuantas;
     const potencia = Math.pow(10, Math.floor(Math.log10(bruto)));
-    const paso = [1, 2, 2.5, 5, 10].map(m => m * potencia).find(p => Math.ceil(rango / p) <= cuantas + 1);
+    const paso = [1, 2, 2.5, 5, 10].map(m => m * potencia).filter(p => !enteros || p >= 1 && Number.isInteger(p)).find(p => Math.ceil(rango / p) <= cuantas + 1) || Math.max(1, 10 * potencia);
     const desde = Math.floor(minimo / paso) * paso;
     const lista = [];
     for (let v = desde; v < maximo + paso * 0.999; v += paso) lista.push(Number(v.toFixed(10)));
@@ -147,7 +149,7 @@
       // Desde cero, el cero entra siempre en el eje: también si todo es negativo
       const minimo = desdeCero ? Math.min(0, ...todos) : Math.min(...todos);
       const maximo = desdeCero ? Math.max(0, ...todos) : Math.max(...todos);
-      const eje = marcas(minimo, maximo, 4);
+      const eje = marcas(minimo, maximo, 4, todos.every(Number.isInteger));
       const y0 = eje[0], y1 = eje[eje.length - 1];
       const enEje = formatoEje(eje);
 
@@ -290,7 +292,7 @@
     return function trazar(ancho) {
       const GROSOR = 16, grupo = k * GROSOR + (k - 1) * 2, paso = grupo + 14;
       // El cero entra siempre en el eje: también si todo es negativo
-      const eje = marcas(Math.min(0, ...todos), Math.max(0, ...todos), ancho < 480 ? 3 : 4);
+      const eje = marcas(Math.min(0, ...todos), Math.max(0, ...todos), ancho < 480 ? 3 : 4, todos.every(Number.isInteger));
       const x0 = eje[0], x1 = eje[eje.length - 1];
       const enEje = formatoEje(eje);
       // Los nombres ocupan lo que necesitan, hasta el 42 % del ancho; lo que no entra se corta con "…"
@@ -342,15 +344,16 @@
      del reloj).
      ------------------------------------------------------------------------ */
   function torta(c) {
-    const { datos, escribir, svg, tabla } = c;
+    const { datos, escribir, svg, tabla, caja } = c;
     const serie = datos.series[0];
-    // "Otros" va una sola vez y al final: junta las filas que se llaman así en la
-    // tabla y, si quedan más de 5 partes, las que sobran
+    // Hasta 6 porciones: 5 de color y la sexta en gris. La gris va al final y
+    // junta las filas que se llaman "Otros" en la tabla y las que no entran de
+    // color; si es una sola fila, conserva su nombre.
     const esOtros = p => /^otr[oa]s\b/i.test(p.nombre);
     let partes = datos.momentos.map((nombre, i) => ({ nombre, valor: serie.valores[i] })).filter(p => p.valor > 0);
     let resto = partes.filter(esOtros);
     partes = partes.filter(p => !esOtros(p));
-    if (partes.length + (resto.length ? 1 : 0) > MAX_SERIES + 1) {
+    if (partes.length > MAX_SERIES) {
       resto = resto.concat(partes.slice(MAX_SERIES));
       partes = partes.slice(0, MAX_SERIES);
     }
@@ -374,8 +377,25 @@
       const pct = p.pct === 0 ? '<1' : p.pct === 100 && partes.length > 1 ? '>99' : p.pct;
       li.append(html('span', 'leyenda__dato', yaEsPorcentaje ? '' : pct + '\u00a0%'));     // siempre, para que la grilla no se corra
       leyenda.append(li);
+      p.li = li;
     });
     c.lienzo.after(leyenda);
+
+    // Con el mouse (o el dedo) sobre una porción se resalta su renglón de la
+    // lista, y al revés. Las demás porciones se apagan un poco.
+    let resaltada = null;
+    const resaltar = k => {
+      resaltada = k;
+      caja.classList.toggle('dibujo--resaltando', k != null);
+      partes.forEach((p, i) => p.li.classList.toggle('leyenda--resaltada', i === k));
+      svg.querySelectorAll('.dibujo__porcion').forEach(e => e.classList.toggle('dibujo__porcion--resaltada', Number(e.dataset.k) === k));
+    };
+    svg.addEventListener('pointerover', e => { if (e.target.dataset && e.target.dataset.k != null) resaltar(Number(e.target.dataset.k)); });
+    svg.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') resaltar(null); });
+    partes.forEach((p, i) => {
+      p.li.addEventListener('pointerenter', () => resaltar(i));
+      p.li.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') resaltar(null); });
+    });
 
     return function trazar(ancho) {
       const lado = Math.round(Math.max(150, Math.min(220, ancho * 0.42)));
@@ -385,14 +405,15 @@
       svg.setAttribute('width', lado);
       svg.setAttribute('height', lado);
       let angulo = -Math.PI / 2;
-      partes.forEach(p => {
+      partes.forEach((p, k) => {
         const giro = p.valor / total * Math.PI * 2;
-        if (partes.length === 1) { crear('circle', { class: 'dibujo__porcion ' + p.clase, cx, cy, r }, svg); return; }
+        if (partes.length === 1) { crear('circle', { class: 'dibujo__porcion ' + p.clase, 'data-k': k, cx, cy, r }, svg); return; }
         const x1 = cx + r * Math.cos(angulo), y1 = cy + r * Math.sin(angulo);
         const x2 = cx + r * Math.cos(angulo + giro), y2 = cy + r * Math.sin(angulo + giro);
-        crear('path', { class: 'dibujo__porcion ' + p.clase, d: `M${cx} ${cy}L${x1.toFixed(2)} ${y1.toFixed(2)}A${r} ${r} 0 ${giro > Math.PI ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}Z` }, svg);
+        crear('path', { class: 'dibujo__porcion ' + p.clase, 'data-k': k, d: `M${cx} ${cy}L${x1.toFixed(2)} ${y1.toFixed(2)}A${r} ${r} 0 ${giro > Math.PI ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}Z` }, svg);
         angulo += giro;
       });
+      if (resaltada != null) resaltar(resaltada);     // se volvió a trazar: se conserva lo resaltado
     };
   }
 

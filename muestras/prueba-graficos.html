@@ -41,6 +41,7 @@
     <div class="grilla grilla--2" id="columnas-casos"></div>
 
     <h2 id="torta">Torta</h2>
+    <p>Pasá el mouse por una porción: se resalta su renglón en la lista y las demás porciones se apagan. También al revés, desde la lista.</p>
     <div class="grilla grilla--2" id="torta-casos"></div>
 
     <h2 id="cambio">Datos que cambian</h2>
@@ -87,6 +88,8 @@
           'El cero en el medio: las barras de 102 y 103 van a la izquierda (el 103 lleva el signo menos tipográfico).'],
         ['Todos negativos', { grafico: 'barras' }, ['Aula', 'Variación'], [['Aula 101', '-12'], ['Aula 102', '-8'], ['Aula 103', '-3']],
           'El cero a la derecha del eje y las barras hacia la izquierda, adentro del gráfico.'],
+        ['Todo en cero', { grafico: 'barras' }, ['Aula', 'Reservas'], [['Aula 101', '0'], ['Aula 102', '0']],
+          'Un eje de 0 a 1, barras mínimas y 0 en cada punta. Nada roto.'],
       ],
       'columnas-casos': [
         ['Doce meses', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Eventos'], MESES.map((m, i) => [m, String([6, 9, 7, 3, 11, 14, 8, 2, 12, 15, 10, 4][i])]),
@@ -101,6 +104,8 @@
           'Una columna centrada, con 14 arriba.'],
         ['Alto a mano (data-alto="180")', { grafico: 'barras', orientacion: 'vertical', alto: '180' }, ['Mes', 'Eventos'], [['Jul', '3'], ['Ago', '11'], ['Sep', '14']],
           'Más bajo que los demás: 180px.'],
+        ['Todo en cero', { grafico: 'barras', orientacion: 'vertical' }, ['Mes', 'Eventos'], [['Jul', '0'], ['Ago', '0'], ['Sep', '0']],
+          'Un eje de 0 a 1 y 0 arriba de cada columna. Nada roto.'],
       ],
       'torta-casos': [
         ['Dos partes', { grafico: 'torta' }, ['Estado', 'Aulas'], [['Ocupadas', '17'], ['Libres', '7']],
@@ -113,6 +118,8 @@
           'Una astilla gris para "Otros". La lista dice "<1 %" y ">99 %", nunca "0 %" ni "100 %".'],
         ['"Otros" en el medio y más de seis filas', { grafico: 'torta' }, ['Quién pide', 'Reservas'], [['Departamentos', '86'], ['Otros', '20'], ['Secretaría', '41'], ['Extensión', '27'], ['Centro de Estudiantes', '16'], ['Bienestar', '9'], ['Biblioteca', '7']],
           'Cinco partes de color y un solo "Otros" gris, al final: junta la fila "Otros" de la tabla (20) con Biblioteca (7), 27 en total.'],
+        ['Seis filas, sin "Otros"', { grafico: 'torta' }, ['Sede', 'Inscriptos'], [['Trelew', '412'], ['Comodoro', '388'], ['Madryn', '251'], ['Esquel', '197'], ['Ushuaia', '84'], ['Río Grande', '41']],
+          'Seis porciones: cinco de color y Río Grande en gris, al final, con su nombre.'],
         ['Todo en cero', { grafico: 'torta' }, ['Estado', 'Aulas'], [['Ocupadas', '0'], ['Libres', '0']],
           'No hay nada que dibujar: debería quedar la tabla, no una caja vacía.'],
         ['Ya son porcentajes (data-unidad="%")', { grafico: 'torta', unidad: '%' }, ['Respuesta', 'Porcentaje'], [['Sí', '62'], ['No', '30'], ['No sabe', '8']],

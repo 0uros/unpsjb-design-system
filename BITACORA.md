@@ -1,4 +1,4 @@
-# Bitácora — Sistema de Diseño UNPSJB (MII 2.0)
+# Bitácora — Sistema de Diseño UNPSJB
 
 ## 2026-09-26 — Sesión 1: arranque y fusión de borradores
 
@@ -936,8 +936,13 @@ Sin número de sesión. No se tocó ninguna pieza: número de versión y registr
 - Sin subir a GitHub ni unir a `main`: falta decidir qué más entra.
 
 Pendientes, en orden:
-- [ ] Decidir qué más entra en la 0.4.5 (por ejemplo, los ajustes de `planos` o la revisión de `textos-y-revision`).
+- [x] Qué entra en la 0.4.5: lo de `en-curso` más los gráficos probados. Los ajustes de `planos` y la revisión de `textos-y-revision` quedan para después.
 - [x] Probar los gráficos de barras, columnas y torta. Con `muestras/prueba-graficos.html` (24 casos límite, datos inventados) en Chrome sin ventana a 1366 y 390 px, claro y oscuro. Aparecieron y se arreglaron: todo negativo se dibujaba fuera del gráfico, el valor de las negativas iba del lado del cero, la torta en cero dejaba una caja vacía, "Otros" podía salir dos veces y una porción visible decía "0 %". `muestra-graficos.html` sigue igual.
-- [ ] Decidir el tope de partes de la torta: `DESIGN.md` 15.A dice 3 y el módulo acepta 5 más "Otros".
-- [ ] Documentar barras, columnas y torta en `DESIGN.md` (15.E solo describe las líneas).
+- [x] Tope de la torta: 6 porciones, 5 de color y una gris (lo decidió el usuario). `DESIGN.md` 15.A y 15.G.
+- [x] Documentar barras, columnas y torta en `DESIGN.md` (15.F y 15.G), y en 18 y 20 lo que vino de `ajustes-0.4.4` (logo original del membrete, pie de verificación en espera, cartelera en el celular).
+- [x] Resaltar en la lista la porción que está bajo el mouse (pedido del usuario), y al revés.
+- [x] Marcas del eje enteras cuando los datos son enteros (antes 0; 2,5; 5,0…).
+- [x] Sacar "(MII 2.0)" del nombre (pedido del usuario): queda contado como origen en `DESIGN.md`. Las notas viejas (`FRAMEWORK.md`, `FEEDBACK-NOTEBOOK.md`) lo conservan.
+- [x] `axe` en las 12 muestras, a 1366 y 390 px, claro y oscuro. Apareció un contraste: `--color-advertencia-texto` sobre `capa` (4,3:1); pasa a `#a64c08`. Quedan dos avisos en `muestra-planos.html`, que se ven al unir `planos-claro`.
+- [ ] Lector de pantalla: necesita una persona.
 - [ ] Unir `version-0.4.5` a `main` y subirla.

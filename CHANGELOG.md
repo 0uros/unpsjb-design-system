@@ -22,9 +22,9 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.4.5 · 2026-10-15 · en preparación
+## 0.4.5 · 2026-10-15 · lista, sin unir a `main`
 
-Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo". Todavía no está en `main` ni publicada: falta decidir qué más entra.
+Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo". Está lista en la rama `version-0.4.5`; todavía no está en `main` ni publicada.
 
 ### Nuevo
 
@@ -55,7 +55,9 @@ Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas qu
 **Vista pública y módulos de la 0.4.3.**
 
 - **Cartelera en el celular** (`muestra-cartelera-celular.html`, `unpsjb-cartelera.css`): lista en el celular; desde 768px, la grilla del día y la semana vigente. La búsqueda recorre toda la semana.
-- **Gráficos de barras, columnas y torta** en `unpsjb-graficos.js`, además de las líneas. Las clases que arma el script pasan de `.lineas__…` a `.dibujo__…`.
+- **Gráficos de barras, columnas y torta** en `unpsjb-graficos.js`, además de las líneas. Las clases que arma el script pasan de `.lineas__…` a `.dibujo__…`. `DESIGN.md`, 15.F y 15.G.
+- **En la torta, el mouse o el dedo sobre una porción resalta su renglón de la lista** (`.leyenda--resaltada`) y apaga las demás porciones (`.dibujo--resaltando`); sobre un renglón, resalta su porción. Cada renglón de `.leyenda--columna` pasa de `display: contents` a `subgrid`, para poder llevar fondo.
+- `muestras/prueba-graficos.html`: casos límite de los gráficos, con datos inventados. No es una muestra para copiar.
 
 ### Cambiado
 
@@ -69,6 +71,15 @@ Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas qu
 - En una notebook (1366×641, con el banner "Piloto"), el ancho de la imagen de cada cámara pasó de 636 a 827px con 1, de 266 a 406px con 4 y de 142 a 266px con 9.
 
 **Documentos.** El membrete usa el logo original (la gaviota con su detalle y el texto curvo). El pie de verificación queda en espera: está diseñado, pero sale apagado en los ejemplos.
+
+**Nombre.** El sistema se llama "Sistema de Diseño Digital UNPSJB", sin "(MII 2.0)". `DESIGN.md` cuenta de dónde venía esa sigla (el primer borrador, `notas/FRAMEWORK.md`). En el `name` de `DESIGN.md` y de la skill: "UNPSJB · Señalética".
+
+**Gráficos.**
+
+- **La torta llega a 6 porciones,** 5 de color y una gris (antes `DESIGN.md` 15.A ponía el tope en 3). La gris junta las filas "Otros" y las que no entran de color.
+- **Si los datos son enteros, las marcas del eje también:** 0, 5, 10, 15 en vez de 0; 2,5; 5,0; 7,5.
+
+**Advertencia.** `--color-advertencia-texto` en claro pasa de `#b45309` a `#a64c08`: sobre `--color-capa` daba 4,3:1 y no llegaba a 4,5:1 (lo encontró `axe` en la cartelera del celular). Ahora da 4,9:1 sobre `capa` y 5,7:1 sobre blanco. El relleno de advertencia (`--color-advertencia`) no cambia.
 
 **Carpetas.** El repositorio pasa a `sistema/` (lo que se publica: la hoja, los módulos, `fonts/` y `assets/`), `muestras/`, `notas/` y `herramientas/` (logo, emojis, QR y las pruebas de logo). Las copias de versiones anteriores van a `archivo/`, que no se versiona. Las entradas anteriores de este registro nombran los archivos donde estaban entonces.
 
@@ -86,15 +97,21 @@ Salen de probar los gráficos nuevos con `muestras/prueba-graficos.html`, una p�
 - **"Otros" en la torta** va una sola vez y al final: junta las filas que se llaman así en la tabla y, si hay más de cinco partes, las que sobran. Antes podía haber dos grises ("Otros" y "Otros (2)") y la fila "Otros" le sacaba un color a las demás.
 - **Una porción que se ve en la torta nunca dice "0 %"**: dice "<1 %", y la parte grande, ">99 %" en vez de "100 %".
 - En barras con todos los valores negativos, el último número del eje se cortaba en el borde derecho.
+- **Barras o columnas con todo en cero:** el eje tenía una sola marca y el dibujo salía roto (una división por cero). Ahora el eje va de 0 a 1.
+- **Torta de seis filas sin "Otros":** la sexta porción salía gris, como "Otros", sin serlo. Ahora la sexta es la gris a propósito y conserva su nombre.
+- `DESIGN.md` 15.E nombraba `.lineas__lectura`; la clase es `.dibujo__lectura`.
+
+### Probado
+
+- Gráficos, en Chrome sin ventana a 1366 y 390 px, en claro y oscuro: 26 casos de `prueba-graficos.html` y los 11 de `muestra-graficos.html`, nada fuera del dibujo, sin scroll horizontal ni errores de consola. El resaltado de la torta, en las dos direcciones. Al imprimir, un gráfico por renglón al ancho de la hoja y sin el selector.
+- `axe` (WCAG 2.2 AA y buenas prácticas) en las 12 páginas de `muestras/`, a 1366 y 390 px, claro y oscuro: sin fallas, salvo en `muestra-planos.html` (abajo).
 
 ### Pendiente
 
-- Probado en Chrome a 1366 y 390 px, en claro y oscuro: nada fuera del dibujo y sin errores. Falta `axe`, lector de pantalla, otros navegadores e impresión.
-- El eje elige pasos de 2,5 cuando el rango es 12 (0; 2,5; 5,0…), y entonces escribe todas las marcas con decimales. Ya pasaba antes; sería más claro con pasos de 2 o de 3.
-- `DESIGN.md` 15.A dice que no se usan tortas de más de 3 partes, pero el módulo acepta hasta 5 más "Otros" y la muestra tiene una de 6. Hay que decidir cuál vale.
-- Documentar barras, columnas y torta en `DESIGN.md` (15.E describe solo las líneas).
-- `axe` y lector de pantalla en el visor, el portal, la cartelera en el celular y los gráficos.
-- Los ajustes de planos de las ramas `planos` y `planos-claro` no entran todavía.
+- **Lector de pantalla** (NVDA u Orca) en el visor, el portal, la cartelera en el celular y los gráficos: no se puede probar sin una persona.
+- `muestra-planos.html` tiene dos avisos de `axe`: el panel de detalle es un `aside` dentro de `main`, y en celular un `h3` va sin `h2` antes. No se tocan acá porque el módulo de planos se está rehaciendo en la rama `planos-claro` (donde el `aside` ya no está); se revisan al unirla.
+- Los ajustes de planos de las ramas `planos` y `planos-claro` no entran en esta versión.
+- Subir `skill/design-md-unpsjb/SKILL.md` a claude.ai.
 
 ## 0.4.4 · 2026-10-05 · oficial
 
