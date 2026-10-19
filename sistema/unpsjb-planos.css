@@ -18,14 +18,16 @@
      de pantalla.
    - Lo elegido va en azul, nunca en naranja: el naranja es foco y "estás acá".
    - No hay carteles flotantes: los datos de lo elegido van en un panel fijo.
+   - Sobre el plano van solo los controles de la vista (planta, acercar, referencias).
+     Buscar, filtrar y elegir van en el panel, que nunca queda vacío.
 
    Piezas
-   1. Barra (.plano__barra)
-   2. Lienzo y dibujo (.plano__lienzo, .plano-trazo)
+   1. La pantalla: panel (.plano__panel) y plano (.plano__mapa)
+   2. Lienzo y dibujo (.plano__lienzo, .plano-trazo), y los controles de la vista
    3. Aulas (.plano-zona, .plano-rotulo)
    4. Antenas (.plano-marca)
       y puntos de referencia (.plano-lugar)
-   5. Referencias, detalle y lista
+   5. Panel: buscar, filtros, lista y ficha; referencias
    6. Celular, impresión y alto contraste
    7. Modo edición (.plano-editor, .plano-form): va con unpsjb-planos-editor.js
    ========================================================================== */
@@ -45,22 +47,31 @@
 }
 :root[data-tema="oscuro"] .plano { --plano-suelo: var(--color-fondo); --plano-local: var(--color-capa); }
 
-/* 1. Barra ----------------------------------------------------------------- */
-/* Plantas a la izquierda; "Plano | Lista" último, contra el borde derecho.
-   Lo que aparece y desaparece (capas, acercar) queda en el medio. */
-.plano__barra {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--espacio-2) var(--espacio-4);
-  margin-bottom: var(--espacio-3);
+/* 1. La pantalla ------------------------------------------------------------ */
+/* En pantallas anchas: el panel a la izquierda y el plano ocupando el resto, los dos del
+   alto de la ventana. En las angostas se ve una cosa por vez (.plano--lista, .plano--plano). */
+.plano__cuerpo { display: grid; gap: var(--espacio-3); grid-template-columns: minmax(0, 1fr); }
+.plano__modo { display: flex; width: fit-content; margin-bottom: var(--espacio-3); }
+.plano__mapa { min-width: 0; }
+.plano__marco { position: relative; }
+@media (max-width: 1023px) {
+  .plano--lista .plano__mapa { display: none; }
+  /* Con el plano a la vista, del panel queda solo la ficha de lo elegido, debajo */
+  .plano--plano .plano__panel > :not(.plano__detalle) { display: none; }
+  .plano--plano:not(.plano--con-elegido) .plano__panel { display: none; }
+  .plano--plano .plano__panel { order: 2; }
+  .plano--plano .plano__ver-plano { display: none; }
 }
-.plano__capas, .plano__zoom { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-1) var(--espacio-4); }
-.plano__zoom { gap: var(--espacio-1); }
-.plano__barra > :last-child { margin-left: auto; }
-
-.plano__cuerpo { display: grid; gap: var(--espacio-4); grid-template-columns: minmax(0, 1fr); align-items: start; }
-@media (min-width: 1024px) { .plano__cuerpo { grid-template-columns: minmax(0, 1fr) 280px; } }
+@media (min-width: 1024px) {
+  .plano__modo { display: none; }
+  .plano__cuerpo { grid-template-columns: 320px minmax(0, 1fr); gap: var(--espacio-4); height: clamp(480px, calc(100vh - 14.5rem), 1000px); }
+  .plano__mapa { display: flex; flex-direction: column; min-height: 0; }
+  .plano__marco { flex: 1; min-height: 0; }
+  .plano .plano__lienzo { height: 100%; aspect-ratio: auto; max-height: none; }
+  .plano .plano__ver-plano { display: none; }
+  /* En edición la barra del editor va arriba: el plano se achica para seguir entrando */
+  .plano--editando .plano__cuerpo { height: clamp(480px, calc(100vh - 23rem), 1000px); }
+}
 
 /* 2. Lienzo y dibujo ------------------------------------------------------- */
 /* El alto sale de la proporción del plano (--plano-proporcion, la pone el
@@ -83,6 +94,61 @@
 .plano__lienzo--moviendo { cursor: grabbing; }
 .plano__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .plano__cargando { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--color-tinta-2); }
+
+/* Los controles de la vista: flotan sobre el plano, cada uno en su esquina.
+   Arriba a la izquierda, la planta; abajo a la derecha, acercar; abajo a la izquierda, las
+   referencias. Todos con la misma superficie: fondo `panel`, borde y la sombra de lo que flota. */
+.plano__plantas, .plano__zoom-par, .plano__ver-todo, .plano__ayuda {
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+  box-shadow: var(--sombra-flotante);
+}
+.plano__plantas, .plano__zoom, .plano__ayuda { position: absolute; z-index: 3; margin: 0; }
+/* Planta: una columna, la más alta arriba, como el edificio */
+.plano__plantas { top: var(--espacio-3); left: var(--espacio-3); display: flex; flex-direction: column; padding: 3px; gap: 2px; min-width: 0; }
+.plano__plantas[hidden] { display: none; }
+.plano__plantas label {
+  display: grid;
+  place-items: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 var(--espacio-2);
+  font: 700 0.9375rem/1 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-tinta-2);
+  border-radius: calc(var(--radio-contenedor) - 3px);
+  cursor: pointer;
+}
+.plano__plantas input { position: absolute; opacity: 0; pointer-events: none; }
+.plano__plantas label:hover { color: var(--color-tinta); background: var(--color-tinte); }
+.plano__plantas label:has(input:checked) { color: #ffffff; background: var(--color-primario-relleno); }
+.plano__plantas label:has(input:focus-visible) { box-shadow: var(--anillo-foco); }
+/* Acercar y alejar, uno sobre otro; debajo, "Ver todo" */
+.plano__zoom { right: var(--espacio-3); bottom: var(--espacio-3); display: flex; flex-direction: column; align-items: flex-end; gap: var(--espacio-2); }
+.plano__zoom-par { display: flex; flex-direction: column; overflow: hidden; }
+.plano__zoom-par button, .plano__ver-todo {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  font: 700 0.875rem/1 var(--fuente-texto);
+  color: var(--color-tinta);
+  cursor: pointer;
+}
+.plano__zoom-par button { width: 40px; height: 40px; padding: 0; background: none; border: 0; }
+.plano__zoom-par button + button { border-top: 1px solid var(--color-linea); }
+.plano__zoom-par .icono { width: 20px; height: 20px; }
+.plano__ver-todo { height: 36px; padding: 0 var(--espacio-3); }
+.plano__zoom-par button:hover, .plano__ver-todo:hover { background: var(--color-tinte); }
+.plano__zoom-par button:focus-visible, .plano__ver-todo:focus-visible { outline: 0; box-shadow: var(--anillo-foco); position: relative; z-index: 1; }
+/* Cómo mover el plano: un botón de ayuda arriba a la derecha, que abre su nota */
+.plano__ayuda { top: var(--espacio-3); right: var(--espacio-3); max-width: min(320px, calc(100% - 96px)); }
+.plano__ayuda summary { display: grid; place-items: center; width: 40px; height: 40px; margin-left: auto; color: var(--color-tinta-2); cursor: pointer; list-style: none; border-radius: var(--radio-contenedor); }
+.plano__ayuda summary::-webkit-details-marker { display: none; }
+.plano__ayuda summary:hover { color: var(--color-tinta); background: var(--color-tinte); }
+.plano__ayuda summary:focus-visible { outline: 0; box-shadow: var(--anillo-foco); }
+.plano__ayuda summary .icono { width: 20px; height: 20px; }
+.plano__ayuda:not([open]) { border-radius: var(--radio-contenedor); }
 
 /* El dibujo. Las líneas no engordan al acercar: es un plano, no una foto.
    .plano-trazo           muros, columnas, aberturas
@@ -289,20 +355,13 @@
 .plano-marca--muestra { position: relative; transform: none; cursor: default; flex-shrink: 0; margin-right: var(--espacio-1); }
 .plano-marca--muestra::after { content: none; }
 
-/* 5. Referencias, detalle y lista ------------------------------------------ */
-.plano__nota { margin: var(--espacio-2) 0 0; font: var(--texto-detalle); color: var(--color-tinta-2); max-width: none; }
-.plano__referencias {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espacio-1) var(--espacio-6);
-  margin: var(--espacio-3) 0 0;
-  padding: 0;
-  list-style: none;
-  font: var(--texto-detalle);
-  color: var(--color-tinta);
-}
-.plano__referencias li { display: inline-flex; align-items: center; gap: var(--espacio-2); }
+/* 5. Panel: buscar, filtros, lista y ficha; referencias ---------------------- */
+.plano__referencias { display: flex; flex-wrap: wrap; gap: var(--espacio-1) var(--espacio-4); margin: var(--espacio-2) 0 0; padding: 0; list-style: none; font: var(--texto-nota); color: var(--color-tinta-2); }
+.plano__referencias[hidden] { display: none; }
+.plano__referencias li { display: flex; align-items: center; gap: var(--espacio-2); }
 .plano__referencias > li > .icono { width: 16px; height: 16px; }
+.plano__referencias .plano-marca--muestra, .plano__referencias .plano-lugar--muestra { margin: 0; }
+.plano__nota { margin: 0; padding: 0 var(--espacio-3) var(--espacio-3); font: var(--texto-nota); color: var(--color-tinta-2); max-width: none; }
 /* La referencia de un aula: un recorte de su zona, con el ícono si lo lleva */
 .plano__muestra {
   display: inline-flex;
@@ -323,53 +382,105 @@
 .plano__muestra[class*="plano__muestra--cat-"] { border-color: color-mix(in srgb, var(--cat) 55%, var(--plano-borde)); background: color-mix(in srgb, var(--cat) 14%, var(--plano-local)); }
 .plano__muestra--libre { color: #ffffff; border-color: var(--color-exito); background: var(--color-exito); }
 .plano__muestra--ocupada { color: var(--color-tinta-2); border-color: var(--color-tinta-2); background: color-mix(in srgb, var(--color-tinta-2) 14%, var(--plano-local)); }
-.plano__referencia--exito .icono { color: var(--color-exito-texto); }
-.plano__referencia--error .icono { color: var(--color-error-texto); }
-.plano__referencia--advertencia .icono { color: var(--color-advertencia-texto); }
 
-/* Detalle: la ficha de lo elegido, siempre en el mismo lugar */
-.plano__detalle > :first-child { margin-top: 0; }
+/* El panel: arriba, buscar y qué se muestra; después la lista de la planta, o la ficha de
+   lo elegido en su lugar. Nunca queda vacío. */
+.plano__panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+  overflow: hidden;
+}
+.plano__buscar { padding: var(--espacio-3) var(--espacio-3) var(--espacio-2); }
+.plano__buscar .input { width: 100%; }
+/* Qué se muestra: dos opciones que se prenden y se apagan */
+.plano__capas { display: flex; flex-wrap: wrap; gap: var(--espacio-2); padding: 0 var(--espacio-3) var(--espacio-3); }
+.plano__filtro { position: relative; display: inline-flex; cursor: pointer; }
+.plano__filtro input { position: absolute; opacity: 0; pointer-events: none; }
+.plano__filtro span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: 32px;
+  padding: 0 var(--espacio-3);
+  font: 600 0.875rem/1 var(--fuente-texto);
+  color: var(--color-tinta-2);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-completo);
+}
+/* Prendida: llena y con su tilde. No depende solo del color. */
+.plano__filtro input:checked + span { color: var(--color-primario-texto); background: var(--color-tinte); border-color: var(--color-primario-texto); }
+.plano__filtro input:checked + span::before { content: ""; width: 9px; height: 5px; margin-top: -3px; border: solid currentColor; border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+.plano__filtro:hover span { border-color: var(--color-primario-texto); }
+.plano__filtro input:focus-visible + span { box-shadow: var(--anillo-foco); }
+.plano__resumen { margin: 0; padding: var(--espacio-2) var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); max-width: none; background: var(--color-capa); border-block: 1px solid var(--color-linea); }
+.plano__lista { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.plano__subtitulo { position: sticky; top: 0; z-index: 1; margin: 0; padding: var(--espacio-2) var(--espacio-3); font: var(--texto-label); color: var(--color-tinta-2); background: var(--color-panel); border-bottom: 1px solid var(--color-linea); }
+.plano__cuenta { font-weight: 400; }
+.plano__items { margin: 0; padding: 0; list-style: none; }
+.plano__items li + li { border-top: 1px solid var(--color-linea); }
+.plano__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: var(--espacio-2) var(--espacio-3);
+  font: inherit;
+  text-align: left;
+  color: var(--color-tinta);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.plano__item:hover { background: var(--color-tinte); }
+.plano__item:focus-visible { outline: 0; box-shadow: inset var(--anillo-foco); }
+.plano__item-texto { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.plano__item-nombre { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.plano__item-dato { font: var(--texto-nota); color: var(--color-tinta-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.plano__item .insignia { flex: none; }
+
+/* La ficha de lo elegido: ocupa el lugar de la lista */
+.plano__detalle { flex: 1; min-height: 0; overflow-y: auto; padding: var(--espacio-3); border-top: 1px solid var(--color-linea); }
+.plano__detalle:empty { display: none; }
+.plano--con-elegido .plano__lista, .plano--con-elegido .plano__resumen { display: none; }
+.plano__volver { display: inline-flex; align-items: center; gap: var(--espacio-1); min-height: 36px; margin: 0 0 var(--espacio-3) calc(var(--espacio-2) * -1); padding: 0 var(--espacio-2); font: 600 0.875rem/1 var(--fuente-texto); color: var(--color-primario-texto); background: none; border: 0; border-radius: var(--radio-control); cursor: pointer; }
+.plano__volver:hover { background: var(--color-tinte); }
+.plano__volver:focus-visible { outline: 0; box-shadow: var(--anillo-foco); }
+.plano__volver .icono { width: 16px; height: 16px; }
 /* El panel es angosto: cada dato va debajo de su nombre */
 .plano__detalle .resumen > div { grid-template-columns: 1fr; gap: 0; }
 .plano__titulo { margin: 0 0 var(--espacio-1); font: var(--texto-titulo-3); }
 .plano__tipo { margin: 0 0 var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); }
-.plano__vacio { margin: 0; color: var(--color-tinta-2); }
 /* El tipo de equipo de una antena: su dibujo y su nombre */
 .plano__equipo { display: inline-flex; align-items: center; gap: var(--espacio-2); }
 .plano__dibujo { width: 32px; height: 32px; stroke-width: 1.5; color: var(--color-tinta-2); }
 .plano__acciones { display: flex; flex-wrap: wrap; gap: var(--espacio-2); margin-top: var(--espacio-4); }
-.plano__acciones:empty { display: none; }
-
-.plano__lista > * + * { margin-top: var(--espacio-6); }
-.plano__subtitulo { margin: 0 0 var(--espacio-2); font: var(--texto-titulo-3); }
-/* El nombre de cada fila es un botón con aspecto de enlace: la elige */
-.plano__ir {
-  margin: 0;
-  padding: 0;
-  font: inherit;
-  text-align: left;
-  color: var(--color-primario-texto);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  background: none;
-  border: 0;
-  border-radius: 2px;
-  cursor: pointer;
-}
-.plano__ir:hover { text-decoration-thickness: 2px; }
+/* Lo que no coincide con lo que se busca */
+.plano-zona--tenue { opacity: 0.35; }
+.plano--tenue { opacity: 0.35; }
 
 /* 6. Celular, impresión y alto contraste ----------------------------------- */
-@media (max-width: 639px) {
-  .plano__barra > :last-child { margin-left: 0; }
-  .plano__lienzo { max-height: 60vh; }
+@media (max-width: 1023px) {
+  .plano__lienzo { max-height: 65vh; }
+  .plano--plano .plano__panel { border: 0; background: none; }
+  .plano--plano .plano__detalle { border: 1px solid var(--color-linea); border-radius: var(--radio-contenedor); background: var(--color-panel); }
 }
 @media (prefers-reduced-motion: reduce) { .plano-zona, .plano-trazo--rotulo, .plano-trazo--suave { transition: none; } }
 @media print {
   .plano { --plano-suelo: transparent; }
   .plano-trazo--rotulo, .plano-trazo--suave { opacity: 1; }      /* en papel va el dibujo entero */
-  .plano__barra, .plano__nota { display: none; }
+  .plano__modo, .plano__buscar, .plano__capas, .plano__plantas, .plano__zoom, .plano__nota, .plano__volver, .plano__ver-plano { display: none; }
+  .plano__cuerpo { display: block; height: auto; }
+  .plano .plano__mapa, .plano .plano__panel, .plano .plano__lista { display: block; overflow: visible; }
+  .plano__ayuda { display: none; }
   .plano__lienzo { max-height: none; border-color: var(--color-linea-control); break-inside: avoid; }
-  .plano__lista[hidden] { display: block; }          /* en papel van el plano y la lista */
   .plano-zona, .plano-marca, .plano-rotulo, .plano-lugar { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
 @media (forced-colors: active) {
