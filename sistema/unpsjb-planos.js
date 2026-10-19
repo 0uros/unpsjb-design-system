@@ -1,6 +1,6 @@
 /* ==========================================================================
    unpsjb-planos.js — Módulo de planos · v0.4.4
-   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 21.
+   Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 21.
 
    Muestra las plantas de un edificio con lo que se marca encima: antenas de
    wifi (puntos) y aulas (zonas). Arma la barra, el plano, la lista y el panel
