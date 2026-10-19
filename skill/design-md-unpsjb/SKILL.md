@@ -1265,7 +1265,7 @@ Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no 
 | Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
 | Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
 | Cartelera (0.4.3) | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
-| Planos (0.4.4) | `unpsjb-planos.css` + `unpsjb-planos.js` | `muestra-planos.html` | 11 KB + 31 KB | 21 |
+| Planos (0.4.4) | `unpsjb-planos.css` + `unpsjb-planos.js` (+ `unpsjb-planos-editor.js`, opcional) | `muestra-planos.html` | 17 KB + 31 KB (+ 23 KB) | 21 |
 
 Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases. En el ejemplo de la agenda los eventos son siempre los mismos: al cambiar de fecha o de aula cambian los títulos y los días.
 
@@ -1607,7 +1607,7 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 
 ## 21. Planos (nuevo en 0.4.4)
 
-Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (11 KB) y `unpsjb-planos.js` (31 KB; 10 KB comprimido). Ejemplo: `muestra-planos.html`.
+Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (17 KB) y `unpsjb-planos.js` (31 KB; 10 KB comprimido), más el modo edición, opcional (21.G). Ejemplo: `muestra-planos.html`.
 
 El plano muestra **el estado de ahora**. Para elegir un aula y un horario está la agenda (16.A): desde el aula elegida se llega a su agenda con un enlace (`data-agenda`).
 
@@ -1665,19 +1665,26 @@ Los tres dibujos son propios del módulo (Lucide no los tiene), con su mismo tra
 
 ### D. Aulas
 
-Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.plano-rotulo`, un botón): ícono, nombre y estado.
+Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.plano-rotulo`, un botón). **Pesa según lo que tiene para decir:** lo que resalta en el plano es lo libre, lo ocupado y lo elegido; lo demás casi no se ve.
 
-| Estado | Ícono | Zona |
+| Estado | Zona | Rótulo |
 |---|---|---|
-| Libre | `check` | `exito-texto`: borde y relleno al 10 % |
-| Ocupada | `clock` | `tinta-2`: borde y relleno al 22 %. **No en rojo:** un aula ocupada no es un error |
-| Sin dato | `square` | `primario-texto`: borde y relleno al 10 % |
+| Libre | `exito-texto`: borde de 1,5px y relleno al 14 % | Caja `panel` con borde `exito-texto`, ícono `check`, nombre y hasta cuándo |
+| Ocupada | `tinta-2`: borde de 1,5px y relleno al 24 %. **No en rojo:** un aula ocupada no es un error | Caja llena en `tinta-2` con el texto en `panel`, ícono `clock`, nombre y hasta cuándo |
+| Sin dato | `linea-control`: borde de 1px, **sin relleno** | El nombre solo, sin caja ni ícono |
+| No se reserva | `linea`: borde de 1px, sin relleno | El nombre solo, en `tinta-2` y sin negrita |
 
+- **"Sin dato" suele ser casi todo el plano:** por eso no lleva color, ni ícono, ni dice "Sin dato" en cada aula. El estado está en el panel, en la lista y en el nombre del botón.
+- **El azul (`primario-texto`) es solo para lo elegido:** borde de 2,5px y relleno al 16 % en la zona, y el rótulo con borde y fondo azulados. Ningún estado lo usa.
+- **Libre y ocupada se distinguen también sin color:** una caja es hueca y la otra llena, y cada una tiene su ícono.
 - El texto dice hasta cuándo, si se sabe: "Ocupada hasta las 16:00", "Libre hasta las 14:00".
-- **El rótulo nunca se sale de su aula.** Si no entra entero, se acorta de a un paso: sin el estado (`--medio`), solo el nombre (`--corto`), solo el ícono (`--chico`). Lo que deja de verse sigue en el nombre del botón, en el panel y en la lista. Al acercar, vuelve.
-- **No todo lo que tiene nombre se reserva.** La biblioteca, una oficina o un laboratorio de investigación también se marcan, para ubicarse, pero **sin estado**: llevan `"reservable": false` y `"tipo"` ("Oficina", "Laboratorio"…). Se dibujan más suaves (`.plano-zona--fija`, en `linea-control`), con el nombre solo, y en la lista dicen su tipo.
+- **El rótulo nunca se sale de su aula, y el nombre es lo último que se pierde.** Si no entra entero, se acorta de a un paso: sin el estado (`--medio`); con el ícono y el **nombre breve** (`--corto`); el nombre breve solo (`--chico`). **Nunca queda el ícono solo.** En el paso más chico el estado se ve por la caja (hueca, llena o sin caja). Lo que deja de verse sigue en el nombre del botón, en el panel y en la lista. Al acercar, vuelve.
+- **El nombre breve** sale solo: "17" por "Aula 17", "Lab. Física" por "Laboratorio de Física". Para los demás, los datos pueden traer el suyo en `"corto"` ("Jurídicas" por "Facultad de Ciencias Jurídicas"). Si ni el breve entra, se corta con puntos suspensivos; el nombre entero aparece al pasar el mouse.
+- **En un local angosto y alto, el nombre va de pie** (`--de-pie`), de abajo hacia arriba, como en un plano.
+- **No todo lo que tiene nombre se reserva.** La biblioteca, una oficina o un laboratorio de investigación también se marcan, para ubicarse, pero **sin estado**: llevan `"reservable": false` y `"tipo"` ("Oficina", "Laboratorio"…), y en la lista dicen su tipo.
 - La zona también responde al clic, pero es un **atajo para el mouse**: con el teclado se llega al rótulo.
-- Sin tramas de relleno (15.C). La elegida lleva el borde `primario-texto` de 3px.
+- Sin tramas de relleno (15.C).
+- **Las referencias de abajo del plano** muestran un recorte de cada zona (`.plano__muestra`), con su ícono si lo lleva.
 - **El estado es un dato aparte** (`data-ocupacion`): el plano no sabe de reservas. Quien tenga las reservas arma `{ "id-del-aula": { "estado": "ocupada", "hasta": "16:00", "evento": "Álgebra I" } }` y se lo pasa (`plano.ocupacion(datos)`), sin volver a cargar la pantalla. Un aula que no figura queda "Sin dato".
 
 ### E. Los datos
@@ -1686,6 +1693,7 @@ Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con
 
 - **El dibujo conserva las coordenadas de la hoja original** (su `viewBox` no arranca en cero). Así se puede **simplificar un plano** (quitarle una parte que no interesa) o volver a una versión más completa sin mover nada de lo marcado. Cada versión anterior de un plano se guarda: nunca se pisa.
 - Un espacio sin `puntos` figura en la lista pero no en el plano: sirve para cargar primero los nombres y ubicarlos después.
+- `"corto"` (opcional) es el nombre que se muestra cuando el aula se ve chica (21.D).
 - **El identificador de un aula no se cambia** una vez que lo usan las reservas: es lo que une el plano con la agenda. El nombre sí.
 - **Editar las posiciones es cosa de cada herramienta,** no del módulo: el módulo avisa dónde se hizo clic (`plano:clic`), deja sumar un formulario al panel (`plano:detalle`) y se vuelve a pintar (`plano.pintar()`). Un editor nunca depende solo de arrastrar: ofrece también "reubicar" con un clic y campos con la posición.
 - En React se puede usar el mismo script (`unpsjbPlanos.dibujar(elemento, datos)`) o armar un componente con estas clases.
@@ -1701,3 +1709,17 @@ Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con
 | Naranja para lo elegido | El naranja es foco y "estás acá" (sección 1) |
 | El estado solo con color | Siempre ícono y texto (3.E) |
 | Elegir horarios sobre el plano | Para eso está la agenda (16.A); el plano enlaza a ella |
+
+### G. Modo edición
+
+Para marcar antenas y aulas sobre el plano sin tocar el archivo de datos a mano. Es **opcional**: `unpsjb-planos-editor.js` (23 KB; 7 KB comprimido) se carga después de `unpsjb-planos.js` y solo hace algo cuando la dirección lleva `?editar`. Sus estilos están en `unpsjb-planos.css`. Ejemplo: `muestra-planos.html?editar`.
+
+- **Se entra con un botón secundario en el encabezado** ("Editar antenas y aulas", `#ir-a-editar`), que en modo edición pasa a "Salir de la edición".
+- **La barra (`.plano-editor`) es una tira pegada al plano,** no un panel aparte: **el plano no se va de la vista mientras se edita.** Arriba, en una fila de botones compactos: qué agregar ("Antena", "Aula", "Aula de forma irregular"), lo que falta ubicar, y contra el borde derecho "Descartar" y "Descargar planos.json" (el único primario). Abajo, una franja (`.plano-editor__ahora`, con `role="status"`) dice qué está pasando y cómo se publica; mientras se marca cambia de color y muestra "Cerrar la forma" y "Cancelar".
+- **Las antenas que están en los datos pero no tienen lugar** se eligen de un desplegable ("Antenas sin ubicar") y se ubican con un clic en el plano.
+- **Un aula se marca con dos clics** (una esquina y la opuesta). Para una forma irregular, un clic por esquina y "Cerrar la forma". Lo que se va marcando se dibuja en `primario-texto` (`.plano-borrador`).
+- **Los datos de lo elegido se editan en el panel de detalle** (`.plano-form`): no hay ventana aparte. **En edición el panel muestra el formulario y no la ficha:** ningún dato va dos veces. El tipo de equipo de una antena se elige entre tres opciones en una fila, cada una con su dibujo (`.plano-form__equipo`). Un aula puede llevar su nombre corto.
+- **Todo se puede hacer sin mouse** (WCAG 2.2, 2.5.7): con el teclado, lo nuevo aparece en el centro de lo que se ve y se ajusta con los campos de posición. `Esc` cancela lo que se está marcando.
+- **No hay servidor.** Los cambios quedan como borrador en el navegador y "Descargar planos.json" entrega el archivo que reemplaza al publicado. Si lo publicado cambió después de empezar el borrador, manda lo publicado y se ofrece recuperar el borrador.
+- **Borrar y descartar piden confirmación** en un modal (7.G), nunca con `confirm()`.
+- Todavía no tiene: mover arrastrando, corregir una forma irregular esquina por esquina, ni deshacer.

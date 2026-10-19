@@ -926,6 +926,100 @@ Pendientes, en orden:
 - [ ] Documentar lo que vino de `ajustes-0.4.4` en `DESIGN.md` y `CHANGELOG.md`, probar los gráficos nuevos y unificar el número de versión (hoy "0.4.4" nombra solo al módulo de planos).
 - [ ] De ahí en adelante, una rama por función.
 
+## 2026-10-08 — Planos: el modo edición pasa al módulo, y la muestra queda a la par de la herramienta
+
+Pedido del usuario: el repositorio da solo el sistema de diseño y las implementaciones van aparte; las muestras son referencia y prototipo. Con eso, la muestra de planos tenía que mostrar lo mismo que la herramienta de la sede (`planos-universidad`), que estaba más avanzada, para seguir trabajando el diseño acá. Rama `planos`, que sale de `en-curso`.
+
+Qué faltaba en la muestra: todo el modo edición (vivía en la herramienta, en `editor.js` y en estilos `.ext-planos-` dentro de su `index.html`), el contenedor ancho y los casos que solo aparecían con los datos reales.
+
+- **El modo edición es ahora parte del módulo:** `sistema/unpsjb-planos-editor.js` y la pieza 7 de `unpsjb-planos.css`, con las clases renombradas a `.plano-editor` y `.plano-form`. Regla nueva: 21.G. Se eligió esto en lugar de copiarlo a la muestra para no tener dos copias que se separen: la herramienta lo trae del sistema.
+- **`muestra-planos.html`** tiene el botón, la barra y datos de ejemplo que cubren antenas sin ubicar, espacios que no se reservan, uno sin ubicación, uno por revisar y uno de forma irregular. Todo inventado; las IP son del rango reservado para ejemplos (`192.0.2.0/24`).
+- **Apareció un error al probar:** con los datos dentro de la página el plano termina de cargar antes de que el editor empiece a escuchar, y la barra quedaba sin funcionar. En la herramienta no pasaba porque los datos llegan por la red. Arreglo: `plano.listo`.
+- **En `planos-universidad`** (repositorio local aparte, sin remoto): se borró `editor.js` y los estilos propios, y `herramientas/traer-sistema.sh` trae también el editor.
+
+Verificado en Chrome sin ventana, sin errores de consola ni de red: la muestra y la herramienta, en vista y en edición, a 1366 px y a 400 px. En edición, con el teclado: agregar una antena, ubicar una pendiente y marcar un aula; con el mouse, entrar y salir de "forma irregular". No se probó: arrastrar ni marcar con clics reales sobre el plano, lector de pantalla, axe, Firefox ni Safari.
+
+Pendientes del módulo de planos:
+- [ ] Mover arrastrando, corregir una forma esquina por esquina y deshacer.
+- [ ] Pasar axe a la muestra en modo edición.
+- [ ] Los textos de la barra nombran `planos.json` y la carpeta `datos`: hacerlos configurables si otra herramienta usa otros nombres.
+- [ ] El ícono de aplicación de la herramienta sigue con la franja naranja (decidir sobre 10.B).
+
+## 2026-10-08 — Planos: revisión de diseño y primera pasada (rótulos, color de las zonas, modo edición)
+
+El usuario dio la funcionalidad por buena y pidió trabajar el diseño ("muy mejorable"). Se hizo una crítica mirando la muestra y, sobre todo, la herramienta con los datos reales: ahí aparecen los problemas. Puntaje: 25 de 40. El informe quedó en `.impeccable/critique/`. El usuario eligió empezar por el plano, hacer los tres problemas graves y que "sin dato" quede casi invisible.
+
+Qué se encontró y qué se hizo:
+
+- **El plano no se leía con datos reales.** En Nivel 1, 12 de 31 rótulos eran un cuadradito sin nombre (y el cuadrado de "sin dato" parece una casilla para tildar). Ahora el nombre es lo último que se pierde: "17" por "Aula 17", y nunca el ícono solo. Medido después: los 31 rótulos tienen texto; 12 entran enteros.
+- **El color estaba al revés.** "Sin dato" es casi todo el plano y llevaba el azul de "elegido". Ahora es un borde fino en neutro, sin relleno, y el azul es solo para lo elegido.
+- **El modo edición sacaba el plano de la vista.** La barra pasó de 420 a 94px y el panel dejó de mostrar cada dato dos veces.
+
+Decisiones:
+- **En el paso más chico del rótulo el estado no lleva ícono:** se ve por la caja (hueca, llena o sin caja), que es una diferencia de forma y no solo de color. El estado con texto está en el nombre del botón, el panel y la lista.
+- **Los nombres largos se cortan con puntos suspensivos** ("Faculta…") cuando no hay forma breve. La salida es cargarles `"corto"` (campo nuevo en el modo edición), no inventar una sigla.
+- **Los nombres de pie** aparecieron al probar: los cuatro laboratorios chicos de Nivel 1 miden 25px de ancho.
+
+Verificado en Chrome sin ventana, sin errores: muestra y herramienta, vista y edición, claro y oscuro, 1366 y 390 px. Dos rondas, como máximo. No se pasó axe ni se midió el contraste de la caja de "ocupada" con una herramienta (a mano: blanco sobre `tinta-2`, cerca de 7:1 en claro).
+
+Lo que quedó sin hacer de la crítica:
+- [ ] **Barra del plano** (P2): acercar, alejar y "ver todo" dentro del plano; capas en las referencias. En celular sigue ocupando cuatro renglones.
+- [ ] **Panel de detalle en vista** (P2): con nada elegido, mostrar el resumen de la planta.
+- [ ] En celular, con el plano entero, los rótulos chicos se enciman: decidir si se ocultan los que no entran hasta acercar.
+- [ ] Los textos chicos del dibujo de AutoCAD ("CIRCULACIÓN", cotas) compiten con los rótulos: sacarlos en el conversor de la herramienta.
+- [ ] El título repetido en la banda y en el `h1`; las columnas casi vacías de la lista; las antenas sin ubicar no figuran fuera de edición.
+- [ ] En la herramienta de la sede, el dibujo de Nivel 1 corta la fila de aulas de arriba (es del SVG, no del módulo), y faltan los nombres cortos de las oficinas.
+
+## 2026-10-08 — Planos: el plano en modo claro pasa a ser un mapa (piso y locales)
+
+Pedido del usuario: "el mapa en modo claro se ve raro, no me gustan los colores"; sugirió buscar referencias. Rama `planos-claro`, que sale de `planos`.
+
+Qué pasaba, mirando la herramienta con los datos reales: en oscuro el plano funciona como cianotipo (líneas claras sobre fondo profundo); en claro era el dibujo de AutoCAD tal cual, en pizarra sobre blanco. Aulas, pasillos y exterior eran el mismo blanco, los muros dobles pesaban más que las aulas, y "ocupada" en gris oscuro parecía deshabilitada.
+
+Referencias que se miraron: el estilo de mapas de interiores de Mappedin (locales rellenos en un tono claro, muros finos, casi sin color; el color queda para lo que se busca) y los planos de las herramientas de reserva (Robin, Joan, Humly, Flowscape, Teem: verde para libre; rojo o gris para ocupado).
+
+- **Piso y locales en dos tonos** (`--plano-suelo`, `--plano-local`, que salen de `capa`/`panel` en claro y `fondo`/`capa` en oscuro). Toda zona se rellena: tapa el ruido del dibujo que tiene debajo.
+- **El dibujo de AutoCAD se apaga:** muros en `linea-control`, lo demás al 45 %.
+- **Libre es lo que se busca:** caja llena en verde. Ocupada pasa a caja hueca en neutro. Sigue valiendo "se distinguen sin color" (llena y hueca), al revés que antes.
+- Reglas tocadas: 21.A, 21.B (lienzo) y 21.D.
+
+Verificado en Chrome sin ventana: herramienta real (las tres plantas en claro, Planta baja y Nivel 1 en oscuro, un aula elegida, a 1366 px) y la muestra en claro y oscuro. No se miró el plano en celular (a 390 px abre la lista), ni se pasó axe, ni se probó impresión ni alto contraste.
+
+Sin decidir (se le mostraron al usuario capturas de las dos):
+- [ ] **Ocupada en rojo,** como todas las herramientas de reserva. Hoy lo prohíbe 21.D.
+- [ ] **Color por tipo de local** (laboratorio, oficina, biblioteca, sala) con los tonos de categoría, y el estado solo en el rótulo. Pide `data-tipo` en la zona y referencias de tipo.
+
+## 2026-10-09 — Planos: borde con contraste, rótulos en locales irregulares y detalle al acercar
+
+El usuario armó un cuaderno con fuentes sobre cartografía de interiores (31 fuentes; entre ellas Chen y Clarke, "Indoor cartography", la guía de mapas accesibles del estado de Minnesota y WCAG 2.2). De consultarlo salieron tres cambios, que aprobó. Rama `planos-claro`.
+
+- **El borde de los locales no llegaba a 3:1 contra el piso** (2.9:1): lo había dejado así el cambio del 8/10, al pasar el lienzo de blanco a `capa`. Ahora es `--plano-borde`. Medido en el navegador: 3.57:1 contra el piso y 4.16:1 contra el local en claro; 5.75:1 y 4.49:1 en oscuro.
+- **El rótulo ya no usa el medio de la caja del local.** En una L o una U caía afuera. Se probó primero el polo de inaccesibilidad tal cual (es lo que hace Polylabel), pero en una L elige la esquina, con 35 de ancho, y no el brazo, con 100: por eso gana el punto más ancho entre los que están bien adentro. En un rectángulo no cambia nada. Sin librería.
+- **El detalle del dibujo aparece desde el doble de acercamiento.** En la vista general quedan los muros.
+
+Verificado: seis formas de prueba (rectángulo, rectángulo largo, L, U, trapecio y un polígono sin área); la herramienta real en las tres plantas, claro y oscuro, a 1366 px, vista general y acercada. **Con los datos reales ninguno de los 59 rótulos cambió de lugar ni de ancho disponible:** en todos los locales ubicados el medio ya servía. El caso irregular solo se probó con formas inventadas. No se miró el plano en celular ni se pasó axe.
+
+Lo que el cuaderno no respalda ni desmiente: rojo o gris para "ocupada" (no hay estudios; solo que no vaya solo en el color). Lo que apoya, como guía de diseño: color por tipo de local, hasta 6 u 8 categorías con su nombre.
+
+Pendiente, con respaldo de estudios con usuarios:
+- [ ] **Puntos de referencia** (escaleras, ascensores, baños, entradas) como capa propia, con pictograma y nombre. Hay que poder marcarlos en el modo edición.
+- [ ] En el dibujo de Trelew las escaleras y los sanitarios están en la clase de los muros: por eso siguen en la vista general. Revisar en el conversor qué va a cada clase.
+
+## 2026-10-09 — Planos: color por tipo de local y puntos de referencia
+
+El usuario comparó la herramienta de antes con la rama y aprobó seguir: se unió `planos-claro` a `planos` y se trajo a `planos-universidad`. Después, en `planos-claro`, estos dos cambios (sin unir todavía: los mira antes).
+
+- **Color por tipo de local.** Biblioteca, laboratorio y sala llevan un tinte de su categoría; aulas y oficinas, no. Se descartó dar color a las oficinas: en Nivel 2 son 8 de 13 locales y la planta entera quedaba teñida. Se descartó también que el tipo reemplazara al estado en el relleno (la opción que se le había mostrado el 8/10): se perdía el verde de las aulas libres, que es lo que se busca. Quedó "el estado manda sobre el tipo".
+- **Puntos de referencia** (`"lugares"`): escaleras, ascensores, baños y entradas, como botones cuadrados en neutro, con el nombre al acercar. Entran en las referencias, en la lista y en el modo edición. Regla nueva: 21.H.
+- El dibujo de los baños se rehízo: con dos figuras detalladas no se leía a 16px.
+
+Verificado en Chrome sin ventana, sin errores: la muestra en vista y en edición (agregar un punto con el teclado, cambiarle el tipo y el nombre, borrador guardado), claro y oscuro; la herramienta real con los tipos en Planta baja y Nivel 1. No se probó: marcar un punto con un clic real sobre el plano, reubicar, borrar, el archivo descargado, celular, lector de pantalla ni axe. **La herramienta real todavía no tiene ningún punto de referencia cargado.**
+
+Pendientes:
+- [ ] Marcar los puntos de referencia de la sede en el modo edición.
+- [ ] Cargar `"corto"` a las oficinas ("Faculta…" tres veces en Nivel 1).
+- [ ] Controles de acercar y referencias dentro del lienzo; resumen de la planta en el panel vacío; búsqueda.
+
 ## 2026-10-15 — Se arma la 0.4.5, sin unir a `main`
 
 Sin número de sesión. No se tocó ninguna pieza: número de versión y registro.

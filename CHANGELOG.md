@@ -22,6 +22,50 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## En curso · rediseño del plano y del modo edición · 2026-10-08 · sin número todavía
+
+Sale de una revisión de diseño hecha con los datos reales de la sede: en una planta con 31 espacios, 12 rótulos quedaban reducidos a un ícono sin nombre, y lo que más resaltaba era lo que no tenía dato. Cambia cómo se ve el módulo; el HTML de la página no cambia.
+
+### Cambiado
+
+- **Las aulas pesan según lo que tienen para decir.** "Sin dato" y lo que no se reserva pasan a un borde fino en neutro, sin relleno (antes, borde y relleno azules). Libre y ocupada conservan su color, con algo más de relleno. `DESIGN.md`, 21.D.
+- **El azul queda solo para lo elegido.** Ningún estado lo usa.
+- **Los rótulos:** libre es una caja hueca con borde verde; ocupada, una caja llena; sin dato, el nombre solo, sin caja ni ícono y sin repetir "Sin dato" en cada aula.
+- **El nombre es lo último que se pierde.** `--corto` muestra el ícono y el nombre breve ("17"); `--chico`, el nombre breve solo. Antes `--chico` dejaba el ícono solo.
+- **Las referencias** de las aulas muestran un recorte de la zona (`.plano__muestra`) en lugar del ícono suelto.
+- **La barra del modo edición es una tira pegada al plano** (de 420 a 94px de alto en escritorio), y en edición el panel muestra el formulario sin repetir la ficha (de 1.460 a 780px con una antena elegida).
+- El tipo de equipo se elige en una fila de tres opciones.
+
+### Nuevo
+
+- `"corto"` en los datos de un aula: el nombre que se muestra cuando se ve chica. Se carga también desde el modo edición.
+- `.plano-rotulo--de-pie`: en un local angosto y alto, el nombre va de pie.
+- `.plano-rotulo__breve`, `.plano__muestra`, `.plano--editando`.
+
+### Eliminado
+
+- `.plano-editor__cabecera`, `__titulo`, `__grupos`, `__subtitulo`, `__linea` y `.plano-form__equipo-ayuda`.
+- En el rótulo, el ícono `square` de "sin dato" y `door-closed` de lo que no se reserva.
+
+## En curso · modo edición del módulo de planos · 2026-10-08 · sin número todavía
+
+El modo edición que tenía la herramienta de planos de la sede pasa al módulo, para que el diseño se trabaje en un solo lugar. La herramienta lo trae del sistema como el resto del módulo.
+
+### Nuevo
+
+- **`unpsjb-planos-editor.js`** (23 KB; 7 KB comprimido), opcional: con `?editar` arma la barra de edición arriba del plano (`.plano-editor`) y el formulario de lo elegido en el panel de detalle (`.plano-form`). Agregar antenas, ubicar las que no tienen lugar, marcar aulas (rectángulo o forma irregular), reubicar, borrar, borrador en el navegador y descarga de `planos.json`. `DESIGN.md`, 21.G.
+- `unpsjb-planos.css` suma la pieza 7, "Modo edición" (pasa de 11 a 17 KB).
+- `plano.listo`: vale `true` cuando el plano ya cargó, para el código que llega después del evento `plano:listo`.
+- `muestra-planos.html`: botón "Editar antenas y aulas", el modo edición, y datos de ejemplo que cubren los casos que tiene una herramienta real: antenas sin ubicar, espacios que no se reservan, uno sin ubicación, uno por revisar y uno de forma irregular. Usa el contenedor ancho, como la herramienta.
+
+### Cambiado
+
+- Las clases del modo edición dejan el prefijo de la herramienta: `.ext-planos-editor` → `.plano-editor`, `.ext-planos-form` → `.plano-form`, `.ext-planos-equipo` → `.plano-form__equipo`, `.ext-planos-borrador` → `.plano-borrador`, `.ext-planos--marcando` → `.plano--marcando`.
+
+### Corregido
+
+- El modo edición no arrancaba cuando los datos venían dentro de la página (`data-plano="#…"`): el plano terminaba de cargar antes de que el editor escuchara `plano:listo`.
+
 ## 0.4.5 · 2026-10-15 · oficial
 
 Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo".

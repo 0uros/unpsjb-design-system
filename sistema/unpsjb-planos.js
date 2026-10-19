@@ -39,6 +39,16 @@
    - "aulas" son todos los espacios con nombre. "tipo" (opcional) dice qué es:
      "Laboratorio", "Oficina"… Sin tipo, es un aula. Con "reservable": false no
      lleva estado. Sin "puntos" figura en la lista pero no en el plano.
+   - "corto" (opcional): el nombre que se muestra cuando el aula se ve chica
+     ("Jurídicas"). Sin él, "Aula 17" pasa a "17" y "Laboratorio de…" a "Lab. …".
+   - "lugares" (opcional): puntos de referencia para ubicarse.
+       [{ "id": "pb-escalera-1", "tipo": "escalera", "nombre": "Escalera central",
+          "planta": "pb", "x": 300, "y": 120 }]
+     "tipo": "escalera", "ascensor", "sanitario" o "entrada" (están en
+     unpsjbPlanos.lugares). "nombre" es opcional: sin él vale el del tipo.
+   - "tipos" (opcional): qué tipos de local llevan color, del 1 al 4 (las
+     categorías del sistema). Sin él: Biblioteca 1, Laboratorio 2, Sala 4.
+       { "Taller": 3 }
 
    La ocupación
      { "pb-aula-1": { "estado": "ocupada", "hasta": "16:00", "evento": "Álgebra I" },
@@ -48,9 +58,10 @@
    Para manejarlo desde el código
      const plano = unpsjbPlanos.dibujar(elemento)     // o unpsjbPlanos.de(elemento)
      plano.ocupacion(datos)        cambia los estados de las aulas sin recargar
-     plano.elegir('antena', id)    elige (y muestra) una antena o un 'aula'
+     plano.elegir('antena', id)    elige (y muestra) una antena, un 'aula' o un 'lugar'
      plano.pintar()                vuelve a dibujar después de cambiar plano.datos
      plano.aPlano(evento)          el punto del plano [x, y] que se tocó
+     plano.listo                   true cuando ya cargó (después de plano:listo)
    Eventos, sobre el elemento: plano:listo, plano:planta, plano:elegir,
    plano:detalle (se rearmó el panel de detalle) y plano:clic (un clic sobre
    el plano; detail.x, detail.y; se puede cancelar).
@@ -60,6 +71,7 @@
 
   const NS = 'http://www.w3.org/2000/svg';
   const ZOOM_MAX = 12;
+  const ZOOM_DETALLE = 2;          // desde cuánto acercamiento se ve el detalle del dibujo
   const ICONOS = {
     'wifi': '<path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/>',
     'wifi-off': '<path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/>',
@@ -89,6 +101,21 @@
   const marca = (a, e) => (EQUIPOS[a.equipo] ? `<svg class="icono" viewBox="0 0 24 24" aria-hidden="true">${EQUIPOS[a.equipo].dibujo}</svg>` : icono('wifi')) +
     (e.aviso ? `<span class="plano-marca__aviso">${icono(e.aviso)}</span>` : '');
   const dibujoEquipo = clave => EQUIPOS[clave] ? `<svg class="icono plano__dibujo" viewBox="0 0 24 24" aria-hidden="true">${EQUIPOS[clave].dibujo}</svg>` : '';
+  // Puntos de referencia: lo que se busca con la vista para ubicarse. Cada uno con su dibujo
+  // (el de la escalera y el del ascensor son propios del módulo, con el trazo de los íconos).
+  const LUGARES = {
+    'escalera': { texto: 'Escalera', dibujo: '<path d="M3 20h4.5v-4.5H12V11h4.5V6.5H21"/>' },
+    'ascensor': { texto: 'Ascensor', dibujo: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="m9 10 3-3 3 3"/><path d="m9 14 3 3 3-3"/>' },
+    'sanitario': { texto: 'Baños', dibujo: '<circle cx="7" cy="5" r="2"/><path d="M7 9.5 4 16h6z"/><path d="M7 16v5"/><circle cx="17" cy="5" r="2"/><path d="M17 9.5V21"/><path d="M14 12.5h6"/>' },
+    'entrada': { texto: 'Entrada', dibujo: '<path d="M11 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/><path d="M21 12H9"/><path d="m13 8-4 4 4 4"/>' },
+    '': { texto: 'Punto de referencia', dibujo: '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>' }
+  };
+  const lugarDe = l => LUGARES[l.tipo] || LUGARES[''];
+  const dibujoLugar = clave => `<svg class="icono" viewBox="0 0 24 24" aria-hidden="true">${(LUGARES[clave] || LUGARES['']).dibujo}</svg>`;
+  // El color de un local sin estado dice qué clase de local es. Son las categorías del sistema
+  // (3.H): máximo cuatro, cada una con su nombre en las referencias. Las aulas y las oficinas
+  // no llevan color: son casi todo el edificio. Los datos pueden sumar las suyas en "tipos".
+  const CATEGORIAS = { 'biblioteca': 1, 'laboratorio': 2, 'sala': 4 };
   const ESTADOS_AULA = {
     'libre': { texto: 'Libre', icono: 'check', tono: 'exito' },
     'ocupada': { texto: 'Ocupada', icono: 'clock', tono: '' },
@@ -132,7 +159,7 @@
     const nombrePlano = raiz.getAttribute('aria-label') || 'Plano';
 
     const plano = {
-      el: raiz, datos: { plantas: [], antenas: [], aulas: [] }, planta: null, elegido: null,
+      el: raiz, datos: { plantas: [], antenas: [], aulas: [], lugares: [] }, planta: null, elegido: null,
       extra: null, detalle: null,
       ocupacion, elegir, pintar, aPlano, irA, verTodo
     };
@@ -210,6 +237,8 @@
       vista.x = cx - vista.w / 2;
       vista.y = cy - vista.h / 2;
       svg.setAttribute('viewBox', `${vista.x} ${vista.y} ${vista.w} ${vista.h}`);
+      // El detalle del dibujo (escaleras, mobiliario, textos del original) aparece recién al acercar
+      raiz.classList.toggle('plano--cerca', anchoTodo() / vista.w >= ZOOM_DETALLE);
       ubicar();
     }
     function centrar(cx, cy, w) {
@@ -249,11 +278,18 @@
         b.style.setProperty('--x', ((+b.dataset.x - vista.x) * e).toFixed(1) + 'px');
         b.style.setProperty('--y', ((+b.dataset.y - vista.y) * e).toFixed(1) + 'px');
         if (b.dataset.ancho) {
-          // El rótulo no se sale de su aula. Si no entra entero se va el estado; después
-          // el ícono; y si tampoco entra el nombre, queda el ícono solo.
+          // El rótulo no se sale de su aula. Si no entra entero se va el estado; después el
+          // nombre pasa a su forma breve ("17"); después se va el ícono. El nombre es lo último
+          // que se pierde: si ni el breve entra, se corta con puntos suspensivos.
           const lugar = +b.dataset.ancho * e - 6;
           const talla = lugar >= +b.dataset.entero ? '' : lugar >= +b.dataset.medio ? 'medio' : lugar >= +b.dataset.corto ? 'corto' : 'chico';
           ['medio', 'corto', 'chico'].forEach(t => b.classList.toggle('plano-rotulo--' + t, t === talla));
+          // Un local angosto y alto (un laboratorio chico, un depósito): el nombre va de pie
+          const alto = +b.dataset.alto * e - 6;
+          const dePie = talla === 'chico' && +b.dataset.chico > lugar && alto > lugar * 1.5;
+          b.classList.toggle('plano-rotulo--de-pie', dePie);
+          b.style.maxWidth = talla === 'chico' && !dePie ? Math.max(24, lugar).toFixed(0) + 'px' : '';
+          b.style.maxHeight = dePie ? Math.max(24, alto).toFixed(0) + 'px' : '';
         }
       });
     }
@@ -263,6 +299,12 @@
     const deLaPlanta = lista_ => (lista_ || []).filter(x => x.planta === plano.planta);
     function estadoAntena(a) { return ESTADOS_ANTENA[a.estado] || { texto: 'Sin dato', icono: 'wifi', tono: '' }; }
     const tipoDe = a => a.tipo || 'Aula';
+    // La categoría de color de un local (1 a 4), o 0 si no lleva
+    function categoria(a) {
+      const t = tipoDe(a), propias = plano.datos.tipos || {};
+      const c = +(propias[t] != null ? propias[t] : CATEGORIAS[t.toLowerCase()]) || 0;
+      return c >= 1 && c <= 4 ? c : 0;
+    }
     function estadoAula(a) {
       // Lo que no se reserva (una oficina, la biblioteca) no tiene estado
       if (a.reservable === false) return { clave: 'fija', icono: 'door-closed', tono: '', evento: '', texto: '' };
@@ -273,10 +315,66 @@
         texto: base.texto + (o.hasta && base !== ESTADOS_AULA[''] ? ' hasta las ' + o.hasta : '')
       };
     }
+    // El nombre que entra en un aula chica: "17" por "Aula 17", "Lab. Física" por "Laboratorio de Física".
+    // Los datos pueden traer el suyo en "corto".
+    function breve(a) {
+      if (a.corto) return String(a.corto);
+      const n = String(a.nombre || a.id);
+      const aula = /^Aula\s+(\d+\s?[a-zñ]?)$/i.exec(n);
+      return aula ? aula[1] : n.replace(/^Laboratorio(\s+de)?\s+/i, 'Lab. ');
+    }
+    // Qué tan adentro del local está un punto: la distancia al borde más cercano (negativa si está afuera)
+    function adentro(puntos, x, y) {
+      let dentro = false, d2 = Infinity;
+      for (let i = 0, j = puntos.length - 1; i < puntos.length; j = i++) {
+        const [ax, ay] = puntos[i], [bx, by] = puntos[j];
+        if ((ay > y) !== (by > y) && x < (bx - ax) * (y - ay) / (by - ay) + ax) dentro = !dentro;
+        const vx = bx - ax, vy = by - ay;
+        const t = entre(((x - ax) * vx + (y - ay) * vy) / (vx * vx + vy * vy || 1), 0, 1);
+        d2 = Math.min(d2, (x - ax - t * vx) ** 2 + (y - ay - t * vy) ** 2);
+      }
+      return (dentro ? 1 : -1) * Math.sqrt(d2);
+    }
+    // El lugar libre a cada lado de un punto, a lo ancho (eje 0) o a lo alto (eje 1), sin salir del local
+    function lugarEn(puntos, x, y, eje) {
+      const p = eje ? x : y, q = eje ? y : x;
+      let antes = -Infinity, despues = Infinity;
+      for (let i = 0, j = puntos.length - 1; i < puntos.length; j = i++) {
+        const a = puntos[i], b = puntos[j], a1 = a[1 - eje], b1 = b[1 - eje];
+        if ((a1 > p) === (b1 > p)) continue;
+        const corte = a[eje] + (p - a1) * (b[eje] - a[eje]) / (b1 - a1);
+        if (corte <= q) antes = Math.max(antes, corte); else despues = Math.min(despues, corte);
+      }
+      return 2 * Math.min(q - antes, despues - q);
+    }
+    // Dónde va el rótulo de un local y cuánto lugar tiene. En un rectángulo es el medio. En un
+    // local en L o en U el medio puede caer afuera o contra una pared: ahí se busca, en una
+    // grilla, el punto más alejado de todos los bordes (el "polo de inaccesibilidad"). Como lo
+    // que hay que ubicar es un nombre, entre los puntos que están bien adentro gana el que
+    // tiene más lugar a lo ancho: en una L, el brazo largo y no la esquina.
     function centro(puntos) {
       const xs = puntos.map(p => p[0]), ys = puntos.map(p => p[1]);
       const x1 = Math.min(...xs), x2 = Math.max(...xs), y1 = Math.min(...ys), y2 = Math.max(...ys);
-      return { x: (x1 + x2) / 2, y: (y1 + y2) / 2, ancho: x2 - x1 };
+      const medio = { x: (x1 + x2) / 2, y: (y1 + y2) / 2, ancho: x2 - x1, alto: y2 - y1 };
+      const enElMedio = adentro(puntos, medio.x, medio.y);
+      const N = 24, grilla = [];
+      let polo = enElMedio;
+      for (let i = 1; i < N; i++) for (let j = 1; j < N; j++) {
+        const x = x1 + medio.ancho * i / N, y = y1 + medio.alto * j / N, d = adentro(puntos, x, y);
+        if (d > 0) { grilla.push({ x, y, d }); polo = Math.max(polo, d); }
+      }
+      // Si el medio está casi tan adentro como el mejor punto, se queda en el medio
+      let p = medio;
+      if (enElMedio < polo * 0.9) {
+        let ancho = -1;
+        grilla.forEach(g => {
+          if (g.d < polo * 0.6) return;
+          const a = lugarEn(puntos, g.x, g.y, 0);
+          if (a > ancho + 0.01 || (a > ancho - 0.01 && g.d > p.d)) { ancho = Math.max(a, ancho); p = g; }
+        });
+      }
+      if (adentro(puntos, p.x, p.y) <= 0) return medio;       // un polígono mal cerrado: como antes
+      return { x: p.x, y: p.y, ancho: Math.min(medio.ancho, lugarEn(puntos, p.x, p.y, 0)), alto: Math.min(medio.alto, lugarEn(puntos, p.x, p.y, 1)) };
     }
 
     // --- Pintar: zonas, marcas, referencias y lista de la planta actual ----
@@ -292,16 +390,24 @@
         const e = estadoAula(a);
         const p = document.createElementNS(NS, 'polygon');
         p.setAttribute('points', a.puntos.map(q => q.join(',')).join(' '));
-        p.setAttribute('class', 'plano-zona' + (e.clave ? ' plano-zona--' + e.clave : '') + (es('aula', a.id) ? ' plano-zona--elegida' : ''));
+        // El estado manda sobre el tipo: un laboratorio libre va en verde, no en su color
+        const cat = e.clave === 'libre' || e.clave === 'ocupada' ? 0 : categoria(a);
+        p.setAttribute('class', 'plano-zona plano-zona--' + (e.clave || 'sin-dato') + (cat ? ' plano-zona--cat-' + cat : '') + (es('aula', a.id) ? ' plano-zona--elegida' : ''));
         p.dataset.id = a.id;
         gZonas.append(p);
         const c = centro(a.puntos);
-        const b = crear('button', 'plano-rotulo' + (e.clave ? ' plano-rotulo--' + e.clave : ''),
-          icono(e.icono) + `<span class="plano-rotulo__nombre">${limpio(a.nombre)}</span>` +
-          (e.texto ? `<span class="plano-rotulo__estado">${limpio(e.texto)}</span>` : ''));
+        // Solo lo libre y lo ocupado llevan ícono y estado: lo demás es el nombre y nada más,
+        // para que en el plano resalte lo que tiene algo que decir
+        const conEstado = e.clave === 'libre' || e.clave === 'ocupada';
+        const corto = breve(a);
+        const b = crear('button', 'plano-rotulo plano-rotulo--' + (e.clave || 'sin-dato'),
+          (conEstado ? icono(e.icono) : '') + `<span class="plano-rotulo__nombre">${limpio(a.nombre)}</span>` +
+          `<span class="plano-rotulo__breve">${limpio(corto)}</span>` +
+          (conEstado ? `<span class="plano-rotulo__estado">${limpio(e.texto)}</span>` : ''));
+        if (corto !== a.nombre) b.title = a.nombre;
         b.type = 'button';
         b.dataset.tipo = 'aula'; b.dataset.id = a.id;
-        b.dataset.x = c.x; b.dataset.y = c.y; b.dataset.ancho = c.ancho;
+        b.dataset.x = c.x; b.dataset.y = c.y; b.dataset.ancho = c.ancho; b.dataset.alto = c.alto;
         b.setAttribute('aria-label', a.nombre + (e.texto ? ', ' + e.texto.toLowerCase() : ''));
         b.setAttribute('aria-pressed', es('aula', a.id));
         encima.append(b);
@@ -317,13 +423,26 @@
         b.setAttribute('aria-pressed', es('antena', a.id));
         encima.append(b);
       });
+      // Puntos de referencia: siempre se ven, no son una capa que se apaga
+      const lugares = deLaPlanta(plano.datos.lugares).filter(l => typeof l.x === 'number' && typeof l.y === 'number');
+      lugares.forEach(l => {
+        const t = lugarDe(l), nombre = l.nombre || t.texto;
+        const b = crear('button', 'plano-lugar', dibujoLugar(l.tipo) + `<span class="plano-lugar__nombre">${limpio(nombre)}</span>`);
+        b.type = 'button';
+        b.title = nombre;
+        b.dataset.tipo = 'lugar'; b.dataset.id = l.id;
+        b.dataset.x = l.x; b.dataset.y = l.y;
+        b.setAttribute('aria-label', nombre === t.texto ? nombre : `${t.texto}: ${nombre}`);
+        b.setAttribute('aria-pressed', es('lugar', l.id));
+        encima.append(b);
+      });
       // Cuánto mide cada rótulo en cada talla, para saber cuál entra en su aula
       const rotulos = Array.from(encima.querySelectorAll('.plano-rotulo'));
       const medir = (talla, dato) => {
-        rotulos.forEach(b => { b.className = b.className.replace(/ plano-rotulo--(medio|corto|chico)/g, '') + (talla ? ' plano-rotulo--' + talla : ''); });
+        rotulos.forEach(b => { b.style.maxWidth = b.style.maxHeight = ''; b.className = b.className.replace(/ plano-rotulo--(medio|corto|chico|de-pie)(?![a-z-])/g, '') + (talla ? ' plano-rotulo--' + talla : ''); });
         rotulos.forEach(b => { b.dataset[dato] = b.offsetWidth; });
       };
-      medir('', 'entero'); medir('medio', 'medio'); medir('corto', 'corto');
+      medir('', 'entero'); medir('medio', 'medio'); medir('corto', 'corto'); medir('chico', 'chico');
       ubicar();
 
       // Referencias: solo de lo que hay en esta planta
@@ -336,7 +455,27 @@
         // La referencia de una antena es su misma marca, en chico
         refs.push([{ tono: '', html: `<span class="plano-marca plano-marca--muestra${ESTADOS_ANTENA[a.estado] ? ' plano-marca--' + a.estado : ''}">${marca({ equipo: 'plato' }, e)}</span>` }, 'Antena: ' + e.texto.toLowerCase()]);
       });
-      aulas.forEach(a => { const e = ESTADOS_AULA[estadoAula(a).clave]; if (e && !vistos.has('u' + e.texto)) { vistos.add('u' + e.texto); refs.push([e, 'Aula: ' + e.texto.toLowerCase()]); } });
+      // La referencia de un aula es un recorte de su zona, con el ícono si lo lleva
+      ['libre', 'ocupada', ''].forEach(clave => {
+        if (!aulas.some(a => a.puntos && a.puntos.length > 2 && estadoAula(a).clave === clave)) return;
+        const e = ESTADOS_AULA[clave];
+        refs.push([{ tono: '', html: `<span class="plano__muestra plano__muestra--${clave || 'sin-dato'}">${clave ? icono(e.icono) : ''}</span>` }, 'Aula: ' + e.texto.toLowerCase()]);
+      });
+      // Los tipos de local que llevan color, cada uno con su nombre
+      const tiposVistos = new Set();
+      aulas.forEach(a => {
+        const e = estadoAula(a), cat = categoria(a);
+        if (!cat || !a.puntos || a.puntos.length < 3 || e.clave === 'libre' || e.clave === 'ocupada' || tiposVistos.has(tipoDe(a))) return;
+        tiposVistos.add(tipoDe(a));
+        refs.push([{ tono: '', html: `<span class="plano__muestra plano__muestra--cat-${cat}"></span>` }, tipoDe(a)]);
+      });
+      const lugaresVistos = new Set();
+      lugares.forEach(l => {
+        const t = lugarDe(l);
+        if (lugaresVistos.has(t.texto)) return;
+        lugaresVistos.add(t.texto);
+        refs.push([{ tono: '', html: `<span class="plano-lugar plano-lugar--muestra">${dibujoLugar(l.tipo)}</span>` }, t.texto]);
+      });
       referencias.innerHTML = refs.map(([e, t]) => `<li class="${e.tono ? 'plano__referencia--' + e.tono : ''}">${e.html || icono(e.icono)}${limpio(t)}</li>`).join('');
       referencias.hidden = !refs.length;
 
@@ -359,13 +498,17 @@
           aulas.map(a => { const e = estadoAula(a); return fila('aula', a, `<td>${limpio(tipoDe(a))}</td><td>${e.texto ? insignia(e) : '—'}</td><td class="num">${a.capacidad || '—'}</td><td>${limpio(e.evento) || '—'}</td>`); }),
           'No hay aulas marcadas en esta planta.');
       }
+      if (lugares.length) {
+        html += tabla(`Puntos de referencia de ${nombre}`, '<th scope="col">Lugar</th><th scope="col">Tipo</th>',
+          lugares.map(l => fila('lugar', Object.assign({}, l, { nombre: l.nombre || lugarDe(l).texto }), `<td>${limpio(lugarDe(l).texto)}</td>`)), '');
+      }
       lista.innerHTML = html || '<p class="plano__vacio">Elegí qué mostrar: antenas, aulas o las dos.</p>';
 
       pintarDetalle();
     }
 
     function buscar(tipo, id) {
-      return (tipo === 'antena' ? plano.datos.antenas : plano.datos.aulas).find(x => x.id === id);
+      return ((tipo === 'antena' ? plano.datos.antenas : tipo === 'lugar' ? plano.datos.lugares : plano.datos.aulas) || []).find(x => x.id === id);
     }
     function pintarDetalle() {
       armarDetalle();
@@ -386,6 +529,8 @@
         filas = par('Estado', insignia(estadoAntena(el))) + par('Planta', limpio(planta)) +
           (EQUIPOS[el.equipo] ? par('Equipo', `<span class="plano__equipo">${dibujoEquipo(el.equipo)}${EQUIPOS[el.equipo].texto}</span>`) : '') +
           (el.modelo ? par('Modelo', limpio(el.modelo)) : '') + (el.ip ? par('IP', limpio(el.ip)) : '') + (el.nota ? par('Nota', limpio(el.nota)) : '');
+      } else if (plano.elegido.tipo === 'lugar') {
+        filas = par('Planta', limpio(planta));
       } else {
         const e = estadoAula(el);
         filas = (e.texto ? par('Estado', insignia(e)) : '') + (e.evento ? par('Evento', limpio(e.evento)) : '') + par('Planta', limpio(planta)) +
@@ -393,8 +538,9 @@
         const agenda = raiz.dataset.agenda;
         if (agenda && el.reservable !== false) acciones = `<a class="boton boton--secundario" href="${limpio(agenda.replace('{id}', encodeURIComponent(el.id)))}">Ver la agenda del aula</a>`;
       }
-      detalle.innerHTML = `<h2 class="plano__titulo">${limpio(el.nombre || el.id)}</h2>` +
-        `<p class="plano__tipo">${plano.elegido.tipo === 'antena' ? 'Antena de wifi' : limpio(tipoDe(el))}</p>` +
+      const esLugar = plano.elegido.tipo === 'lugar';
+      detalle.innerHTML = `<h2 class="plano__titulo">${limpio(el.nombre || (esLugar ? lugarDe(el).texto : el.id))}</h2>` +
+        `<p class="plano__tipo">${plano.elegido.tipo === 'antena' ? 'Antena de wifi' : esLugar ? limpio(lugarDe(el).texto) : limpio(tipoDe(el))}</p>` +
         `<dl class="resumen">${filas}</dl><div class="plano__acciones">${acciones}</div>`;
     }
 
@@ -405,7 +551,7 @@
       const sigue = () => {
         pintar();
         if (el && modo === 'plano') {
-          const c = tipo === 'antena' ? (typeof el.x === 'number' ? el : null) : el.puntos && el.puntos.length ? centro(el.puntos) : null;
+          const c = tipo !== 'aula' ? (typeof el.x === 'number' ? el : null) : el.puntos && el.puntos.length ? centro(el.puntos) : null;
           if (c) irA(c.x, c.y);
         }
         if (opciones && opciones.foco) {
@@ -578,7 +724,7 @@
       datosDados ? Promise.resolve(datosDados) : leerJSON(raiz.dataset.plano),
       leerJSON(raiz.dataset.ocupacion).catch(() => null)     // sin ocupación, las aulas quedan "Sin dato"
     ]).then(([datos, ocup]) => {
-      plano.datos = Object.assign({ plantas: [], antenas: [], aulas: [] }, datos);
+      plano.datos = Object.assign({ plantas: [], antenas: [], aulas: [], lugares: [] }, datos);
       estados = ocup || {};
       selPlanta.insertAdjacentHTML('beforeend', plano.datos.plantas.map(p =>
         `<label><input type="radio" name="plano-planta-${n}" value="${limpio(p.id)}"> ${limpio(p.nombre)}</label>`).join(''));
@@ -586,10 +732,11 @@
       ponerModo(modo);
       // Lo que diga la dirección: #planta=pb&antena=ap-03
       const pedido = new URLSearchParams(raiz.dataset.enlace === 'no' ? '' : location.hash.slice(1));
-      const tipo = pedido.has('antena') ? 'antena' : pedido.has('aula') ? 'aula' : null;
+      const tipo = pedido.has('antena') ? 'antena' : pedido.has('aula') ? 'aula' : pedido.has('lugar') ? 'lugar' : null;
       const el = tipo && buscar(tipo, pedido.get(tipo));
       return cambiarPlanta(el ? el.planta : pedido.get('planta')).then(() => {
         if (el) elegir(tipo, el.id);
+        plano.listo = true;       // para quien llega después del evento (con datos en la página, es enseguida)
         raiz.dispatchEvent(new CustomEvent('plano:listo', { detail: { plano } }));
       });
     }).catch(fallo);
@@ -599,5 +746,5 @@
 
   const iniciar = () => document.querySelectorAll('.plano[data-plano]').forEach(e => dibujar(e));
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
-  window.unpsjbPlanos = { dibujar, de: e => instancias.get(e), equipos: EQUIPOS, dibujoEquipo };
+  window.unpsjbPlanos = { dibujar, de: e => instancias.get(e), equipos: EQUIPOS, dibujoEquipo, lugares: LUGARES, dibujoLugar };
 })();
