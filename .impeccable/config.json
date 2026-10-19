@@ -151,6 +151,33 @@
         "reason": "falso positivo, igual que en las otras muestras: son piezas de unpsjb.css (la banda, que solo lleva borde al imprimir, y las opciones de .segmentado, que traen su propio relleno); revisado en las capturas a 1280 y 390px"
       },
       {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "muestras/prueba-graficos.html"
+        ],
+        "createdAt": "2026-10-15T15:09:24.164Z",
+        "reason": "Claude: página de prueba de casos límite; el relleno viene de unpsjb.css (mismas clases que muestra-graficos.html)"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "muestras/prueba-graficos.html"
+        ],
+        "createdAt": "2026-10-15T15:09:24.213Z",
+        "reason": "Claude: página de prueba de casos límite; los tamaños de títulos vienen de unpsjb.css (mismas clases que muestra-graficos.html)"
+      },
+      {
+        "rule": "monotonous-spacing",
+        "value": "*",
+        "files": [
+          "muestras/prueba-graficos.html"
+        ],
+        "createdAt": "2026-10-15T15:09:24.252Z",
+        "reason": "Claude: página de prueba con una grilla de casos iguales a propósito; el espaciado viene de unpsjb.css"
+      },
+      {
         "rule": "low-contrast",
         "value": "*",
         "files": [

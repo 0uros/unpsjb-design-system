@@ -1,6 +1,6 @@
 /* ==========================================================================
    unpsjb-graficos.css — Módulo de gráficos · v0.4.4
-   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 15.
+   Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 15.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
    Va junto con unpsjb-graficos.js, que dibuja el gráfico a partir de una tabla.
@@ -143,10 +143,27 @@
   align-items: baseline;
   margin: 0;
 }
-.leyenda--columna li { display: contents; }
+/* Cada renglón usa las columnas de la lista (subgrid), para poder resaltarlo entero */
+.leyenda--columna li {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  margin: 0 calc(-1 * var(--espacio-2));
+  padding: 2px var(--espacio-2);
+  border-radius: var(--radio-control);
+}
 .leyenda--columna li::before { align-self: center; }
 .leyenda--columna b, .leyenda__dato { text-align: right; white-space: nowrap; }
 .leyenda__dato { color: var(--color-tinta-2); }
+/* Resaltar: con el mouse sobre una porción, su renglón lleva fondo y el nombre
+   en negrita; las demás porciones se apagan. Y al revés, desde la lista. */
+.leyenda--columna li.leyenda--resaltada { background: var(--color-tinte); }
+.leyenda--resaltada .leyenda__nombre { font-weight: 700; }
+.dibujo--resaltando .dibujo__porcion:not(.dibujo__porcion--resaltada) { opacity: 0.3; }
+@media (prefers-reduced-motion: no-preference) {
+  .dibujo__porcion, .leyenda--columna li { transition: opacity 120ms ease, background-color 120ms ease; }
+}
 
 /* 6. Recorrer con el teclado ----------------------------------------------- */
 /* Un control de rango, invisible pero con foco: Tab llega al gráfico y las
@@ -176,4 +193,5 @@
   .dibujo__linea, .dibujo__punto, .dibujo__barra, .dibujo__porcion { forced-color-adjust: none; }
   .dibujo__grilla, .dibujo__eje, .dibujo__guia { stroke: CanvasText; }
   .dibujo__marca, .dibujo__valor, .dibujo__nombre { fill: CanvasText; }
+  .leyenda--columna li.leyenda--resaltada { outline: 2px solid Highlight; background: none; }
 }

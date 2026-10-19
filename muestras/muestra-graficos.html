@@ -71,7 +71,7 @@
           <tr><td>Algo que cambia en el tiempo</td><th scope="row"><a href="#lineas">Líneas</a></th><td>Solicitudes por mes</td></tr>
           <tr><td>Cantidades de varias cosas, para comparar</td><th scope="row"><a href="#barras">Barras</a></th><td>Reservas por aula</td></tr>
           <tr><td>Pocos períodos, uno al lado del otro</td><th scope="row"><a href="#barras">Columnas</a></th><td>Eventos por mes</td></tr>
-          <tr><td>Partes de un total (hasta 5, más "Otros")</td><th scope="row"><a href="#torta">Torta</a></th><td>Uso de las aulas por tipo</td></tr>
+          <tr><td>Partes de un total (hasta 6, contando "Otros")</td><th scope="row"><a href="#torta">Torta</a></th><td>Uso de las aulas por tipo</td></tr>
           <tr><td>Un número solo</td><th scope="row"><a href="muestra.html#graficos">Indicador</a></th><td>Aulas ocupadas ahora</td></tr>
         </tbody>
       </table>
@@ -316,7 +316,7 @@
     </div>
 
     <h2 id="torta">Torta</h2>
-    <p>Para las partes de un total, cuando son pocas y lo que importa es cuánto del todo se lleva cada una. Al lado va la lista con el nombre, el valor y el porcentaje, en el mismo orden que el dibujo.</p>
+    <p>Para las partes de un total, cuando son pocas y lo que importa es cuánto del todo se lleva cada una. Al lado va la lista con el nombre, el valor y el porcentaje, en el mismo orden que el dibujo. Con el mouse sobre una porción se resalta su renglón, y al revés.</p>
     <div class="grilla grilla--2">
       <!-- Cinco partes más "Otros": el máximo -->
       <figure class="grafico panel">
@@ -380,7 +380,7 @@
       <summary>Cuándo usarlo y cuándo no: torta</summary>
       <div class="acordeon__cuerpo">
         <dl class="resumen">
-          <div><dt>Usalo cuando</dt><dd>Son las partes de un total, hay pocas (hasta cinco, más "Otros") y lo que importa es cuánto del todo se lleva cada una.</dd></div>
+          <div><dt>Usalo cuando</dt><dd>Son las partes de un total, hay pocas (hasta seis, contando "Otros") y lo que importa es cuánto del todo se lleva cada una.</dd></div>
           <div><dt>No lo uses cuando</dt><dd><ul><li>Hay que comparar partes de tamaño parecido: en una torta, 23 % y 26 % se ven iguales. Van barras.</li><li>Las partes no suman un total (respuestas múltiples, promedios).</li><li>Hay que comparar dos totales: dos tortas, una al lado de la otra, no se comparan bien. Van barras con dos series.</li><li>Algo cambia en el tiempo: van líneas.</li></ul></dd></div>
           <div><dt>Cómo se arma</dt><dd><ul><li>Empieza arriba y gira en el sentido del reloj, en el orden de la tabla. Conviene de mayor a menor.</li><li>Sin textos encima del dibujo: el nombre, el valor y el porcentaje van en la lista de al lado.</li><li>Sin 3D, sin porciones separadas y sin dona.</li></ul></dd></div>
         </dl>
@@ -430,7 +430,7 @@
             <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
           </fieldset>
         </div>
-        <span>v0.4.4</span>
+        <span>v0.4.5</span>
       </div>
     </footer>
   </main>

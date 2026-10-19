@@ -16,6 +16,7 @@
 | Ajustes a los dos módulos después de la primera revisión | — | **0.4.2** |
 | Módulos de documentos, gráficos de líneas, mesa de ayuda y cartelera | — | **0.4.3** |
 | Módulo de planos | — | **0.4.4** |
+| Visor de cámaras rehecho, piezas del estudio de referencia y carpetas reordenadas | — | **0.4.5** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
@@ -51,27 +52,13 @@ Sale de mirar las skills de diseño para agentes de IA que circulaban en un top 
 
 - **Errores en tres partes** (sección 12): qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. Antes la regla pedía dos; el porqué ya estaba en los ejemplos de 8.A y 8.J.
 
-## En curso · piezas del estudio de referencia · 2026-10-07 · sin número todavía
+## 0.4.5 · 2026-10-15 · oficial
 
-Sale del estudio de los sitios de la UNC y la UBA y del portal MiUNC (`REFERENCIAS-UNC-UBA.md`). Se tomó estructura, no aspecto. No cambia nada de lo que ya existía: son dos piezas y cuatro reglas nuevas. Falta darle número y registrarlo en git.
-
-### Nuevo
-
-- **Lista de accesos** (`ul.accesos`, `.accesos__nombre`, `.accesos__marca`, `.accesos--columnas`): a dónde se puede ir desde acá. Cada renglón lleva el nombre, una línea que dice para qué sirve y una flecha o un botón. Sirve para los accesos de una página de inicio, una lista de trámites y un listado de herramientas. Va en lugar de la grilla de tarjetas con ícono. `DESIGN.md`, 7.Q.
-- **Entradas** (`ul.entradas`, `.entradas__titulo`, `.entradas__principal`): de dos a cuatro bloques grandes y planos para la portada de un portal, nombrados por lo que la persona viene a hacer. `DESIGN.md`, 17.C.
-- **Portal de la Delegación** (17.C): chico, informativo y de consulta rápida. Avisos antes que noticias, sin foto de apertura, navegación de un nivel y contacto a la vista.
-- **Página de inicio de una cuenta** (17.D): quién sos, qué tenés pendiente y a dónde ir, en ese orden.
-- **Topes de peso para fotos y video** (2.C): 1 MB por página, 200 KB por foto, carga diferida y ningún video que arranque solo.
-- **Un punto más en "Antes de publicar"** (sección 9): `lang="es"`, el `viewport` sin bloquear el zoom y ninguna ventana al entrar.
-- **Tres filas en "Lo que no se agrega"** (7.P): carrusel, ventana que se abre sola y asistente de chat flotante.
-- **El pie va al fondo** (6.C): en una pantalla con poco contenido, el `<footer class="pie">` que cierra `<main>` baja hasta el borde de abajo de la ventana. Lo hace la hoja sola y vale para todas las herramientas; en una página larga no cambia nada.
-- **Prototipo:** `muestra-portal.html`, con cinco pantallas (portada, trámites, herramientas, inicio de cuenta y datos de la cuenta). Al final de cada una, una tabla dice qué se tomó del estudio y de dónde. Trae el script que evita que el pie entre cortado (6.C).
-
-## En curso · visor de cámaras rehecho · 2026-10-06 · sin número todavía
-
-El visor de cámaras se rehízo tomando ideas de un visor comercial de referencia. Cambia el HTML de la pantalla "En vivo": quien ya la armó con la 0.4.2 tiene que rehacerla con `muestra-video.html`. La línea de tiempo de grabaciones no cambia. Falta darle número y registrarlo en git.
+Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo".
 
 ### Nuevo
+
+**Visor de cámaras.** Se rehízo tomando ideas de un visor comercial de referencia. La línea de tiempo de grabaciones no cambia.
 
 - **Vistas de 5 y de 6 cámaras,** además de 1, 4 y 9. La de 6 es una grande y cinco chicas alrededor; la de 5, dos grandes arriba y tres chicas abajo.
 - **Panel lateral** (`.visor`, `.visor__lateral`) con el título, las vistas, la pantalla completa, el buscador y la lista. Se pliega a un riel de 46px que conserva los controles (`data-lista="plegada"`), y el muro gana ese ancho.
@@ -83,7 +70,28 @@ El visor de cámaras se rehízo tomando ideas de un visor comercial de referenci
 - **El ojo de la lista quita la cámara del muro** (`.camaras-lista__ojo`). Con el mouse encima o con el foco pasa a ojo tachado en rojo. Cada renglón de la lista tiene ahora dos botones: el de la cámara (`.camaras-lista__camara`) y el ojo.
 - Tokens `--color-video-texto`, `--color-video-barra`, `--color-video-exito`, `--color-video-info` y `--color-video-error`.
 
+**Piezas del estudio de referencia** (`notas/REFERENCIAS-UNC-UBA.md`). Se tomó estructura, no aspecto. No cambia nada de lo que ya existía.
+
+- **Lista de accesos** (`ul.accesos`, `.accesos__nombre`, `.accesos__marca`, `.accesos--columnas`): a dónde se puede ir desde acá. Cada renglón lleva el nombre, una línea que dice para qué sirve y una flecha o un botón. Sirve para los accesos de una página de inicio, una lista de trámites y un listado de herramientas. Va en lugar de la grilla de tarjetas con ícono. `DESIGN.md`, 7.Q.
+- **Entradas** (`ul.entradas`, `.entradas__titulo`, `.entradas__principal`): de dos a cuatro bloques grandes y planos para la portada de un portal, nombrados por lo que la persona viene a hacer. `DESIGN.md`, 17.C.
+- **Portal de la Delegación** (17.C): chico, informativo y de consulta rápida. Avisos antes que noticias, sin foto de apertura, navegación de un nivel y contacto a la vista.
+- **Página de inicio de una cuenta** (17.D): quién sos, qué tenés pendiente y a dónde ir, en ese orden.
+- **Topes de peso para fotos y video** (2.C): 1 MB por página, 200 KB por foto, carga diferida y ningún video que arranque solo.
+- **Un punto más en "Antes de publicar"** (sección 9): `lang="es"`, el `viewport` sin bloquear el zoom y ninguna ventana al entrar.
+- **Tres filas en "Lo que no se agrega"** (7.P): carrusel, ventana que se abre sola y asistente de chat flotante.
+- **El pie va al fondo** (6.C): en una pantalla con poco contenido, el `<footer class="pie">` que cierra `<main>` baja hasta el borde de abajo de la ventana. Lo hace la hoja sola y vale para todas las herramientas; en una página larga no cambia nada.
+- **Prototipo:** `muestra-portal.html`, con cinco pantallas (portada, trámites, herramientas, inicio de cuenta y datos de la cuenta). Al final de cada una, una tabla dice qué se tomó del estudio y de dónde. Trae el script que evita que el pie entre cortado (6.C).
+
+**Vista pública y módulos de la 0.4.3.**
+
+- **Cartelera en el celular** (`muestra-cartelera-celular.html`, `unpsjb-cartelera.css`): lista en el celular; desde 768px, la grilla del día y la semana vigente. La búsqueda recorre toda la semana.
+- **Gráficos de barras, columnas y torta** en `unpsjb-graficos.js`, además de las líneas. Las clases que arma el script pasan de `.lineas__…` a `.dibujo__…`. `DESIGN.md`, 15.F y 15.G.
+- **En la torta, el mouse o el dedo sobre una porción resalta su renglón de la lista** (`.leyenda--resaltada`) y apaga las demás porciones (`.dibujo--resaltando`); sobre un renglón, resalta su porción. Cada renglón de `.leyenda--columna` pasa de `display: contents` a `subgrid`, para poder llevar fondo.
+- `muestras/prueba-graficos.html`: casos límite de los gráficos, con datos inventados. No es una muestra para copiar.
+
 ### Cambiado
+
+**Visor de cámaras.** Quien ya armó la pantalla "En vivo" con la 0.4.2 tiene que rehacerla con `muestra-video.html`.
 
 - **El muro ocupa todo el ancho y todo el alto libres.** Antes se achicaba hasta que sus celdas en 16:9 entraran, y quedaba centrado con lugar vacío a los costados. Ahora las celdas pueden ser más anchas que 16:9 y la imagen deja negro a los costados.
 - **No hay encabezado de pantalla arriba del muro:** el `h1` va dentro del panel. Ese alto pasó a las cámaras.
@@ -92,11 +100,50 @@ El visor de cámaras se rehízo tomando ideas de un visor comercial de referenci
 - `--color-video-texto` pasa a blanco (`#ffffff`): ahora es el color de lo que se escribe sobre la barra.
 - En una notebook (1366×641, con el banner "Piloto"), el ancho de la imagen de cada cámara pasó de 636 a 827px con 1, de 266 a 406px con 4 y de 142 a 266px con 9.
 
+**Documentos.** El membrete usa el logo original (la gaviota con su detalle y el texto curvo). El pie de verificación queda en espera: está diseñado, pero sale apagado en los ejemplos.
+
+**Nombre.** El sistema se llama "Sistema de Diseño Digital UNPSJB", sin "(MII 2.0)". `DESIGN.md` cuenta de dónde venía esa sigla (el primer borrador, `notas/FRAMEWORK.md`). En el `name` de `DESIGN.md` y de la skill: "UNPSJB · Señalética".
+
+**Gráficos.**
+
+- **La torta llega a 6 porciones,** 5 de color y una gris (antes `DESIGN.md` 15.A ponía el tope en 3). La gris junta las filas "Otros" y las que no entran de color.
+- **Si los datos son enteros, las marcas del eje también:** 0, 5, 10, 15 en vez de 0; 2,5; 5,0; 7,5.
+
+**Advertencia.** `--color-advertencia-texto` en claro pasa de `#b45309` a `#a64c08`: sobre `--color-capa` daba 4,3:1 y no llegaba a 4,5:1 (lo encontró `axe` en la cartelera del celular). Ahora da 4,9:1 sobre `capa` y 5,7:1 sobre blanco. El relleno de advertencia (`--color-advertencia`) no cambia.
+
+**Carpetas.** El repositorio pasa a `sistema/` (lo que se publica: la hoja, los módulos, `fonts/` y `assets/`), `muestras/`, `notas/` y `herramientas/` (logo, emojis, QR y las pruebas de logo). Las copias de versiones anteriores van a `archivo/`, que no se versiona. Las entradas anteriores de este registro nombran los archivos donde estaban entonces.
+
 ### Eliminado
 
 - `.camara__pie` (ahora `.camara__barra`), `.camaras-panel`, `.camaras-panel__cuerpo` y `.encabezado--visor`. El visor ya no usa `.grilla--lateral`.
 
-## 0.4.4 · 2026-10-05 · oficial
+### Corregido
+
+Salen de probar los gráficos nuevos con `muestras/prueba-graficos.html`, una página de casos límite con datos inventados (no es una muestra para copiar).
+
+- **Barras y columnas con todos los valores negativos** se dibujaban fuera del gráfico: el eje no llegaba al cero. Ahora el cero entra siempre en el eje.
+- **El valor de una barra o columna negativa** va en su punta (a la izquierda o abajo), no del lado del cero, y la punta redondeada queda del lado del valor. En columnas, la línea fuerte del eje es la del cero.
+- **Torta con todo en cero:** quedaba una caja vacía y la tabla oculta. Ahora queda la tabla, sin el selector "Gráfico | Tabla". Lo mismo si se vuelve a dibujar con datos que ya no se pueden graficar.
+- **"Otros" en la torta** va una sola vez y al final: junta las filas que se llaman así en la tabla y, si hay más de cinco partes, las que sobran. Antes podía haber dos grises ("Otros" y "Otros (2)") y la fila "Otros" le sacaba un color a las demás.
+- **Una porción que se ve en la torta nunca dice "0 %"**: dice "<1 %", y la parte grande, ">99 %" en vez de "100 %".
+- En barras con todos los valores negativos, el último número del eje se cortaba en el borde derecho.
+- **Barras o columnas con todo en cero:** el eje tenía una sola marca y el dibujo salía roto (una división por cero). Ahora el eje va de 0 a 1.
+- **Torta de seis filas sin "Otros":** la sexta porción salía gris, como "Otros", sin serlo. Ahora la sexta es la gris a propósito y conserva su nombre.
+- `DESIGN.md` 15.E nombraba `.lineas__lectura`; la clase es `.dibujo__lectura`.
+
+### Probado
+
+- Gráficos, en Chrome sin ventana a 1366 y 390 px, en claro y oscuro: 26 casos de `prueba-graficos.html` y los 11 de `muestra-graficos.html`, nada fuera del dibujo, sin scroll horizontal ni errores de consola. El resaltado de la torta, en las dos direcciones. Al imprimir, un gráfico por renglón al ancho de la hoja y sin el selector.
+- `axe` (WCAG 2.2 AA y buenas prácticas) en las 12 páginas de `muestras/`, a 1366 y 390 px, claro y oscuro: sin fallas, salvo en `muestra-planos.html` (abajo).
+
+### Pendiente
+
+- **Lector de pantalla** (NVDA u Orca) en el visor, el portal, la cartelera en el celular y los gráficos: no se puede probar sin una persona.
+- `muestra-planos.html` tiene dos avisos de `axe`: el panel de detalle es un `aside` dentro de `main`, y en celular un `h3` va sin `h2` antes. No se tocan acá porque el módulo de planos se está rehaciendo en la rama `planos-claro` (donde el `aside` ya no está); se revisan al unirla.
+- Los ajustes de planos de las ramas `planos` y `planos-claro` no entran en esta versión.
+- Subir `skill/design-md-unpsjb/SKILL.md` a claude.ai.
+
+## 0.4.4 · 2026-10-05 · anterior (no se publicó sola: salió dentro de la 0.4.5)
 
 Un módulo nuevo: planos. Sube el último número: es un agregado, y nada de lo anterior cambia. `unpsjb.css` no cambia (solo su número), y los demás módulos tampoco.
 
@@ -110,7 +157,7 @@ Un módulo nuevo: planos. Sube el último número: es un agregado, y nada de lo 
 
 - `DESIGN.md`: 2.A y la tabla de módulos (sección 16) listan los siete.
 
-## 0.4.3 · 2026-10-02 · oficial
+## 0.4.3 · 2026-10-02 · anterior
 
 Cuatro módulos nuevos. Sube el último número: son agregados, y nada de lo anterior cambia. `unpsjb.css` no cambia (solo su número), y los módulos de agenda y de video tampoco: siguen como en la 0.4.2.
 

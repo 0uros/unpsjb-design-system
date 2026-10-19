@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb.css — Sistema de Diseño Digital UNPSJB (MII 2.0) · v0.4.4
+   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.4.5
    Dirección "Señalética". Delegación Trelew · 2026
    Versión oficial. Fuente de verdad: DESIGN.md. Cambios: CHANGELOG.md.
    Los nombres del código van en español (regla y excepciones: DESIGN.md, 2.A).
@@ -147,7 +147,7 @@
   --color-exito: #047857;
   --color-exito-texto: #047857;
   --color-advertencia: #b45309;       /* 0.3: ámbar. El naranja ya no avisa problemas */
-  --color-advertencia-texto: #b45309;
+  --color-advertencia-texto: #a64c08;   /* 0.4.5: más oscuro, para llegar a 4.5:1 también sobre --color-capa */
   --color-error: #e11d48;
   --color-error-hover: #be123c;
   --color-error-texto: #be123c;
@@ -701,7 +701,7 @@ img, svg { max-width: 100%; }
 .pie__derecha { display: flex; align-items: center; gap: var(--espacio-4); }
 @media (max-width: 639px) { .pie { flex-direction: column; align-items: flex-start; } }
 @media (max-width: 639px) { .pie__derecha { flex-wrap: wrap; } }
-/* Pie al fondo (en curso, sin número todavía): en una página corta el pie baja
+/* Pie al fondo (nuevo en 0.4.5): en una página corta el pie baja
    hasta el borde de abajo de la ventana, en lugar de quedar a mitad de pantalla.
    Cómo: <main> ocupa el alto que sobra (body es una columna) y el pie, pegajoso
    con una ventana entera de distancia, se corre hacia abajo hasta donde termina
@@ -1407,7 +1407,7 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
 }
 .etiquetas { display: flex; flex-wrap: wrap; gap: var(--espacio-1) var(--espacio-2); margin: 0; padding: 0; list-style: none; }
 
-/* Lista de accesos (en curso, sin número todavía): a dónde se puede ir desde acá.
+/* Lista de accesos (nuevo en 0.4.5): a dónde se puede ir desde acá.
    Cada renglón es un destino: el nombre, una línea que dice para qué sirve y, a
    la derecha, una flecha o un botón. Sirve para la página de inicio de una
    cuenta, una lista de trámites y un listado de herramientas. Reemplaza a la
@@ -1463,7 +1463,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   border-top: 0;
 }
 
-/* Entradas (en curso, sin número todavía): de dos a cuatro bloques grandes para
+/* Entradas (nuevo en 0.4.5): de dos a cuatro bloques grandes para
    elegir por dónde empezar, según lo que la persona viene a hacer. Solo en la
    portada de un portal (DESIGN.md, 17.C). Son planos y sin ícono. La principal
    va en azul con texto blanco; las demás, en neutro con texto oscuro. El
@@ -1813,7 +1813,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
     --color-primario-relleno: #004992;
     --color-primario-relleno-hover: #003a75;
     --color-exito-texto: #047857;
-    --color-advertencia-texto: #b45309;
+    --color-advertencia-texto: #a64c08;
     --color-error-texto: #be123c;
     --color-info: #004992;
     --color-cat-1: #7c3aed;
