@@ -1,4 +1,4 @@
-# Bitácora — Sistema de Diseño UNPSJB (MII 2.0)
+# Bitácora — Sistema de Diseño UNPSJB
 
 ## 2026-09-26 — Sesión 1: arranque y fusión de borradores
 
@@ -963,3 +963,28 @@ Verificado:
 - La aparición: al cargar solo queda visible lo que está en pantalla; al bajar, cada sección aparece una vez.
 
 Sin probar: con fotos reales, con lector de pantalla, axe, teclado de punta a punta, impresión y en un celular real.
+
+## 2026-10-15 — Se arma la 0.4.5, sin unir a `main`
+
+Sin número de sesión. No se tocó ninguna pieza: número de versión y registro.
+
+- **La rama `version-0.4.5` sale de `en-curso`** y lleva todo lo que había ahí: el visor de cámaras rehecho, las piezas del estudio de referencia con el prototipo de portal, lo que vino de `ajustes-0.4.4` (cartelera en el celular, logo original en documentos, barras, columnas y torta) y el reordenamiento de carpetas. El módulo de planos entra como quedó en la 0.4.4; los ajustes de `planos` y `planos-claro` no.
+- **La 0.4.4 queda como estaba en el registro** (el módulo de planos). Nunca llegó a `main`: al unir la 0.4.5 entran las dos juntas.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `muestra.html` y `muestra-video.html` dicen 0.4.5, y lo que decía "sin número todavía" dice 0.4.5. En `CHANGELOG.md`, las dos entradas "En curso" pasan a ser la 0.4.5, que suma lo de `ajustes-0.4.4`, que no estaba registrado.
+- Sin subir a GitHub ni unir a `main`: falta decidir qué más entra.
+
+Pendientes, en orden:
+- [x] Qué entra en la 0.4.5: lo de `en-curso` más los gráficos probados. Los ajustes de `planos` y la revisión de `textos-y-revision` quedan para después.
+- [x] Probar los gráficos de barras, columnas y torta. Con `muestras/prueba-graficos.html` (24 casos límite, datos inventados) en Chrome sin ventana a 1366 y 390 px, claro y oscuro. Aparecieron y se arreglaron: todo negativo se dibujaba fuera del gráfico, el valor de las negativas iba del lado del cero, la torta en cero dejaba una caja vacía, "Otros" podía salir dos veces y una porción visible decía "0 %". `muestra-graficos.html` sigue igual.
+- [x] Tope de la torta: 6 porciones, 5 de color y una gris (lo decidió el usuario). `DESIGN.md` 15.A y 15.G.
+- [x] Documentar barras, columnas y torta en `DESIGN.md` (15.F y 15.G), y en 18 y 20 lo que vino de `ajustes-0.4.4` (logo original del membrete, pie de verificación en espera, cartelera en el celular).
+- [x] Resaltar en la lista la porción que está bajo el mouse (pedido del usuario), y al revés.
+- [x] Marcas del eje enteras cuando los datos son enteros (antes 0; 2,5; 5,0…).
+- [x] Sacar "(MII 2.0)" del nombre (pedido del usuario): queda contado como origen en `DESIGN.md`. Las notas viejas (`FRAMEWORK.md`, `FEEDBACK-NOTEBOOK.md`) lo conservan.
+- [x] `axe` en las 12 muestras, a 1366 y 390 px, claro y oscuro. Apareció un contraste: `--color-advertencia-texto` sobre `capa` (4,3:1); pasa a `#a64c08`. Quedan dos avisos en `muestra-planos.html`, que se ven al unir `planos-claro`.
+- [ ] Lector de pantalla: necesita una persona.
+- [ ] Unir `version-0.4.5` a `main` y subirla.
+
+## 2026-10-15 — Se publica la 0.4.5
+
+A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.
