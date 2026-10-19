@@ -1,6 +1,6 @@
 /* ==========================================================================
    unpsjb-documentos.css — Módulo de documentos e impresión · v0.4.4
-   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 18.
+   Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 18.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens.
    Ejemplo completo: muestra-documentos.html.
@@ -57,7 +57,7 @@
   --color-primario-relleno: #004992;
   --color-primario-relleno-hover: #003a75;
   --color-exito-texto: #047857;
-  --color-advertencia-texto: #b45309;
+  --color-advertencia-texto: #a64c08;
   --color-error-texto: #be123c;
   --color-info: #004992;
   --anillo-foco: 0 0 0 2px var(--color-acento), 0 0 0 4px var(--color-primario);

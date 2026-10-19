@@ -4,8 +4,8 @@ description: "Design.md para generar páginas para la universidad"
 ---
 
 ---
-name: UNPSJB MII 2.0 · Señalética
-version: 0.4.4
+name: UNPSJB · Señalética
+version: 0.4.5
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -25,7 +25,7 @@ colors:
   # Semáforo
   exito: "#047857"
   advertencia: "#b45309"
-  advertencia-texto: "#b45309"
+  advertencia-texto: "#a64c08"
   error: "#e11d48"
   error-hover: "#be123c"
   error-texto: "#be123c"
@@ -146,13 +146,13 @@ motion:
   curva: cubic-bezier(0.2, 0, 0, 1)
 ---
 
-# Sistema de Diseño Digital UNPSJB (MII 2.0)
+# Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.4.4 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.5 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `archivo/` (`DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`; fuera de git, la etiqueta es `v0.2.1`). Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `archivo/comparar-v3.html` (0.2.1 y la actual) y `archivo/comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
-Este documento es la única fuente de verdad para el diseño de interfaz (UI), la experiencia de usuario (UX) y la arquitectura base del software web de la UNPSJB. Traslada la "fuerza y carácter propio" del manual de marca de 2008 (pensado para impresos) a la web, con estándares actuales de usabilidad, accesibilidad, seguridad y rendimiento.
+Este documento es la única fuente de verdad para el diseño de interfaz (UI), la experiencia de usuario (UX) y la arquitectura base del software web de la UNPSJB. Traslada la "fuerza y carácter propio" del manual de marca de 2008 (pensado para impresos) a la web, con estándares actuales de usabilidad, accesibilidad, seguridad y rendimiento. El primer borrador (`notas/FRAMEWORK.md`) lo llamaba "MII 2.0", como continuación de ese manual; desde la 0.4.5 el nombre es solo "Sistema de Diseño Digital UNPSJB".
 
 ## 1. La idea: la universidad como un lugar que se recorre
 
@@ -208,7 +208,7 @@ Regla práctica: si la herramienta empieza a necesitar más de una pantalla, o h
 - **DOM poco profundo:** prohibido anidar contenedores (`div`) sin necesidad. Preferir etiquetas semánticas (`header`, `main`, `nav`, `section`, `footer`).
 - **Sin Tailwind por CDN:** el script de Tailwind por CDN pesa cientos de KB y no está pensado para producción. En React se permite Tailwind **compilado**, configurado con los mismos tokens de `unpsjb.css`.
 - **Fuentes:** solo en formato `woff2` variable, un archivo por familia, con `font-display: swap`.
-- **Fotos y video (nuevo, sin número todavía).** Las páginas con fotos son las que más pesan: en el estudio de referencia (`REFERENCIAS-UNC-UBA.md`), la portada de una universidad bajaba 22 MB, casi todo imágenes sin reducir, y la de otra, 11,7 MB de un video. Topes:
+- **Fotos y video (nuevo en 0.4.5).** Las páginas con fotos son las que más pesan: en el estudio de referencia (`REFERENCIAS-UNC-UBA.md`), la portada de una universidad bajaba 22 MB, casi todo imágenes sin reducir, y la de otra, 11,7 MB de un video. Topes:
   - **Una página no pasa de 1 MB** en total la primera vez que se abre.
   - **Cada foto, 200 KB como máximo,** en `webp` o `avif`, y con el tamaño en que se muestra, no el de la cámara. Con `width` y `height` escritos, para que la página no salte al cargar.
   - **`loading="lazy"`** en toda foto que no se ve al entrar.
@@ -277,7 +277,7 @@ Los grises dejan de ser la paleta genérica `slate` y pasan a derivarse del azul
 | Estado | Marca (ícono, borde, relleno) | Texto sobre claro | Texto sobre oscuro |
 |---|---|---|---|
 | Éxito | `#047857` | `#047857` (5.5:1) | `#34d399` |
-| Advertencia | `#b45309` (ámbar) | `#b45309` (5.0:1) | `#fbbf24` |
+| Advertencia | `#b45309` (ámbar) | `#a64c08` (5.7:1 sobre blanco, 4.9:1 sobre `--color-capa`; 0.4.5) | `#fbbf24` |
 | Error | `#e11d48` | `#be123c` (6.3:1) | `#fb7185` |
 | Información | `#004992` | `#004992` (8.9:1) | `#7ab3f0` |
 
@@ -517,7 +517,7 @@ A la derecha, antes de la versión, va el **selector de tema** (sección 3.F). E
 
 La herramienta suma sola lo que ya sabe (quién reporta, en qué pantalla, con qué navegador): no se le pide a la persona. Qué se hace con cada reporte está en la sección 14.F.
 
-**El pie va al fondo (nuevo, sin número todavía).** En una pantalla con poco contenido, el pie baja hasta el borde de abajo de la ventana: no queda flotando a mitad de pantalla con un hueco debajo. Lo hace la hoja sola, sin clase ni script, para el `<footer class="pie">` que cierra `<main>`. En una página larga no cambia nada: el pie va después del contenido.
+**El pie va al fondo (nuevo en 0.4.5).** En una pantalla con poco contenido, el pie baja hasta el borde de abajo de la ventana: no queda flotando a mitad de pantalla con un hueco debajo. Lo hace la hoja sola, sin clase ni script, para el `<footer class="pie">` que cierra `<main>`. En una página larga no cambia nada: el pie va después del contenido.
 
 - **El pie no entra cortado.** Si al abrir la página el pie entra solo en parte, es mejor que no se vea: se le da alto al contenido para que el pie empiece justo debajo del borde de la ventana, y se llega bajando. Importa sobre todo con el pie de las páginas públicas, que es alto. Esto sí necesita un script chico (quince líneas, en `muestra-portal.html`): es una mejora y, si no está, la página funciona igual.
 - En el celular, el borde de abajo es el del menú inferior.
@@ -727,9 +727,9 @@ Para no volver a discutirlo cada vez:
 | Ventana que se abre sola al entrar | Tapa todo en el celular y atrapa el foco antes de que la persona haya visto la página. | Un aviso (8.A) arriba del contenido |
 | Asistente de chat flotante | Es otro elemento fijo que tapa contenido en el celular. | Un enlace a la mesa de ayuda (sección 19) |
 
-Las últimas tres filas son nuevas (sin número todavía) y salen del estudio de referencia.
+Las últimas tres filas son nuevas (0.4.5) y salen del estudio de referencia.
 
-### Q. Lista de accesos (nuevo, sin número todavía)
+### Q. Lista de accesos (nuevo en 0.4.5)
 
 **A dónde se puede ir desde acá** (`ul.accesos`). Cada renglón es un destino: el nombre, una línea que dice para qué sirve y, a la derecha, una flecha o un botón. Es lo que va donde otros sitios ponen una grilla de tarjetas con ícono, título y texto (prohibida en 7.C): la misma información, en menos lugar y fácil de recorrer con la vista.
 
@@ -903,7 +903,7 @@ Una lista corta que se recorre en cada versión nueva. Se anota el resultado en 
 4. **Contraste:** los colores nuevos que no estén en este documento se miden (4.5:1 texto, 3:1 controles), en claro **y** en oscuro.
 5. **Lector de pantalla:** el recorrido principal con **Orca** (Linux), **NVDA** (Windows) o VoiceOver (macOS/iOS). Los botones dicen qué hacen, los errores y toasts se anuncian solos y los íconos decorativos no se leen.
 6. **Celular real:** un recorrido en un teléfono, con los campos de 16px (sin zoom automático) y el menú inferior sin tapar contenido.
-7. **Lo básico de la página (nuevo, sin número todavía):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
+7. **Lo básico de la página (nuevo en 0.4.5):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
    - `<html lang="es">`. Con otro idioma declarado, el lector de pantalla pronuncia todo mal.
    - El `viewport` es `width=device-width, initial-scale=1`, **sin** `maximum-scale` ni `user-scalable=no`: bloquean el zoom con los dedos.
    - Al entrar no se abre ninguna ventana encima del contenido (7.P).
@@ -1121,7 +1121,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.4), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.5), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1168,11 +1168,11 @@ A veces una herramienta necesita algo que el sistema no tiene (un control de cá
 | Un número (y cómo cambió) | **Indicador** | Un gráfico de una barra |
 | Unos pocos números principales | Una fila de indicadores | Barras agrupadas |
 | Cantidades de pocas cosas para comparar | **Barras horizontales** | Torta |
-| Partes de un total | **Barra apilada**, hasta 5 partes más "Otros" | Torta de muchas partes |
+| Partes de un total | **Barra apilada** o **torta** (15.G), hasta 6 partes contando "Otros" | Torta de muchas partes |
 | Algo que cambia en el tiempo | **Líneas** | Barras apretadas |
 | Más de 5 series o más de 7 clases | Una **tabla** | Más colores |
 
-No se usan: tortas o donas de más de 3 partes, gráficos en 3D, áreas apiladas y **dos ejes en un mismo gráfico** (dos escalas inventan una relación que los datos no tienen; van dos gráficos).
+No se usan: tortas de más de 6 partes (desde la 0.4.5; antes el tope era 3), donas, gráficos en 3D, áreas apiladas y **dos ejes en un mismo gráfico** (dos escalas inventan una relación que los datos no tienen; van dos gráficos).
 
 ### B. Indicador
 
@@ -1211,15 +1211,15 @@ Los colores están en la sección 3.I.
 
 ### E. Gráficos de líneas (nuevo en 0.4.3)
 
-Lo que cambia en el tiempo. Es el único gráfico que necesita un dibujo (SVG), así que va en un módulo: `unpsjb-graficos.css` (5 KB) y `unpsjb-graficos.js` (16 KB; 6 KB comprimido). Ejemplo: `muestra-graficos.html`.
+Lo que cambia en el tiempo. Necesita un dibujo (SVG), así que va en un módulo: `unpsjb-graficos.css` (8 KB) y `unpsjb-graficos.js` (29 KB; 9 KB comprimido), que desde la 0.4.5 dibujan también barras, columnas y torta (15.F y 15.G). Ejemplo: `muestra-graficos.html`; casos límite: `prueba-graficos.html`.
 
 - **Los datos se escriben una sola vez, en una tabla.** La tabla lleva `data-grafico="lineas"`; el script arma el gráfico y el selector "Gráfico | Tabla". Sin JavaScript queda la tabla. La primera columna es el momento (mes, día, año) y cada una de las demás, una serie.
 - **`data-descripcion` es obligatorio:** una oración que dice lo importante ("Trelew sube de 310 a 412"). Es el nombre de la imagen: lo que escucha quien usa lector de pantalla.
 - Opcionales: `data-unidad="%"`, `data-alto` (260px por defecto) y `data-desde-cero="no"`.
 - **El eje arranca en cero.** Sin el cero, una suba de 2 % parece el doble. La excepción es cuando el cero no significa nada (una temperatura, un índice): ahí va `data-desde-cero="no"` y la nota del gráfico lo dice.
-- **Marcas del eje en números redondos** (0, 100, 200), cuatro o cinco. Los nombres del eje de abajo se saltean si no entran, y el último va siempre.
+- **Marcas del eje en números redondos** (0, 100, 200), cuatro o cinco. Si los datos son enteros, las marcas también: 0, 5, 10, 15 y no 0; 2,5; 5; 7,5. Los nombres del eje de abajo se saltean si no entran, y el último va siempre.
 - **Un punto en cada dato** si hay 20px o más entre uno y otro. Con muchos datos, solo en el último y en el momento elegido: una fila de puntos pegados es una línea más gruesa, no información.
-- **La lectura, arriba del gráfico** (`.lineas__lectura`): el momento elegido y el valor de cada serie con su cuadradito. Es también la leyenda. Sin tocar nada muestra el último momento.
+- **La lectura, arriba del gráfico** (`.dibujo__lectura`): el momento elegido y el valor de cada serie con su cuadradito. Es también la leyenda. Sin tocar nada muestra el último momento.
   - Con el mouse o el dedo se elige un momento; una guía vertical lo marca.
   - Con el teclado, `Tab` llega al gráfico y las flechas lo recorren. Es un control de rango, como la línea de tiempo del visor (16.B): el lector de pantalla dice el momento y todos los valores.
   - No hay cartel flotante (7.P): la lectura está siempre en el mismo lugar y no tapa nada.
@@ -1231,6 +1231,28 @@ Lo que cambia en el tiempo. Es el único gráfico que necesita un dibujo (SVG), 
 - **Lo que no hace:** áreas rellenas, líneas curvas (suavizar inventa valores entre dato y dato), dos ejes, más de cinco series.
 - En una herramienta hecha en React se puede usar el mismo script (después de cambiar los datos de la tabla, `unpsjbGraficos.dibujar(tabla)`) o armar un componente que produzca el mismo SVG con estas clases.
 
+### F. Barras y columnas con el módulo (nuevo en 0.4.5)
+
+Para comparar cantidades de cosas. Se arman igual que las líneas, desde una tabla, con `data-grafico="barras"`. La tabla `.barras` de `unpsjb.css` (15.D) sigue sirviendo para una serie sola sin script; el módulo agrega varias series, columnas y el eje.
+
+- **Barras horizontales** por defecto: los nombres a la izquierda (hasta el 42 % del ancho; lo que no entra se corta con "…" y se lee entero con el mouse encima) y el valor escrito en la punta de cada barra.
+- **Columnas** con `data-orientacion="vertical"`, para pocos períodos uno al lado del otro. Con una serie, el valor va arriba de cada columna; con varias, en la lectura de arriba, que se recorre con el mouse, el dedo o las flechas, como en las líneas. **En pantallas de menos de 480px las columnas pasan solas a barras horizontales** (15.C).
+- **Varias series:** hasta 5, una barra por serie en cada fila y la leyenda arriba. La sexta columna de la tabla no se dibuja (queda en la tabla).
+- **Siempre desde cero,** también con negativos: el cero entra en el eje y es la línea fuerte. Una barra negativa va hacia la izquierda (o hacia abajo) y su valor, en su punta.
+- **Si falta un dato,** no hay barra; en la tabla dice "Sin dato". Un cero lleva una barra mínima y "0".
+- Opcionales: `data-unidad`, `data-alto` (solo columnas; 260px por defecto).
+
+### G. Torta (nuevo en 0.4.5)
+
+Para las partes de un total, cuando son pocas y lo que importa es cuánto del todo se lleva cada una. `data-grafico="torta"`, con una sola columna de valores.
+
+- **Hasta 6 porciones: 5 de color y una gris.** La gris va al final y junta las filas que se llaman "Otros" en la tabla y las que no entran de color; si es una sola fila, conserva su nombre. En la tabla quedan todas.
+- **Empieza arriba y gira en el sentido del reloj,** en el orden de la tabla. Conviene de mayor a menor.
+- **Sin textos encima del dibujo.** Al lado (debajo, en pantallas angostas) va la lista con el nombre, el valor y el porcentaje de cada parte, en el mismo orden. Los porcentajes son enteros y suman 100; una parte que se ve nunca dice "0 %" (dice "<1 %"), y si hay otras, ninguna dice "100 %" (dice ">99 %"). Con `data-unidad="%"` los valores ya son porcentajes y no se repiten.
+- **Con el mouse o el dedo sobre una porción, se resalta su renglón de la lista** (fondo `tinte` y el nombre en negrita) y las demás porciones se apagan. También al revés: sobre un renglón, se resalta su porción. Es una ayuda para cuando hay varias partes de color parecido; la información ya está toda en la lista.
+- **Partes que valen cero no se dibujan.** Si todo vale cero, no hay gráfico: queda la tabla.
+- **Lo que no hace:** donas, porciones separadas, 3D, dos tortas para comparar dos totales (van barras con dos series).
+
 ## 16. Módulos: agenda de aulas y visor de cámaras (nuevo en 0.4)
 
 Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no las cargue quien no las usa. Cada una se enlaza **después** de `unpsjb.css` y usa sus tokens. Esta sección documenta las dos primeras; las demás tienen la suya.
@@ -1238,8 +1260,8 @@ Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no 
 | Módulo | Hoja | Ejemplo | Peso | Reglas |
 |---|---|---|---|---|
 | Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB | 16.A |
-| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
-| Gráficos de líneas (0.4.3) | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 5 KB + 16 KB | 15.E |
+| Visor de cámaras (rehecho en 0.4.5) | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
+| Gráficos: líneas (0.4.3); barras, columnas y torta (0.4.5) | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 8 KB + 29 KB | 15.E a 15.G |
 | Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
 | Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
 | Cartelera (0.4.3) | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
@@ -1274,7 +1296,7 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 
 ### B. Visor de cámaras
 
-Rehecho el 6 de octubre de 2026 (todavía sin número de versión), a partir de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
+Rehecho el 6 de octubre de 2026 (0.4.5), a partir de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
 
 - **Lo primero es el tamaño de las cámaras.** Todo lo demás se acomoda a eso: nada le saca alto al muro. No hay encabezado de pantalla ni barra de herramientas arriba, y el nombre de cada cámara va encima de la imagen, no debajo.
 - **El video va siempre sobre negro** (`#000`), en claro y en oscuro. El resto de la pantalla respeta el tema elegido: el visor **no** fuerza el modo oscuro. Los únicos colores propios del módulo son los del video: el negro, y lo que se escribe encima de la imagen.
@@ -1362,7 +1384,7 @@ Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripc
 - **El logo completo** (nivel L, 10.A) solo donde hay lugar para mostrarlo a 96px o más: una portada, no la banda.
 - **Sin siglas internas** sin explicar (sección 12): quien llega de afuera no sabe qué es SIU ni SUDOCU.
 
-### C. Portal de la Delegación (nuevo, sin número todavía)
+### C. Portal de la Delegación (nuevo en 0.4.5)
 
 El portal institucional de la universidad lo maneja Comodoro. El de la Delegación es otra cosa: **chico, informativo y de consulta rápida**. Sirve para encontrar en un minuto dónde queda algo, a quién escribirle y por dónde se hace un trámite. No es un diario ni repite lo que ya está en el portal de la universidad: lo enlaza.
 
@@ -1381,7 +1403,7 @@ Hay un prototipo: `muestra-portal.html`. Las reglas salen del estudio de los sit
 - **Contacto a la vista:** oficina, dirección, horario, teléfono y correo, como lista de resumen (7.L) dentro de un panel. Los teléfonos y correos son enlaces (`tel:`, `mailto:`).
 - **Pesa poco:** una página del portal no pasa de 1 MB (2.C).
 
-### D. Página de inicio de una cuenta (nuevo, sin número todavía)
+### D. Página de inicio de una cuenta (nuevo en 0.4.5)
 
 Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta con varias partes. Responde tres preguntas, en este orden. Es el orden de la página de inicio de MiUNC, con nuestras piezas:
 
@@ -1415,7 +1437,7 @@ Casi toda herramienta termina en un papel: una constancia, un certificado, un co
 
 ### B. Membrete
 
-- El logo de fondos claros (`logo-unpsjb-trelew.svg`) a 15 mm de alto, y al lado el nombre completo de la universidad en Montserrat 700, con la dependencia debajo. Como el logo en ese tamaño va sin el texto curvo (10.A), el nombre escrito no es opcional.
+- **El logo original** (`logo-unpsjb-trelew-completo.svg`, desde la 0.4.5): la gaviota con su detalle y el texto curvo con el nombre de la universidad, a 26 mm de alto, el mínimo al que ese logo se lee (nivel L, 10.A). Al lado, la dependencia que emite el documento ("Secretaría Académica", y debajo "Delegación Trelew"). El nombre de la universidad ya lo dice el logo, así que no se repite. (Hasta la 0.4.3 iba el logo de fondos claros a 15 mm, sin el texto curvo, con el nombre escrito al lado.)
 - Abajo, una línea `primario` de 2px: la misma que deja la banda al imprimir (6.G).
 - Va en la primera hoja. Las siguientes llevan el número de página.
 
@@ -1438,7 +1460,7 @@ Casi toda herramienta termina en un papel: una constancia, un certificado, un co
 - Al pie de la hoja (`.verificacion`): dónde se comprueba que el documento es auténtico. **La dirección y el código van escritos**; el QR es un atajo a esa misma dirección.
 - El QR mide 20 mm: es el mínimo para escanear en papel con comodidad. Lleva `alt=""`, porque lo que dice ya está en el texto.
 - Todo QR del sistema se genera con `herramientas/qr/generar.sh <dirección> <archivo.svg>`: negro sobre blanco, con su margen de 4 módulos y corrección de errores media. La dirección, lo más corta posible: cuanto más corta, más grandes los cuadraditos.
-- Falta: el servicio que verifica. El módulo da el lugar; la dirección de los ejemplos (`verificar.tw.unp.edu.ar`) no existe.
+- **En espera desde la 0.4.5:** la pieza está diseñada pero no se usa hasta que exista el servicio que verifica un documento. Los ejemplos de `muestra-documentos.html` la tienen apagada; la dirección de los ejemplos (`verificar.tw.unp.edu.ar`) no existe.
 
 ### F. Certificado
 
@@ -1548,7 +1570,11 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 
 ### D. El QR y la vista de solo lectura
 
-- **El QR lleva a las mismas actividades en el celular** (`.cartelera-qr`), para quien quiere mirar con calma, buscar su materia o ver otro día.
+- **El QR lleva a las mismas actividades en el celular** (`.cartelera-qr`), para quien quiere mirar con calma, buscar su materia o ver otro día. Esa vista (`muestra-cartelera-celular.html`) es una página pública común que usa las piezas de la agenda (`.solo-lectura`): se mira, no se toca. Desde la 0.4.5 se adapta a la pantalla:
+  - **En el celular,** el día elegido en lista, con la fila de días arriba.
+  - **Desde 768px** (tablet, notebook), el día en grilla con las aulas en columnas, o en lista, y la semana vigente con un día por columna.
+  - **Al buscar,** los resultados salen en lista y abarcan toda la semana.
+  - Un cambio o una suspensión se dice con ícono y palabras (`.solo-lectura__estado--advertencia`, `--error`), en el color de texto del estado.
 - **Mide 300 u:** en una tele de 43 pulgadas son unos 15 cm, que se escanean a un metro y medio. Va siempre negro sobre blanco, con su margen, también con la tele en modo oscuro.
 - **Al lado, la dirección escrita,** para quien no puede escanear.
 - Se genera con `herramientas/qr/generar.sh` (18.E). **El de los ejemplos es de prueba:** la dirección `agenda.tw.unp.edu.ar/hoy` todavía no existe. Cuando esté la definitiva, se corre el script y se reemplaza el archivo.

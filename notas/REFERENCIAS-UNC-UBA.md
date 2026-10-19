@@ -8,7 +8,7 @@ Hecho el 2026-10-06. Se miraron tres cosas:
 
 **No se cambió nada del diseño.** `DESIGN.md`, `unpsjb.css` y las muestras quedaron como estaban. Esto es para decidir.
 
-**Estado al 2026-10-07: aplicado en parte, sin número de versión ni commit.** Por pedido del usuario se pasaron a `DESIGN.md` y `unpsjb.css` las acciones 1 a 4 (como una sola pieza, la lista de accesos, 7.Q, más la página de inicio de cuenta, 17.D), la 5, 6 y 7 en chico (portal de la Delegación y entradas, 17.C), la 8 (2.C) y la 9 (sección 9). El prototipo es `muestra-portal.html`. Lo que sigue es lo que se había anotado el día anterior.
+**Estado al 2026-10-15: aplicado en parte, en la 0.4.5.** Por pedido del usuario se pasaron a `DESIGN.md` y `unpsjb.css` las acciones 1 a 4 (como una sola pieza, la lista de accesos, 7.Q, más la página de inicio de cuenta, 17.D), la 5, 6 y 7 en chico (portal de la Delegación y entradas, 17.C), la 8 (2.C) y la 9 (sección 9). El prototipo es `muestra-portal.html`. Lo que sigue es lo que se había anotado el día anterior.
 
 **Estado al 2026-10-06: en espera.** Por decisión del usuario no se integra nada todavía, porque hay otro trabajo en paralelo. Lo decidido hasta acá:
 

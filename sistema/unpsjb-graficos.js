@@ -1,6 +1,6 @@
 /* ==========================================================================
-   unpsjb-graficos.js — Módulo de gráficos · v0.4.4
-   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 15.
+   unpsjb-graficos.js — Módulo de gráficos · v0.4.5
+   Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 15.
 
    Dibuja un gráfico A PARTIR DE UNA TABLA. Los datos se escriben una sola vez,
    en la tabla; el gráfico se arma solo. Sin JavaScript queda la tabla.
@@ -22,8 +22,8 @@
    - "barras": cantidades de cosas para comparar. Primera columna, la cosa.
      Horizontales; con data-orientacion="vertical", columnas (en pantallas
      angostas vuelven a ser horizontales).
-   - "torta": partes de un total. Una sola columna de valores, hasta 5 partes
-     más "Otros" (si hay más filas, las que sobran se suman en "Otros").
+   - "torta": partes de un total. Una sola columna de valores, hasta 6 porciones:
+     5 de color y una gris. La gris junta las filas "Otros" y las que sobran.
 
    Qué lee de la tabla
    - Primera columna: el nombre de cada fila. Las demás: una serie cada una,
@@ -71,12 +71,14 @@
     return limpio === '' || isNaN(limpio) ? null : Number(limpio);
   };
 
-  // Marcas del eje en números redondos: 0, 100, 200… (nunca 0, 87, 174…)
-  const marcas = (minimo, maximo, cuantas) => {
+  // Marcas del eje en números redondos: 0, 100, 200… (nunca 0, 87, 174…).
+  // Si los datos son enteros, las marcas también: 0, 5, 10, y no 0; 2,5; 5,0
+  const marcas = (minimo, maximo, cuantas, enteros) => {
+    if (maximo <= minimo) maximo = minimo + 1;          // todo igual (por ejemplo, todo en cero): igual hay eje
     const rango = (maximo - minimo) || 1;
     const bruto = rango / cuantas;
     const potencia = Math.pow(10, Math.floor(Math.log10(bruto)));
-    const paso = [1, 2, 2.5, 5, 10].map(m => m * potencia).find(p => Math.ceil(rango / p) <= cuantas + 1);
+    const paso = [1, 2, 2.5, 5, 10].map(m => m * potencia).filter(p => !enteros || p >= 1 && Number.isInteger(p)).find(p => Math.ceil(rango / p) <= cuantas + 1) || Math.max(1, 10 * potencia);
     const desde = Math.floor(minimo / paso) * paso;
     const lista = [];
     for (let v = desde; v < maximo + paso * 0.999; v += paso) lista.push(Number(v.toFixed(10)));
@@ -99,12 +101,17 @@
     return { columna: encabezados[0].textContent.trim(), momentos, series };
   }
 
-  // Una barra: recta en la base y con 4px de radio en la punta
-  const barra = (x, y, ancho, alto, haciaArriba) => {
-    const r = Math.min(4, haciaArriba ? alto : ancho, (haciaArriba ? ancho : alto) / 2);
-    return haciaArriba
-      ? `M${x} ${y + alto}V${y + r}a${r} ${r} 0 0 1 ${r} ${-r}H${x + ancho - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + alto}Z`
-      : `M${x} ${y}H${x + ancho - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + alto - r}a${r} ${r} 0 0 1 ${-r} ${r}H${x}Z`;
+  // Una barra: recta en la base (el cero) y con 4px de radio en la punta.
+  // hacia: 'arriba' o 'abajo' (columnas), 'derecha' o 'izquierda' (barras)
+  const barra = (x, y, ancho, alto, hacia) => {
+    const vertical = hacia === 'arriba' || hacia === 'abajo';
+    const r = Math.min(4, vertical ? alto : ancho, (vertical ? ancho : alto) / 2);
+    switch (hacia) {
+      case 'arriba': return `M${x} ${y + alto}V${y + r}a${r} ${r} 0 0 1 ${r} ${-r}H${x + ancho - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + alto}Z`;
+      case 'abajo': return `M${x} ${y}V${y + alto - r}a${r} ${r} 0 0 0 ${r} ${r}H${x + ancho - r}a${r} ${r} 0 0 0 ${r} ${-r}V${y}Z`;
+      case 'izquierda': return `M${x + ancho} ${y}H${x + r}a${r} ${r} 0 0 0 ${-r} ${r}V${y + alto - r}a${r} ${r} 0 0 0 ${r} ${r}H${x + ancho}Z`;
+      default: return `M${x} ${y}H${x + ancho - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + alto - r}a${r} ${r} 0 0 1 ${-r} ${r}H${x}Z`;
+    }
   };
 
   /* ------------------------------------------------------------------------
@@ -139,15 +146,19 @@
     function trazar(ancho) {
       const alto = Number(tabla.dataset.alto) || (ancho < 480 ? 220 : 260);
       const desdeCero = columnas || tabla.dataset.desdeCero !== 'no';      // las barras arrancan siempre en cero
+      // Desde cero, el cero entra siempre en el eje: también si todo es negativo
       const minimo = desdeCero ? Math.min(0, ...todos) : Math.min(...todos);
-      const eje = marcas(minimo, Math.max(...todos), 4);
+      const maximo = desdeCero ? Math.max(0, ...todos) : Math.max(...todos);
+      const eje = marcas(minimo, maximo, 4, todos.every(Number.isInteger));
       const y0 = eje[0], y1 = eje[eje.length - 1];
       const enEje = formatoEje(eje);
 
       const ultimos = datos.series.map(s => s.valores[n - 1]);
       const izq = Math.ceil(Math.max(...eje.map(v => medir(enEje.format(v))))) + 10;
       const der = columnas ? 4 : Math.ceil(Math.max(...ultimos.map(v => v == null ? 0 : medir(escribir(v), true)))) + 16;
-      const arriba = columnas ? 22 : 12, abajo = 30;
+      // Columnas con negativos: el valor va debajo de la punta, y necesita lugar abajo
+      const conValores = columnas && datos.series.length === 1;
+      const arriba = columnas ? 22 : 12, abajo = 30 + (conValores && minimo < 0 ? 16 : 0);
       const pw = ancho - izq - der, ph = alto - arriba - abajo;
       const banda = pw / n;                                                  // columnas: el lugar de cada grupo
       const x = i => columnas ? izq + banda * (i + 0.5) : izq + (n === 1 ? pw / 2 : i * pw / (n - 1));
@@ -162,10 +173,11 @@
       // Columnas: la franja del grupo elegido, por detrás de todo
       if (columnas) crear('rect', { class: 'dibujo__franja', y: arriba, height: ph, width: Math.max(0, banda - 4) }, svg);
 
-      // Grilla y eje: líneas finas y continuas. La base (el cero) es el eje.
+      // Grilla y eje: líneas finas y continuas. En líneas el eje es la base; en
+      // columnas, el cero (con negativos queda en el medio o arriba).
       eje.forEach(v => {
         const yy = Math.round(y(v)) + 0.5;
-        crear('line', { class: v === y0 ? 'dibujo__eje' : 'dibujo__grilla', x1: izq, x2: izq + pw, y1: yy, y2: yy }, svg);
+        crear('line', { class: (columnas ? v === 0 : v === y0) ? 'dibujo__eje' : 'dibujo__grilla', x1: izq, x2: izq + pw, y1: yy, y2: yy }, svg);
         crear('text', { class: 'dibujo__marca', x: izq - 8, y: yy + 4, 'text-anchor': 'end' }, svg).textContent = enEje.format(v);
       });
 
@@ -185,11 +197,12 @@
         const grupo = k * grosor + (k - 1) * 2;
         datos.series.forEach((s, j) => s.valores.forEach((v, i) => {
           if (v == null) return;
-          const bx = x(i) - grupo / 2 + j * (grosor + 2), tope = Math.min(y(v), y(Math.max(0, y0))), base = Math.max(y(v), y(Math.max(0, y0)));
-          crear('path', { class: 'dibujo__barra ' + s.clase, 'data-i': i, d: barra(bx, tope, grosor, Math.max(1, base - tope), true) }, svg);
-          // Con una sola serie, el valor va escrito arriba de cada columna si entra
-          if (k === 1 && medir(escribir(v), true) <= banda - 4) {
-            crear('text', { class: 'dibujo__valor', x: x(i), y: tope - 6, 'text-anchor': 'middle' }, svg).textContent = escribir(v);
+          const bx = x(i) - grupo / 2 + j * (grosor + 2), tope = Math.min(y(v), y(0)), base = Math.max(y(v), y(0));
+          crear('path', { class: 'dibujo__barra ' + s.clase, 'data-i': i, d: barra(bx, tope, grosor, Math.max(1, base - tope), v < 0 ? 'abajo' : 'arriba') }, svg);
+          // Con una sola serie, el valor va escrito en la punta de cada columna si
+          // entra: arriba si es positivo, abajo si es negativo
+          if (conValores && medir(escribir(v), true) <= banda - 4) {
+            crear('text', { class: 'dibujo__valor', x: x(i), y: v < 0 ? base + 15 : tope - 6, 'text-anchor': 'middle' }, svg).textContent = escribir(v);
           }
         }));
       } else {
@@ -278,16 +291,21 @@
     }
     return function trazar(ancho) {
       const GROSOR = 16, grupo = k * GROSOR + (k - 1) * 2, paso = grupo + 14;
-      const eje = marcas(Math.min(0, ...todos), Math.max(...todos), ancho < 480 ? 3 : 4);
+      // El cero entra siempre en el eje: también si todo es negativo
+      const eje = marcas(Math.min(0, ...todos), Math.max(0, ...todos), ancho < 480 ? 3 : 4, todos.every(Number.isInteger));
       const x0 = eje[0], x1 = eje[eje.length - 1];
       const enEje = formatoEje(eje);
       // Los nombres ocupan lo que necesitan, hasta el 42 % del ancho; lo que no entra se corta con "…"
       const tope = Math.floor(ancho * 0.42);
       const izq = Math.min(tope, Math.ceil(Math.max(...datos.momentos.map(m => medir(m))))) + 10;
-      const der = Math.ceil(Math.max(...todos.map(v => medir(escribir(v), true)))) + 12;
+      // El valor va en la punta: a la derecha de las positivas y a la izquierda de las negativas
+      const lugarValores = lista => lista.length ? Math.ceil(Math.max(...lista.map(v => medir(escribir(v), true)))) + 12 : 6;
+      const negativos = lugarValores(todos.filter(v => v < 0)) - 6;
+      // A la derecha, al menos media marca del eje: el último número va centrado en el borde
+      const der = Math.max(lugarValores(todos.filter(v => v >= 0)), Math.ceil(medir(enEje.format(x1)) / 2) + 2);
       const arriba = 4, abajo = 26;
-      const pw = ancho - izq - der, alto = arriba + n * paso + abajo;
-      const x = v => izq + (v - x0) / (x1 - x0) * pw;
+      const pw = ancho - izq - negativos - der, alto = arriba + n * paso + abajo;
+      const x = v => izq + negativos + (v - x0) / (x1 - x0) * pw;
 
       svg.replaceChildren();
       svg.setAttribute('viewBox', '0 0 ' + ancho + ' ' + alto);
@@ -310,8 +328,10 @@
           const v = s.valores[i];
           if (v == null) return;
           const by = cy + j * (GROSOR + 2), desde = Math.min(x(0), x(v)), largo = Math.max(1, Math.abs(x(v) - x(0)));
-          crear('path', { class: 'dibujo__barra ' + s.clase, d: barra(desde, by, largo, GROSOR, false) }, svg);
-          crear('text', { class: 'dibujo__valor', x: desde + largo + 6, y: by + GROSOR / 2 + 4.5 }, svg).textContent = escribir(v);
+          crear('path', { class: 'dibujo__barra ' + s.clase, d: barra(desde, by, largo, GROSOR, v < 0 ? 'izquierda' : 'derecha') }, svg);
+          crear('text', v < 0
+            ? { class: 'dibujo__valor', x: desde - 6, y: by + GROSOR / 2 + 4.5, 'text-anchor': 'end' }
+            : { class: 'dibujo__valor', x: desde + largo + 6, y: by + GROSOR / 2 + 4.5 }, svg).textContent = escribir(v);
         });
       });
     };
@@ -324,16 +344,26 @@
      del reloj).
      ------------------------------------------------------------------------ */
   function torta(c) {
-    const { datos, escribir, svg, tabla } = c;
+    const { datos, escribir, svg, tabla, caja } = c;
     const serie = datos.series[0];
+    // Hasta 6 porciones: 5 de color y la sexta en gris. La gris va al final y
+    // junta las filas que se llaman "Otros" en la tabla y las que no entran de
+    // color; si es una sola fila, conserva su nombre.
+    const esOtros = p => /^otr[oa]s\b/i.test(p.nombre);
     let partes = datos.momentos.map((nombre, i) => ({ nombre, valor: serie.valores[i] })).filter(p => p.valor > 0);
-    if (partes.length > MAX_SERIES + 1) {
-      const resto = partes.slice(MAX_SERIES);
-      partes = partes.slice(0, MAX_SERIES).concat({ nombre: 'Otros (' + resto.length + ')', valor: resto.reduce((t, p) => t + p.valor, 0), otros: true });
+    let resto = partes.filter(esOtros);
+    partes = partes.filter(p => !esOtros(p));
+    if (partes.length > MAX_SERIES) {
+      resto = resto.concat(partes.slice(MAX_SERIES));
+      partes = partes.slice(0, MAX_SERIES);
+    }
+    if (resto.length) {
+      const nombre = resto.length === 1 ? resto[0].nombre : resto.some(esOtros) ? 'Otros' : 'Otros (' + resto.length + ')';
+      partes.push({ nombre, valor: resto.reduce((t, p) => t + p.valor, 0), otros: true });
     }
     const total = partes.reduce((t, p) => t + p.valor, 0);
     let color = 0;
-    partes.forEach(p => { p.clase = p.otros || /^otr[oa]s\b/i.test(p.nombre) ? 'serie-otros' : 'serie-' + (++color); });
+    partes.forEach(p => { p.clase = p.otros ? 'serie-otros' : 'serie-' + (++color); });
     // Porcentajes enteros que suman 100: se reparte lo que sobra del redondeo entre los que más perdieron
     partes.forEach(p => { p.exacto = p.valor / total * 100; p.pct = Math.floor(p.exacto); });
     [...partes].sort((a, b) => (b.exacto - b.pct) - (a.exacto - a.pct)).slice(0, 100 - partes.reduce((t, p) => t + p.pct, 0)).forEach(p => { p.pct++; });
@@ -343,10 +373,29 @@
     partes.forEach(p => {
       const li = html('li', p.clase);
       li.append(html('span', 'leyenda__nombre', p.nombre), html('b', null, escribir(p.valor)));
-      li.append(html('span', 'leyenda__dato', yaEsPorcentaje ? '' : p.pct + '\u00a0%'));     // siempre, para que la grilla no se corra
+      // Una parte que se ve en el dibujo nunca dice "0 %", y si hay otras, ninguna dice "100 %"
+      const pct = p.pct === 0 ? '<1' : p.pct === 100 && partes.length > 1 ? '>99' : p.pct;
+      li.append(html('span', 'leyenda__dato', yaEsPorcentaje ? '' : pct + '\u00a0%'));     // siempre, para que la grilla no se corra
       leyenda.append(li);
+      p.li = li;
     });
     c.lienzo.after(leyenda);
+
+    // Con el mouse (o el dedo) sobre una porción se resalta su renglón de la
+    // lista, y al revés. Las demás porciones se apagan un poco.
+    let resaltada = null;
+    const resaltar = k => {
+      resaltada = k;
+      caja.classList.toggle('dibujo--resaltando', k != null);
+      partes.forEach((p, i) => p.li.classList.toggle('leyenda--resaltada', i === k));
+      svg.querySelectorAll('.dibujo__porcion').forEach(e => e.classList.toggle('dibujo__porcion--resaltada', Number(e.dataset.k) === k));
+    };
+    svg.addEventListener('pointerover', e => { if (e.target.dataset && e.target.dataset.k != null) resaltar(Number(e.target.dataset.k)); });
+    svg.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') resaltar(null); });
+    partes.forEach((p, i) => {
+      p.li.addEventListener('pointerenter', () => resaltar(i));
+      p.li.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') resaltar(null); });
+    });
 
     return function trazar(ancho) {
       const lado = Math.round(Math.max(150, Math.min(220, ancho * 0.42)));
@@ -356,14 +405,15 @@
       svg.setAttribute('width', lado);
       svg.setAttribute('height', lado);
       let angulo = -Math.PI / 2;
-      partes.forEach(p => {
+      partes.forEach((p, k) => {
         const giro = p.valor / total * Math.PI * 2;
-        if (partes.length === 1) { crear('circle', { class: 'dibujo__porcion ' + p.clase, cx, cy, r }, svg); return; }
+        if (partes.length === 1) { crear('circle', { class: 'dibujo__porcion ' + p.clase, 'data-k': k, cx, cy, r }, svg); return; }
         const x1 = cx + r * Math.cos(angulo), y1 = cy + r * Math.sin(angulo);
         const x2 = cx + r * Math.cos(angulo + giro), y2 = cy + r * Math.sin(angulo + giro);
-        crear('path', { class: 'dibujo__porcion ' + p.clase, d: `M${cx} ${cy}L${x1.toFixed(2)} ${y1.toFixed(2)}A${r} ${r} 0 ${giro > Math.PI ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}Z` }, svg);
+        crear('path', { class: 'dibujo__porcion ' + p.clase, 'data-k': k, d: `M${cx} ${cy}L${x1.toFixed(2)} ${y1.toFixed(2)}A${r} ${r} 0 ${giro > Math.PI ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}Z` }, svg);
         angulo += giro;
       });
+      if (resaltada != null) resaltar(resaltada);     // se volvió a trazar: se conserva lo resaltado
     };
   }
 
@@ -378,8 +428,15 @@
     const datos = leerTabla(tabla);
     const n = datos.momentos.length;
     const todos = datos.series.flatMap(s => s.valores).filter(v => v != null);
-    if (!n || !datos.series.length || !todos.length) return;
-    if (tipo === 'lineas' && n < 2) return;        // con un solo dato no hay línea: queda la tabla
+    // Sin nada que dibujar queda la tabla, también si antes había un gráfico
+    const sinGrafico = () => {
+      figura.querySelector('.dibujo')?.remove();
+      figura.querySelector('.dibujo-selector')?.remove();
+      marco.hidden = false;
+    };
+    if (!n || !datos.series.length || !todos.length) return sinGrafico();
+    if (tipo === 'lineas' && n < 2) return sinGrafico();       // con un solo dato no hay línea
+    if (tipo === 'torta' && !datos.series[0].valores.some(v => v > 0)) return sinGrafico();   // todo en cero
 
     const unidad = tabla.dataset.unidad ? ' ' + tabla.dataset.unidad : '';
     const decimales = todos.some(v => v % 1 !== 0) ? 1 : 0;
