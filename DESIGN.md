@@ -445,6 +445,7 @@ No hay sombras para crear jerarquía. **La única excepción es lo que flota sob
 - El movimiento solo **responde a algo que hizo la persona**: abrir, cerrar, confirmar. No hay animaciones de entrada de secciones ni efectos al pasar el mouse por tarjetas.
 - Duraciones: 120ms para cambios de color (hover), 180ms para aparecer o desaparecer (toasts, menús, modales). Curva: `cubic-bezier(0.2, 0, 0, 1)` (arranca rápido y frena suave).
 - Con `prefers-reduced-motion` se elimina todo desplazamiento; quedan solo los cambios de opacidad.
+- **Excepción (propuesta, sin aprobar):** las páginas de difusión pueden mostrar cada sección al entrar en pantalla, una vez y con límites (17.E). Las herramientas, el portal y las páginas públicas comunes, no.
 
 ### F. Breakpoints
 
@@ -897,6 +898,8 @@ Una lista corta que se recorre en cada versión nueva. Se anota el resultado en 
 3. **Zoom y ancho:** al 200% y con la ventana en 320px de ancho no aparece scroll horizontal en la página (las tablas pueden tenerlo adentro).
 4. **Contraste:** los colores nuevos que no estén en este documento se miden (4.5:1 texto, 3:1 controles), en claro **y** en oscuro.
 5. **Lector de pantalla:** el recorrido principal con **Orca** (Linux), **NVDA** (Windows) o VoiceOver (macOS/iOS). Los botones dicen qué hacen, los errores y toasts se anuncian solos y los íconos decorativos no se leen.
+   - **Lo que se lee incluye lo que se ve (nuevo, sin número todavía; WCAG 2.5.3):** si el botón dice "Guardar", su `aria-label` no puede ser "Enviar formulario", porque quien maneja la computadora con la voz dice lo que ve. Si el texto visible alcanza, no lleva `aria-label`; si hace falta más, se suma con `.solo-lector` después del texto, como en 7.Q.
+   - Ningún botón ni enlace queda sin nombre (por ejemplo, un ícono solo sin `aria-label`).
 6. **Celular real:** un recorrido en un teléfono, con los campos de 16px (sin zoom automático) y el menú inferior sin tapar contenido.
 7. **Lo básico de la página (nuevo en 0.4.5):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
    - `<html lang="es">`. Con otro idioma declarado, el lector de pantalla pronuncia todo mal.
@@ -1025,6 +1028,8 @@ Las palabras son parte del diseño.
 - **Nombrar por lo que entiende la persona**, no por cómo está hecho el sistema: "Inscripciones", no "Registros de la tabla alumnos_evento".
 - **Botones con verbo y objeto:** "Guardar cambios", "Descargar planilla". La misma acción conserva el mismo nombre en todo el recorrido.
 - **Errores:** dicen qué pasó y cómo se arregla. No piden disculpas ni son vagos ("Ocurrió un error" no sirve).
+  - **En tres partes (nuevo, sin número todavía):** qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. "No se pudo subir programa.docx · solo se aceptan PDF y JPG · exportalo como PDF y probá de nuevo." El título del aviso (8.A) lleva lo que pasó; la descripción, el porqué y la salida.
+  - El porqué se omite cuando la persona no puede hacer nada con él: "el servidor devolvió 502" no ayuda; "el servidor no respondió, tus datos siguen cargados" sí.
 - **Sin relleno:** nada de "Bienvenido/a al sistema de…" arriba de cada pantalla. El título de la pantalla alcanza.
 - **Voz activa (nuevo en 0.3):** que se sepa quién hace qué. "Soporte Informático revisa tu solicitud", no "La solicitud será revisada por el área correspondiente".
 - **Corto (nuevo en 0.3):** oraciones de 20 palabras como máximo y párrafos de 1 a 3 oraciones. Si hace falta más, es una lista.
@@ -1063,6 +1068,7 @@ Las palabras son parte del diseño.
 | Ofrecer el selector de tema (Automático · Claro · Oscuro). | Depender solo de la preferencia del sistema operativo. |
 | Escribir con colectivos ("el cuerpo docente", "las personas inscriptas"). | Usar "los/las", "x", "@" o "e" en la interfaz. |
 | Recorrer la lista "Antes de publicar" (sección 9) en cada versión. | Publicar sin probar con teclado y lector de pantalla. |
+| Revisar con capturas en celular y escritorio, claro y oscuro, y datos como los reales (14.G). | Dar una pantalla por buena porque se ve bien con los datos de ejemplo. |
 | Tomar logo, fuentes (incluida la de emojis), íconos y `unpsjb.css` del servidor de recursos. | Poner claves de API en el código del navegador. |
 | Usar los colores de categoría para tipos de cosas, siempre con su nombre. | Pintar categorías con el semáforo o estados con colores de categoría. |
 | Usar el interruptor solo para lo que se aplica en el momento. | Poner un interruptor en un formulario con botón "Guardar". |
@@ -1072,6 +1078,7 @@ Las palabras son parte del diseño.
 | Mostrar un solo registro como lista de resumen. | Armar una tabla de una fila o campos deshabilitados. |
 | Listar destinos como lista de accesos: nombre, una línea y una flecha o un botón. | Una grilla de tarjetas con ícono, o un logo y un color por trámite. |
 | En la portada de un portal, de 2 a 4 entradas por tarea, planas. | Carrusel, foto de apertura, ventana al entrar o bloques con texto blanco sobre un color claro. |
+| En una página de difusión, una foto real al lado del título y un solo botón que se repite al cierre (17.E). | Texto sobre una foto, fotos de banco o animaciones que la página necesita para verse. |
 | Fotos de hasta 200 KB y páginas de hasta 1 MB. | Subir la foto como sale de la cámara, o un video que arranca solo. |
 | Usar el acordeón para lo secundario. | Esconder campos obligatorios o avisos importantes. |
 | En gráficos, los colores de serie, en orden, y el valor escrito. | Pintar series con el semáforo o con las categorías. |
@@ -1153,6 +1160,24 @@ A veces una herramienta necesita algo que el sistema no tiene (un control de cá
   - "Algo no funciona" y "Me cuesta usarlo o leerlo" se corrigen en la versión de arreglo siguiente. Los de accesibilidad, primero.
   - Las sugerencias se anotan. Lo que piden dos o más herramientas entra en la próxima versión menor.
   - A quien reportó se le contesta, aunque sea para decir que no se va a hacer.
+
+### G. Revisión de diseño de una pantalla (nuevo, sin número todavía)
+
+Antes de las pruebas con personas (9) y antes de publicar una pantalla nueva o un cambio grande. La lista "Antes de publicar" dice si una pantalla es accesible; esta dice si cumple este documento y si se entiende.
+
+1. **Capturas, no el código.** Celular (390px), tablet (768px) y escritorio (1280px), en claro y en oscuro. **Con datos como los reales:** nombres largos, listas vacías y llenas, el peor caso. Con datos de ejemplo cortos todo entra: en el plano, recién con los datos de la sede apareció que 12 de 31 rótulos quedaban sin nombre.
+2. **Cinco segundos por captura.** ¿Se sabe qué herramienta es y dónde se está (la banda y el marcador naranja)? ¿Cuál es la acción principal? Si hay que buscarla, ya es un hallazgo.
+3. **Contra el documento.** Se recorre la tabla de la sección 13 y las reglas de los componentes que aparecen en la pantalla.
+4. **Cada hallazgo, con su nivel:**
+
+| Nivel | Qué es | Cuándo se arregla |
+|---|---|---|
+| **Bloquea** | No se puede terminar la tarea, o falla WCAG 2.2 AA. | Antes de publicar, sin excepción. |
+| **Importante** | Confunde, o va contra una regla de este documento. | Antes de publicar. Si no se llega, se anota con fecha. |
+| **Detalle** | Se nota, pero no traba a nadie. | En la próxima versión de arreglo. |
+| **Gusto** | Una preferencia, sin regla que la respalde. | Se anota y no se discute de nuevo. Si se repite en varias revisiones, se propone como regla (14.B). |
+
+5. **Se anota en la bitácora de la herramienta:** la captura, el nivel, la regla que toca (con su número de sección) y el arreglo en una frase. Cada arreglo se comprueba con una captura nueva, en los mismos tamaños.
 
 ## 15. Gráficos e indicadores (nuevo en 0.4)
 
@@ -1409,6 +1434,35 @@ Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta 
 - **Los datos de la cuenta** van en otra pantalla: menú lateral (6.A) con las secciones y, a la derecha, una lista de resumen (7.L). Solo llevan "Cambiar" los datos que la persona puede cambiar; de los demás se dice quién los corrige.
 - **Avisos de seguridad** ("Nunca te vamos a pedir la contraseña") van como aviso, al lado del dato que protegen. No en letra chica ni en cursiva.
 - **No va:** una grilla de tarjetas con ícono (7.C), contadores o gráficos de relleno, ni un saludo con la hora del día.
+
+### E. Páginas de difusión (propuesta, sin aprobar)
+
+La página de una carrera, del ingreso, de una jornada o de una convocatoria. No es una herramienta ni el portal: su trabajo es que alguien de afuera entienda en un minuto qué se ofrece, **se imagine acá** y dé un paso (inscribirse, pedir información). Con las reglas de las herramientas sale correcta pero muda: no muestra el lugar ni a la gente.
+
+Vale todo 17.B (la misma banda, el pie de páginas públicas, sin siglas internas), la accesibilidad (9) y el tope de 1 MB (2.C). Llevan `data-registro="difusion"` en el `<body>`, y **solo ahí** cambian estas reglas:
+
+| Regla | En una herramienta | En difusión | Límite |
+|---|---|---|---|
+| **Título** (4.B) | `titulo-1`, 32px | `titulo-portada`: Montserrat 800, de 40px en celular a 56px en escritorio (`clamp`) | Una vez por página, en la apertura. El interlineado de 1.25 (4.C) sigue. |
+| **Foto** (17.C, 2.C) | Sin foto de apertura | Una foto **real** de la sede o de su gente, al lado o debajo del título | Nunca detrás del texto (el contraste cambia con cada foto). Nunca de un banco de imágenes. 200 KB, con `width`, `height` y `fetchpriority="high"`. |
+| **Color** (13) | La banda es el único bloque grande de color | Una franja `primario` a todo el ancho para el cierre, con texto blanco | Una por página. El naranja sigue sin ser relleno (3.B). |
+| **Movimiento** (5.E) | Solo responde a la persona | Cada sección puede aparecer una vez al entrar en pantalla: de transparente a visible, subiendo 8px, en 240ms con la curva del sistema | Una vez por sección (`.difusion-aparece`, toda la sección junta, sin escalonar). La apertura aparece quieta. Con `prefers-reduced-motion`, nada. |
+
+**El contenido nunca depende de la animación para verse.** Lo esconde un script de unas quince líneas (`IntersectionObserver`), y solo si va a poder mostrarlo: sin script, sin `IntersectionObserver` o con "reducir movimiento", la página se ve completa y quieta. Lo que ya está en pantalla al cargar no se anima. Al imprimir, todo visible. (Se descartó `animation-timeline: view()`, que es solo CSS: la animación sigue al scroll, va y vuelve al subir y bajar, y no anda en todos los navegadores.)
+
+**Módulo:** `unpsjb-difusion.css` (propuesta), con el ejemplo completo en `muestra-difusion.html`. Usa los tokens de la hoja central; la franja de cierre toma los colores de la banda, así que en oscuro no hay que hacer nada aparte.
+
+**Sigue sin ir,** también acá: video que arranca solo, nada que se repita en bucle, parallax, texto que se escribe o que rota, efectos de cursor, números que suben solos, fondos animados (shaders, WebGL), librerías de animación, carrusel y ventana al entrar (7.P).
+
+**Orden recomendado:**
+
+1. **Apertura:** el título dice qué es y para quién ("Licenciatura en Sistemas, en Trelew"), una línea con lo esencial (duración, modalidad, si es gratuita), **un** botón primario ("Inscribite") y, como mucho, un enlace ("Ver el plan de estudios"). La foto, al lado en escritorio y debajo en celular.
+2. **Qué vas a hacer:** lista de accesos (7.Q) o dos o tres paneles con lo concreto (materias, salida laboral). Sin íconos de relleno.
+3. **Cómo es:** fotos de la sede y, si hay, palabras de estudiantes o graduados **reales**, con nombre, carrera y permiso por escrito. En las muestras van inventadas y lo dicen.
+4. **En números:** una fila de indicadores (15.B) con cifras verificables. Escritos, sin contadores animados.
+5. **Cómo se entra:** los pasos, numerados, con sus fechas.
+6. **Preguntas frecuentes:** acordeón (7.M).
+7. **Cierre:** la franja `primario` con el mismo botón de la apertura.
 
 ## 18. Documentos e impresión (nuevo en 0.4.3)
 

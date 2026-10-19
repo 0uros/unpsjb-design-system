@@ -22,6 +22,36 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## Propuesta · páginas de difusión · 2026-10-14 · sin aprobar
+
+Las reglas de las herramientas dejaban una landing (una carrera, el ingreso, una jornada) correcta pero muda. Se propone un registro aparte, solo para esas páginas. No cambia nada de lo que ya existe. Va en un commit aparte: si no se aprueba, se revierte solo.
+
+### Nuevo
+
+- **Páginas de difusión** (17.E, `data-registro="difusion"`): un título de portada de 40 a 56px, una foto real al lado del título (nunca detrás), una franja `primario` de cierre y que cada sección aparezca una vez al entrar en pantalla (solo CSS, nada con `prefers-reduced-motion`). Lista de lo que sigue prohibido y un orden recomendado de siete partes.
+- Una excepción en 5.E que remite a 17.E, y una fila en la sección 13.
+
+- **Módulo `unpsjb-difusion.css`** y **`muestra-difusion.html`**: la página de una carrera inventada, con las siete partes. Las fotos son lugares marcados: falta probarla con fotos reales de la Sede.
+
+### Corregido (dentro de la propuesta)
+
+- **La aparición al entrar en pantalla** se hace con un script corto (`IntersectionObserver`) y no con `animation-timeline: view()`: esa animación sigue al scroll, va y vuelve, y no cumplía "una vez, en 240ms".
+
+Pendiente si se aprueba: pasar el token `titulo-portada` al encabezado del documento y sumar el módulo a la lista de 2.A.
+
+## En curso · revisión de diseño y textos · 2026-10-14 · sin número todavía
+
+Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.
+
+### Nuevo
+
+- **Revisión de diseño de una pantalla** (14.G): capturas a 390, 768 y 1280px en claro y oscuro, con datos como los reales; una lectura de cinco segundos; el recorrido contra la sección 13, y cada hallazgo con su nivel (bloquea, importante, detalle, gusto) y cuándo se arregla. Una fila nueva en la sección 13.
+- **Un punto más en "Antes de publicar"** (sección 9, lector de pantalla): lo que se lee incluye lo que se ve (WCAG 2.5.3) y ningún botón ni enlace queda sin nombre.
+
+### Cambiado
+
+- **Errores en tres partes** (sección 12): qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. Antes la regla pedía dos; el porqué ya estaba en los ejemplos de 8.A y 8.J.
+
 ## 0.4.5 · 2026-10-15 · oficial
 
 Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo".

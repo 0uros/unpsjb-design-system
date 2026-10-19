@@ -1,0 +1,134 @@
+/* ==========================================================================
+   unpsjb-difusion.css — Módulo de páginas de difusión · PROPUESTA, sin aprobar
+   Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, 17.E.
+
+   Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
+   Ejemplo completo: muestra-difusion.html.
+
+   La página de una carrera, del ingreso o de una jornada. Todo lo demás sale de
+   unpsjb.css (banda, pie público, indicadores, acordeón, botones). Esto agrega
+   solo las cuatro licencias de 17.E, y solo dentro de <body data-registro="difusion">:
+     1. El título de portada (.difusion-apertura h1).
+     2. Una foto real al lado del título (.difusion-apertura__foto).
+     3. La franja de cierre en el color de la banda (.difusion-cierre).
+     4. Las secciones que aparecen una vez al entrar en pantalla (.difusion-aparece).
+
+   <main> no lleva .contenedor: cada sección trae el suyo, para que la franja de
+   cierre pueda ir de borde a borde.
+   ========================================================================== */
+
+[data-registro="difusion"] {
+  /* De 40px en celular a 56px en escritorio. El interlineado de 1.25 de 4.C sigue. */
+  --texto-titulo-portada: 800 clamp(2.5rem, 1.75rem + 2.4vw, 3.5rem)/1.25 var(--fuente-titulo);
+}
+
+/* Secciones: mucho aire entre una y otra (5.A), sin recuadros */
+.difusion-seccion { padding-block: var(--espacio-12); }
+.difusion-seccion + .difusion-seccion { border-top: 1px solid var(--color-linea); }
+@media (min-width: 1024px) { .difusion-seccion { padding-block: var(--espacio-16); } }
+.difusion-seccion > .contenedor > h2 { margin-bottom: var(--espacio-6); }
+.difusion-bajada { max-width: 70ch; margin: 0 0 var(--espacio-8); font: var(--texto-grande); color: var(--color-tinta-2); }
+
+/* 1 y 2. Apertura: título, una línea, un botón y la foto.
+   La foto va al lado en escritorio y debajo en celular; nunca detrás del texto. */
+.difusion-apertura { padding-block: var(--espacio-8) var(--espacio-12); }
+.difusion-apertura .contenedor {
+  display: grid;
+  gap: var(--espacio-8);
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .difusion-apertura { padding-block: var(--espacio-16); }
+  .difusion-apertura .contenedor { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--espacio-12); }
+}
+.difusion-apertura h1 {
+  margin-bottom: var(--espacio-4);
+  font: var(--texto-titulo-portada);
+  letter-spacing: -0.02em;
+}
+.difusion-apertura__linea { max-width: 52ch; margin: 0 0 var(--espacio-6); font: var(--texto-grande); color: var(--color-tinta-2); }
+.difusion-apertura__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-3) var(--espacio-6); }
+.difusion-apertura__plazo { margin: var(--espacio-4) 0 0; font: var(--texto-detalle); color: var(--color-tinta-2); }
+
+.difusion-foto { margin: 0; }
+.difusion-foto img,
+.difusion-foto__lugar {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radio-contenedor);
+  background: var(--color-capa);
+}
+/* Solo en las muestras: el lugar de una foto que todavía no está */
+.difusion-foto__lugar {
+  display: grid;
+  place-content: center;
+  gap: var(--espacio-1);
+  padding: var(--espacio-6);
+  text-align: center;
+  font: var(--texto-label);
+  color: var(--color-tinta-2);
+  border: 1px dashed var(--color-linea-control);
+}
+.difusion-foto__lugar small { font: var(--texto-detalle); }
+.difusion-foto figcaption { margin-top: var(--espacio-2); font: var(--texto-detalle); color: var(--color-tinta-2); }
+
+/* Lo que el sistema ya tiene, con la separación de esta página */
+.difusion-puntos h3 { margin-bottom: var(--espacio-2); }
+.difusion-puntos p { margin: 0; color: var(--color-tinta-2); }
+.difusion-puntos > * { padding-top: var(--espacio-4); border-top: 2px solid var(--color-tinta); }
+
+/* Palabras de alguien real (con permiso por escrito). Sin comillas gigantes ni globos. */
+.difusion-cita { margin: 0; }
+.difusion-cita blockquote { margin: 0 0 var(--espacio-3); font: var(--texto-titulo-3); color: var(--color-tinta); text-wrap: pretty; }
+.difusion-cita figcaption { font: var(--texto-detalle); color: var(--color-tinta-2); }
+.difusion-cita figcaption strong { color: var(--color-tinta); }
+
+/* Pasos con fecha. El número en Montserrat, del color del texto: sin círculos de color. */
+.difusion-pasos { margin: 0; padding: 0; list-style: none; counter-reset: paso; display: grid; gap: var(--espacio-6); }
+@media (min-width: 768px) { .difusion-pasos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .difusion-pasos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.difusion-pasos > li { counter-increment: paso; padding-top: var(--espacio-4); border-top: 2px solid var(--color-tinta); }
+.difusion-pasos > li::before {
+  content: counter(paso);
+  display: block;
+  margin-bottom: var(--espacio-2);
+  font: var(--texto-titulo-2);
+  color: var(--color-tinta-2);
+}
+.difusion-pasos h3 { margin-bottom: var(--espacio-1); }
+.difusion-pasos time { display: block; margin-bottom: var(--espacio-2); font: var(--texto-label); color: var(--color-primario-texto); }
+.difusion-pasos p { margin: 0; color: var(--color-tinta-2); }
+
+.difusion-preguntas { max-width: 880px; }
+
+/* 3. Franja de cierre: una por página, del color de la banda, con el mismo
+   botón de la apertura. Sobre el azul, el foco es el anillo naranja solo (9). */
+.difusion-cierre {
+  padding-block: var(--espacio-12);
+  background: var(--color-banda);
+  color: var(--color-sobre-banda);
+  --anillo-foco: 0 0 0 2px var(--color-acento);
+}
+.difusion-cierre .contenedor { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--espacio-6); }
+.difusion-cierre h2 { margin: 0 0 var(--espacio-1); color: inherit; }
+.difusion-cierre p { margin: 0; color: var(--color-sobre-banda-2); }
+.difusion-cierre .boton--primario { background: #ffffff; color: var(--color-primario); }
+.difusion-cierre .boton--primario:hover { background: var(--color-tinte); }
+.difusion-cierre + .pie { margin-top: 0; }
+
+/* 4. Aparecer una vez al entrar en pantalla.
+   Lo esconde solo el script de la página, poniendo .difusion-js en <html>, y solo si
+   el navegador tiene IntersectionObserver y la persona no pidió menos movimiento.
+   Sin script, la página se ve completa y quieta. La apertura nunca lleva esta clase. */
+.difusion-js .difusion-aparece:not(.difusion-visible) { opacity: 0; transform: translateY(8px); }
+.difusion-js .difusion-aparece {
+  transition: opacity 240ms var(--curva), transform 240ms var(--curva);
+}
+@media print {
+  .difusion-js .difusion-aparece:not(.difusion-visible) { opacity: 1; transform: none; }
+  .difusion-cierre { background: none; color: inherit; border-block: 1px solid currentColor; }
+  .difusion-cierre .boton { display: none; }
+}
