@@ -1,11 +1,13 @@
-// Captura y mide las páginas de referencia (UNC y UBA) con Chrome sin ventana.
-// Uso: node medir.js <carpeta de salida> <axe.min.js>
+// Captura y mide las páginas de referencia (UNC, UBA, OPM y NDS) con Chrome sin ventana.
+// Uso: node medir.js <carpeta de salida> <axe.min.js> [sitio,sitio…]
+// Con la lista de sitios mide solo esos y conserva lo que ya había en medidas.json.
 const { chromium } = require('/home/agustin/Documents/antigravity/charming-bohr/node_modules/playwright-core');
 const fs = require('fs');
 const path = require('path');
 
 const SALIDA = process.argv[2];
 const AXE = fs.readFileSync(process.argv[3], 'utf8');
+const SITIOS = process.argv[4] ? process.argv[4].split(',') : null;
 
 const PAGINAS = {
   unc: {
@@ -23,6 +25,17 @@ const PAGINAS = {
     listado: 'https://www.uba.ar/facultades',
     perfil: 'https://www.uba.ar/ingresouba',
     tramite: 'https://www.uba.ar/tramites',
+  },
+  // Trámite de jubilación de los empleados federales de EE. UU., hecho por el National Design Studio.
+  // La solicitud pide iniciar sesión: se miden solo las páginas públicas.
+  opm: {
+    portada: 'https://retire.opm.gov/portal',
+    opciones: 'https://retire.opm.gov/portal/former-federal',
+    ayuda: 'https://retire.opm.gov/help',
+  },
+  nds: {
+    portada: 'https://ndstudio.gov/',
+    noticia: 'https://ndstudio.gov/posts/accessibility-matters',
   },
 };
 const ANCHOS = [1280, 390, 320];
@@ -91,8 +104,10 @@ function medir() {
 
 (async () => {
   const navegador = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true });
-  const todo = {};
+  const archivo = path.join(SALIDA, 'medidas.json');
+  const todo = SITIOS && fs.existsSync(archivo) ? JSON.parse(fs.readFileSync(archivo, 'utf8')) : {};
   for (const [sitio, paginas] of Object.entries(PAGINAS)) {
+    if (SITIOS && !SITIOS.includes(sitio)) continue;
     fs.mkdirSync(path.join(SALIDA, sitio), { recursive: true });
     todo[sitio] = {};
     for (const [nombre, url] of Object.entries(paginas)) {
@@ -155,6 +170,6 @@ function medir() {
       }
     }
   }
-  fs.writeFileSync(path.join(SALIDA, 'medidas.json'), JSON.stringify(todo, null, 1));
+  fs.writeFileSync(archivo, JSON.stringify(todo, null, 1));
   await navegador.close();
 })();
