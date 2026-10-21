@@ -1,6 +1,8 @@
 # Feedback del notebook "Digital Infrastructure: Design Systems, Typography, and Responsibility Matrices"
 
-Consultas hechas el 2026-09-30 (rondas 1 y 2, sobre la v2) y el 2026-10-01 (ronda 3, sobre la v3) al notebook de referencia (99 fuentes: sistemas gubernamentales, SIU, Material, identidad institucional, tipografía, accesibilidad). Link: https://notebooklm.google.com/notebook/e504cca8-7462-435a-95f0-36e802bb3afa (se abre en el navegador "Browser 1").
+Consultas hechas el 2026-09-30 (rondas 1 y 2, sobre la v2) y el 2026-10-01 (ronda 3, sobre la v3) al notebook de referencia (99 fuentes: sistemas gubernamentales, SIU, Material, identidad institucional, tipografía, accesibilidad). Link: https://notebook.google.com/notebook/e504cca8-7462-435a-95f0-36e802bb3afa (hoy es Gemini Notebook).
+
+> **2026-10-21:** se sumaron 6 fuentes (ahora son 105): dos notas del National Design Studio, su portada, la orden "Improving Our Nation Through Better Design", la portada de retire.opm.gov y beui.dev. La consulta que se hizo con ellas (Pregunta 9) y lo que se opina de su respuesta están en `REFERENCIAS-NDS-OPM.md`, no en este archivo.
 
 Cada respuesta se contrastó con `DESIGN.md`. Las marcas son: **[Ya está]** si DESIGN.md ya lo cubre, **[Nuevo]** si conviene agregarlo, **[Revisar]** si contradice una decisión actual y **[Dudoso]** si el notebook parece inventar o contradecirse.
 

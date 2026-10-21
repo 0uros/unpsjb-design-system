@@ -950,3 +950,32 @@ Pendientes, en orden:
 ## 2026-10-15 — Se publica la 0.4.5
 
 A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.
+
+## 2026-10-21 — Estudio de referencia: National Design Studio, retire.opm.gov y beUI
+
+Sin número de sesión. Pedido del usuario: ¿vale la pena sumar ndstudio.gov y beui.dev? ¿Se habían tenido en cuenta las métricas del National Design Studio?
+
+### Qué se hizo
+- Se verificó que no estaban en ningún lado: ni en el repositorio ni en los dos cuadernos (sistema de diseño, 99 fuentes; planos, 59).
+- Se midieron con `referencias/medir.js` tres páginas públicas de **retire.opm.gov** (ORA, el trámite de jubilación que hizo el National Design Studio) y dos de **ndstudio.gov**. `medir.js` ahora acepta una lista de sitios (`opm,nds`) y conserva lo que ya había en `medidas.json`.
+- Se sumaron 6 fuentes al cuaderno del sistema de diseño (105 en total) y se le hizo una consulta, la "Pregunta 9".
+- Todo quedó en `REFERENCIAS-NDS-OPM.md`. **No se cambió nada del diseño.**
+
+### Qué salió
+- El National Design Studio **no publica métricas de diseño**: publica metas de resultado (horas perdidas, "90 clics pasan a 9", de meses a días, casos "instantáneos").
+- Sirve: medir cada trámite antes y después de rediseñarlo (pasos, campos, datos que se piden de nuevo, minutos, días) y el patrón "mostrar y verificar" de ORA, que extiende 8.F a los datos del trámite.
+- No sirve el aspecto: una foto con degradado, una serif de exhibición, una fuente paga y una portada de 24 MB (18 de video). ORA desborda a lo ancho en celular y usa texto con transparencia que no llega al contraste.
+- beUI se descarta: React 19, Tailwind 4 y Motion, con animaciones que contradicen 5.E.
+- El cuaderno propuso metas fijas (50 % menos campos, menos de 10 clics, 30 días). Están marcadas **[Dudoso]**: no están en las fuentes.
+
+### Cómo se verificó
+- Chrome sin ventana a 1280, 390 y 320px, con **axe 4.10.2** y recorrido con Tab, igual que UNC y UBA. ORA pide iniciar sesión para la solicitud: solo se midieron páginas públicas.
+- Las notas del National Design Studio se leyeron enteras: los números de la nota salen de ahí, no del cuaderno.
+
+### Archivos
+- Nuevo: `REFERENCIAS-NDS-OPM.md`.
+- Tocados: `referencias/medir.js`, `referencias/medidas.json`, `FEEDBACK-NOTEBOOK.md` (enlace y aviso de las fuentes nuevas), `.gitignore` y `BITACORA.md`. Las capturas (`referencias/opm/`, `referencias/nds/`, 5 MB) quedan fuera de git.
+
+### Pendientes
+- [ ] Que el usuario decida si la acción 1 (medir el trámite antes y después) entra en `DESIGN.md`, secciones 9 y 14.
+- [ ] Que decida si la acción 2 ("mostrar y verificar" con datos de SIU) se escribe ya o se espera a tener una herramienta que lea SIU.
