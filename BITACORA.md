@@ -1082,3 +1082,13 @@ Sin número de sesión. El usuario revisó la muestra de planos en claro, en osc
 - `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.6. En `CHANGELOG.md`, las dos entradas "En curso" de planos pasan a ser la 0.4.6, y la 0.4.5 queda como anterior.
 - `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`: le faltaban las reglas del plano de esta rama (21.A, 21.B, 21.D y 21.H).
 - La rama `planos` se une a `main`. `planos-interfaz-nueva` (PR #3) sale de `planos`: sigue como borrador.
+
+## 2026-11-03 — Se arma la 0.4.7 (revisión de diseño, sin la difusión)
+
+Sin número de sesión. Al preparar el PR #2 (`textos-y-revision`) apareció que su propuesta de páginas de difusión (17.E, sin aprobar, del 14/10) choca con lo que el usuario decidió hoy para las páginas públicas en la rama `portada-publica`, que también es una 17.E: la difusión dice que la foto nunca va detrás del texto, y la portada pone el título sobre la foto, con la capa al 55 %.
+
+- **Decisión del usuario:** separar. La 0.4.7 lleva solo la revisión de diseño del 14/10 (14.G, errores en tres partes, lo que se lee incluye lo que se ve), que estaba lista.
+- **La difusión pasa a la rama `difusion`**, tal cual (propuesta 17.E, `muestra-difusion.html`, `unpsjb-difusion.css` y las 5 excepciones del detector). Después se junta con `portada-publica` en una sola 17.E, tomando lo de `portada-publica` cuando choquen.
+- La rama nueva `revision-de-diseno` sale de `main` (0.4.6) con el commit de la revisión. Al traerlo chocaron `BITACORA.md` y `CHANGELOG.md`: quedaron todas las entradas en orden de fecha.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.7; lo que decía "sin número todavía" dice 0.4.7. La skill se regeneró desde `DESIGN.md`.
+- No se tocó CSS ni muestras más allá del número.

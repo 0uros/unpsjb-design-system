@@ -18,12 +18,13 @@
 | Módulo de planos | — | **0.4.4** |
 | Visor de cámaras rehecho, piezas del estudio de referencia y carpetas reordenadas | — | **0.4.5** |
 | Rediseño del módulo de planos y modo edición en el módulo | — | **0.4.6** |
+| Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## En curso · revisión de diseño y textos · 2026-10-14 · sin número todavía
+## 0.4.7 · 2026-11-03 · oficial
 
 Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.
 
@@ -36,7 +37,7 @@ Sale de mirar las skills de diseño para agentes de IA que circulaban en un top 
 
 - **Errores en tres partes** (sección 12): qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. Antes la regla pedía dos; el porqué ya estaba en los ejemplos de 8.A y 8.J.
 
-## 0.4.6 · 2026-11-03 · oficial
+## 0.4.6 · 2026-11-03 · anterior
 
 El módulo de planos rediseñado con los datos reales de la sede y el modo edición dentro del módulo (PR #1, rama `planos`). Tiene dos partes, cada una con su registro. Al cambiar a esta versión, una herramienta que use el modo edición tiene que renombrar las clases `.ext-planos-*` (ver "El modo edición pasa al módulo").
 
