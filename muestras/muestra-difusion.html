@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004992">
+  <title>Licenciatura en Gestión Ambiental · Sede Trelew · UNPSJB</title>
+  <meta name="description" content="Cinco años, presencial y gratuita, en la Sede Trelew de la UNPSJB. Inscripción al ingreso 2027 hasta el 18 de diciembre.">
+  <!-- Tema elegido: se aplica antes de la hoja de estilos para que no parpadee -->
+  <script>try{var t=localStorage.getItem("unpsjb-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}</script>
+  <link rel="preload" href="../sistema/fonts/AtkinsonHyperlegibleNext-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../sistema/fonts/Montserrat-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../sistema/assets/favicon-unpsjb.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../sistema/unpsjb.css">
+  <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
+  <style>
+    .ext-difusion-bajada { max-width: 70ch; margin: 0 0 var(--espacio-8); font: var(--texto-grande); color: var(--color-tinta-2); }
+    .ext-difusion-lista { margin: 0 0 var(--espacio-6); padding-left: var(--espacio-6); }
+    .ext-difusion-lista li + li { margin-top: var(--espacio-3); }
+    .ext-difusion-preguntas { max-width: 880px; }
+    .ext-difusion-despues { margin: var(--espacio-8) 0 0; }
+    .ext-difusion-plazo { margin: var(--espacio-4) 0 0; font: var(--texto-detalle); }
+    /* El pie oscuro va pegado a la última franja */
+    main > .pie--oscuro { margin-top: 0; }
+  </style>
+  <script src="../sistema/unpsjb-aparece.js" defer></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-graduation-cap" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+    <symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <!-- La misma banda que las herramientas (17.B). Una sola página: sin sub-barra; sin ingreso: sin "Mi cuenta" -->
+  <header class="cabecera" id="arriba">
+    <div class="banda">
+      <div class="contenedor">
+        <div class="banda__fila">
+          <img class="banda__logo banda__logo--escritorio" src="../sistema/assets/logo-unpsjb-trelew-blanco.svg" alt="UNPSJB Sede Trelew" width="101" height="48">
+          <img class="banda__logo banda__logo--movil" src="../sistema/assets/escudo-unpsjb-blanco.svg" alt="UNPSJB Sede Trelew" width="29" height="36">
+          <p class="banda__herramienta"><svg class="icono" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Ingreso 2027</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <aside class="fase" aria-label="Estado de la página">
+    <div class="contenedor fase__fila">
+      <strong class="fase__nombre">Muestra</strong>
+      <p>Página de difusión (<code>DESIGN.md</code>, 17.E), armada con las piezas de las páginas públicas. La carrera, las fechas y las fotos son de ejemplo. <a href="muestra-portal.html">Ver la portada del portal</a> · <a href="muestra.html">Volver a la muestra general</a>.</p>
+    </div>
+  </aside>
+
+  <!-- A todo el ancho, en franjas: cada una lleva su .contenedor adentro (17.E) -->
+  <main id="contenido">
+
+    <!-- 1. Foto de apertura: qué es y para quién, una línea y un botón. Nunca lleva .aparece. -->
+    <div class="apertura">
+      <img class="apertura__foto" src="fotos-ejemplo/apertura-960.webp"
+           srcset="fotos-ejemplo/apertura-960.webp 960w, fotos-ejemplo/apertura-1600.webp 1600w"
+           sizes="100vw" width="1600" height="720" alt="" fetchpriority="high">
+      <div class="contenedor apertura__texto">
+        <h1 id="t-carrera">Licenciatura en Gestión Ambiental, en Trelew</h1>
+        <p>Cinco años, presencial y gratuita. Para entender el ambiente de la Patagonia y saber qué hacer con él: el agua, la costa, la meseta y las ciudades.</p>
+        <a class="boton boton--secundario" href="#ingreso">Inscribite al ingreso 2027</a>
+        <p class="ext-difusion-plazo">La inscripción cierra el <time datetime="2026-12-18">18 de diciembre de 2026</time>.</p>
+      </div>
+    </div>
+
+    <!-- 2. Qué vas a hacer: mitad foto y mitad texto, con lo concreto -->
+    <section class="mitades aparece" aria-labelledby="t-hacer" id="plan">
+      <img class="mitades__foto" src="fotos-ejemplo/mitad-sede.webp" width="960" height="640" alt="" loading="lazy">
+      <div class="mitades__texto">
+        <h2 id="t-hacer" class="titulo-filete">Qué vas a hacer</h2>
+        <ul class="ext-difusion-lista">
+          <li><strong>Medir y entender:</strong> calidad del agua y del aire, suelos y biodiversidad, con los equipos del laboratorio de la Sede.</li>
+          <li><strong>Planificar:</strong> ordenamiento del territorio, evaluación de impacto ambiental y gestión de residuos para municipios y empresas.</li>
+          <li><strong>Trabajar de esto:</strong> en organismos públicos, consultoras, industrias y áreas protegidas. Con el título intermedio, desde el tercer año.</li>
+        </ul>
+        <p><a href="#plan">Plan de estudios completo (PDF, 240 KB)</a></p>
+      </div>
+    </section>
+
+    <!-- 3. En números: indicadores escritos (15.B), sin contadores que suben solos -->
+    <section class="franja aparece" aria-labelledby="t-numeros">
+      <div class="contenedor">
+        <h2 id="t-numeros" class="titulo-filete">En números</h2>
+        <div class="indicadores">
+          <div class="indicador"><p class="indicador__nombre">Duración</p><p class="indicador__valor">5 <span>años</span></p></div>
+          <div class="indicador"><p class="indicador__nombre">Título intermedio</p><p class="indicador__valor">3 <span>años</span></p></div>
+          <div class="indicador"><p class="indicador__nombre">Costo</p><p class="indicador__valor">$ 0 <span>es pública</span></p></div>
+          <div class="indicador"><p class="indicador__nombre">Horario de cursada</p><p class="indicador__valor">18 a 22 <span>h</span></p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Cómo se entra: etapas con fecha (17.E) -->
+    <section class="franja franja--panel aparece" aria-labelledby="t-ingreso" id="ingreso">
+      <div class="contenedor">
+        <h2 id="t-ingreso" class="titulo-filete">Cómo se entra</h2>
+        <p class="ext-difusion-bajada">Cuatro etapas, de diciembre a marzo. Ninguna es un examen.</p>
+        <ol class="etapas">
+          <li>
+            <time class="etapas__fecha" datetime="2026-12-18">Hasta el 18 de diciembre</time>
+            <h3>Preinscripción</h3>
+            <p>En el sistema de alumnos de la universidad (SIU-Guaraní), con tu DNI y un correo. Tarda unos 10 minutos.</p>
+          </li>
+          <li>
+            <time class="etapas__fecha" datetime="2027-02">En febrero</time>
+            <h3>Documentación</h3>
+            <p>DNI y título secundario, o la constancia de que lo estás terminando. En Alumnos de la Sede, de 8 a 13 h.</p>
+          </li>
+          <li>
+            <time class="etapas__fecha" datetime="2027-02-01">Del 1 al 26 de febrero</time>
+            <h3>Curso de ingreso</h3>
+            <p>Presencial y no eliminatorio: sirve para empezar con una base común.</p>
+          </li>
+          <li>
+            <time class="etapas__fecha" datetime="2027-03-15">15 de marzo de 2027</time>
+            <h3>Primer día de clases</h3>
+            <p>El horario de cada materia sale en la agenda de aulas una semana antes.</p>
+          </li>
+        </ol>
+        <p class="ext-difusion-despues"><a href="#ingreso">Preinscribirte en SIU-Guaraní<span class="solo-lector"> (abre otro sitio)</span></a> <svg class="icono icono--chico" aria-hidden="true"><use href="#i-external-link"/></svg></p>
+      </div>
+    </section>
+
+    <!-- 5. Franja oscura: el llamado, uno solo, con el mismo botón de la apertura y la marca de agua -->
+    <section class="franja franja--oscura marca-agua aparece" aria-labelledby="t-cierre">
+      <div class="contenedor">
+        <h2 id="t-cierre" class="titulo-filete">La inscripción cierra el 18 de diciembre</h2>
+        <p>Si tenés dudas, escribinos a <a href="mailto:ingreso@ejemplo.unp.edu.ar">ingreso@ejemplo.unp.edu.ar</a> o llamá al <a href="tel:+542804421234">(0280) 442-1234</a>.</p>
+        <p class="ext-difusion-despues"><a class="boton boton--secundario" href="#ingreso">Inscribite al ingreso 2027</a></p>
+      </div>
+    </section>
+
+    <!-- 6. Preguntas frecuentes: acordeón (7.M) -->
+    <section class="franja aparece" aria-labelledby="t-preguntas">
+      <div class="contenedor">
+        <h2 id="t-preguntas" class="titulo-filete">Preguntas frecuentes</h2>
+        <div class="ext-difusion-preguntas">
+          <details class="acordeon">
+            <summary>¿Tengo que rendir un examen para entrar?</summary>
+            <div class="acordeon__cuerpo"><p>No. El curso de ingreso no es eliminatorio: todas las personas preinscriptas que presentan la documentación empiezan la carrera.</p></div>
+          </details>
+          <details class="acordeon">
+            <summary>¿Puedo inscribirme si todavía no terminé el secundario?</summary>
+            <div class="acordeon__cuerpo"><p>Sí, con una constancia de alumno regular. Tenés tiempo de presentar el título hasta el 30 de junio de 2027.</p></div>
+          </details>
+          <details class="acordeon">
+            <summary>¿Se puede cursar trabajando?</summary>
+            <div class="acordeon__cuerpo"><p>Sí. Las clases son de 18 a 22 h. Las salidas de campo se avisan con un mes de anticipación y casi todas son los sábados.</p></div>
+          </details>
+          <details class="acordeon">
+            <summary>¿Hay becas?</summary>
+            <div class="acordeon__cuerpo"><p>Sí: de la universidad (comedor, transporte y apuntes) y las becas nacionales. Se piden en marzo, en Bienestar Estudiantil.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pie pie--publico pie--oscuro">
+      <div class="contenedor pie__interior">
+        <p class="pie__frase">Universidad pública y gratuita, en el valle del Chubut</p>
+        <div class="pie__bloques">
+          <div>
+            <h2 class="pie__titulo">UNPSJB · Sede Trelew</h2>
+            <address>Dirección de la Sede<br>Trelew, Chubut</address>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Contacto</h2>
+            <ul><li>Teléfono: <a href="tel:+542804421234">(0280) 442-1234</a></li><li><a href="mailto:ingreso@ejemplo.unp.edu.ar">Escribir a Ingreso</a></li></ul>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Redes</h2>
+            <ul><li><a href="#contenido">Instagram<span class="solo-lector"> (abre otro sitio)</span></a></li><li><a href="#contenido">YouTube<span class="solo-lector"> (abre otro sitio)</span></a></li></ul>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Sobre este sitio</h2>
+            <ul><li><a href="#contenido">Accesibilidad</a></li><li><a href="#contenido">Privacidad y datos personales</a></li><li><a href="#contenido">Reportar un problema</a></li></ul>
+          </div>
+        </div>
+        <p>© 2026 Universidad Nacional de la Patagonia San Juan Bosco</p>
+        <div class="pie__derecha">
+          <div class="selector-tema">
+            <span aria-hidden="true">Tema</span>
+            <fieldset class="segmentado segmentado--compacto">
+              <legend class="solo-lector">Tema</legend>
+              <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+              <label><input type="radio" name="tema" value="claro"> Claro</label>
+              <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+            </fieldset>
+          </div>
+          <a href="#arriba">Subir</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const html = document.documentElement;
+    // Selector de tema: Automático · Claro · Oscuro, guardado en el navegador
+    let guardado = null;
+    try { guardado = localStorage.getItem('unpsjb-tema'); } catch (e) {}
+    document.querySelectorAll('input[name="tema"]').forEach(r => {
+      r.checked = r.value === (guardado === 'claro' || guardado === 'oscuro' ? guardado : 'auto');
+      r.onchange = () => {
+        try {
+          if (r.value === 'auto') { delete html.dataset.tema; localStorage.removeItem('unpsjb-tema'); }
+          else { html.dataset.tema = r.value; localStorage.setItem('unpsjb-tema', r.value); }
+        } catch (e) { if (r.value !== 'auto') html.dataset.tema = r.value; }
+      };
+    });
+  </script>
+</body>
+</html>

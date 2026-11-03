@@ -26,7 +26,7 @@ Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borrador
 
 ## En curso (rama `portada-publica`)
 
-Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`). No cambia nada de las herramientas.
+Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`), y la propuesta de páginas de difusión del 14/10 (rama `difusion`) armada con esas piezas. No cambia nada de las herramientas.
 
 ### Nuevo
 
@@ -40,10 +40,14 @@ Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`
 - **Entradas con foto** (`.entradas--foto`) y **novedades con foto** (`ul.novedades`, `.novedades__titulo`). Cada tarjeta es un solo enlace.
 - **Pie oscuro** (`.pie--oscuro`, `.pie__interior`, `.pie__frase`, 6.C): el pie público a todo el ancho, con una frase, el menú repetido, las redes con su nombre y "Subir".
 - Tokens `--color-oscuro`, `--color-borde-oscuro`, `--color-velo-foto` y `--marca-agua-opacidad`.
+- **Etapas con fecha** (`.etapas`, `.etapas__fecha`, 17.E): "cómo se entra", de dos a seis pasos numerados con su fecha. No es `.pasos` (8.F).
+- **Aparecer al entrar** (`.aparece`, `unpsjb-aparece.js`, 17.E): una franja aparece una vez al llegar a la pantalla, en 240ms. Solo en páginas públicas; la apertura nunca. Sin script, sin `IntersectionObserver` o con "reducir movimiento", todo se ve quieto.
+- **Orden de una página de difusión** (17.E): apertura, qué vas a hacer, en números, cómo se entra, franja oscura y preguntas frecuentes. Muestra nueva: `muestra-difusion.html` (una carrera), enlazada desde `muestra.html`.
 - **Fotos de ejemplo** para las muestras (`muestras/fotos-ejemplo/`), dibujadas por `herramientas/fotos-ejemplo/generar.py`.
 
 ### Cambiado
 
+- **Movimiento** (5.E): la única animación de entrada permitida es `.aparece`, y solo en páginas públicas.
 - **Fondos limpios** (3.G): en las páginas públicas se permiten la foto de apertura con capa y la marca de agua, con condiciones. En las herramientas sigue todo igual.
 - **Portal de la Delegación** (17.C): la foto de apertura pasa de prohibida a opcional, y las entradas y las novedades pueden llevar foto.
 - **Portada de `muestra-portal.html`:** rehecha en franjas, con todas las piezas nuevas. Las demás pantallas no cambian. `<main>` ya no lleva `.contenedor`: lo lleva cada pantalla.

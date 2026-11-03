@@ -1716,6 +1716,33 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
 @media (max-width: 639px) { .novedades__titulo, .novedades time { padding-inline: var(--espacio-4); } }
 @media (forced-colors: active) { .entradas--foto a, .novedades a { border-color: LinkText; } }
 
+/* Etapas con fecha: "cómo se entra", de dos a seis pasos numerados. El número
+   en Montserrat y en tinta-2, sin círculos de color. No es .pasos (8.F).
+   <ol class="etapas"><li><time class="etapas__fecha" datetime="2026-11-03">Del 3 de
+   noviembre al 20 de febrero</time><h3>Preinscripción</h3><p>…</p></li>…</ol> */
+.etapas { display: grid; gap: var(--espacio-6); margin: 0; padding: 0; list-style: none; counter-reset: etapa; }
+.etapas > li { counter-increment: etapa; padding-top: var(--espacio-4); border-top: 2px solid var(--color-tinta); }
+.etapas > li::before {
+  content: counter(etapa);
+  display: block;
+  margin-bottom: var(--espacio-2);
+  font: var(--texto-titulo-2);
+  color: var(--color-tinta-2);
+}
+.etapas h3 { margin-bottom: var(--espacio-1); }
+.etapas__fecha { display: block; margin-bottom: var(--espacio-2); font: var(--texto-label); color: var(--color-primario-texto); }
+.etapas p { margin: 0; color: var(--color-tinta-2); }
+@media (min-width: 768px) { .etapas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .etapas { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); } }
+
+/* Aparecer al entrar: la única animación de entrada (5.E, 17.E). Una franja
+   entera, una vez. Solo la esconde unpsjb-aparece.js, poniendo .aparece-js en
+   <html>, y solo si puede mostrarla: sin script, sin IntersectionObserver o con
+   "reducir movimiento", todo se ve quieto. La apertura nunca lleva .aparece.
+   <section class="franja aparece">…</section> */
+.aparece-js .aparece { transition: opacity 240ms var(--curva), transform 240ms var(--curva); }
+.aparece-js .aparece:not(.aparece--visible) { opacity: 0; transform: translateY(8px); }
+
 /* Pie oscuro: el pie de las páginas públicas (6.C) a todo el ancho, sobre
    --color-oscuro. Suma una frase, el menú repetido, las redes (con su nombre
    escrito, no solo el ícono) y "Subir". Va como último hijo de <main>.
@@ -1758,6 +1785,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   }
   .mitades { display: block; background: none; }
   .novedades img, .entradas--foto img { display: none; }
+  .aparece-js .aparece:not(.aparece--visible) { opacity: 1; transform: none; }
 }
 
 /* 6. Estados --------------------------------------------------------------- */

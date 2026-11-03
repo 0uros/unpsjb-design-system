@@ -462,7 +462,7 @@ No hay sombras para crear jerarquía. **La única excepción es lo que flota sob
 
 ### E. Movimiento
 
-- El movimiento solo **responde a algo que hizo la persona**: abrir, cerrar, confirmar. No hay animaciones de entrada de secciones ni efectos al pasar el mouse por tarjetas.
+- El movimiento solo **responde a algo que hizo la persona**: abrir, cerrar, confirmar. No hay animaciones de entrada de secciones ni efectos al pasar el mouse por tarjetas. **La única excepción** (nuevo, sin número todavía): en las páginas públicas, una franja puede aparecer una vez al entrar en pantalla, en 240ms (`.aparece`, 17.E). Nunca en una herramienta de trabajo.
 - Duraciones: 120ms para cambios de color (hover), 180ms para aparecer o desaparecer (toasts, menús, modales). Curva: `cubic-bezier(0.2, 0, 0, 1)` (arranca rápido y frena suave).
 - Con `prefers-reduced-motion` se elimina todo desplazamiento; quedan solo los cambios de opacidad.
 
@@ -1471,6 +1471,8 @@ Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta 
 
 Salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`): una portada que se recorre en franjas, con una foto arriba, un solo llamado fuerte y un pie oscuro. Se toma el orden y las piezas; los colores, las letras y las reglas de texto siguen siendo los del sistema. Hay un ejemplo armado en la portada de `muestra-portal.html`.
 
+Sirven para dos clases de página: la **portada** del portal (17.C) y las **páginas de difusión** (una carrera, el ingreso, una jornada o una convocatoria), que se arman con las mismas piezas. La SIDE es el punto de partida; se pueden sumar piezas de los sitios de otras universidades, siempre que respeten lo de abajo.
+
 **Solo en páginas públicas** (17.B y 17.C). Ninguna de estas piezas va en una herramienta de trabajo.
 
 **La página va a todo el ancho.** No usa `<main class="contenedor">`: cada franja lleva su `.contenedor` adentro, y el pie oscuro cierra `<main>`.
@@ -1485,9 +1487,22 @@ Salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`): una portad
 | **Mitad foto, mitad texto** | `.mitades`, `--invertida` | La foto hasta el borde de la ventana y, al lado, un texto corto: el contacto (7.L) o cómo llegar. En celular, la foto arriba, de 240px. Foto en 3:2, con `loading="lazy"`. |
 | **Entradas con foto** | `.entradas--foto` | Las entradas de 17.C con una foto arriba (3:2, `alt=""`), el título en `titulo-3` y una línea. Todas llevan foto, o ninguna. La principal sigue en azul. |
 | **Novedades con foto** | `.novedades`, `.novedades__titulo` | De una a tres, cada una con foto (16:9, `alt=""`), título y fecha. Toda la tarjeta es **un solo enlace**: en la UNC la foto y el título eran dos. Debajo, un botón a "Todas las novedades". |
+| **Etapas con fecha** | `.etapas`, `.etapas__fecha` | "Cómo se entra": de dos a seis pasos numerados (`<ol>`), cada uno con su fecha (`<time>`), un título y una línea. El número en Montserrat y en `tinta-2`, sin círculos de color; arriba de cada etapa, una línea de 2px. Una columna en celular, dos desde 768px y hasta cuatro desde 1024px. No es el indicador de un formulario (`.pasos`, 8.F). |
+| **Aparecer al entrar** | `.aparece` y `unpsjb-aparece.js` | La única animación de entrada del sistema (excepción de 5.E). Una franja entera aparece **una vez** al llegar a la pantalla: de transparente a visible, subiendo 8px, en 240ms con la curva del sistema. Sin escalonar sus partes ni repetir al volver a subir. **La apertura nunca,** ni lo que ya se ve al cargar. El contenido no depende de la animación: lo esconde el script y solo si va a poder mostrarlo. Sin script, sin `IntersectionObserver` o con `prefers-reduced-motion`, la página se ve completa y quieta. Al imprimir, todo visible. |
 | **Pie oscuro** | `.pie--oscuro`, `.pie__interior`, `.pie__frase` | El pie público a todo el ancho (6.C), con una frase, el menú repetido, las redes con su nombre y "Subir". |
 
 **Orden de la portada,** como en la muestra: foto de apertura → aviso, si hay (8.A) → entradas → presentación → novedades → franja oscura → mitad foto y mitad texto con el contacto → pie oscuro. Las entradas van antes que la presentación, porque la persona viene a hacer algo.
+
+**Orden de una página de difusión,** como en `muestra-difusion.html`. Su trabajo es que alguien de afuera entienda en un minuto qué se ofrece, se imagine acá y dé un paso:
+
+1. **Foto de apertura:** el título dice qué es y para quién ("Licenciatura en Sistemas, en Trelew"), una línea con lo esencial (duración, modalidad, si es gratuita) y un botón ("Inscribite").
+2. **Qué vas a hacer:** una lista de accesos (7.Q) o mitad foto y mitad texto, con lo concreto (materias, salida laboral). Sin íconos de relleno.
+3. **En números:** una fila de indicadores (15.B) con cifras verificables, escritas: sin contadores que suben solos.
+4. **Cómo se entra:** etapas con fecha.
+5. **Franja oscura** con el mismo botón de la apertura, justo después de las etapas: ahí la persona ya sabe qué hacer.
+6. **Preguntas frecuentes:** acordeón (7.M), y el pie oscuro. La franja oscura no va al final: pegada al pie oscuro, las dos se ven como un solo bloque.
+
+**Lo único que se mueve es `.aparece`.** Siguen sin ir, también acá: video que arranca solo, nada que se repita en bucle, parallax, texto que se escribe o que rota, efectos de cursor, números que suben solos, fondos animados (shaders, WebGL), librerías de animación, carrusel y ventana al entrar (7.P).
 
 **Lo que no se toma de la SIDE:**
 

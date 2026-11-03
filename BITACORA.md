@@ -1155,3 +1155,20 @@ A pedido del usuario. Le gustaron la portada y la página de carreras de side.go
 - [ ] Probar la impresión de la portada.
 - [ ] Unir `portada-publica` a `main` y darle número.
 
+
+## 2026-11-03 — La propuesta de difusión se junta con las piezas de la SIDE (17.E)
+
+Sin número de sesión. Rama `portada-publica`, con `main` (0.4.7) traído antes; al traerlo chocaron `BITACORA.md` y `CHANGELOG.md` y quedaron todas las entradas.
+
+La propuesta de páginas de difusión del 14/10 (rama `difusion`) y las piezas de la SIDE de hoy eran las dos una 17.E. Decisión del usuario: cuando chocan, gana lo de hoy. Y para lo demás: "hasta ahora me gusta el estilo de la SIDE, usaremos principalmente a este de referencia, con taste de páginas de universidades"; avisó que es probable que más adelante se sumen otras universidades como referencia, así que la 17.E dice que la SIDE es el punto de partida.
+
+- **Se perdieron solas** (chocaban con lo de hoy): la foto al lado del título y nunca detrás, el título de 40 a 56px (`titulo-portada`), la franja de cierre en `primario` y las secciones separadas con una línea. Quedan la foto de apertura con la capa, `apertura` (40px; 32px en celular), la franja oscura y las franjas que alternan el fondo.
+- **Eligió quedarse con:** el orden de una página de difusión, los pasos con fecha (pasan a `.etapas`, porque `.pasos` ya es el indicador de los formularios, 8.F) y la animación al entrar (`.aparece` y `unpsjb-aparece.js`). La animación contradecía 5.E: entra como su única excepción, solo en páginas públicas. **Afuera:** la cita de estudiantes.
+- **El orden cambió al armar la muestra:** la franja oscura iba al final, pero pegada al pie oscuro las dos se ven como un solo bloque (y 17.E pide que dos franjas seguidas no repitan fondo). Va justo después de "cómo se entra", y las preguntas cierran la página.
+- **`muestra-difusion.html` rehecha** con las piezas de la 17.E; ya no existe `unpsjb-difusion.css`. Las 5 excepciones del detector que tenía la versión vieja no se trajeron: el detector no encontró nada en la nueva.
+
+Verificado en Chrome sin ventana, después de recorrer la página: `muestra-difusion.html` y `muestra-portal.html`, claro y oscuro, 1366 y 390 px, 0 fallas de axe y sin errores en la consola. Queda el aviso de contraste en el texto sobre la foto y sobre la marca de agua, que axe no puede medir por el seudoelemento (la capa al 55 % ya se midió al armar la apertura). La animación: 4 de 5 franjas escondidas al cargar y las 5 visibles después de recorrer; con "reducir movimiento" o sin JavaScript, ninguna escondida.
+
+Pendiente:
+- [ ] Que el usuario mire `muestra-difusion.html` (claro, oscuro y celular) y la animación.
+- [ ] Borrar la rama `difusion` cuando se una esta: ya está toda acá.
