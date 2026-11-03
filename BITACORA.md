@@ -1056,5 +1056,14 @@ Sin número de sesión. Es uno de los pendientes del PR #1 (rama `planos`).
 
 Pendientes del PR #1:
 - [x] Los dos avisos de axe de `muestra-planos.html`.
-- [ ] Revisar a ojo en claro y oscuro.
-- [ ] Decidir el número de versión antes de unir.
+- [x] Revisar a ojo en claro y oscuro (el usuario: "lo veo bien").
+- [x] Decidir el número de versión antes de unir: 0.4.6.
+
+## 2026-11-03 — Se arma la 0.4.6 (PR #1, planos)
+
+Sin número de sesión. El usuario revisó la muestra de planos en claro, en oscuro, en el celular y en modo edición, y la aprobó.
+
+- **Numeración (decisión del usuario):** se sigue en 0.4.x hasta la 0.4.20. Entra en la regla de `DESIGN.md` 14.C: mientras el primer número sea 0, el del medio sube solo con un borrador de diseño nuevo. Por defecto, cada PR que cambia `sistema/` lleva un número: este es la 0.4.6 y el PR #2 (`textos-y-revision`) va a ser la 0.4.7.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.6. En `CHANGELOG.md`, las dos entradas "En curso" de planos pasan a ser la 0.4.6, y la 0.4.5 queda como anterior.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`: le faltaban las reglas del plano de esta rama (21.A, 21.B, 21.D y 21.H).
+- La rama `planos` se une a `main`. `planos-interfaz-nueva` (PR #3) sale de `planos`: sigue como borrador.
