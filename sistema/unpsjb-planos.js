@@ -215,7 +215,7 @@
     vistaPlano.append(lienzo, referencias, nota);
     const lista = crear('div', 'plano__lista');
     principal.append(vistaPlano, lista);
-    const detalle = crear('aside', 'plano__detalle panel');
+    const detalle = crear('section', 'plano__detalle panel');
     detalle.setAttribute('aria-live', 'polite');
     detalle.setAttribute('aria-label', 'Datos de lo elegido');
     cuerpo.append(principal, detalle);
@@ -483,7 +483,7 @@
       const nombre = plantaActual().nombre || '';
       const fila = (tipo, a, celdas) => `<tr aria-selected="${es(tipo, a.id)}" data-tipo="${tipo}" data-id="${limpio(a.id)}">` +
         `<th scope="row"><button type="button" class="plano__ir">${limpio(a.nombre || a.id)}</button></th>${celdas}</tr>`;
-      const tabla = (titulo, cabeza, filas, vacio) => `<section><h3 class="plano__subtitulo">${limpio(titulo)}</h3>` +
+      const tabla = (titulo, cabeza, filas, vacio) => `<section><h2 class="plano__subtitulo">${limpio(titulo)}</h2>` +
         (filas.length
           ? `<div class="tabla-marco" tabindex="0" role="region" aria-label="${limpio(titulo)}"><table class="tabla"><thead><tr>${cabeza}</tr></thead><tbody>${filas.join('')}</tbody></table></div>`
           : `<p class="plano__vacio">${vacio}</p>`) + '</section>';

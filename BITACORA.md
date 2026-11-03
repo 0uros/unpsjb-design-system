@@ -1044,3 +1044,17 @@ Pendientes, en orden:
 ## 2026-10-15 — Se publica la 0.4.5
 
 A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.
+
+## 2026-11-03 — Planos: los dos avisos de axe del PR #1
+
+Sin número de sesión. Es uno de los pendientes del PR #1 (rama `planos`).
+
+- **axe en `muestra-planos.html` y `muestra-planos.html?editar`**, a 1366 y 390 px, claro y oscuro (8 casos), con Chrome sin ventana. Antes había dos fallas: `landmark-complementary-is-top-level` en todos los casos y `heading-order` a 390 px.
+- **Se arreglan en el módulo** (`unpsjb-planos.js`), así que alcanzan a toda herramienta que lo use: el panel de detalle pasa de `<aside>` a `<section>` con el mismo nombre, y los títulos de la lista pasan de `<h3>` a `<h2>`. Ninguno cambia cómo se ve.
+- Queda 0 fallas en los 8 casos y sin errores en la consola. Sigue un aviso (`color-contrast`, "incomplete") en los `<kbd>` con "+" y "−": axe no mide caracteres que no son letras. `kbd` no tiene estilo propio y hereda el color del párrafo, que pasa. No hace falta cambiar nada.
+- Las herramientas que copian `sistema/` (los planos de la sede) toman el arreglo la próxima vez que traigan el sistema.
+
+Pendientes del PR #1:
+- [x] Los dos avisos de axe de `muestra-planos.html`.
+- [ ] Revisar a ojo en claro y oscuro.
+- [ ] Decidir el número de versión antes de unir.

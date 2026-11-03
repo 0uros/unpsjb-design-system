@@ -47,6 +47,11 @@ Sale de una revisión de diseño hecha con los datos reales de la sede: en una p
 - `.plano-editor__cabecera`, `__titulo`, `__grupos`, `__subtitulo`, `__linea` y `.plano-form__equipo-ayuda`.
 - En el rótulo, el ícono `square` de "sin dato" y `door-closed` de lo que no se reserva.
 
+### Corregido
+
+- **El panel "Datos de lo elegido" pasa de `<aside>` a `<section>`**, con el mismo `aria-label`. Como `<aside>` quedaba adentro del `<main>` de la página, y un complementario no puede ir adentro de otra región (axe, `landmark-complementary-is-top-level`). Se ve igual: el estilo va por `.plano__detalle`.
+- **Los títulos de la lista pasan de `<h3>` a `<h2>`**, el mismo nivel que el título del panel. En el celular la lista se abre primero y quedaba un `<h3>` después del `<h1>` (axe, `heading-order`). Se ven igual: el tamaño lo da `.plano__subtitulo`.
+
 ## En curso · modo edición del módulo de planos · 2026-10-08 · sin número todavía
 
 El modo edición que tenía la herramienta de planos de la sede pasa al módulo, para que el diseño se trabaje en un solo lugar. La herramienta lo trae del sistema como el resto del módulo.
