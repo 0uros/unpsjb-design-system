@@ -950,3 +950,37 @@ Pendientes, en orden:
 ## 2026-10-15 — Se publica la 0.4.5
 
 A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.
+
+## 2026-11-03 — Piezas de páginas públicas a partir del sitio de la SIDE
+
+A pedido del usuario. Le gustaron la portada y la página de carreras de side.gob.ar para el diseño de una universidad. Se estudiaron (`notas/REFERENCIAS-SIDE.md`) y se pasaron al sistema en la rama `portada-publica`, que sale de `main` (0.4.5). Sin número de versión.
+
+### Decisiones del usuario
+- **Levantar "sin foto de apertura" y "sin marcas de agua".** Al buscar de dónde venían, ninguna tenía una medición detrás: la primera salió del estudio de la UNC y la UBA, que había medido el peso y el carrusel, no una sola foto; la segunda venía del primer borrador. Quedan permitidas con condiciones y solo en páginas públicas.
+- **Sumar el pie oscuro.**
+- **Rehacer la portada de `muestra-portal.html`** con la estructura de la SIDE. Entran también las entradas y las novedades con foto. El usuario no dijo que no, y van con los mismos topes de peso.
+
+### Qué se hizo
+- `unpsjb.css`: apertura, franjas, título con filete, marca de agua, presentación, mitades, entradas y novedades con foto, pie oscuro, y cuatro tokens. Unas 260 líneas.
+- **La franja oscura y el pie oscuro usan adentro los tokens del modo oscuro.** Así los botones, los enlaces, el foco y el selector de tema funcionan sin reglas aparte.
+- **La marca de agua es una máscara** (`mask-image`) con el color del texto, no una imagen. Toma el tema sola. El asset sale de `herramientas/logo/armar.py`, al que se le sumó la forma `marca-agua`: el óvalo con la gaviota calada. Se volvió a correr `generar.sh`, y los otros cinco logos salieron iguales byte por byte.
+- **No hay fotos propias para las muestras.** Las únicas de la Sede son de las cámaras, que son datos reales. Se dibujan paisajes de meseta con `herramientas/fotos-ejemplo/generar.py` (Pillow), de 1 a 6 KB. La de apertura tiene el cielo casi blanco a propósito, para probar el peor caso.
+- `DESIGN.md`: 2.C, 3.G, 4.B, 6.C, 7.C, 10.A, 13, 17.B, 17.C y la sección nueva 17.E. La skill se regeneró desde `DESIGN.md`.
+
+### Cómo se verificó
+- **axe 4.10.2** (WCAG 2.0, 2.1 y 2.2 A/AA y buenas prácticas): sin fallas en las cinco pantallas de `muestra-portal.html`, a 1366×768, 390×844 y 320×640, en claro y en oscuro (30 casos). Sin scroll horizontal en ninguno.
+- **axe no puede medir el texto sobre la foto ni sobre la marca de agua** (6 elementos "sin decidir"). Se midió aparte: se sacó una captura sin el texto y se buscó el píxel más claro. Blanco sobre la foto de apertura: 5,31:1 (en teoría, 4,74:1 sobre una foto toda blanca). `tinta-2` sobre la franja oscura con la marca: 6,66:1 en claro y 5,03:1 en oscuro.
+- **Capturas** revisadas en Chrome a 1568 px y a 390 px, en claro y en oscuro.
+- Sin probar: lector de pantalla, celular real, Firefox y Safari, impresión.
+
+### Lo que apareció
+- En el celular, la línea del pie oscuro quedaba corta: con el pie en columna, el bloque no ocupaba todo el ancho. Se corrigió con `align-self: stretch`. El pie público de antes tiene lo mismo y no se tocó.
+- El logo completo no sirve para la presentación en modo oscuro: tiene el texto en gris oscuro. Va el óvalo solo.
+- `.pie p { margin: 0 }` le ganaba al margen de la frase del pie. La regla pasó a `.pie .pie__frase`.
+
+### Pendientes
+- [ ] Que el usuario mire la portada nueva y diga si queda.
+- [ ] Una página de carrera con los pasos numerados y los perfiles de la SIDE, cuando haya una carrera de verdad.
+- [ ] Probar la impresión de la portada.
+- [ ] Unir `portada-publica` a `main` y darle número.
+

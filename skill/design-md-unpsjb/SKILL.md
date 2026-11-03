@@ -67,12 +67,22 @@ colors:
   oscuro-serie-4: "#0ea5b7"
   oscuro-serie-5: "#c026d3"
   oscuro-serie-otros: "#94a3b8"
+  # Páginas públicas (sin número todavía, 17.E)
+  oscuro: "#0f2438"
+  oscuro-oscuro: "#050c15"
+  velo-foto: "rgb(0 0 0 / 0.55)"
   # Papel: lo que se imprime y la hoja de los documentos (no siguen al tema)
   papel: "#ffffff"
   papel-tinta: "#000000"
   papel-tinta-2: "#333d49"
   papel-linea: "#b9c6d6"
 typography:
+  apertura:
+    fontFamily: Montserrat
+    fontSize: 40px
+    fontWeight: 800
+    lineHeight: 1.25
+    letterSpacing: -0.02em
   titulo-1:
     fontFamily: Montserrat
     fontSize: 32px
@@ -212,6 +222,8 @@ Regla práctica: si la herramienta empieza a necesitar más de una pantalla, o h
   - **Una página no pasa de 1 MB** en total la primera vez que se abre.
   - **Cada foto, 200 KB como máximo,** en `webp` o `avif`, y con el tamaño en que se muestra, no el de la cámara. Con `width` y `height` escritos, para que la página no salte al cargar.
   - **`loading="lazy"`** en toda foto que no se ve al entrar.
+  - **La foto de apertura (17.E) va al revés:** sin `loading="lazy"`, con `fetchpriority="high"` y en dos anchos (`srcset` de 960 y 1600px), así el celular no baja la grande. Cada ancho respeta los 200 KB. (Sin número todavía.)
+  - **Las muestras usan dibujos de ejemplo,** no fotos: los genera `herramientas/fotos-ejemplo/generar.py` y pesan entre 1 y 6 KB. En una página real van fotos propias. (Sin número todavía.)
   - **Ningún video arranca solo** ni se descarga antes de que la persona lo pida: va una imagen con el botón de reproducir.
 
 ### D. PWA (aplicación instalable)
@@ -319,7 +331,14 @@ En oscuro, el texto claro sobre fondo oscuro se ve más fino: los párrafos larg
 
 ### G. Fondos limpios
 
-Prohibido usar imágenes de fondo, patrones, degradados o marcas de agua (por ejemplo, escudos en baja opacidad). Solo fondos sólidos de esta paleta.
+Las herramientas usan solo fondos sólidos de esta paleta: sin imágenes de fondo, patrones, degradados ni marcas de agua.
+
+**Dos excepciones en las páginas públicas (sin número todavía).** La regla venía del primer borrador (`notas/FRAMEWORK.md`) y nunca se había medido. Al estudiar el sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`) se midió y quedaron permitidas, con condiciones, solo en páginas públicas (17.E):
+
+- **La foto de apertura,** con una capa negra del 55% debajo del texto. Con esa capa el texto blanco da 4,7:1 aun sobre una foto toda blanca.
+- **La marca de agua:** el escudo de un solo color, al 8% de opacidad como máximo, solo en una franja con poco texto o en el pie oscuro. Al 8%, `tinta-2` sigue dando 4,9:1 o más en cualquier fondo de la paleta (el peor caso es `capa`, en claro).
+
+Siguen prohibidos los degradados y los patrones, y la marca de agua detrás de formularios, tablas, herramientas o documentos (sección 18).
 
 ### H. Categorías
 
@@ -399,7 +418,8 @@ La escala es fija (no cambia con el ancho de pantalla) y con saltos claros, para
 
 | Rol | Familia | Tamaño / peso / interlineado | Uso |
 |---|---|---|---|
-| `titulo-1` | Montserrat | 32px / 800 / 1.25, tracking −0.015em | Título de la pantalla (uno por pantalla). Es el único rol en peso 800. |
+| `apertura` | Montserrat | 40px / 800 / 1.25, tracking −0.02em; 32px en celular | Solo el título de la foto de apertura (17.E), que hace de `titulo-1` en esa página. Es el único rol que cambia con el ancho. (Sin número todavía.) |
+| `titulo-1` | Montserrat | 32px / 800 / 1.25, tracking −0.015em | Título de la pantalla (uno por pantalla). Con `apertura`, los únicos roles en peso 800. |
 | `titulo-2` | Montserrat | 24px / 700 / 1.25, tracking −0.01em | Secciones principales. |
 | `titulo-3` | Montserrat | 19px / 700 / 1.3 | Títulos de paneles, modales y avisos destacados. |
 | `texto-grande` | Atkinson | 18px / 400 / 1.6 | Textos de lectura larga (instructivos, reglamentos). |
@@ -524,6 +544,15 @@ La herramienta suma sola lo que ya sabe (quién reporta, en qué pantalla, con q
 
 **Pie de las páginas públicas (nuevo en 0.4).** Las páginas que ve gente de afuera de la universidad (sección 17) usan un pie más completo (`.pie.pie--publico`), con tres bloques arriba de la línea de derechos: quién es y dónde queda (la dirección, en `<address>`), cómo contactar, y los enlaces "Accesibilidad", "Privacidad y datos personales" y "Reportar un problema". No lleva número de versión ni clave de IA.
 
+**Pie oscuro (sin número todavía).** En la portada y las páginas públicas que van en franjas (17.E), el pie público puede ir a todo el ancho y sobre fondo oscuro: `.pie.pie--publico.pie--oscuro`, con el contenido dentro de `.contenedor.pie__interior`. Suma cuatro cosas al pie público:
+
+- **Una frase** (`.pie__frase`) que dice qué es la Sede, en `titulo-2`. Con mayúscula solo inicial.
+- **El menú repetido:** las mismas secciones de la sub-barra, como un bloque más.
+- **Las redes, con su nombre escrito** ("Instagram", "YouTube"), no solo el ícono: en el estudio, los íconos de redes sin texto eran enlaces que el lector de pantalla no podía nombrar.
+- **"Subir"**, un enlace a `#arriba` (el `id` de la cabecera), a la derecha, después del selector de tema.
+
+Adentro valen los tokens del modo oscuro, así los enlaces, el foco y el selector de tema se leen igual que en oscuro. Los enlaces del pie van a 14px (`detalle`) como mínimo, nunca en mayúsculas.
+
 ### D. Encabezado de pantalla
 
 Debajo de la banda, cada pantalla abre con su título `titulo-1` alineado a la izquierda y, si corresponde, la acción principal a la derecha en la misma línea (ej.: "Crear evento"). Sin textos de relleno entre el título y el contenido.
@@ -606,6 +635,7 @@ El contenedor por defecto **no es la tarjeta**. Primero se usan listas, tablas y
 - Fondo `panel`, borde 1px `linea`, radio 8px, padding 24px (16px en móvil).
 - **Encabezado opcional:** título `titulo-3` y, a la derecha, una acción tranquila. Separado del cuerpo por un borde `linea`.
 - **Prohibido:** paneles dentro de paneles; grillas de paneles iguales con ícono + título + texto como estructura de la página; bordes laterales de color.
+- **No son paneles:** las entradas y las novedades con foto de la portada (17.E). Son de una a cuatro, cada una es un solo enlace y llevan foto, no ícono.
 
 ### D. Tablas
 
@@ -938,6 +968,7 @@ El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Deleg
 | `logo-unpsjb-trelew.svg` | **Fondos claros**, documentos impresos o exportados; también el que usa `unpsjb.css` al imprimir. Gaviota plana; barra y "Sede Trelew" en gris `#3b3a36`. | ~3KB |
 | `logo-unpsjb-trelew-completo.svg` | **Usos grandes** (carteles, portadas, pantallas de bienvenida): el original sin cambios, con la foto de la gaviota y el texto curvo. | ~56KB |
 | `logo-unpsjb-trelew-una-tinta.svg` | **Impresión a una tinta** (nuevo en 0.4.3): óvalo, barra y "Sede Trelew" en negro; la gaviota entera en blanco, sin gris ni amarillo. Lo usa la hoja `.hoja--una-tinta` (sección 18). | ~3KB |
+| `marca-agua-unpsjb.svg` | **Marca de agua** (sin número todavía): el óvalo en negro con la gaviota calada. No se muestra como imagen: `unpsjb.css` lo usa de máscara y le pone el color y la opacidad (17.E). | ~1KB |
 
 - **Los colores del óvalo no se modifican:** el azul (`#347EBB`), el gris de las puntas y el amarillo del pico se tomaron de la foto original. Son parte de la marca, no colores de interfaz: no se usan en botones ni textos.
 - **De dónde sale la gaviota plana:** en el EPS la gaviota es una foto (JPEG en CMYK). `herramientas/logo/vectorizar.sh` la separa por color, borra el detalle y la vectoriza; el resultado queda guardado en `herramientas/logo/gaviota-plana.svg`. Solo hay que volver a correrlo si cambia el EPS (instala sus librerías de Python en `~/.cache/unpsjb-logo/`). `herramientas/logo/generar.sh` usa esa gaviota guardada y no necesita nada extra. **No se edita a mano:** si hay que afinar la forma, se ajusta `herramientas/logo/vectorizar.py` o se reemplaza por un dibujo hecho por un diseñador.
@@ -1076,7 +1107,9 @@ Las palabras son parte del diseño.
 | Compactar una pantalla de trabajo con `data-densidad="compacta"`. | Achicar la letra para que entre más. |
 | Mostrar un solo registro como lista de resumen. | Armar una tabla de una fila o campos deshabilitados. |
 | Listar destinos como lista de accesos: nombre, una línea y una flecha o un botón. | Una grilla de tarjetas con ícono, o un logo y un color por trámite. |
-| En la portada de un portal, de 2 a 4 entradas por tarea, planas. | Carrusel, foto de apertura, ventana al entrar o bloques con texto blanco sobre un color claro. |
+| En la portada de un portal, de 2 a 4 entradas por tarea, planas o todas con foto. | Carrusel, ventana al entrar o bloques con texto blanco sobre un color claro. |
+| Una sola foto de apertura, con la capa al 55% y sin tapar toda la ventana. | Texto blanco sobre una foto sin capa, o una foto que ocupa toda la pantalla al entrar. |
+| Marca de agua solo en una franja pública o en el pie oscuro, al 8% como máximo. | Marca de agua detrás de formularios, tablas, herramientas o documentos. |
 | Fotos de hasta 200 KB y páginas de hasta 1 MB. | Subir la foto como sale de la cámara, o un video que arranca solo. |
 | Usar el acordeón para lo secundario. | Esconder campos obligatorios o avisos importantes. |
 | En gráficos, los colores de serie, en orden, y el valor escrito. | Pintar series con el semáforo o con las categorías. |
@@ -1380,6 +1413,7 @@ Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripc
 - **La misma banda** que las herramientas: es la identidad. No hay un header distinto para lo público.
 - **Sin sub-barra** si es una sola página; sin "Mi cuenta" si no hay ingreso.
 - **Contenido de lectura:** `.contenedor` con los textos a 70 caracteres por línea, sin densidad compacta.
+- **Pueden ir en franjas** a todo el ancho, con foto de apertura y pie oscuro (17.E).
 - **Pie de páginas públicas** (6.C), con dirección, contacto y enlaces legales.
 - **El logo completo** (nivel L, 10.A) solo donde hay lugar para mostrarlo a 96px o más: una portada, no la banda.
 - **Sin siglas internas** sin explicar (sección 12): quien llega de afuera no sabe qué es SIU ni SUDOCU.
@@ -1392,12 +1426,12 @@ Hay un prototipo: `muestra-portal.html`. Las reglas salen del estudio de los sit
 
 - **Vale todo lo de las páginas públicas** (17.B): la misma banda, textos a 70 caracteres, pie de páginas públicas.
 - **Abre con las entradas** (`ul.entradas`): de **dos a cuatro** bloques grandes, nombrados por lo que la persona viene a hacer ("Estudiar en Trelew", "Trámites", "Herramientas"), no por el organigrama. Es la idea de las tres entradas del portal de la UNC.
-  - Son planos, sin foto, sin ícono y sin sombra. El **principal** (`.entradas__principal`) va en azul con texto blanco; los demás, en `capa` con texto `tinta`. Es la única excepción a "la banda es el único bloque grande de color" (13), y solo en esta portada.
+  - Son planos, sin ícono y sin sombra. Pueden llevar foto (`.entradas--foto`, 17.E): todos o ninguno. El **principal** (`.entradas__principal`) va en azul con texto blanco; los demás, en `capa` (o en `panel`, con foto) con texto `tinta`. Junto con la franja oscura (17.E), es la excepción a "la banda es el único bloque grande de color" (13), y solo en páginas públicas.
   - Cada uno lleva el título y una línea que dice qué hay adentro.
   - **El naranja no se usa de relleno** (3.B). Texto blanco sobre celeste o naranja, como en los mosaicos de otros sitios, da 2:1.
   - Con más de cuatro destinos no se suman bloques: va una lista de accesos (7.Q).
-- **Avisos antes que noticias.** Lo que cambia el día de alguien ("El lunes no hay clases") va como aviso (8.A), arriba. Las novedades, como una lista corta de título y fecha, con un enlace a "todas". Sin carrusel (7.P).
-- **Sin foto de apertura.** Si hay fotos, respetan los topes de 2.C.
+- **Avisos antes que noticias.** Lo que cambia el día de alguien ("El lunes no hay clases") va como aviso (8.A), arriba. Las novedades, como una lista corta de título y fecha o, en la portada, hasta tres con foto (`.novedades`, 17.E), con un enlace a "todas". Sin carrusel (7.P).
+- **Foto de apertura, si se quiere** (17.E): una sola, con la capa oscura, y sin tapar toda la ventana, así las entradas se ven sin bajar. Antes estaba prohibida; lo que el estudio había encontrado era el peso de las fotos y el carrusel, y eso ya lo resuelven los topes de 2.C. (Cambio sin número todavía.)
 - **El acceso a la cuenta va en la banda,** en todas las páginas (el botón "Mi cuenta"). Es el puente entre informarse y hacer un trámite.
 - **Navegación de un solo nivel:** la sub-barra (6.A), con hasta 6 secciones. En el estudio había páginas con tres filas de menú antes del título.
 - **Contacto a la vista:** oficina, dirección, horario, teléfono y correo, como lista de resumen (7.L) dentro de un panel. Los teléfonos y correos son enlaces (`tel:`, `mailto:`).
@@ -1414,6 +1448,37 @@ Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta 
 - **Los datos de la cuenta** van en otra pantalla: menú lateral (6.A) con las secciones y, a la derecha, una lista de resumen (7.L). Solo llevan "Cambiar" los datos que la persona puede cambiar; de los demás se dice quién los corrige.
 - **Avisos de seguridad** ("Nunca te vamos a pedir la contraseña") van como aviso, al lado del dato que protegen. No en letra chica ni en cursiva.
 - **No va:** una grilla de tarjetas con ícono (7.C), contadores o gráficos de relleno, ni un saludo con la hora del día.
+
+### E. Piezas de las páginas públicas (sin número todavía)
+
+Salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`): una portada que se recorre en franjas, con una foto arriba, un solo llamado fuerte y un pie oscuro. Se toma el orden y las piezas; los colores, las letras y las reglas de texto siguen siendo los del sistema. Hay un ejemplo armado en la portada de `muestra-portal.html`.
+
+**Solo en páginas públicas** (17.B y 17.C). Ninguna de estas piezas va en una herramienta de trabajo.
+
+**La página va a todo el ancho.** No usa `<main class="contenedor">`: cada franja lleva su `.contenedor` adentro, y el pie oscuro cierra `<main>`.
+
+| Pieza | Clase | Reglas |
+|---|---|---|
+| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto y como mucho un botón (`.boton--secundario`). La capa negra al 55% (`--color-velo-foto`) es fija: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
+| **Franjas** | `.franja`, `--panel`, `--capa`, `--oscura` | Secciones a todo el ancho que separan con el cambio de fondo, sin bordes ni tarjetas. Alternan `fondo`, `panel` y `capa`; dos seguidas no llevan el mismo. La **oscura** (`--color-oscuro`), **una por página**, para el llamado más importante ("Inscripciones 2027"): un título, una o dos líneas y un botón. Adentro valen los tokens del modo oscuro. |
+| **Título con filete** | `.titulo-filete` | Una línea de 2px del ancho del título, en `primario-texto`, nunca en naranja. Para los títulos de las franjas. Alineado a la izquierda, como todo (5.F), y con mayúscula solo inicial (4.C). |
+| **Marca de agua** | `.marca-agua` | El escudo de un solo color (`marca-agua-unpsjb.svg`, 10.A) detrás del contenido, del lado derecho en escritorio. Toma el color del texto y la opacidad de `--marca-agua-opacidad`: 6%, con un tope de 8%. Solo en una franja con poco texto (la oscura) o en el pie oscuro. Medido en la muestra: el texto encima da 6,7:1 en claro y 5:1 en oscuro. No se imprime ni aparece en alto contraste. |
+| **Presentación** | `.presentacion`, `.presentacion__destacado` | Quién es la Sede, con el escudo grande al lado (160px; 200px desde 768px). Va el óvalo solo (`escudo-unpsjb-blanco.svg`), que se ve igual en claro y en oscuro: el logo completo tiene el texto en gris oscuro y desaparece sobre fondo oscuro. La primera línea en negrita y dos o tres oraciones más. |
+| **Mitad foto, mitad texto** | `.mitades`, `--invertida` | La foto hasta el borde de la ventana y, al lado, un texto corto: el contacto (7.L) o cómo llegar. En celular, la foto arriba, de 240px. Foto en 3:2, con `loading="lazy"`. |
+| **Entradas con foto** | `.entradas--foto` | Las entradas de 17.C con una foto arriba (3:2, `alt=""`), el título en `titulo-3` y una línea. Todas llevan foto, o ninguna. La principal sigue en azul. |
+| **Novedades con foto** | `.novedades`, `.novedades__titulo` | De una a tres, cada una con foto (16:9, `alt=""`), título y fecha. Toda la tarjeta es **un solo enlace**: en la UNC la foto y el título eran dos. Debajo, un botón a "Todas las novedades". |
+| **Pie oscuro** | `.pie--oscuro`, `.pie__interior`, `.pie__frase` | El pie público a todo el ancho (6.C), con una frase, el menú repetido, las redes con su nombre y "Subir". |
+
+**Orden de la portada,** como en la muestra: foto de apertura → aviso, si hay (8.A) → entradas → presentación → novedades → franja oscura → mitad foto y mitad texto con el contacto → pie oscuro. Las entradas van antes que la presentación, porque la persona viene a hacer algo.
+
+**Lo que no se toma de la SIDE:**
+
+- **Títulos en mayúsculas y en serif.** Van con mayúscula solo inicial (4.C) y en Montserrat.
+- **Texto justificado.** Deja huecos entre las palabras y cuesta más con dislexia o baja visión: siempre alineado a la izquierda.
+- **Títulos centrados.** Van alineados a la izquierda, como el resto del contenido (5.F).
+- **Enlaces del pie a 11px, en mayúsculas, con letras separadas y blanco a medio tono.** Van a 14px como mínimo, con mayúscula solo inicial.
+- **Una foto que tapa toda la ventana al entrar** y una capa al 40%.
+- **Un logo de 260 KB.** Es casi todo lo que pesa esa portada (1,7 MB). El escudo nuestro pesa 2 KB.
 
 ## 18. Documentos e impresión (nuevo en 0.4.3)
 

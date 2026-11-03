@@ -22,6 +22,30 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## En curso (rama `portada-publica`)
+
+Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`). No cambia nada de las herramientas.
+
+### Nuevo
+
+- **Foto de apertura** (`.apertura`, `.apertura__foto`, `.apertura__texto`, 17.E): una sola foto con el título encima y una capa negra al 55% (`--color-velo-foto`).
+- **Rol de texto `apertura`** (`--texto-apertura`, 4.B): 40px / 800 / 1.25; 32px en celular. Solo para el título de la foto de apertura.
+- **Franjas** (`.franja`, `--panel`, `--capa`, `--oscura`): secciones a todo el ancho que alternan el fondo. La oscura usa `--color-oscuro` y, adentro, los tokens del modo oscuro.
+- **Título con filete** (`.titulo-filete`): una línea azul de 2px debajo del título.
+- **Marca de agua** (`.marca-agua`, `--marca-agua-opacidad`): el escudo de un solo color detrás de una franja, al 6% (tope: 8%). Asset nuevo `marca-agua-unpsjb.svg`, que genera `herramientas/logo/generar.sh`.
+- **Presentación** (`.presentacion`, `.presentacion__destacado`): quién es la Sede, con el escudo grande al lado.
+- **Mitad foto, mitad texto** (`.mitades`, `.mitades--invertida`, `.mitades__foto`, `.mitades__texto`).
+- **Entradas con foto** (`.entradas--foto`) y **novedades con foto** (`ul.novedades`, `.novedades__titulo`). Cada tarjeta es un solo enlace.
+- **Pie oscuro** (`.pie--oscuro`, `.pie__interior`, `.pie__frase`, 6.C): el pie público a todo el ancho, con una frase, el menú repetido, las redes con su nombre y "Subir".
+- Tokens `--color-oscuro`, `--color-borde-oscuro`, `--color-velo-foto` y `--marca-agua-opacidad`.
+- **Fotos de ejemplo** para las muestras (`muestras/fotos-ejemplo/`), dibujadas por `herramientas/fotos-ejemplo/generar.py`.
+
+### Cambiado
+
+- **Fondos limpios** (3.G): en las páginas públicas se permiten la foto de apertura con capa y la marca de agua, con condiciones. En las herramientas sigue todo igual.
+- **Portal de la Delegación** (17.C): la foto de apertura pasa de prohibida a opcional, y las entradas y las novedades pueden llevar foto.
+- **Portada de `muestra-portal.html`:** rehecha en franjas, con todas las piezas nuevas. Las demás pantallas no cambian. `<main>` ya no lleva `.contenedor`: lo lleva cada pantalla.
+
 ## 0.4.5 · 2026-10-15 · oficial
 
 Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo".
