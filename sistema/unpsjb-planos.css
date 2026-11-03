@@ -4,11 +4,14 @@
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
    Va junto con unpsjb-planos.js, que arma la pantalla a partir de un archivo
-   de datos. Ejemplo completo: muestra-planos.html.
+   de datos, y opcionalmente con unpsjb-planos-editor.js, el modo edición.
+   Ejemplo completo: muestra-planos.html.
 
    La idea:
-   - El plano es el fondo: se dibuja en neutros, nunca con los colores de CAD.
-     El color queda para lo que se marca encima (antenas, aulas).
+   - Es un mapa, no un plano de obra: el piso va en un tono y los locales con
+     nombre se rellenan en otro, más claro. Así el edificio tiene cuerpo.
+   - El dibujo de AutoCAD queda de fondo, en neutros apagados, nunca con los
+     colores de CAD. El color queda para lo que se marca encima (antenas, aulas).
    - Lo que se marca son botones, no dibujos: una antena mide siempre lo mismo
      aunque se acerque o se aleje el plano.
    - Todo plano tiene su lista. Es la forma de usarlo en celular y con lector
@@ -21,11 +24,26 @@
    2. Lienzo y dibujo (.plano__lienzo, .plano-trazo)
    3. Aulas (.plano-zona, .plano-rotulo)
    4. Antenas (.plano-marca)
+      y puntos de referencia (.plano-lugar)
    5. Referencias, detalle y lista
    6. Celular, impresión y alto contraste
+   7. Modo edición (.plano-editor, .plano-form): va con unpsjb-planos-editor.js
    ========================================================================== */
 
-.plano { font: var(--texto-base); }
+.plano {
+  font: var(--texto-base);
+  /* Los dos tonos del mapa: el piso (pasillos, exterior) y los locales con nombre.
+     Salen de los tokens del sistema; cambian con el tema igual que ellos. */
+  --plano-suelo: var(--color-capa);
+  --plano-local: var(--color-panel);
+  /* El borde de un local: es lo que lo separa del piso, así que tiene que dar 3:1 contra
+     los dos tonos (WCAG 1.4.11). `linea-control` solo da 2.9:1 sobre `capa`. */
+  --plano-borde: color-mix(in srgb, var(--color-linea-control) 70%, var(--color-tinta-2));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .plano { --plano-suelo: var(--color-fondo); --plano-local: var(--color-capa); }
+}
+:root[data-tema="oscuro"] .plano { --plano-suelo: var(--color-fondo); --plano-local: var(--color-capa); }
 
 /* 1. Barra ----------------------------------------------------------------- */
 /* Plantas a la izquierda; "Plano | Lista" último, contra el borde derecho.
@@ -54,7 +72,7 @@
   min-height: 280px;
   max-height: 70vh;
   overflow: clip;
-  background: var(--color-panel);
+  background: var(--plano-suelo);
   border: 1px solid var(--color-linea);
   border-radius: var(--radio-contenedor);
   cursor: grab;
@@ -69,34 +87,60 @@
 /* El dibujo. Las líneas no engordan al acercar: es un plano, no una foto.
    .plano-trazo           muros, columnas, aberturas
    .plano-trazo--rotulo   nombres escritos en el plano original
-   .plano-trazo--suave    lo demás: escaleras, cotas, mobiliario */
+   .plano-trazo--suave    lo demás: escaleras, cotas, mobiliario
+   Va apagado: la forma del edificio la dan los locales rellenos, no los muros.
+   Con el plano entero se ven solo los muros; lo demás aparece al acercar (.plano--cerca,
+   que pone el script): de lejos no se lee y compite con los rótulos. */
 .plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { vector-effect: non-scaling-stroke; stroke-width: 1px; }
-.plano-trazo { color: var(--color-tinta-2); }
-.plano-trazo--rotulo { color: var(--color-tinta-2); stroke-width: 0.75px; }
-.plano-trazo--suave { color: var(--color-linea-control); stroke-width: 0.75px; }
+.plano-trazo { color: var(--color-linea-control); }
+.plano-trazo--rotulo, .plano-trazo--suave {
+  color: color-mix(in srgb, var(--color-linea-control) 45%, transparent);
+  stroke-width: 0.75px;
+  opacity: 0;
+  transition: opacity var(--duracion-normal) var(--curva);
+}
+.plano--cerca .plano-trazo--rotulo, .plano--cerca .plano-trazo--suave { opacity: 1; }
 
 /* 3. Aulas ----------------------------------------------------------------- */
-/* La forma del aula (un polígono del SVG) y su rótulo (un botón). El estado va
-   en el ícono y en el texto del rótulo; el color acompaña.
-   Ocupada no es un error: va en neutro, no en rojo. */
+/* La forma del aula (un polígono del SVG) y su rótulo (un botón).
+   Toda zona se rellena con el tono de local: tapa el dibujo que tiene debajo
+   (puertas, cotas, textos) y se despega del piso. Encima de eso:
+   - Sin dato: el local y nada más. Es casi todo el plano.
+   - Lo que no se reserva (una oficina, la biblioteca): a medio camino del piso.
+   - Libre: verde. Ocupada: en neutro (no es un error: no va en rojo).
+   - Elegida: azul, y es lo único azul del plano. */
 .plano-zona {
-  --zona: var(--color-primario-texto);
-  fill: color-mix(in srgb, var(--zona) 10%, transparent);
+  --zona: var(--plano-borde);
+  fill: var(--plano-local);
   stroke: var(--zona);
-  stroke-width: 1.5px;
+  stroke-width: 1px;
   vector-effect: non-scaling-stroke;
   cursor: pointer;
   transition: fill var(--duracion-rapida) var(--curva);
 }
-.plano-zona--libre { --zona: var(--color-exito-texto); }
-.plano-zona--ocupada { --zona: var(--color-tinta-2); fill: color-mix(in srgb, var(--zona) 22%, transparent); }
-/* Lo que no se reserva (una oficina, la biblioteca): sin estado, casi sin relleno */
-.plano-zona--fija { --zona: var(--color-linea-control); fill: color-mix(in srgb, var(--zona) 8%, transparent); stroke-width: 1px; }
-.plano-zona:hover { fill: color-mix(in srgb, var(--zona) 28%, transparent); }
-.plano-zona--elegida { stroke: var(--color-primario-texto); stroke-width: 3px; }
+.plano-zona--libre { --zona: var(--color-exito-texto); fill: color-mix(in srgb, var(--zona) 16%, var(--plano-local)); stroke-width: 1.5px; }
+.plano-zona--ocupada { --zona: var(--color-tinta-2); fill: color-mix(in srgb, var(--zona) 14%, var(--plano-local)); }
+.plano-zona--fija { fill: color-mix(in srgb, var(--plano-local) 55%, var(--plano-suelo)); }
+ /* El tipo de local (laboratorio, biblioteca, sala): un tinte de su categoría (3.H). Solo en
+   los locales sin estado: el estado manda. Siempre con su nombre en las referencias. */
+.plano-zona--cat-1 { --cat: var(--color-cat-1); }
+.plano-zona--cat-2 { --cat: var(--color-cat-2); }
+.plano-zona--cat-3 { --cat: var(--color-cat-3); }
+.plano-zona--cat-4 { --cat: var(--color-cat-4); }
+.plano-zona[class*="plano-zona--cat-"] {
+  --zona: color-mix(in srgb, var(--cat) 55%, var(--plano-borde));
+  fill: color-mix(in srgb, var(--cat) 14%, var(--plano-local));
+}
+.plano-zona:hover { fill: color-mix(in srgb, var(--color-primario-texto) 10%, var(--plano-local)); }
+.plano-zona--elegida,
+.plano-zona--elegida:hover {
+  stroke: var(--color-primario-texto);
+  stroke-width: 2.5px;
+  fill: color-mix(in srgb, var(--color-primario-texto) 18%, var(--plano-local));
+}
 
-/* Rótulo y marca comparten cómo se ubican: el script pasa el punto en --x, --y */
-.plano-rotulo, .plano-marca {
+/* Rótulo, marca y punto de referencia comparten cómo se ubican: el script pasa el punto en --x, --y */
+.plano-rotulo, .plano-marca, .plano-lugar {
   position: absolute;
   left: 0;
   top: 0;
@@ -105,47 +149,71 @@
   font: inherit;
   cursor: pointer;
 }
-.plano-rotulo::after, .plano-marca::after { content: ""; position: absolute; inset: -8px; }  /* área para el dedo */
-.plano-rotulo:focus-visible, .plano-marca:focus-visible { outline: 0; box-shadow: var(--anillo-foco); z-index: 2; }
+.plano-rotulo::after, .plano-marca::after, .plano-lugar::after { content: ""; position: absolute; inset: -8px; }  /* área para el dedo */
+.plano-rotulo:focus-visible, .plano-marca:focus-visible, .plano-lugar:focus-visible { outline: 0; box-shadow: var(--anillo-foco); z-index: 2; }
 
 /* <button class="plano-rotulo plano-rotulo--libre"><svg class="icono">…</svg>
-     <span class="plano-rotulo__nombre">Aula 1</span>
-     <span class="plano-rotulo__estado">Libre</span></button> */
+     <span class="plano-rotulo__nombre">Aula 17</span>
+     <span class="plano-rotulo__breve">17</span>
+     <span class="plano-rotulo__estado">Libre hasta las 14:00</span></button>
+   El rótulo pesa según lo que dice. Sin dato: el nombre solo, sin caja. Libre: caja
+   llena, verde, con su tilde: es lo que se busca y lo que primero se ve. Ocupada: caja
+   hueca, en neutro, con su reloj. Así libre y ocupada se distinguen también sin color
+   (una es llena y la otra hueca). */
 .plano-rotulo {
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
-  min-height: 28px;
-  padding: 0 var(--espacio-2);
-  font: 700 0.8125rem/1.2 var(--fuente-texto);
+  min-height: 24px;
+  padding: 0 6px;
+  font: 600 0.8125rem/1.2 var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
   color: var(--color-tinta);
-  background: var(--color-panel);
-  border: 1px solid var(--color-linea-control);
+  background: transparent;              /* el local ya tapa el dibujo que pasa por detrás */
+  border: 1px solid transparent;
   border-radius: var(--radio-control);
 }
-.plano-rotulo .icono { width: 14px; height: 14px; color: var(--color-tinta-2); }
-.plano-rotulo--libre .icono { color: var(--color-exito-texto); }
-.plano-rotulo__estado { font-weight: 400; color: var(--color-tinta-2); }
+.plano-rotulo .icono { flex: none; width: 14px; height: 14px; }
+.plano-rotulo__nombre, .plano-rotulo__breve { overflow: hidden; text-overflow: ellipsis; }
+.plano-rotulo__breve { display: none; }
+.plano-rotulo__estado { font-weight: 400; }
 .plano-rotulo__estado::before { content: "· "; }
+.plano-rotulo--fija { font-weight: 400; color: var(--color-tinta-2); }
+.plano-rotulo--libre { font-weight: 700; color: #ffffff; background: var(--color-exito); border-color: var(--color-exito); }   /* blanco sobre exito: 5.5:1 en los dos temas */
+.plano-rotulo--ocupada { background: var(--color-panel); border-color: var(--color-linea-control); }
+.plano-rotulo--ocupada .icono, .plano-rotulo--ocupada .plano-rotulo__estado { color: var(--color-tinta-2); }
 /* Cuando el aula se ve chica, el rótulo se acorta para no salirse de ella:
-   --medio  sin el estado      --corto  solo el nombre      --chico  solo el ícono
-   El nombre y el estado siguen estando para el lector de pantalla (aria-label). */
+   --medio  sin el estado     --corto  ícono y nombre breve     --chico  el nombre breve solo
+   El nombre es lo último que se pierde: nunca queda el ícono solo. El nombre entero y el
+   estado siguen estando para el lector de pantalla (aria-label) y al pasar el mouse (title). */
 .plano-rotulo--medio .plano-rotulo__estado,
 .plano-rotulo--corto .plano-rotulo__estado,
-.plano-rotulo--corto .icono,
 .plano-rotulo--chico .plano-rotulo__estado,
-.plano-rotulo--chico .plano-rotulo__nombre { display: none; }
-/* Lo que no se reserva no tiene estado: su ícono aparece solo cuando no entra el nombre */
-.plano-rotulo--fija:not(.plano-rotulo--chico) .icono { display: none; }
-.plano-rotulo--corto { padding: 0 var(--espacio-1); }
-.plano-rotulo--chico { padding: 0; width: 28px; justify-content: center; }
+.plano-rotulo--corto .plano-rotulo__nombre,
+.plano-rotulo--chico .plano-rotulo__nombre,
+.plano-rotulo--chico .icono { display: none; }
+.plano-rotulo--corto .plano-rotulo__breve,
+.plano-rotulo--chico .plano-rotulo__breve { display: block; }
+.plano-rotulo--corto, .plano-rotulo--chico { padding: 0 var(--espacio-1); }
+.plano-rotulo--chico { min-height: 20px; min-width: 20px; justify-content: center; font-size: 0.75rem; }
+/* Un local angosto y alto: el nombre va de pie, de abajo hacia arriba, como en un plano */
+.plano-rotulo--de-pie {
+  writing-mode: vertical-rl;
+  transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%)) rotate(180deg);
+  min-width: 20px;
+  min-height: 0;
+  padding: var(--espacio-1) 0;
+}
 .plano-rotulo:hover { border-color: var(--color-primario-texto); }
 .plano-rotulo[aria-pressed="true"] {
+  color: var(--color-tinta);
   border-color: var(--color-primario-texto);
   background: color-mix(in srgb, var(--color-primario-texto) 14%, var(--color-panel));
   outline: 1px solid var(--color-primario-texto);
+  z-index: 1;
 }
+.plano-rotulo[aria-pressed="true"] .icono { color: var(--color-primario-texto); }
 
 /* 4. Antenas --------------------------------------------------------------- */
 /* <button class="plano-marca plano-marca--sin-conexion" aria-label="Antena AP Hall, sin conexión">
@@ -188,6 +256,35 @@
 .plano-marca__aviso .icono { width: 10px; height: 10px; stroke-width: 3; }
 /* La elegida: un aro azul alrededor. Conserva el color de su estado. */
 .plano-marca[aria-pressed="true"] { outline: 3px solid var(--color-primario-texto); outline-offset: 2px; }
+/* Puntos de referencia: escaleras, ascensores, baños, entradas. Es lo que se busca con la
+   vista para ubicarse.
+   <button class="plano-lugar"><svg class="icono">…</svg><span class="plano-lugar__nombre">Escalera</span></button>
+   Un cuadrado de 24px con su dibujo: cuadrado, para no confundirlo con una antena (redonda),
+   y en neutro, porque no tiene estado. El nombre aparece al acercar. */
+.plano-lugar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-width: 24px;
+  height: 24px;
+  padding: 0 3px;
+  font: 400 0.8125rem/1 var(--fuente-texto);
+  white-space: nowrap;
+  color: var(--color-tinta);
+  background: var(--color-panel);
+  border: 1px solid var(--plano-borde);
+  border-radius: var(--radio-control);
+  z-index: 1;
+}
+.plano-lugar::after { inset: -10px; }
+.plano-lugar .icono { flex: none; width: 16px; height: 16px; }
+.plano-lugar__nombre { display: none; padding-right: 2px; }
+.plano--cerca .plano-lugar__nombre { display: inline; }
+.plano-lugar:hover { border-color: var(--color-primario-texto); }
+.plano-lugar[aria-pressed="true"] { outline: 3px solid var(--color-primario-texto); outline-offset: 2px; }
+.plano-lugar--muestra { position: relative; transform: none; cursor: default; flex: none; }
+.plano-lugar--muestra::after { content: none; }
+
 /* La misma marca en las referencias, sin ubicar */
 .plano-marca--muestra { position: relative; transform: none; cursor: default; flex-shrink: 0; margin-right: var(--espacio-1); }
 .plano-marca--muestra::after { content: none; }
@@ -206,6 +303,26 @@
 }
 .plano__referencias li { display: inline-flex; align-items: center; gap: var(--espacio-2); }
 .plano__referencias > li > .icono { width: 16px; height: 16px; }
+/* La referencia de un aula: un recorte de su zona, con el ícono si lo lleva */
+.plano__muestra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 18px;
+  border: 1px solid var(--color-linea-control);
+  border-radius: 2px;
+}
+.plano__muestra .icono { width: 12px; height: 12px; }
+.plano__muestra--sin-dato { background: var(--plano-local); border-color: var(--plano-borde); }
+.plano__muestra--cat-1 { --cat: var(--color-cat-1); }
+.plano__muestra--cat-2 { --cat: var(--color-cat-2); }
+.plano__muestra--cat-3 { --cat: var(--color-cat-3); }
+.plano__muestra--cat-4 { --cat: var(--color-cat-4); }
+.plano__muestra[class*="plano__muestra--cat-"] { border-color: color-mix(in srgb, var(--cat) 55%, var(--plano-borde)); background: color-mix(in srgb, var(--cat) 14%, var(--plano-local)); }
+.plano__muestra--libre { color: #ffffff; border-color: var(--color-exito); background: var(--color-exito); }
+.plano__muestra--ocupada { color: var(--color-tinta-2); border-color: var(--color-tinta-2); background: color-mix(in srgb, var(--color-tinta-2) 14%, var(--plano-local)); }
 .plano__referencia--exito .icono { color: var(--color-exito-texto); }
 .plano__referencia--error .icono { color: var(--color-error-texto); }
 .plano__referencia--advertencia .icono { color: var(--color-advertencia-texto); }
@@ -246,17 +363,114 @@
   .plano__barra > :last-child { margin-left: 0; }
   .plano__lienzo { max-height: 60vh; }
 }
-@media (prefers-reduced-motion: reduce) { .plano-zona { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .plano-zona, .plano-trazo--rotulo, .plano-trazo--suave { transition: none; } }
 @media print {
+  .plano { --plano-suelo: transparent; }
+  .plano-trazo--rotulo, .plano-trazo--suave { opacity: 1; }      /* en papel va el dibujo entero */
   .plano__barra, .plano__nota { display: none; }
   .plano__lienzo { max-height: none; border-color: var(--color-linea-control); break-inside: avoid; }
   .plano__lista[hidden] { display: block; }          /* en papel van el plano y la lista */
-  .plano-zona, .plano-marca, .plano-rotulo { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .plano-zona, .plano-marca, .plano-rotulo, .plano-lugar { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
 @media (forced-colors: active) {
   .plano-trazo, .plano-trazo--rotulo, .plano-trazo--suave { color: CanvasText; }
-  .plano-zona { fill: none; stroke: ButtonText; }
+  .plano-zona { fill: transparent; stroke: ButtonText; }
+  .plano-rotulo, .plano-lugar { background: ButtonFace; border-color: ButtonText; }
+  .plano-rotulo--libre { background: ButtonText; color: ButtonFace; }
   .plano-zona--elegida { stroke: Highlight; }
-  .plano-marca[aria-pressed="true"], .plano-rotulo[aria-pressed="true"] { outline-color: Highlight; }
+  .plano-marca[aria-pressed="true"], .plano-rotulo[aria-pressed="true"], .plano-lugar[aria-pressed="true"] { outline-color: Highlight; }
   .plano-marca__aviso { background: ButtonText; color: ButtonFace; }
+}
+
+/* 7. Modo edición ---------------------------------------------------------- */
+/* Lo arma unpsjb-planos-editor.js cuando la dirección lleva ?editar. Reglas: 21.G.
+   Una tira pegada al plano, para que el plano no se vaya de la vista: arriba las
+   herramientas (qué agregar | lo que falta ubicar | publicar, contra el borde
+   derecho) y abajo, en una franja, qué está pasando ahora. */
+.plano-editor {
+  margin-bottom: var(--espacio-3);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+}
+.plano-editor p { margin: 0; }
+.plano-editor__fila { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2) var(--espacio-6); padding: var(--espacio-2) var(--espacio-3); }
+.plano-editor__grupo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-2); min-width: 0; }
+.plano-editor__grupo[hidden] { display: none; }
+.plano-editor__publicar { margin-left: auto; }
+.plano-editor__rotulo { font: var(--texto-label); color: var(--color-tinta-2); white-space: nowrap; }
+.plano-editor__sin-ubicar .select { width: auto; min-width: 0; max-width: 240px; min-height: 36px; padding-block: 0; }
+/* Qué está pasando ahora: el aviso y, mientras se marca, "Cerrar la forma" y "Cancelar" */
+.plano-editor__ahora {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+  min-height: 40px;
+  padding: var(--espacio-1) var(--espacio-3);
+  background: var(--color-capa);
+  border-top: 1px solid var(--color-linea);
+  border-radius: 0 0 calc(var(--radio-contenedor) - 1px) calc(var(--radio-contenedor) - 1px);
+}
+.plano-editor__estado { flex: 1 1 240px; font: var(--texto-detalle); color: var(--color-tinta); max-width: none; }
+/* Mientras se marca, la franja avisa con el color de lo que se está dibujando */
+.plano--marcando-barra .plano-editor__ahora { background: color-mix(in srgb, var(--color-primario-texto) 12%, var(--color-panel)); }
+.plano--marcando-barra .plano-editor__estado { font-weight: 700; }
+
+/* En edición, el panel de lo elegido muestra el formulario y no la ficha: los datos
+   no van dos veces. Queda el nombre como título. */
+.plano--editando .plano__detalle .resumen,
+.plano--editando .plano__detalle .plano__tipo,
+.plano--editando .plano__detalle .plano__acciones { display: none; }
+.plano--editando .plano__detalle .plano-form { margin-top: var(--espacio-2); padding-top: 0; border-top: 0; }
+.plano-form { margin-top: var(--espacio-4); padding-top: var(--espacio-4); border-top: 1px solid var(--color-linea); }
+.plano-form .campo { margin-bottom: var(--espacio-3); }
+.plano-form__par { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espacio-2); }
+.plano-form__id { margin: 0 0 var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); overflow-wrap: anywhere; }
+.plano-form__ayuda { margin: calc(var(--espacio-2) * -1) 0 var(--espacio-3); font: var(--texto-detalle); color: var(--color-tinta-2); }
+/* El tipo de equipo de una antena: tres opciones en una fila, el dibujo arriba y el nombre abajo */
+.plano-form__equipos { margin: 0 0 var(--espacio-3); padding: 0; border: 0; min-width: 0; }
+.plano-form__equipos legend { padding: 0; margin-bottom: var(--espacio-1); }
+.plano-form__equipos-fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espacio-1); }
+.plano-form__equipo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--espacio-2) var(--espacio-1);
+  font: var(--texto-detalle);
+  text-align: center;
+  color: var(--color-tinta);
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea-control);
+  border-radius: var(--radio-control);
+  cursor: pointer;
+}
+.plano-form__equipo .plano__dibujo { width: 28px; height: 28px; }
+.plano-form__equipo:hover { border-color: var(--color-primario-texto); }
+.plano-form__equipo:has(input:checked) {
+  font-weight: 700;
+  border-color: var(--color-primario-texto);
+  outline: 1px solid var(--color-primario-texto);
+  background: color-mix(in srgb, var(--color-primario-texto) 10%, var(--color-panel));
+}
+.plano-form__equipo:has(input:checked) .plano__dibujo { color: var(--color-primario-texto); }
+.plano-form__equipo:has(input:focus-visible) { box-shadow: var(--anillo-foco); }
+
+/* Lo que se está marcando: las esquinas ya puestas de un aula nueva */
+.plano-borrador {
+  fill: color-mix(in srgb, var(--color-primario-texto) 14%, transparent);
+  stroke: var(--color-primario-texto);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.plano--marcando .plano__lienzo { cursor: crosshair; }
+/* Mientras se marca, los rótulos y las antenas no atajan el clic: se puede marcar encima de ellos */
+.plano--marcando .plano-rotulo, .plano--marcando .plano-marca, .plano--marcando .plano-lugar { pointer-events: none; }
+@media print { .plano-editor, .plano-form { display: none; } }
+@media (forced-colors: active) {
+  .plano-form__equipo:has(input:checked) { outline: 2px solid Highlight; }
+  .plano-borrador { fill: none; stroke: Highlight; }
 }

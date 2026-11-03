@@ -926,6 +926,115 @@ Pendientes, en orden:
 - [ ] Documentar lo que vino de `ajustes-0.4.4` en `DESIGN.md` y `CHANGELOG.md`, probar los gráficos nuevos y unificar el número de versión (hoy "0.4.4" nombra solo al módulo de planos).
 - [ ] De ahí en adelante, una rama por función.
 
+## 2026-10-08 — Planos: el modo edición pasa al módulo, y la muestra queda a la par de la herramienta
+
+Pedido del usuario: el repositorio da solo el sistema de diseño y las implementaciones van aparte; las muestras son referencia y prototipo. Con eso, la muestra de planos tenía que mostrar lo mismo que la herramienta de la sede (`planos-universidad`), que estaba más avanzada, para seguir trabajando el diseño acá. Rama `planos`, que sale de `en-curso`.
+
+Qué faltaba en la muestra: todo el modo edición (vivía en la herramienta, en `editor.js` y en estilos `.ext-planos-` dentro de su `index.html`), el contenedor ancho y los casos que solo aparecían con los datos reales.
+
+- **El modo edición es ahora parte del módulo:** `sistema/unpsjb-planos-editor.js` y la pieza 7 de `unpsjb-planos.css`, con las clases renombradas a `.plano-editor` y `.plano-form`. Regla nueva: 21.G. Se eligió esto en lugar de copiarlo a la muestra para no tener dos copias que se separen: la herramienta lo trae del sistema.
+- **`muestra-planos.html`** tiene el botón, la barra y datos de ejemplo que cubren antenas sin ubicar, espacios que no se reservan, uno sin ubicación, uno por revisar y uno de forma irregular. Todo inventado; las IP son del rango reservado para ejemplos (`192.0.2.0/24`).
+- **Apareció un error al probar:** con los datos dentro de la página el plano termina de cargar antes de que el editor empiece a escuchar, y la barra quedaba sin funcionar. En la herramienta no pasaba porque los datos llegan por la red. Arreglo: `plano.listo`.
+- **En `planos-universidad`** (repositorio local aparte, sin remoto): se borró `editor.js` y los estilos propios, y `herramientas/traer-sistema.sh` trae también el editor.
+
+Verificado en Chrome sin ventana, sin errores de consola ni de red: la muestra y la herramienta, en vista y en edición, a 1366 px y a 400 px. En edición, con el teclado: agregar una antena, ubicar una pendiente y marcar un aula; con el mouse, entrar y salir de "forma irregular". No se probó: arrastrar ni marcar con clics reales sobre el plano, lector de pantalla, axe, Firefox ni Safari.
+
+Pendientes del módulo de planos:
+- [ ] Mover arrastrando, corregir una forma esquina por esquina y deshacer.
+- [ ] Pasar axe a la muestra en modo edición.
+- [ ] Los textos de la barra nombran `planos.json` y la carpeta `datos`: hacerlos configurables si otra herramienta usa otros nombres.
+- [ ] El ícono de aplicación de la herramienta sigue con la franja naranja (decidir sobre 10.B).
+
+## 2026-10-08 — Planos: revisión de diseño y primera pasada (rótulos, color de las zonas, modo edición)
+
+El usuario dio la funcionalidad por buena y pidió trabajar el diseño ("muy mejorable"). Se hizo una crítica mirando la muestra y, sobre todo, la herramienta con los datos reales: ahí aparecen los problemas. Puntaje: 25 de 40. El informe quedó en `.impeccable/critique/`. El usuario eligió empezar por el plano, hacer los tres problemas graves y que "sin dato" quede casi invisible.
+
+Qué se encontró y qué se hizo:
+
+- **El plano no se leía con datos reales.** En Nivel 1, 12 de 31 rótulos eran un cuadradito sin nombre (y el cuadrado de "sin dato" parece una casilla para tildar). Ahora el nombre es lo último que se pierde: "17" por "Aula 17", y nunca el ícono solo. Medido después: los 31 rótulos tienen texto; 12 entran enteros.
+- **El color estaba al revés.** "Sin dato" es casi todo el plano y llevaba el azul de "elegido". Ahora es un borde fino en neutro, sin relleno, y el azul es solo para lo elegido.
+- **El modo edición sacaba el plano de la vista.** La barra pasó de 420 a 94px y el panel dejó de mostrar cada dato dos veces.
+
+Decisiones:
+- **En el paso más chico del rótulo el estado no lleva ícono:** se ve por la caja (hueca, llena o sin caja), que es una diferencia de forma y no solo de color. El estado con texto está en el nombre del botón, el panel y la lista.
+- **Los nombres largos se cortan con puntos suspensivos** ("Faculta…") cuando no hay forma breve. La salida es cargarles `"corto"` (campo nuevo en el modo edición), no inventar una sigla.
+- **Los nombres de pie** aparecieron al probar: los cuatro laboratorios chicos de Nivel 1 miden 25px de ancho.
+
+Verificado en Chrome sin ventana, sin errores: muestra y herramienta, vista y edición, claro y oscuro, 1366 y 390 px. Dos rondas, como máximo. No se pasó axe ni se midió el contraste de la caja de "ocupada" con una herramienta (a mano: blanco sobre `tinta-2`, cerca de 7:1 en claro).
+
+Lo que quedó sin hacer de la crítica:
+- [ ] **Barra del plano** (P2): acercar, alejar y "ver todo" dentro del plano; capas en las referencias. En celular sigue ocupando cuatro renglones.
+- [ ] **Panel de detalle en vista** (P2): con nada elegido, mostrar el resumen de la planta.
+- [ ] En celular, con el plano entero, los rótulos chicos se enciman: decidir si se ocultan los que no entran hasta acercar.
+- [ ] Los textos chicos del dibujo de AutoCAD ("CIRCULACIÓN", cotas) compiten con los rótulos: sacarlos en el conversor de la herramienta.
+- [ ] El título repetido en la banda y en el `h1`; las columnas casi vacías de la lista; las antenas sin ubicar no figuran fuera de edición.
+- [ ] En la herramienta de la sede, el dibujo de Nivel 1 corta la fila de aulas de arriba (es del SVG, no del módulo), y faltan los nombres cortos de las oficinas.
+
+## 2026-10-08 — Planos: el plano en modo claro pasa a ser un mapa (piso y locales)
+
+Pedido del usuario: "el mapa en modo claro se ve raro, no me gustan los colores"; sugirió buscar referencias. Rama `planos-claro`, que sale de `planos`.
+
+Qué pasaba, mirando la herramienta con los datos reales: en oscuro el plano funciona como cianotipo (líneas claras sobre fondo profundo); en claro era el dibujo de AutoCAD tal cual, en pizarra sobre blanco. Aulas, pasillos y exterior eran el mismo blanco, los muros dobles pesaban más que las aulas, y "ocupada" en gris oscuro parecía deshabilitada.
+
+Referencias que se miraron: el estilo de mapas de interiores de Mappedin (locales rellenos en un tono claro, muros finos, casi sin color; el color queda para lo que se busca) y los planos de las herramientas de reserva (Robin, Joan, Humly, Flowscape, Teem: verde para libre; rojo o gris para ocupado).
+
+- **Piso y locales en dos tonos** (`--plano-suelo`, `--plano-local`, que salen de `capa`/`panel` en claro y `fondo`/`capa` en oscuro). Toda zona se rellena: tapa el ruido del dibujo que tiene debajo.
+- **El dibujo de AutoCAD se apaga:** muros en `linea-control`, lo demás al 45 %.
+- **Libre es lo que se busca:** caja llena en verde. Ocupada pasa a caja hueca en neutro. Sigue valiendo "se distinguen sin color" (llena y hueca), al revés que antes.
+- Reglas tocadas: 21.A, 21.B (lienzo) y 21.D.
+
+Verificado en Chrome sin ventana: herramienta real (las tres plantas en claro, Planta baja y Nivel 1 en oscuro, un aula elegida, a 1366 px) y la muestra en claro y oscuro. No se miró el plano en celular (a 390 px abre la lista), ni se pasó axe, ni se probó impresión ni alto contraste.
+
+Sin decidir (se le mostraron al usuario capturas de las dos):
+- [ ] **Ocupada en rojo,** como todas las herramientas de reserva. Hoy lo prohíbe 21.D.
+- [ ] **Color por tipo de local** (laboratorio, oficina, biblioteca, sala) con los tonos de categoría, y el estado solo en el rótulo. Pide `data-tipo` en la zona y referencias de tipo.
+
+## 2026-10-09 — Planos: borde con contraste, rótulos en locales irregulares y detalle al acercar
+
+El usuario armó un cuaderno con fuentes sobre cartografía de interiores (31 fuentes; entre ellas Chen y Clarke, "Indoor cartography", la guía de mapas accesibles del estado de Minnesota y WCAG 2.2). De consultarlo salieron tres cambios, que aprobó. Rama `planos-claro`.
+
+- **El borde de los locales no llegaba a 3:1 contra el piso** (2.9:1): lo había dejado así el cambio del 8/10, al pasar el lienzo de blanco a `capa`. Ahora es `--plano-borde`. Medido en el navegador: 3.57:1 contra el piso y 4.16:1 contra el local en claro; 5.75:1 y 4.49:1 en oscuro.
+- **El rótulo ya no usa el medio de la caja del local.** En una L o una U caía afuera. Se probó primero el polo de inaccesibilidad tal cual (es lo que hace Polylabel), pero en una L elige la esquina, con 35 de ancho, y no el brazo, con 100: por eso gana el punto más ancho entre los que están bien adentro. En un rectángulo no cambia nada. Sin librería.
+- **El detalle del dibujo aparece desde el doble de acercamiento.** En la vista general quedan los muros.
+
+Verificado: seis formas de prueba (rectángulo, rectángulo largo, L, U, trapecio y un polígono sin área); la herramienta real en las tres plantas, claro y oscuro, a 1366 px, vista general y acercada. **Con los datos reales ninguno de los 59 rótulos cambió de lugar ni de ancho disponible:** en todos los locales ubicados el medio ya servía. El caso irregular solo se probó con formas inventadas. No se miró el plano en celular ni se pasó axe.
+
+Lo que el cuaderno no respalda ni desmiente: rojo o gris para "ocupada" (no hay estudios; solo que no vaya solo en el color). Lo que apoya, como guía de diseño: color por tipo de local, hasta 6 u 8 categorías con su nombre.
+
+Pendiente, con respaldo de estudios con usuarios:
+- [ ] **Puntos de referencia** (escaleras, ascensores, baños, entradas) como capa propia, con pictograma y nombre. Hay que poder marcarlos en el modo edición.
+- [ ] En el dibujo de Trelew las escaleras y los sanitarios están en la clase de los muros: por eso siguen en la vista general. Revisar en el conversor qué va a cada clase.
+
+## 2026-10-09 — Planos: color por tipo de local y puntos de referencia
+
+El usuario comparó la herramienta de antes con la rama y aprobó seguir: se unió `planos-claro` a `planos` y se trajo a `planos-universidad`. Después, en `planos-claro`, estos dos cambios (sin unir todavía: los mira antes).
+
+- **Color por tipo de local.** Biblioteca, laboratorio y sala llevan un tinte de su categoría; aulas y oficinas, no. Se descartó dar color a las oficinas: en Nivel 2 son 8 de 13 locales y la planta entera quedaba teñida. Se descartó también que el tipo reemplazara al estado en el relleno (la opción que se le había mostrado el 8/10): se perdía el verde de las aulas libres, que es lo que se busca. Quedó "el estado manda sobre el tipo".
+- **Puntos de referencia** (`"lugares"`): escaleras, ascensores, baños y entradas, como botones cuadrados en neutro, con el nombre al acercar. Entran en las referencias, en la lista y en el modo edición. Regla nueva: 21.H.
+- El dibujo de los baños se rehízo: con dos figuras detalladas no se leía a 16px.
+
+Verificado en Chrome sin ventana, sin errores: la muestra en vista y en edición (agregar un punto con el teclado, cambiarle el tipo y el nombre, borrador guardado), claro y oscuro; la herramienta real con los tipos en Planta baja y Nivel 1. No se probó: marcar un punto con un clic real sobre el plano, reubicar, borrar, el archivo descargado, celular, lector de pantalla ni axe. **La herramienta real todavía no tiene ningún punto de referencia cargado.**
+
+Pendientes:
+- [ ] Marcar los puntos de referencia de la sede en el modo edición.
+- [ ] Cargar `"corto"` a las oficinas ("Faculta…" tres veces en Nivel 1).
+- [ ] Controles de acercar y referencias dentro del lienzo; resumen de la planta en el panel vacío; búsqueda.
+
+## 2026-10-14 — Skills de diseño para agentes: qué se toma y qué no
+
+Sin número de sesión. Rama `textos-y-revision`, salida de `en-curso`.
+
+El usuario pasó un tweet con diez repositorios "que convierten a Claude Code en diseñador de interfaces" y preguntó si valía la pena instalarlos. No se instaló ninguno:
+
+- **Siete son librerías de efectos** para React o Tailwind (WebGL, shaders, animación de cursor, texto que se escribe solo, animaciones de entrada). Van contra 5.E (el movimiento solo responde a la persona), 3.G (fondos limpios), el principio 3 (liviano) y 7.P/sección 13 (nada de texto que corre).
+- **Better Design** trae 31 temas copiados de marcas (Stripe, Linear…): el sistema ya tiene identidad propia.
+- **Superdesign** necesita cuenta y manda el código a su servicio.
+- **design-taste** tiene reglas buenas, pero repite lo que ya hacen las skills instaladas (impeccable, ui-ux-pro-max) y, en accesibilidad, este documento ya va más lejos.
+
+Lo que sí se tomó, como texto (ver `CHANGELOG.md`): la revisión de diseño por niveles (14.G), errores en tres partes (12) y lo que se lee incluye lo que se ve (9). Mucho de lo que se pensaba sumar ya estaba: los estados vacíos de 8.D ya siguen el esquema de tres partes de design-taste, y la sección 12 ya pedía errores con qué pasó y cómo se arregla.
+
+Verificado: `skill/design-md-unpsjb/SKILL.md` sigue siendo una copia exacta de `DESIGN.md` debajo de su encabezado. No se tocó CSS ni muestras.
+
 ## 2026-10-15 — Se arma la 0.4.5, sin unir a `main`
 
 Sin número de sesión. No se tocó ninguna pieza: número de versión y registro.
@@ -950,6 +1059,68 @@ Pendientes, en orden:
 ## 2026-10-15 — Se publica la 0.4.5
 
 A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.
+
+## 2026-10-21 — Estudio de referencia: National Design Studio, retire.opm.gov y beUI
+
+Sin número de sesión. Pedido del usuario: ¿vale la pena sumar ndstudio.gov y beui.dev? ¿Se habían tenido en cuenta las métricas del National Design Studio?
+
+### Qué se hizo
+- Se verificó que no estaban en ningún lado: ni en el repositorio ni en los dos cuadernos (sistema de diseño, 99 fuentes; planos, 59).
+- Se midieron con `referencias/medir.js` tres páginas públicas de **retire.opm.gov** (ORA, el trámite de jubilación que hizo el National Design Studio) y dos de **ndstudio.gov**. `medir.js` ahora acepta una lista de sitios (`opm,nds`) y conserva lo que ya había en `medidas.json`.
+- Se sumaron 6 fuentes al cuaderno del sistema de diseño (105 en total) y se le hizo una consulta, la "Pregunta 9".
+- Todo quedó en `REFERENCIAS-NDS-OPM.md`. **No se cambió nada del diseño.**
+
+### Qué salió
+- El National Design Studio **no publica métricas de diseño**: publica metas de resultado (horas perdidas, "90 clics pasan a 9", de meses a días, casos "instantáneos").
+- Sirve: medir cada trámite antes y después de rediseñarlo (pasos, campos, datos que se piden de nuevo, minutos, días) y el patrón "mostrar y verificar" de ORA, que extiende 8.F a los datos del trámite.
+- No sirve el aspecto: una foto con degradado, una serif de exhibición, una fuente paga y una portada de 24 MB (18 de video). ORA desborda a lo ancho en celular y usa texto con transparencia que no llega al contraste.
+- beUI se descarta: React 19, Tailwind 4 y Motion, con animaciones que contradicen 5.E.
+- El cuaderno propuso metas fijas (50 % menos campos, menos de 10 clics, 30 días). Están marcadas **[Dudoso]**: no están en las fuentes.
+
+### Cómo se verificó
+- Chrome sin ventana a 1280, 390 y 320px, con **axe 4.10.2** y recorrido con Tab, igual que UNC y UBA. ORA pide iniciar sesión para la solicitud: solo se midieron páginas públicas.
+- Las notas del National Design Studio se leyeron enteras: los números de la nota salen de ahí, no del cuaderno.
+
+### Archivos
+- Nuevo: `REFERENCIAS-NDS-OPM.md`.
+- Tocados: `referencias/medir.js`, `referencias/medidas.json`, `FEEDBACK-NOTEBOOK.md` (enlace y aviso de las fuentes nuevas), `.gitignore` y `BITACORA.md`. Las capturas (`referencias/opm/`, `referencias/nds/`, 5 MB) quedan fuera de git.
+
+### Pendientes
+- [ ] Que el usuario decida si la acción 1 (medir el trámite antes y después) entra en `DESIGN.md`, secciones 9 y 14.
+- [ ] Que decida si la acción 2 ("mostrar y verificar" con datos de SIU) se escribe ya o se espera a tener una herramienta que lea SIU.
+
+## 2026-11-03 — Planos: los dos avisos de axe del PR #1
+
+Sin número de sesión. Es uno de los pendientes del PR #1 (rama `planos`).
+
+- **axe en `muestra-planos.html` y `muestra-planos.html?editar`**, a 1366 y 390 px, claro y oscuro (8 casos), con Chrome sin ventana. Antes había dos fallas: `landmark-complementary-is-top-level` en todos los casos y `heading-order` a 390 px.
+- **Se arreglan en el módulo** (`unpsjb-planos.js`), así que alcanzan a toda herramienta que lo use: el panel de detalle pasa de `<aside>` a `<section>` con el mismo nombre, y los títulos de la lista pasan de `<h3>` a `<h2>`. Ninguno cambia cómo se ve.
+- Queda 0 fallas en los 8 casos y sin errores en la consola. Sigue un aviso (`color-contrast`, "incomplete") en los `<kbd>` con "+" y "−": axe no mide caracteres que no son letras. `kbd` no tiene estilo propio y hereda el color del párrafo, que pasa. No hace falta cambiar nada.
+- Las herramientas que copian `sistema/` (los planos de la sede) toman el arreglo la próxima vez que traigan el sistema.
+
+Pendientes del PR #1:
+- [x] Los dos avisos de axe de `muestra-planos.html`.
+- [x] Revisar a ojo en claro y oscuro (el usuario: "lo veo bien").
+- [x] Decidir el número de versión antes de unir: 0.4.6.
+
+## 2026-11-03 — Se arma la 0.4.6 (PR #1, planos)
+
+Sin número de sesión. El usuario revisó la muestra de planos en claro, en oscuro, en el celular y en modo edición, y la aprobó.
+
+- **Numeración (decisión del usuario):** se sigue en 0.4.x hasta la 0.4.20. Entra en la regla de `DESIGN.md` 14.C: mientras el primer número sea 0, el del medio sube solo con un borrador de diseño nuevo. Por defecto, cada PR que cambia `sistema/` lleva un número: este es la 0.4.6 y el PR #2 (`textos-y-revision`) va a ser la 0.4.7.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.6. En `CHANGELOG.md`, las dos entradas "En curso" de planos pasan a ser la 0.4.6, y la 0.4.5 queda como anterior.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`: le faltaban las reglas del plano de esta rama (21.A, 21.B, 21.D y 21.H).
+- La rama `planos` se une a `main`. `planos-interfaz-nueva` (PR #3) sale de `planos`: sigue como borrador.
+
+## 2026-11-03 — Se arma la 0.4.7 (revisión de diseño, sin la difusión)
+
+Sin número de sesión. Al preparar el PR #2 (`textos-y-revision`) apareció que su propuesta de páginas de difusión (17.E, sin aprobar, del 14/10) choca con lo que el usuario decidió hoy para las páginas públicas en la rama `portada-publica`, que también es una 17.E: la difusión dice que la foto nunca va detrás del texto, y la portada pone el título sobre la foto, con la capa al 55 %.
+
+- **Decisión del usuario:** separar. La 0.4.7 lleva solo la revisión de diseño del 14/10 (14.G, errores en tres partes, lo que se lee incluye lo que se ve), que estaba lista.
+- **La difusión pasa a la rama `difusion`**, tal cual (propuesta 17.E, `muestra-difusion.html`, `unpsjb-difusion.css` y las 5 excepciones del detector). Después se junta con `portada-publica` en una sola 17.E, tomando lo de `portada-publica` cuando choquen.
+- La rama nueva `revision-de-diseno` sale de `main` (0.4.6) con el commit de la revisión. Al traerlo chocaron `BITACORA.md` y `CHANGELOG.md`: quedaron todas las entradas en orden de fecha.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.7; lo que decía "sin número todavía" dice 0.4.7. La skill se regeneró desde `DESIGN.md`.
+- No se tocó CSS ni muestras más allá del número.
 
 ## 2026-11-03 — Piezas de páginas públicas a partir del sitio de la SIDE
 
