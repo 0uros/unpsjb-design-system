@@ -5,7 +5,7 @@ description: "Design.md para generar páginas para la universidad"
 
 ---
 name: UNPSJB · Señalética
-version: 0.4.6
+version: 0.4.7
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -148,7 +148,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.4.6 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.7 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `archivo/` (`DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`; fuera de git, la etiqueta es `v0.2.1`). Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `archivo/comparar-v3.html` (0.2.1 y la actual) y `archivo/comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -902,6 +902,8 @@ Una lista corta que se recorre en cada versión nueva. Se anota el resultado en 
 3. **Zoom y ancho:** al 200% y con la ventana en 320px de ancho no aparece scroll horizontal en la página (las tablas pueden tenerlo adentro).
 4. **Contraste:** los colores nuevos que no estén en este documento se miden (4.5:1 texto, 3:1 controles), en claro **y** en oscuro.
 5. **Lector de pantalla:** el recorrido principal con **Orca** (Linux), **NVDA** (Windows) o VoiceOver (macOS/iOS). Los botones dicen qué hacen, los errores y toasts se anuncian solos y los íconos decorativos no se leen.
+   - **Lo que se lee incluye lo que se ve (nuevo en 0.4.7; WCAG 2.5.3):** si el botón dice "Guardar", su `aria-label` no puede ser "Enviar formulario", porque quien maneja la computadora con la voz dice lo que ve. Si el texto visible alcanza, no lleva `aria-label`; si hace falta más, se suma con `.solo-lector` después del texto, como en 7.Q.
+   - Ningún botón ni enlace queda sin nombre (por ejemplo, un ícono solo sin `aria-label`).
 6. **Celular real:** un recorrido en un teléfono, con los campos de 16px (sin zoom automático) y el menú inferior sin tapar contenido.
 7. **Lo básico de la página (nuevo en 0.4.5):** tres cosas que se rompen sin que nadie lo note y que aparecieron en sitios grandes en el estudio de referencia.
    - `<html lang="es">`. Con otro idioma declarado, el lector de pantalla pronuncia todo mal.
@@ -1030,6 +1032,8 @@ Las palabras son parte del diseño.
 - **Nombrar por lo que entiende la persona**, no por cómo está hecho el sistema: "Inscripciones", no "Registros de la tabla alumnos_evento".
 - **Botones con verbo y objeto:** "Guardar cambios", "Descargar planilla". La misma acción conserva el mismo nombre en todo el recorrido.
 - **Errores:** dicen qué pasó y cómo se arregla. No piden disculpas ni son vagos ("Ocurrió un error" no sirve).
+  - **En tres partes (nuevo en 0.4.7):** qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. "No se pudo subir programa.docx · solo se aceptan PDF y JPG · exportalo como PDF y probá de nuevo." El título del aviso (8.A) lleva lo que pasó; la descripción, el porqué y la salida.
+  - El porqué se omite cuando la persona no puede hacer nada con él: "el servidor devolvió 502" no ayuda; "el servidor no respondió, tus datos siguen cargados" sí.
 - **Sin relleno:** nada de "Bienvenido/a al sistema de…" arriba de cada pantalla. El título de la pantalla alcanza.
 - **Voz activa (nuevo en 0.3):** que se sepa quién hace qué. "Soporte Informático revisa tu solicitud", no "La solicitud será revisada por el área correspondiente".
 - **Corto (nuevo en 0.3):** oraciones de 20 palabras como máximo y párrafos de 1 a 3 oraciones. Si hace falta más, es una lista.
@@ -1068,6 +1072,7 @@ Las palabras son parte del diseño.
 | Ofrecer el selector de tema (Automático · Claro · Oscuro). | Depender solo de la preferencia del sistema operativo. |
 | Escribir con colectivos ("el cuerpo docente", "las personas inscriptas"). | Usar "los/las", "x", "@" o "e" en la interfaz. |
 | Recorrer la lista "Antes de publicar" (sección 9) en cada versión. | Publicar sin probar con teclado y lector de pantalla. |
+| Revisar con capturas en celular y escritorio, claro y oscuro, y datos como los reales (14.G). | Dar una pantalla por buena porque se ve bien con los datos de ejemplo. |
 | Tomar logo, fuentes (incluida la de emojis), íconos y `unpsjb.css` del servidor de recursos. | Poner claves de API en el código del navegador. |
 | Usar los colores de categoría para tipos de cosas, siempre con su nombre. | Pintar categorías con el semáforo o estados con colores de categoría. |
 | Usar el interruptor solo para lo que se aplica en el momento. | Poner un interruptor en un formulario con botón "Guardar". |
@@ -1121,7 +1126,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.6), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.7), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1158,6 +1163,24 @@ A veces una herramienta necesita algo que el sistema no tiene (un control de cá
   - "Algo no funciona" y "Me cuesta usarlo o leerlo" se corrigen en la versión de arreglo siguiente. Los de accesibilidad, primero.
   - Las sugerencias se anotan. Lo que piden dos o más herramientas entra en la próxima versión menor.
   - A quien reportó se le contesta, aunque sea para decir que no se va a hacer.
+
+### G. Revisión de diseño de una pantalla (nuevo en 0.4.7)
+
+Antes de las pruebas con personas (9) y antes de publicar una pantalla nueva o un cambio grande. La lista "Antes de publicar" dice si una pantalla es accesible; esta dice si cumple este documento y si se entiende.
+
+1. **Capturas, no el código.** Celular (390px), tablet (768px) y escritorio (1280px), en claro y en oscuro. **Con datos como los reales:** nombres largos, listas vacías y llenas, el peor caso. Con datos de ejemplo cortos todo entra: en el plano, recién con los datos de la sede apareció que 12 de 31 rótulos quedaban sin nombre.
+2. **Cinco segundos por captura.** ¿Se sabe qué herramienta es y dónde se está (la banda y el marcador naranja)? ¿Cuál es la acción principal? Si hay que buscarla, ya es un hallazgo.
+3. **Contra el documento.** Se recorre la tabla de la sección 13 y las reglas de los componentes que aparecen en la pantalla.
+4. **Cada hallazgo, con su nivel:**
+
+| Nivel | Qué es | Cuándo se arregla |
+|---|---|---|
+| **Bloquea** | No se puede terminar la tarea, o falla WCAG 2.2 AA. | Antes de publicar, sin excepción. |
+| **Importante** | Confunde, o va contra una regla de este documento. | Antes de publicar. Si no se llega, se anota con fecha. |
+| **Detalle** | Se nota, pero no traba a nadie. | En la próxima versión de arreglo. |
+| **Gusto** | Una preferencia, sin regla que la respalde. | Se anota y no se discute de nuevo. Si se repite en varias revisiones, se propone como regla (14.B). |
+
+5. **Se anota en la bitácora de la herramienta:** la captura, el nivel, la regla que toca (con su número de sección) y el arreglo en una frase. Cada arreglo se comprueba con una captura nueva, en los mismos tamaños.
 
 ## 15. Gráficos e indicadores (nuevo en 0.4)
 

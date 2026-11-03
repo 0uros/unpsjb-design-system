@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-graficos.js — Módulo de gráficos · v0.4.6
+   unpsjb-graficos.js — Módulo de gráficos · v0.4.7
    Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 15.
 
    Dibuja un gráfico A PARTIR DE UNA TABLA. Los datos se escriben una sola vez,
