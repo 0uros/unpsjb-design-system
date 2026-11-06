@@ -6619,5 +6619,2171 @@
     }
    }
   }
+ },
+ "opm": {
+  "portada": {
+   "url": "https://retire.opm.gov/portal",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "ORA - Online Retirement Application",
+    "medidas": {
+     "elementos": 216,
+     "colores": {
+      "fondos": 10,
+      "textos": 14
+     },
+     "fondos": [
+      "rgb(238, 236, 230)  x6",
+      "rgb(255, 255, 255)  x4",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.2)  x3",
+      "lab(17.8299 -5.31271 -21.1584)  x2",
+      "rgb(247, 246, 244)  x2",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "oklab(0 0 0 / 0.25)  x1",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)  x1",
+      "rgb(0, 111, 174)  x1",
+      "lab(18.4058 -4.79996 -22.2076 / 0.7)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x19",
+      "rgb(0, 0, 0)  x8",
+      "rgb(2, 6, 23)  x6",
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)  x4",
+      "lab(11.2636 -0.00000745058 0.0000089407 / 0.5)  x4",
+      "oklab(0 0 0 / 0.5)  x3",
+      "rgb(136, 22, 29)  x2",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "rgb(134, 145, 160)  x1",
+      "rgb(71, 85, 105)  x1",
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)  x1"
+     ],
+     "bordes": [
+      "1px oklab(0.999994 0.0000455678 0.0000200868 / 0.3)  x1",
+      "1px oklab(0.999994 0.0000455678 0.0000200868 / 0.1)  x1",
+      "1px lab(91.7353 -0.998765 -4.76968)  x1"
+     ],
+     "degradados": [
+      "linear-gradient(oklab(0 0 0 / 0) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.2) 100%)  x2",
+      "linear-gradient(rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.06) 38%, rgba(0, 0, 0, 0.72) 100%)  x1",
+      "linear-gradient(90deg, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0.24) 100%)  x1",
+      "linear-gradient(90deg, rgba(0, 38, 68, 0.58) 0%, rgba(0, 38, 68, 0.16) 40%, rgba(0, 58, 91, 0.12) 10  x1",
+      "linear-gradient(rgba(0, 52, 86, 0.08) 0%, rgba(0, 22, 34, 0.76) 100%)  x1"
+     ],
+     "familias": [
+      "Inter  x46",
+      "Geist Mono  x4",
+      "Geist  x2",
+      "Instrument Serif  x1"
+     ],
+     "tamanios": [
+      "40px/600/50px  x9",
+      "14px/600/20px  x8",
+      "20px/400/28px  x7",
+      "20px/400/27.5px  x4",
+      "29px/600/36.25px  x3",
+      "24px/400/33px  x3",
+      "16px/500/24px  x2",
+      "16px/400/24px  x2",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "72px/400/70.56px  x1",
+      "14px/500/20px  x1",
+      "12px/600/20px  x1",
+      "78px/600/79.56px  x1",
+      "12px/400/15px  x1",
+      "60px/600/75px  x1"
+     ],
+     "radios": [
+      "3.35544e+07px  x9",
+      "32px  x3",
+      "10px  x2",
+      "6px  x1",
+      "8px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x4"
+     ],
+     "tamaniosDistintos": 14,
+     "header": {
+      "alto": 64,
+      "ancho": 1280,
+      "pos": "absolute",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": null,
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "20px",
+      "inter": "28px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Inter",
+      "ancho": 580,
+      "caracteresPorRenglon": 58
+     },
+     "h": "H3 H1 H4 H2 H4 H2 H3 H3 H3 H2 H2 H2 H2 H4 H2 H2 H2 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header main",
+     "saltar": false,
+     "enlacesMenu": 2,
+     "interactivos": 15,
+     "chicos": 3,
+     "imgs": 12,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 8190,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 56
+    },
+    "red": {
+     "pedidos": 56,
+     "kB": 1472,
+     "porTipoKB": {
+      "document": 4,
+      "font": 113,
+      "stylesheet": 35,
+      "script": 928,
+      "xhr": 0,
+      "image": 387,
+      "fetch": 5,
+      "other": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 5,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<div class=\"mt-4 text-[20px] leading-snug font-normal tracking-tight text-[#1E1E1E]/50 lg:text-[20px]\">We show you how your elections affect",
+       "<div class=\"mt-4 text-[20px] leading-snug font-normal tracking-tight text-[#1E1E1E]/50 lg:text-[20px]\">"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 3,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"w-full text-center font-mono text-xs leading-5 font-semibold tracking-[2px] text-white/70 uppercase\">Online Retirement Applicatio",
+       "<h4 class=\"font-mono text-[12px] leading-tight tracking-tighter text-[#88161D] uppercase\">HOW IT WORKS</h4>"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"flex items-center gap-2\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Here's how you know",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "a.relative",
+      "texto": "",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "a.hidden",
+      "texto": "Help",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "button.bg-background-elevated",
+      "texto": "Log in",
+      "contorno": "1px oklab(0.590231 -0.0156409 -0.0665001 / 0.04)",
+      "sombra": true
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Start application",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.group",
+      "texto": "Options for former federal emp",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Coming Soon",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "input.relative",
+      "texto": "Retirement age",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "input.relative",
+      "texto": "Years of service",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "input.relative",
+      "texto": "Salary",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.flex",
+      "texto": "Who can access the portal?",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "button.flex",
+      "texto": "How does HR and payroll reques",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "ORA - Online Retirement Application",
+    "medidas": {
+     "elementos": 213,
+     "colores": {
+      "fondos": 10,
+      "textos": 13
+     },
+     "fondos": [
+      "rgb(238, 236, 230)  x6",
+      "rgb(255, 255, 255)  x4",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.2)  x3",
+      "lab(17.8299 -5.31271 -21.1584)  x2",
+      "rgb(247, 246, 244)  x2",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "oklab(0 0 0 / 0.25)  x1",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)  x1",
+      "rgb(0, 111, 174)  x1",
+      "lab(18.4058 -4.79996 -22.2076 / 0.7)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x19",
+      "rgb(0, 0, 0)  x8",
+      "rgb(2, 6, 23)  x6",
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)  x4",
+      "lab(11.2636 -0.00000745058 0.0000089407 / 0.5)  x4",
+      "oklab(0 0 0 / 0.5)  x3",
+      "rgb(136, 22, 29)  x2",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "rgb(71, 85, 105)  x1",
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)  x1",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)  x1"
+     ],
+     "bordes": [
+      "1px oklab(0.999994 0.0000455678 0.0000200868 / 0.3)  x1",
+      "1px oklab(0.999994 0.0000455678 0.0000200868 / 0.1)  x1",
+      "1px lab(91.7353 -0.998765 -4.76968)  x1"
+     ],
+     "degradados": [
+      "linear-gradient(oklab(0 0 0 / 0) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.2) 100%)  x2",
+      "linear-gradient(rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.06) 38%, rgba(0, 0, 0, 0.72) 100%)  x1",
+      "linear-gradient(90deg, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0.24) 100%)  x1",
+      "linear-gradient(90deg, rgba(0, 38, 68, 0.58) 0%, rgba(0, 38, 68, 0.16) 40%, rgba(0, 58, 91, 0.12) 10  x1",
+      "linear-gradient(rgba(0, 52, 86, 0.08) 0%, rgba(0, 22, 34, 0.76) 100%)  x1"
+     ],
+     "familias": [
+      "Inter  x45",
+      "Geist Mono  x4",
+      "Geist  x2",
+      "Instrument Serif  x1"
+     ],
+     "tamanios": [
+      "16px/400/24px  x8",
+      "14px/600/20px  x8",
+      "32px/600/40px  x5",
+      "40px/600/50px  x4",
+      "20px/400/27.5px  x4",
+      "29px/600/36.25px  x3",
+      "24px/400/33px  x3",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "16px/500/24px  x1",
+      "44px/400/43.12px  x1",
+      "16px/400/28px  x1",
+      "14px/500/20px  x1",
+      "12px/600/20px  x1",
+      "18px/600/18.36px  x1",
+      "12px/400/15px  x1"
+     ],
+     "radios": [
+      "3.35544e+07px  x9",
+      "16px  x3",
+      "6px  x1",
+      "10px  x1",
+      "8px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x4"
+     ],
+     "tamaniosDistintos": 16,
+     "header": {
+      "alto": 64,
+      "ancho": 390,
+      "pos": "absolute",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": null,
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Inter",
+      "ancho": 326,
+      "caracteresPorRenglon": 41
+     },
+     "h": "H3 H1 H4 H2 H4 H2 H3 H3 H3 H2 H2 H2 H2 H4 H2 H2 H2 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header main",
+     "saltar": false,
+     "enlacesMenu": 2,
+     "interactivos": 14,
+     "chicos": 3,
+     "imgs": 12,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 8943,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 56
+    },
+    "red": {
+     "pedidos": 42,
+     "kB": 1189,
+     "porTipoKB": {
+      "document": 4,
+      "font": 113,
+      "stylesheet": 34,
+      "script": 765,
+      "xhr": 0,
+      "image": 270,
+      "fetch": 2,
+      "other": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 5,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<div class=\"mt-4 text-[20px] leading-snug font-normal tracking-tight text-[#1E1E1E]/50 lg:text-[20px]\">We show you how your elections affect",
+       "<div class=\"mt-4 text-[20px] leading-snug font-normal tracking-tight text-[#1E1E1E]/50 lg:text-[20px]\">"
+      ]
+     },
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 3,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h4 class=\"w-full text-center font-mono text-xs leading-5 font-semibold tracking-[2px] text-white/70 uppercase\">Online Retirement Applicatio",
+       "<h4 class=\"font-mono text-[12px] leading-tight tracking-tighter text-[#88161D] uppercase\">HOW IT WORKS</h4>"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"flex items-center gap-2\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "ORA - Online Retirement Application",
+    "medidas": {
+     "elementos": 213,
+     "colores": {
+      "fondos": 10,
+      "textos": 13
+     },
+     "fondos": [
+      "rgb(238, 236, 230)  x6",
+      "rgb(255, 255, 255)  x4",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.2)  x3",
+      "lab(17.8299 -5.31271 -21.1584)  x2",
+      "rgb(247, 246, 244)  x2",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "oklab(0 0 0 / 0.25)  x1",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)  x1",
+      "rgb(0, 111, 174)  x1",
+      "lab(18.4058 -4.79996 -22.2076 / 0.7)  x1"
+     ],
+     "textos": [
+      "rgb(255, 255, 255)  x19",
+      "rgb(0, 0, 0)  x8",
+      "rgb(2, 6, 23)  x6",
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)  x4",
+      "lab(11.2636 -0.00000745058 0.0000089407 / 0.5)  x4",
+      "oklab(0 0 0 / 0.5)  x3",
+      "rgb(136, 22, 29)  x2",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "rgb(71, 85, 105)  x1",
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)  x1",
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)  x1"
+     ],
+     "bordes": [
+      "1px oklab(0.999994 0.0000455678 0.0000200868 / 0.3)  x1",
+      "1px oklab(0.999994 0.0000455678 0.0000200868 / 0.1)  x1",
+      "1px lab(91.7353 -0.998765 -4.76968)  x1"
+     ],
+     "degradados": [
+      "linear-gradient(oklab(0 0 0 / 0) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.2) 100%)  x2",
+      "linear-gradient(rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.06) 38%, rgba(0, 0, 0, 0.72) 100%)  x1",
+      "linear-gradient(90deg, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0.24) 100%)  x1",
+      "linear-gradient(90deg, rgba(0, 38, 68, 0.58) 0%, rgba(0, 38, 68, 0.16) 40%, rgba(0, 58, 91, 0.12) 10  x1",
+      "linear-gradient(rgba(0, 52, 86, 0.08) 0%, rgba(0, 22, 34, 0.76) 100%)  x1"
+     ],
+     "familias": [
+      "Inter  x45",
+      "Geist Mono  x4",
+      "Geist  x2",
+      "Instrument Serif  x1"
+     ],
+     "tamanios": [
+      "16px/400/24px  x8",
+      "14px/600/20px  x8",
+      "32px/600/40px  x5",
+      "40px/600/50px  x4",
+      "20px/400/27.5px  x4",
+      "29px/600/36.25px  x3",
+      "24px/400/33px  x3",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "16px/500/24px  x1",
+      "44px/400/43.12px  x1",
+      "16px/400/28px  x1",
+      "14px/500/20px  x1",
+      "12px/600/20px  x1",
+      "18px/600/18.36px  x1",
+      "12px/400/15px  x1"
+     ],
+     "radios": [
+      "3.35544e+07px  x9",
+      "16px  x3",
+      "6px  x1",
+      "10px  x1",
+      "8px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x4"
+     ],
+     "tamaniosDistintos": 16,
+     "header": {
+      "alto": 64,
+      "ancho": 320,
+      "pos": "absolute",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": null,
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(255, 255, 255)",
+      "familia": "Inter",
+      "ancho": 256,
+      "caracteresPorRenglon": 32
+     },
+     "h": "H3 H1 H4 H2 H4 H2 H3 H3 H3 H2 H2 H2 H2 H4 H2 H2 H2 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header main",
+     "saltar": false,
+     "enlacesMenu": 2,
+     "interactivos": 14,
+     "chicos": 3,
+     "imgs": 12,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 9733,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 56
+    },
+    "red": {
+     "pedidos": 42,
+     "kB": 1189,
+     "porTipoKB": {
+      "document": 4,
+      "font": 113,
+      "stylesheet": 34,
+      "script": 765,
+      "xhr": 0,
+      "image": 270,
+      "fetch": 2,
+      "other": 0
+     }
+    }
+   }
+  },
+  "opciones": {
+   "url": "https://retire.opm.gov/portal/former-federal",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "ORA - Online Retirement Application",
+    "medidas": {
+     "elementos": 47,
+     "colores": {
+      "fondos": 4,
+      "textos": 7
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x2",
+      "rgb(30, 41, 59)  x2",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "rgb(238, 236, 230)  x1"
+     ],
+     "textos": [
+      "lab(35.5623 -1.74978 -15.4316)  x4",
+      "lab(7.78673 1.82345 -15.0537)  x2",
+      "rgb(255, 255, 255)  x2",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "rgb(134, 145, 160)  x1",
+      "rgb(8, 51, 83)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "Inter  x9",
+      "Geist  x2",
+      "Instrument Serif  x1"
+     ],
+     "tamanios": [
+      "16px/500/24px  x3",
+      "14px/400/24px  x3",
+      "24px/600/32px  x2",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "64px/400/80px  x1",
+      "18px/400/28px  x1"
+     ],
+     "radios": [
+      "8px  x4",
+      "6px  x1",
+      "10px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x4"
+     ],
+     "tamaniosDistintos": 6,
+     "header": {
+      "alto": 64,
+      "ancho": 1280,
+      "pos": "absolute",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": null,
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "14px",
+      "inter": "24px",
+      "color": "lab(35.5623 -1.74978 -15.4316)",
+      "familia": "Inter",
+      "ancho": 540,
+      "caracteresPorRenglon": 77
+     },
+     "h": "H3 H1 H2 H2",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header main",
+     "saltar": false,
+     "enlacesMenu": 2,
+     "interactivos": 5,
+     "chicos": 0,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 848,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 56
+    },
+    "red": {
+     "pedidos": 47,
+     "kB": 1102,
+     "porTipoKB": {
+      "document": 4,
+      "font": 113,
+      "stylesheet": 35,
+      "script": 924,
+      "xhr": 0,
+      "image": 20,
+      "fetch": 5,
+      "other": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "color-contrast",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "Elements must meet minimum color contrast ratio thresholds",
+      "tags": "wcag2aa,wcag143",
+      "ej": [
+       "<span class=\"text-content-subtle leading-6 font-medium\">Help</span>"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"flex items-center gap-2\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Here's how you know",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "a.relative",
+      "texto": "",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "a.hidden",
+      "texto": "Help",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Start disability application",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Start deferred or postponed ap",
+      "contorno": "no",
+      "sombra": true
+     },
+     null,
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Here's how you know",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "a.relative",
+      "texto": "",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "a.hidden",
+      "texto": "Help",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Start disability application",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Start deferred or postponed ap",
+      "contorno": "no",
+      "sombra": true
+     },
+     null
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "ORA - Online Retirement Application",
+    "medidas": {
+     "elementos": 43,
+     "colores": {
+      "fondos": 4,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x2",
+      "rgb(30, 41, 59)  x2",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "rgb(238, 236, 230)  x1"
+     ],
+     "textos": [
+      "lab(35.5623 -1.74978 -15.4316)  x4",
+      "lab(7.78673 1.82345 -15.0537)  x2",
+      "rgb(255, 255, 255)  x2",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "rgb(8, 51, 83)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "Inter  x8",
+      "Geist  x2",
+      "Instrument Serif  x1"
+     ],
+     "tamanios": [
+      "14px/400/24px  x3",
+      "20px/600/28px  x2",
+      "16px/500/24px  x2",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "36px/400/45px  x1",
+      "16px/400/28px  x1"
+     ],
+     "radios": [
+      "8px  x4",
+      "6px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x4"
+     ],
+     "tamaniosDistintos": 5,
+     "header": {
+      "alto": 44,
+      "ancho": 390,
+      "pos": "absolute",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": null,
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "14px",
+      "inter": "24px",
+      "color": "lab(35.5623 -1.74978 -15.4316)",
+      "familia": "Inter",
+      "ancho": 354,
+      "caracteresPorRenglon": 51
+     },
+     "h": "H3 H1 H2 H2",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header main",
+     "saltar": false,
+     "enlacesMenu": 2,
+     "interactivos": 4,
+     "chicos": 0,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 426,
+     "innerW": 426,
+     "altoPagina": 1542,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 56
+    },
+    "red": {
+     "pedidos": 33,
+     "kB": 936,
+     "porTipoKB": {
+      "document": 4,
+      "font": 113,
+      "stylesheet": 34,
+      "script": 762,
+      "xhr": 0,
+      "image": 20,
+      "fetch": 2,
+      "other": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"flex items-center gap-2\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "ORA - Online Retirement Application",
+    "medidas": {
+     "elementos": 43,
+     "colores": {
+      "fondos": 4,
+      "textos": 6
+     },
+     "fondos": [
+      "rgb(255, 255, 255)  x2",
+      "rgb(30, 41, 59)  x2",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "rgb(238, 236, 230)  x1"
+     ],
+     "textos": [
+      "lab(35.5623 -1.74978 -15.4316)  x4",
+      "lab(7.78673 1.82345 -15.0537)  x2",
+      "rgb(255, 255, 255)  x2",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "rgb(8, 51, 83)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "Inter  x8",
+      "Geist  x2",
+      "Instrument Serif  x1"
+     ],
+     "tamanios": [
+      "14px/400/24px  x3",
+      "20px/600/28px  x2",
+      "16px/500/24px  x2",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "36px/400/45px  x1",
+      "16px/400/28px  x1"
+     ],
+     "radios": [
+      "8px  x4",
+      "6px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x4"
+     ],
+     "tamaniosDistintos": 5,
+     "header": {
+      "alto": 44,
+      "ancho": 320,
+      "pos": "absolute",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": null,
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "14px",
+      "inter": "24px",
+      "color": "lab(35.5623 -1.74978 -15.4316)",
+      "familia": "Inter",
+      "ancho": 354,
+      "caracteresPorRenglon": 51
+     },
+     "h": "H3 H1 H2 H2",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "header main",
+     "saltar": false,
+     "enlacesMenu": 2,
+     "interactivos": 4,
+     "chicos": 0,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 426,
+     "innerW": 426,
+     "altoPagina": 1558,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 56
+    },
+    "red": {
+     "pedidos": 33,
+     "kB": 936,
+     "porTipoKB": {
+      "document": 4,
+      "font": 113,
+      "stylesheet": 34,
+      "script": 762,
+      "xhr": 0,
+      "fetch": 2,
+      "image": 20,
+      "other": 0
+     }
+    }
+   }
+  },
+  "ayuda": {
+   "url": "https://retire.opm.gov/help",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Help | ORA",
+    "medidas": {
+     "elementos": 73,
+     "colores": {
+      "fondos": 4,
+      "textos": 6
+     },
+     "fondos": [
+      "lab(26.9569 -1.47016 -15.6993)  x4",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "rgb(30, 41, 59)  x1",
+      "lab(91.7353 -0.998765 -4.76968)  x1"
+     ],
+     "textos": [
+      "rgb(71, 85, 105)  x4",
+      "rgb(255, 255, 255)  x4",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "lab(65.5349 -2.25151 -14.5072)  x1",
+      "rgb(2, 6, 23)  x1"
+     ],
+     "bordes": [
+      "1px rgba(255, 255, 255, 0.25)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "Geist  x12"
+     ],
+     "tamanios": [
+      "16px/400/24px  x4",
+      "20px/600/28px  x4",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "14px/500/20px  x1",
+      "30px/600/36px  x1"
+     ],
+     "radios": [
+      "6px  x6",
+      "4px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": null,
+     "nav": {
+      "alto": 24,
+      "ancho": 240,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(71, 85, 105)",
+      "familia": "Geist",
+      "ancho": 848,
+      "caracteresPorRenglon": 106
+     },
+     "h": "H3 H1 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav",
+     "saltar": false,
+     "enlacesMenu": 0,
+     "interactivos": 8,
+     "chicos": 0,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 1280,
+     "innerW": 1280,
+     "altoPagina": 800,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 73
+    },
+    "red": {
+     "pedidos": 39,
+     "kB": 1011,
+     "porTipoKB": {
+      "document": 4,
+      "font": 66,
+      "stylesheet": 34,
+      "script": 905,
+      "xhr": 0,
+      "image": 1,
+      "fetch": 0,
+      "other": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h3 data-orientation=\"vertical\" data-state=\"closed\" class=\"flex\">"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 4,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"flex items-center gap-2\">",
+       "<span class=\"ml-4 overflow-hidden whitespace-nowrap\">Help</span>"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Here's how you know",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.focus-visible:ring-ring",
+      "texto": "Collapse navigation",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Collapse navigation",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "a.hover:bg-sidebar-accent",
+      "texto": "Help",
+      "contorno": "1px oklab(0.703997 -0.00914919 -0.038923 / 0.5)",
+      "sombra": false
+     },
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Information for Applicants",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Information for HR Specialists",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Information for Payroll Office",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Contact Support",
+      "contorno": "no",
+      "sombra": true
+     },
+     null,
+     {
+      "el": "button.focus-visible:border-ring",
+      "texto": "Here's how you know",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.focus-visible:ring-ring",
+      "texto": "Collapse navigation",
+      "contorno": "no",
+      "sombra": true
+     },
+     {
+      "el": "button.inline-flex",
+      "texto": "Collapse navigation",
+      "contorno": "no",
+      "sombra": true
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Help | ORA",
+    "medidas": {
+     "elementos": 59,
+     "colores": {
+      "fondos": 4,
+      "textos": 6
+     },
+     "fondos": [
+      "lab(26.9569 -1.47016 -15.6993)  x4",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "rgb(30, 41, 59)  x1",
+      "lab(91.7353 -0.998765 -4.76968)  x1"
+     ],
+     "textos": [
+      "rgb(71, 85, 105)  x4",
+      "rgb(255, 255, 255)  x4",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "lab(65.5349 -2.25151 -14.5072)  x1",
+      "rgb(2, 6, 23)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "Geist  x12"
+     ],
+     "tamanios": [
+      "16px/400/24px  x4",
+      "20px/600/28px  x4",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "14px/500/20px  x1",
+      "30px/600/36px  x1"
+     ],
+     "radios": [
+      "6px  x5",
+      "8px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": null,
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(71, 85, 105)",
+      "familia": "Geist",
+      "ancho": 278,
+      "caracteresPorRenglon": 35
+     },
+     "h": "H3 H1 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "",
+     "saltar": false,
+     "enlacesMenu": 0,
+     "interactivos": 6,
+     "chicos": 0,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 800,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 73
+    },
+    "red": {
+     "pedidos": 38,
+     "kB": 1006,
+     "porTipoKB": {
+      "document": 4,
+      "font": 66,
+      "stylesheet": 34,
+      "script": 900,
+      "xhr": 0,
+      "image": 1,
+      "other": 0
+     }
+    },
+    "axe": [
+     {
+      "id": "heading-order",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Heading levels should only increase by one",
+      "tags": "best-practice",
+      "ej": [
+       "<h3 data-orientation=\"vertical\" data-state=\"closed\" class=\"flex\">"
+      ]
+     },
+     {
+      "id": "landmark-one-main",
+      "impacto": "moderate",
+      "nodos": 1,
+      "ayuda": "Document should have one main landmark",
+      "tags": "best-practice",
+      "ej": [
+       "<html lang=\"en\">"
+      ]
+     },
+     {
+      "id": "region",
+      "impacto": "moderate",
+      "nodos": 4,
+      "ayuda": "All page content should be contained by landmarks",
+      "tags": "best-practice",
+      "ej": [
+       "<div class=\"flex items-center gap-2\">",
+       "<span class=\"ml-2 text-sm font-medium\">Help</span>"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Help | ORA",
+    "medidas": {
+     "elementos": 59,
+     "colores": {
+      "fondos": 4,
+      "textos": 6
+     },
+     "fondos": [
+      "lab(26.9569 -1.47016 -15.6993)  x4",
+      "lab(96.1596 -0.0823438 -1.13575)  x1",
+      "rgb(30, 41, 59)  x1",
+      "lab(91.7353 -0.998765 -4.76968)  x1"
+     ],
+     "textos": [
+      "rgb(71, 85, 105)  x4",
+      "rgb(255, 255, 255)  x4",
+      "lab(8.11897 0.811279 -12.254)  x1",
+      "rgb(0, 94, 162)  x1",
+      "lab(65.5349 -2.25151 -14.5072)  x1",
+      "rgb(2, 6, 23)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "Geist  x12"
+     ],
+     "tamanios": [
+      "16px/400/24px  x4",
+      "20px/600/28px  x4",
+      "12px/400/16px  x1",
+      "12px/500/16px  x1",
+      "14px/500/20px  x1",
+      "30px/600/36px  x1"
+     ],
+     "radios": [
+      "6px  x5",
+      "8px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": null,
+     "nav": {
+      "alto": 0,
+      "ancho": 0,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": null,
+     "fijos": [],
+     "parrafo": {
+      "tam": "16px",
+      "inter": "24px",
+      "color": "rgb(71, 85, 105)",
+      "familia": "Geist",
+      "ancho": 208,
+      "caracteresPorRenglon": 26
+     },
+     "h": "H3 H1 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "",
+     "saltar": false,
+     "enlacesMenu": 0,
+     "interactivos": 6,
+     "chicos": 0,
+     "imgs": 3,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 816,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 73
+    },
+    "red": {
+     "pedidos": 38,
+     "kB": 1010,
+     "porTipoKB": {
+      "document": 4,
+      "font": 66,
+      "stylesheet": 34,
+      "script": 905,
+      "xhr": 0,
+      "image": 1,
+      "other": 0
+     }
+    }
+   }
+  }
+ },
+ "nds": {
+  "portada": {
+   "url": "https://ndstudio.gov/",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "National Design Studio",
+    "medidas": {
+     "elementos": 255,
+     "colores": {
+      "fondos": 5,
+      "textos": 4
+     },
+     "fondos": [
+      "oklab(0 0 0 / 0.05)  x9",
+      "rgb(242, 242, 242)  x5",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.2)  x2",
+      "rgb(255, 255, 255)  x1",
+      "oklab(0 0 0 / 0.2)  x1"
+     ],
+     "textos": [
+      "rgb(0, 0, 0)  x69",
+      "rgb(1, 1, 1)  x12",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x9",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.3)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "ppNueMontreal  x91"
+     ],
+     "tamanios": [
+      "16px/450/22.4px  x47",
+      "30px/450/36px  x32",
+      "14px/530/16.1px  x10",
+      "44px/450/47.52px  x1",
+      "30px/450/32.4px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 1123,
+      "ancho": 1270,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 84,
+      "ancho": 1270,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 760,
+      "ancho": 1270,
+      "pos": "static",
+      "fondo": "rgb(242, 242, 242)"
+     },
+     "fijos": [
+      "DIV.fixed.top-0 84px"
+     ],
+     "parrafo": {
+      "tam": "30px",
+      "inter": "36px",
+      "color": "rgb(1, 1, 1)",
+      "familia": "ppNueMontreal",
+      "ancho": 383,
+      "caracteresPorRenglon": 26
+     },
+     "h": "H1 H2 H2 H3 H3 H3 H3 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav main header header footer nav",
+     "saltar": true,
+     "enlacesMenu": 16,
+     "interactivos": 35,
+     "chicos": 14,
+     "imgs": 17,
+     "imgsSinAlt": 0,
+     "scrollW": 1270,
+     "innerW": 1280,
+     "altoPagina": 6235,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 58,
+     "kB": 24407,
+     "porTipoKB": {
+      "document": 83,
+      "image": 4527,
+      "font": 509,
+      "stylesheet": 73,
+      "media": 18089,
+      "script": 953,
+      "fetch": 173
+     }
+    },
+    "axe": [
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/about\">",
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/news\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.sr-only",
+      "texto": "Skip to content",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.flex",
+      "texto": "National Design Studio",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "About",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "News",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "Dev Index",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "Join the Mission",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.transition-opacity",
+      "texto": "Ten Billion Hours1",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.group",
+      "texto": "America.gov\n↗\n(opens in a new ",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.group",
+      "texto": "TrumpRX\n↗\n(opens in a new tab)",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.group",
+      "texto": "Real Food\n↗\n(opens in a new ta",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.group",
+      "texto": "Genesis Mission\n↗\n(opens in a ",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.group",
+      "texto": "Trump Accounts\n↗\n(opens in a n",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "National Design Studio",
+    "medidas": {
+     "elementos": 270,
+     "colores": {
+      "fondos": 5,
+      "textos": 5
+     },
+     "fondos": [
+      "oklab(0 0 0 / 0.05)  x9",
+      "rgb(242, 242, 242)  x6",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.2)  x2",
+      "rgb(255, 255, 255)  x1",
+      "oklab(0 0 0 / 0.2)  x1"
+     ],
+     "textos": [
+      "rgb(0, 0, 0)  x71",
+      "rgb(1, 1, 1)  x12",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x9",
+      "rgb(107, 107, 107)  x1",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.3)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "ppNueMontreal  x94"
+     ],
+     "tamanios": [
+      "16px/450/22.4px  x36",
+      "30px/450/36px  x36",
+      "14px/530/16.1px  x20",
+      "44px/450/47.52px  x1",
+      "30px/450/32.4px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 1634,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 84,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 762,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(242, 242, 242)"
+     },
+     "fijos": [
+      "DIV.fixed.top-0 84px",
+      "DIV.fixed.inset-0 780px"
+     ],
+     "parrafo": {
+      "tam": "30px",
+      "inter": "36px",
+      "color": "rgb(1, 1, 1)",
+      "familia": "ppNueMontreal",
+      "ancho": 342,
+      "caracteresPorRenglon": 23
+     },
+     "h": "H1 H2 H2 H3 H3 H3 H3 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav nav main header header footer nav",
+     "saltar": true,
+     "enlacesMenu": 16,
+     "interactivos": 37,
+     "chicos": 12,
+     "imgs": 17,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 9699,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 52,
+     "kB": 24291,
+     "porTipoKB": {
+      "document": 83,
+      "image": 4527,
+      "stylesheet": 73,
+      "font": 509,
+      "media": 18089,
+      "script": 905,
+      "fetch": 105
+     }
+    },
+    "axe": [
+     {
+      "id": "aria-hidden-focus",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "ARIA hidden element must not be focusable or contain focusable elements",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<div class=\"fixed inset-0 z-[100] transition-opacity md:hidden ease-[cubic-bezier(0.33,1,0.68,1)] pointer-events-none opacity-0\" aria-hidden"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 7,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/about\">",
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/news\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "National Design Studio",
+    "medidas": {
+     "elementos": 270,
+     "colores": {
+      "fondos": 5,
+      "textos": 5
+     },
+     "fondos": [
+      "oklab(0 0 0 / 0.05)  x9",
+      "rgb(242, 242, 242)  x6",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.2)  x2",
+      "rgb(255, 255, 255)  x1",
+      "oklab(0 0 0 / 0.2)  x1"
+     ],
+     "textos": [
+      "rgb(0, 0, 0)  x71",
+      "rgb(1, 1, 1)  x12",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x9",
+      "rgb(107, 107, 107)  x1",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.3)  x1"
+     ],
+     "bordes": [],
+     "degradados": [],
+     "familias": [
+      "ppNueMontreal  x94"
+     ],
+     "tamanios": [
+      "16px/450/22.4px  x36",
+      "30px/450/36px  x36",
+      "14px/530/16.1px  x20",
+      "44px/450/47.52px  x1",
+      "30px/450/32.4px  x1"
+     ],
+     "radios": [
+      "6px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 4,
+     "header": {
+      "alto": 1624,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "nav": {
+      "alto": 84,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 745,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(242, 242, 242)"
+     },
+     "fijos": [
+      "DIV.fixed.top-0 84px",
+      "DIV.fixed.inset-0 780px"
+     ],
+     "parrafo": {
+      "tam": "30px",
+      "inter": "36px",
+      "color": "rgb(1, 1, 1)",
+      "familia": "ppNueMontreal",
+      "ancho": 272,
+      "caracteresPorRenglon": 18
+     },
+     "h": "H1 H2 H2 H3 H3 H3 H3 H3 H3 H3 H3 H3",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav nav main header header footer nav",
+     "saltar": true,
+     "enlacesMenu": 16,
+     "interactivos": 37,
+     "chicos": 12,
+     "imgs": 17,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 9232,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 56,
+     "kB": 24385,
+     "porTipoKB": {
+      "document": 83,
+      "image": 4527,
+      "font": 509,
+      "stylesheet": 73,
+      "media": 18089,
+      "script": 947,
+      "fetch": 157
+     }
+    }
+   }
+  },
+  "noticia": {
+   "url": "https://ndstudio.gov/posts/accessibility-matters",
+   "a1280": {
+    "ancho": 1280,
+    "http": 200,
+    "titulo": "Accessibility Matters - National Design Studio",
+    "medidas": {
+     "elementos": 126,
+     "colores": {
+      "fondos": 6,
+      "textos": 4
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x4",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.2)  x2",
+      "rgb(255, 255, 255)  x1",
+      "rgb(0, 0, 0)  x1",
+      "oklab(0 0 0 / 0.05)  x1",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x1"
+     ],
+     "textos": [
+      "rgb(1, 1, 1)  x32",
+      "rgb(0, 0, 0)  x15",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x9",
+      "oklab(0 0 0 / 0.65)  x2"
+     ],
+     "bordes": [
+      "1px oklab(0 0 0 / 0.2)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "ppNueMontreal  x58"
+     ],
+     "tamanios": [
+      "16px/450/22.4px  x32",
+      "18px/450/25.2px  x19",
+      "30px/450/36px  x5",
+      "14px/530/16.1px  x1",
+      "104px/530/101.92px  x1"
+     ],
+     "radios": [
+      "6px  x1",
+      "3.35544e+07px  x1"
+     ],
+     "sombras": [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0  x1"
+     ],
+     "tamaniosDistintos": 5,
+     "header": null,
+     "nav": {
+      "alto": 84,
+      "ancho": 1270,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 760,
+      "ancho": 1270,
+      "pos": "static",
+      "fondo": "rgb(242, 242, 242)"
+     },
+     "fijos": [
+      "DIV.fixed.top-0 84px"
+     ],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "25.2px",
+      "color": "rgb(1, 1, 1)",
+      "familia": "ppNueMontreal",
+      "ancho": 585,
+      "caracteresPorRenglon": 65
+     },
+     "h": "H1 H2 H2 H2",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav main footer nav",
+     "saltar": true,
+     "enlacesMenu": 16,
+     "interactivos": 24,
+     "chicos": 19,
+     "imgs": 4,
+     "imgsSinAlt": 0,
+     "scrollW": 1270,
+     "innerW": 1280,
+     "altoPagina": 7678,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 47,
+     "kB": 3110,
+     "porTipoKB": {
+      "document": 61,
+      "image": 960,
+      "stylesheet": 73,
+      "font": 509,
+      "script": 1331,
+      "fetch": 177
+     }
+    },
+    "axe": [
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 6,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/about\">",
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/news\">"
+      ]
+     }
+    ],
+    "foco": [
+     {
+      "el": "a.sr-only",
+      "texto": "Skip to content",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.flex",
+      "texto": "National Design Studio",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "About",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "News",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "Dev Index",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "Join the Mission",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.text-[var(--light-fg)]",
+      "texto": "← All posts",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "a.relative",
+      "texto": "Edward Coristine on X (opens i",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "button.group",
+      "texto": "Expand image: Screenshot of Tr",
+      "contorno": "2px rgb(0, 0, 0)",
+      "sombra": false
+     },
+     {
+      "el": "a.",
+      "texto": "TrumpRx.gov",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     },
+     {
+      "el": "button.group",
+      "texto": "Expand image: Excerpt from Cod",
+      "contorno": "2px rgb(0, 0, 0)",
+      "sombra": false
+     },
+     {
+      "el": "a.text-current",
+      "texto": "Join us",
+      "contorno": "2px rgb(1, 1, 1)",
+      "sombra": false
+     }
+    ]
+   },
+   "a390": {
+    "ancho": 390,
+    "http": 200,
+    "titulo": "Accessibility Matters - National Design Studio",
+    "medidas": {
+     "elementos": 140,
+     "colores": {
+      "fondos": 5,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x5",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.2)  x2",
+      "rgb(255, 255, 255)  x1",
+      "oklab(0 0 0 / 0.05)  x1",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x1"
+     ],
+     "textos": [
+      "rgb(1, 1, 1)  x32",
+      "rgb(0, 0, 0)  x17",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x9",
+      "oklab(0 0 0 / 0.65)  x2",
+      "rgb(107, 107, 107)  x1"
+     ],
+     "bordes": [
+      "1px oklab(0 0 0 / 0.2)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "ppNueMontreal  x61"
+     ],
+     "tamanios": [
+      "16px/450/22.4px  x29",
+      "18px/450/25.2px  x19",
+      "30px/450/36px  x9",
+      "14px/530/16.1px  x3",
+      "44px/450/47.52px  x1"
+     ],
+     "radios": [
+      "6px  x1",
+      "3.35544e+07px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": null,
+     "nav": {
+      "alto": 84,
+      "ancho": 390,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 762,
+      "ancho": 390,
+      "pos": "static",
+      "fondo": "rgb(242, 242, 242)"
+     },
+     "fijos": [
+      "DIV.fixed.top-0 84px",
+      "DIV.fixed.inset-0 780px"
+     ],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "25.2px",
+      "color": "rgb(1, 1, 1)",
+      "familia": "ppNueMontreal",
+      "ancho": 342,
+      "caracteresPorRenglon": 38
+     },
+     "h": "H1 H2 H2 H2",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav nav main footer nav",
+     "saltar": true,
+     "enlacesMenu": 16,
+     "interactivos": 26,
+     "chicos": 17,
+     "imgs": 4,
+     "imgsSinAlt": 0,
+     "scrollW": 390,
+     "innerW": 390,
+     "altoPagina": 8812,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 36,
+     "kB": 2931,
+     "porTipoKB": {
+      "document": 61,
+      "font": 509,
+      "image": 960,
+      "stylesheet": 73,
+      "script": 1270,
+      "fetch": 58
+     }
+    },
+    "axe": [
+     {
+      "id": "aria-hidden-focus",
+      "impacto": "serious",
+      "nodos": 1,
+      "ayuda": "ARIA hidden element must not be focusable or contain focusable elements",
+      "tags": "wcag2a,wcag412",
+      "ej": [
+       "<div class=\"fixed inset-0 z-[100] transition-opacity md:hidden ease-[cubic-bezier(0.33,1,0.68,1)] pointer-events-none opacity-0\" aria-hidden"
+      ]
+     },
+     {
+      "id": "target-size",
+      "impacto": "serious",
+      "nodos": 7,
+      "ayuda": "All touch targets must be 24px large, or leave sufficient space",
+      "tags": "wcag22aa,wcag258",
+      "ej": [
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/about\">",
+       "<a class=\"relative transition-opacity duration-[600ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] opacity-100 w-fit\" href=\"/news\">"
+      ]
+     }
+    ]
+   },
+   "a320": {
+    "ancho": 320,
+    "http": 200,
+    "titulo": "Accessibility Matters - National Design Studio",
+    "medidas": {
+     "elementos": 140,
+     "colores": {
+      "fondos": 5,
+      "textos": 5
+     },
+     "fondos": [
+      "rgb(242, 242, 242)  x5",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.2)  x2",
+      "rgb(255, 255, 255)  x1",
+      "oklab(0 0 0 / 0.05)  x1",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x1"
+     ],
+     "textos": [
+      "rgb(1, 1, 1)  x32",
+      "rgb(0, 0, 0)  x17",
+      "oklab(0.0672042 0.00000306219 0.00000134483 / 0.6)  x9",
+      "oklab(0 0 0 / 0.65)  x2",
+      "rgb(107, 107, 107)  x1"
+     ],
+     "bordes": [
+      "1px oklab(0 0 0 / 0.2)  x1"
+     ],
+     "degradados": [],
+     "familias": [
+      "ppNueMontreal  x61"
+     ],
+     "tamanios": [
+      "16px/450/22.4px  x29",
+      "18px/450/25.2px  x19",
+      "30px/450/36px  x9",
+      "14px/530/16.1px  x3",
+      "44px/450/47.52px  x1"
+     ],
+     "radios": [
+      "6px  x1",
+      "3.35544e+07px  x1"
+     ],
+     "sombras": [],
+     "tamaniosDistintos": 5,
+     "header": null,
+     "nav": {
+      "alto": 84,
+      "ancho": 320,
+      "pos": "relative",
+      "fondo": "rgba(0, 0, 0, 0)"
+     },
+     "footer": {
+      "alto": 745,
+      "ancho": 320,
+      "pos": "static",
+      "fondo": "rgb(242, 242, 242)"
+     },
+     "fijos": [
+      "DIV.fixed.top-0 84px",
+      "DIV.fixed.inset-0 780px"
+     ],
+     "parrafo": {
+      "tam": "18px",
+      "inter": "25.2px",
+      "color": "rgb(1, 1, 1)",
+      "familia": "ppNueMontreal",
+      "ancho": 272,
+      "caracteresPorRenglon": 30
+     },
+     "h": "H1 H2 H2 H2",
+     "h1": 1,
+     "lang": "en",
+     "landmarks": "nav nav main footer nav",
+     "saltar": true,
+     "enlacesMenu": 16,
+     "interactivos": 26,
+     "chicos": 17,
+     "imgs": 4,
+     "imgsSinAlt": 0,
+     "scrollW": 320,
+     "innerW": 320,
+     "altoPagina": 9824,
+     "viewport": "width=device-width, initial-scale=1",
+     "varsCss": 0
+    },
+    "red": {
+     "pedidos": 38,
+     "kB": 2934,
+     "porTipoKB": {
+      "document": 61,
+      "font": 509,
+      "script": 1270,
+      "image": 960,
+      "stylesheet": 73,
+      "fetch": 61
+     }
+    }
+   }
+  }
  }
 }

@@ -17,16 +17,35 @@
 | Módulos de documentos, gráficos de líneas, mesa de ayuda y cartelera | — | **0.4.3** |
 | Módulo de planos | — | **0.4.4** |
 | Visor de cámaras rehecho, piezas del estudio de referencia y carpetas reordenadas | — | **0.4.5** |
+| Rediseño del módulo de planos y modo edición en el módulo | — | **0.4.6** |
+| Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## En curso · rediseño del plano y del modo edición · 2026-10-08 · sin número todavía
+## 0.4.7 · 2026-11-03 · oficial
+
+Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.
+
+### Nuevo
+
+- **Revisión de diseño de una pantalla** (14.G): capturas a 390, 768 y 1280px en claro y oscuro, con datos como los reales; una lectura de cinco segundos; el recorrido contra la sección 13, y cada hallazgo con su nivel (bloquea, importante, detalle, gusto) y cuándo se arregla. Una fila nueva en la sección 13.
+- **Un punto más en "Antes de publicar"** (sección 9, lector de pantalla): lo que se lee incluye lo que se ve (WCAG 2.5.3) y ningún botón ni enlace queda sin nombre.
+
+### Cambiado
+
+- **Errores en tres partes** (sección 12): qué pasó, por qué (si ayuda a arreglarlo) y qué hacer. Antes la regla pedía dos; el porqué ya estaba en los ejemplos de 8.A y 8.J.
+
+## 0.4.6 · 2026-11-03 · anterior
+
+El módulo de planos rediseñado con los datos reales de la sede y el modo edición dentro del módulo (PR #1, rama `planos`). Tiene dos partes, cada una con su registro. Al cambiar a esta versión, una herramienta que use el modo edición tiene que renombrar las clases `.ext-planos-*` (ver "El modo edición pasa al módulo").
+
+### Rediseño del plano y del modo edición (desde el 8/10)
 
 Sale de una revisión de diseño hecha con los datos reales de la sede: en una planta con 31 espacios, 12 rótulos quedaban reducidos a un ícono sin nombre, y lo que más resaltaba era lo que no tenía dato. Cambia cómo se ve el módulo; el HTML de la página no cambia.
 
-### Cambiado
+#### Cambiado
 
 - **Las aulas pesan según lo que tienen para decir.** "Sin dato" y lo que no se reserva pasan a un borde fino en neutro, sin relleno (antes, borde y relleno azules). Libre y ocupada conservan su color, con algo más de relleno. `DESIGN.md`, 21.D.
 - **El azul queda solo para lo elegido.** Ningún estado lo usa.
@@ -36,37 +55,42 @@ Sale de una revisión de diseño hecha con los datos reales de la sede: en una p
 - **La barra del modo edición es una tira pegada al plano** (de 420 a 94px de alto en escritorio), y en edición el panel muestra el formulario sin repetir la ficha (de 1.460 a 780px con una antena elegida).
 - El tipo de equipo se elige en una fila de tres opciones.
 
-### Nuevo
+#### Nuevo
 
 - `"corto"` en los datos de un aula: el nombre que se muestra cuando se ve chica. Se carga también desde el modo edición.
 - `.plano-rotulo--de-pie`: en un local angosto y alto, el nombre va de pie.
 - `.plano-rotulo__breve`, `.plano__muestra`, `.plano--editando`.
 
-### Eliminado
+#### Eliminado
 
 - `.plano-editor__cabecera`, `__titulo`, `__grupos`, `__subtitulo`, `__linea` y `.plano-form__equipo-ayuda`.
 - En el rótulo, el ícono `square` de "sin dato" y `door-closed` de lo que no se reserva.
 
-## En curso · modo edición del módulo de planos · 2026-10-08 · sin número todavía
+#### Corregido
+
+- **El panel "Datos de lo elegido" pasa de `<aside>` a `<section>`**, con el mismo `aria-label`. Como `<aside>` quedaba adentro del `<main>` de la página, y un complementario no puede ir adentro de otra región (axe, `landmark-complementary-is-top-level`). Se ve igual: el estilo va por `.plano__detalle`.
+- **Los títulos de la lista pasan de `<h3>` a `<h2>`**, el mismo nivel que el título del panel. En el celular la lista se abre primero y quedaba un `<h3>` después del `<h1>` (axe, `heading-order`). Se ven igual: el tamaño lo da `.plano__subtitulo`.
+
+### El modo edición pasa al módulo (8/10)
 
 El modo edición que tenía la herramienta de planos de la sede pasa al módulo, para que el diseño se trabaje en un solo lugar. La herramienta lo trae del sistema como el resto del módulo.
 
-### Nuevo
+#### Nuevo
 
 - **`unpsjb-planos-editor.js`** (23 KB; 7 KB comprimido), opcional: con `?editar` arma la barra de edición arriba del plano (`.plano-editor`) y el formulario de lo elegido en el panel de detalle (`.plano-form`). Agregar antenas, ubicar las que no tienen lugar, marcar aulas (rectángulo o forma irregular), reubicar, borrar, borrador en el navegador y descarga de `planos.json`. `DESIGN.md`, 21.G.
 - `unpsjb-planos.css` suma la pieza 7, "Modo edición" (pasa de 11 a 17 KB).
 - `plano.listo`: vale `true` cuando el plano ya cargó, para el código que llega después del evento `plano:listo`.
 - `muestra-planos.html`: botón "Editar antenas y aulas", el modo edición, y datos de ejemplo que cubren los casos que tiene una herramienta real: antenas sin ubicar, espacios que no se reservan, uno sin ubicación, uno por revisar y uno de forma irregular. Usa el contenedor ancho, como la herramienta.
 
-### Cambiado
+#### Cambiado
 
 - Las clases del modo edición dejan el prefijo de la herramienta: `.ext-planos-editor` → `.plano-editor`, `.ext-planos-form` → `.plano-form`, `.ext-planos-equipo` → `.plano-form__equipo`, `.ext-planos-borrador` → `.plano-borrador`, `.ext-planos--marcando` → `.plano--marcando`.
 
-### Corregido
+#### Corregido
 
 - El modo edición no arrancaba cuando los datos venían dentro de la página (`data-plano="#…"`): el plano terminaba de cargar antes de que el editor escuchara `plano:listo`.
 
-## 0.4.5 · 2026-10-15 · oficial
+## 0.4.5 · 2026-10-15 · anterior
 
 Junta lo hecho después de la 0.4.4: el visor de cámaras rehecho, las piezas que salen del estudio de los sitios de la UNC y la UBA, los ajustes a la vista pública de la cartelera, los documentos y los gráficos, y el reordenamiento de las carpetas. Sube el último número porque el primero todavía es 0 (sección 14), aunque el visor obliga a rehacer el HTML de la pantalla "En vivo".
 

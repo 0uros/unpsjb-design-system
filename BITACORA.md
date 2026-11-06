@@ -1020,6 +1020,21 @@ Pendientes:
 - [ ] Cargar `"corto"` a las oficinas ("Faculta…" tres veces en Nivel 1).
 - [ ] Controles de acercar y referencias dentro del lienzo; resumen de la planta en el panel vacío; búsqueda.
 
+## 2026-10-14 — Skills de diseño para agentes: qué se toma y qué no
+
+Sin número de sesión. Rama `textos-y-revision`, salida de `en-curso`.
+
+El usuario pasó un tweet con diez repositorios "que convierten a Claude Code en diseñador de interfaces" y preguntó si valía la pena instalarlos. No se instaló ninguno:
+
+- **Siete son librerías de efectos** para React o Tailwind (WebGL, shaders, animación de cursor, texto que se escribe solo, animaciones de entrada). Van contra 5.E (el movimiento solo responde a la persona), 3.G (fondos limpios), el principio 3 (liviano) y 7.P/sección 13 (nada de texto que corre).
+- **Better Design** trae 31 temas copiados de marcas (Stripe, Linear…): el sistema ya tiene identidad propia.
+- **Superdesign** necesita cuenta y manda el código a su servicio.
+- **design-taste** tiene reglas buenas, pero repite lo que ya hacen las skills instaladas (impeccable, ui-ux-pro-max) y, en accesibilidad, este documento ya va más lejos.
+
+Lo que sí se tomó, como texto (ver `CHANGELOG.md`): la revisión de diseño por niveles (14.G), errores en tres partes (12) y lo que se lee incluye lo que se ve (9). Mucho de lo que se pensaba sumar ya estaba: los estados vacíos de 8.D ya siguen el esquema de tres partes de design-taste, y la sección 12 ya pedía errores con qué pasó y cómo se arregla.
+
+Verificado: `skill/design-md-unpsjb/SKILL.md` sigue siendo una copia exacta de `DESIGN.md` debajo de su encabezado. No se tocó CSS ni muestras.
+
 ## 2026-10-15 — Se arma la 0.4.5, sin unir a `main`
 
 Sin número de sesión. No se tocó ninguna pieza: número de versión y registro.
@@ -1044,3 +1059,65 @@ Pendientes, en orden:
 ## 2026-10-15 — Se publica la 0.4.5
 
 A pedido del usuario: "es suficiente para esta versión que se pospuso mucho". `main` avanza hasta `version-0.4.5`, con las etiquetas `v0.4.5` y `v0.4.3` (que no se había etiquetado). La 0.4.4 no tiene etiqueta propia: salió dentro de la 0.4.5. En `CHANGELOG.md`, la 0.4.5 pasa a oficial y la 0.4.3 y la 0.4.4 a anteriores.
+
+## 2026-10-21 — Estudio de referencia: National Design Studio, retire.opm.gov y beUI
+
+Sin número de sesión. Pedido del usuario: ¿vale la pena sumar ndstudio.gov y beui.dev? ¿Se habían tenido en cuenta las métricas del National Design Studio?
+
+### Qué se hizo
+- Se verificó que no estaban en ningún lado: ni en el repositorio ni en los dos cuadernos (sistema de diseño, 99 fuentes; planos, 59).
+- Se midieron con `referencias/medir.js` tres páginas públicas de **retire.opm.gov** (ORA, el trámite de jubilación que hizo el National Design Studio) y dos de **ndstudio.gov**. `medir.js` ahora acepta una lista de sitios (`opm,nds`) y conserva lo que ya había en `medidas.json`.
+- Se sumaron 6 fuentes al cuaderno del sistema de diseño (105 en total) y se le hizo una consulta, la "Pregunta 9".
+- Todo quedó en `REFERENCIAS-NDS-OPM.md`. **No se cambió nada del diseño.**
+
+### Qué salió
+- El National Design Studio **no publica métricas de diseño**: publica metas de resultado (horas perdidas, "90 clics pasan a 9", de meses a días, casos "instantáneos").
+- Sirve: medir cada trámite antes y después de rediseñarlo (pasos, campos, datos que se piden de nuevo, minutos, días) y el patrón "mostrar y verificar" de ORA, que extiende 8.F a los datos del trámite.
+- No sirve el aspecto: una foto con degradado, una serif de exhibición, una fuente paga y una portada de 24 MB (18 de video). ORA desborda a lo ancho en celular y usa texto con transparencia que no llega al contraste.
+- beUI se descarta: React 19, Tailwind 4 y Motion, con animaciones que contradicen 5.E.
+- El cuaderno propuso metas fijas (50 % menos campos, menos de 10 clics, 30 días). Están marcadas **[Dudoso]**: no están en las fuentes.
+
+### Cómo se verificó
+- Chrome sin ventana a 1280, 390 y 320px, con **axe 4.10.2** y recorrido con Tab, igual que UNC y UBA. ORA pide iniciar sesión para la solicitud: solo se midieron páginas públicas.
+- Las notas del National Design Studio se leyeron enteras: los números de la nota salen de ahí, no del cuaderno.
+
+### Archivos
+- Nuevo: `REFERENCIAS-NDS-OPM.md`.
+- Tocados: `referencias/medir.js`, `referencias/medidas.json`, `FEEDBACK-NOTEBOOK.md` (enlace y aviso de las fuentes nuevas), `.gitignore` y `BITACORA.md`. Las capturas (`referencias/opm/`, `referencias/nds/`, 5 MB) quedan fuera de git.
+
+### Pendientes
+- [ ] Que el usuario decida si la acción 1 (medir el trámite antes y después) entra en `DESIGN.md`, secciones 9 y 14.
+- [ ] Que decida si la acción 2 ("mostrar y verificar" con datos de SIU) se escribe ya o se espera a tener una herramienta que lea SIU.
+
+## 2026-11-03 — Planos: los dos avisos de axe del PR #1
+
+Sin número de sesión. Es uno de los pendientes del PR #1 (rama `planos`).
+
+- **axe en `muestra-planos.html` y `muestra-planos.html?editar`**, a 1366 y 390 px, claro y oscuro (8 casos), con Chrome sin ventana. Antes había dos fallas: `landmark-complementary-is-top-level` en todos los casos y `heading-order` a 390 px.
+- **Se arreglan en el módulo** (`unpsjb-planos.js`), así que alcanzan a toda herramienta que lo use: el panel de detalle pasa de `<aside>` a `<section>` con el mismo nombre, y los títulos de la lista pasan de `<h3>` a `<h2>`. Ninguno cambia cómo se ve.
+- Queda 0 fallas en los 8 casos y sin errores en la consola. Sigue un aviso (`color-contrast`, "incomplete") en los `<kbd>` con "+" y "−": axe no mide caracteres que no son letras. `kbd` no tiene estilo propio y hereda el color del párrafo, que pasa. No hace falta cambiar nada.
+- Las herramientas que copian `sistema/` (los planos de la sede) toman el arreglo la próxima vez que traigan el sistema.
+
+Pendientes del PR #1:
+- [x] Los dos avisos de axe de `muestra-planos.html`.
+- [x] Revisar a ojo en claro y oscuro (el usuario: "lo veo bien").
+- [x] Decidir el número de versión antes de unir: 0.4.6.
+
+## 2026-11-03 — Se arma la 0.4.6 (PR #1, planos)
+
+Sin número de sesión. El usuario revisó la muestra de planos en claro, en oscuro, en el celular y en modo edición, y la aprobó.
+
+- **Numeración (decisión del usuario):** se sigue en 0.4.x hasta la 0.4.20. Entra en la regla de `DESIGN.md` 14.C: mientras el primer número sea 0, el del medio sube solo con un borrador de diseño nuevo. Por defecto, cada PR que cambia `sistema/` lleva un número: este es la 0.4.6 y el PR #2 (`textos-y-revision`) va a ser la 0.4.7.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.6. En `CHANGELOG.md`, las dos entradas "En curso" de planos pasan a ser la 0.4.6, y la 0.4.5 queda como anterior.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`: le faltaban las reglas del plano de esta rama (21.A, 21.B, 21.D y 21.H).
+- La rama `planos` se une a `main`. `planos-interfaz-nueva` (PR #3) sale de `planos`: sigue como borrador.
+
+## 2026-11-03 — Se arma la 0.4.7 (revisión de diseño, sin la difusión)
+
+Sin número de sesión. Al preparar el PR #2 (`textos-y-revision`) apareció que su propuesta de páginas de difusión (17.E, sin aprobar, del 14/10) choca con lo que el usuario decidió hoy para las páginas públicas en la rama `portada-publica`, que también es una 17.E: la difusión dice que la foto nunca va detrás del texto, y la portada pone el título sobre la foto, con la capa al 55 %.
+
+- **Decisión del usuario:** separar. La 0.4.7 lleva solo la revisión de diseño del 14/10 (14.G, errores en tres partes, lo que se lee incluye lo que se ve), que estaba lista.
+- **La difusión pasa a la rama `difusion`**, tal cual (propuesta 17.E, `muestra-difusion.html`, `unpsjb-difusion.css` y las 5 excepciones del detector). Después se junta con `portada-publica` en una sola 17.E, tomando lo de `portada-publica` cuando choquen.
+- La rama nueva `revision-de-diseno` sale de `main` (0.4.6) con el commit de la revisión. Al traerlo chocaron `BITACORA.md` y `CHANGELOG.md`: quedaron todas las entradas en orden de fecha.
+- `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.7; lo que decía "sin número todavía" dice 0.4.7. La skill se regeneró desde `DESIGN.md`.
+- No se tocó CSS ni muestras más allá del número.
