@@ -1222,3 +1222,12 @@ Sin número de sesión. Al mirar `muestra-difusion.html`, el usuario: "falla en 
 - **Cambia una regla de 17.E:** la apertura "nunca toda la ventana, así lo que sigue se ve sin bajar" sigue valiendo para el portal (ahí después viene el aviso y las entradas, sin foto grande). Para la difusión, la primera pantalla entera. También en la tabla de la sección 13.
 - Ahora "Qué vas a hacer" está fuera de la pantalla al cargar, así que también aparece al bajar (`.aparece`).
 
+## 2026-11-06 — Se arma la 0.4.9 (PR #6, páginas públicas y difusión)
+
+Sin número de sesión. El usuario aprobó la página de difusión: "dale, pasalo a 0.4.9, igualmente es más un concepto que otra cosa". Queda como concepto: la carrera, las fechas y las fotos son de ejemplo, y la apertura se juzga de nuevo con una foto real.
+
+- `DESIGN.md` (línea 3, la portada y 14.C), `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.9. Lo que decía "sin número todavía" dice "nuevo en 0.4.9" (o "cambio de la 0.4.9"). Los archivos del módulo de planos quedan en 0.4.8: no cambiaron.
+- En `CHANGELOG.md` la entrada "En curso" pasa a ser la 0.4.9, la 0.4.8 queda como anterior, y la tabla suma la fila.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
+- Al unir: borrar la rama `difusion` (ya está toda acá) y el worktree de `portada-publica`.
+

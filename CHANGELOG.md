@@ -20,12 +20,15 @@
 | Rediseño del módulo de planos y modo edición en el módulo | — | **0.4.6** |
 | Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
 | Interfaz nueva del módulo de planos: panel para buscar y elegir, controles sobre el plano | — | **0.4.8** |
+| Piezas de páginas públicas (SIDE) y página de difusión de una carrera | — | **0.4.9** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## En curso (rama `portada-publica`)
+## 0.4.9 · 2026-11-06 · oficial
+
+Las piezas de las páginas públicas, a partir del sitio de la SIDE, y la página de difusión de una carrera (PR #6). La muestra de difusión es un concepto: la carrera, las fechas y las fotos son de ejemplo, y falta juzgarla con fotos reales.
 
 Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`), y la propuesta de páginas de difusión del 14/10 (rama `difusion`) armada con esas piezas. No cambia nada de las herramientas.
 
@@ -56,7 +59,7 @@ Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`
 - **Portal de la Delegación** (17.C): la foto de apertura pasa de prohibida a opcional, y las entradas y las novedades pueden llevar foto.
 - **Portada de `muestra-portal.html`:** rehecha en franjas, con todas las piezas nuevas. Las demás pantallas no cambian. `<main>` ya no lleva `.contenedor`: lo lleva cada pantalla.
 
-## 0.4.8 · 2026-11-06 · oficial
+## 0.4.8 · 2026-11-06 · anterior
 
 La interfaz nueva del módulo de planos (PR #3). El usuario la comparó con la de antes, con los datos reales de la sede, y la aprobó el 6/11. Una herramienta que use el módulo no tiene que cambiar nada: el módulo arma la pantalla solo.
 

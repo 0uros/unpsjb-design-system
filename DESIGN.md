@@ -1,6 +1,6 @@
 ---
 name: UNPSJB · Señalética
-version: 0.4.8
+version: 0.4.9
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -62,7 +62,7 @@ colors:
   oscuro-serie-4: "#0ea5b7"
   oscuro-serie-5: "#c026d3"
   oscuro-serie-otros: "#94a3b8"
-  # Páginas públicas (sin número todavía, 17.E)
+  # Páginas públicas (nuevo en 0.4.9, 17.E)
   oscuro: "#0f2438"
   oscuro-oscuro: "#050c15"
   velo-foto: "rgb(0 0 0 / 0.55)"
@@ -153,7 +153,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.4.8 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.9 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `archivo/` (`DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`; fuera de git, la etiqueta es `v0.2.1`). Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `archivo/comparar-v3.html` (0.2.1 y la actual) y `archivo/comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -217,8 +217,8 @@ Regla práctica: si la herramienta empieza a necesitar más de una pantalla, o h
   - **Una página no pasa de 1 MB** en total la primera vez que se abre.
   - **Cada foto, 200 KB como máximo,** en `webp` o `avif`, y con el tamaño en que se muestra, no el de la cámara. Con `width` y `height` escritos, para que la página no salte al cargar.
   - **`loading="lazy"`** en toda foto que no se ve al entrar.
-  - **La foto de apertura (17.E) va al revés:** sin `loading="lazy"`, con `fetchpriority="high"` y en dos anchos (`srcset` de 960 y 1600px), así el celular no baja la grande. Cada ancho respeta los 200 KB. (Sin número todavía.)
-  - **Las muestras usan dibujos de ejemplo,** no fotos: los genera `herramientas/fotos-ejemplo/generar.py` y pesan entre 1 y 6 KB. En una página real van fotos propias. (Sin número todavía.)
+  - **La foto de apertura (17.E) va al revés:** sin `loading="lazy"`, con `fetchpriority="high"` y en dos anchos (`srcset` de 960 y 1600px), así el celular no baja la grande. Cada ancho respeta los 200 KB. (Nuevo en 0.4.9.)
+  - **Las muestras usan dibujos de ejemplo,** no fotos: los genera `herramientas/fotos-ejemplo/generar.py` y pesan entre 1 y 6 KB. En una página real van fotos propias. (Nuevo en 0.4.9.)
   - **Ningún video arranca solo** ni se descarga antes de que la persona lo pida: va una imagen con el botón de reproducir.
 
 ### D. PWA (aplicación instalable)
@@ -328,7 +328,7 @@ En oscuro, el texto claro sobre fondo oscuro se ve más fino: los párrafos larg
 
 Las herramientas usan solo fondos sólidos de esta paleta: sin imágenes de fondo, patrones, degradados ni marcas de agua.
 
-**Dos excepciones en las páginas públicas (sin número todavía).** La regla venía del primer borrador (`notas/FRAMEWORK.md`) y nunca se había medido. Al estudiar el sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`) se midió y quedaron permitidas, con condiciones, solo en páginas públicas (17.E):
+**Dos excepciones en las páginas públicas (nuevo en 0.4.9).** La regla venía del primer borrador (`notas/FRAMEWORK.md`) y nunca se había medido. Al estudiar el sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`) se midió y quedaron permitidas, con condiciones, solo en páginas públicas (17.E):
 
 - **La foto de apertura,** con una capa negra del 55% debajo del texto. Con esa capa el texto blanco da 4,7:1 aun sobre una foto toda blanca.
 - **La marca de agua:** el escudo de un solo color, al 8% de opacidad como máximo, solo en una franja con poco texto o en el pie oscuro. Al 8%, `tinta-2` sigue dando 4,9:1 o más en cualquier fondo de la paleta (el peor caso es `capa`, en claro).
@@ -413,7 +413,7 @@ La escala es fija (no cambia con el ancho de pantalla) y con saltos claros, para
 
 | Rol | Familia | Tamaño / peso / interlineado | Uso |
 |---|---|---|---|
-| `apertura` | Montserrat | 40px / 800 / 1.25, tracking −0.02em; 32px en celular | Solo el título de la foto de apertura (17.E), que hace de `titulo-1` en esa página. Es el único rol que cambia con el ancho. (Sin número todavía.) |
+| `apertura` | Montserrat | 40px / 800 / 1.25, tracking −0.02em; 32px en celular | Solo el título de la foto de apertura (17.E), que hace de `titulo-1` en esa página. Es el único rol que cambia con el ancho. (Nuevo en 0.4.9.) |
 | `titulo-1` | Montserrat | 32px / 800 / 1.25, tracking −0.015em | Título de la pantalla (uno por pantalla). Con `apertura`, los únicos roles en peso 800. |
 | `titulo-2` | Montserrat | 24px / 700 / 1.25, tracking −0.01em | Secciones principales. |
 | `titulo-3` | Montserrat | 19px / 700 / 1.3 | Títulos de paneles, modales y avisos destacados. |
@@ -462,7 +462,7 @@ No hay sombras para crear jerarquía. **La única excepción es lo que flota sob
 
 ### E. Movimiento
 
-- El movimiento solo **responde a algo que hizo la persona**: abrir, cerrar, confirmar. No hay animaciones de entrada de secciones ni efectos al pasar el mouse por tarjetas. **La única excepción** (nuevo, sin número todavía): en las páginas públicas, una franja puede aparecer una vez al entrar en pantalla, en 240ms (`.aparece`, 17.E). Nunca en una herramienta de trabajo.
+- El movimiento solo **responde a algo que hizo la persona**: abrir, cerrar, confirmar. No hay animaciones de entrada de secciones ni efectos al pasar el mouse por tarjetas. **La única excepción** (nuevo en 0.4.9): en las páginas públicas, una franja puede aparecer una vez al entrar en pantalla, en 240ms (`.aparece`, 17.E). Nunca en una herramienta de trabajo.
 - Duraciones: 120ms para cambios de color (hover), 180ms para aparecer o desaparecer (toasts, menús, modales). Curva: `cubic-bezier(0.2, 0, 0, 1)` (arranca rápido y frena suave).
 - Con `prefers-reduced-motion` se elimina todo desplazamiento; quedan solo los cambios de opacidad.
 
@@ -539,7 +539,7 @@ La herramienta suma sola lo que ya sabe (quién reporta, en qué pantalla, con q
 
 **Pie de las páginas públicas (nuevo en 0.4).** Las páginas que ve gente de afuera de la universidad (sección 17) usan un pie más completo (`.pie.pie--publico`), con tres bloques arriba de la línea de derechos: quién es y dónde queda (la dirección, en `<address>`), cómo contactar, y los enlaces "Accesibilidad", "Privacidad y datos personales" y "Reportar un problema". No lleva número de versión ni clave de IA.
 
-**Pie oscuro (sin número todavía).** En la portada y las páginas públicas que van en franjas (17.E), el pie público puede ir a todo el ancho y sobre fondo oscuro: `.pie.pie--publico.pie--oscuro`, con el contenido dentro de `.contenedor.pie__interior`. Suma cuatro cosas al pie público:
+**Pie oscuro (nuevo en 0.4.9).** En la portada y las páginas públicas que van en franjas (17.E), el pie público puede ir a todo el ancho y sobre fondo oscuro: `.pie.pie--publico.pie--oscuro`, con el contenido dentro de `.contenedor.pie__interior`. Suma cuatro cosas al pie público:
 
 - **Una frase** (`.pie__frase`) que dice qué es la Sede, en `titulo-2`. Con mayúscula solo inicial.
 - **El menú repetido:** las mismas secciones de la sub-barra, como un bloque más.
@@ -965,7 +965,7 @@ El logo de la UNPSJB Sede Trelew se aloja en el servidor de recursos de la Deleg
 | `logo-unpsjb-trelew.svg` | **Fondos claros**, documentos impresos o exportados; también el que usa `unpsjb.css` al imprimir. Gaviota plana; barra y "Sede Trelew" en gris `#3b3a36`. | ~3KB |
 | `logo-unpsjb-trelew-completo.svg` | **Usos grandes** (carteles, portadas, pantallas de bienvenida): el original sin cambios, con la foto de la gaviota y el texto curvo. | ~56KB |
 | `logo-unpsjb-trelew-una-tinta.svg` | **Impresión a una tinta** (nuevo en 0.4.3): óvalo, barra y "Sede Trelew" en negro; la gaviota entera en blanco, sin gris ni amarillo. Lo usa la hoja `.hoja--una-tinta` (sección 18). | ~3KB |
-| `marca-agua-unpsjb.svg` | **Marca de agua** (sin número todavía): el óvalo en negro con la gaviota calada. No se muestra como imagen: `unpsjb.css` lo usa de máscara y le pone el color y la opacidad (17.E). | ~1KB |
+| `marca-agua-unpsjb.svg` | **Marca de agua** (nuevo en 0.4.9): el óvalo en negro con la gaviota calada. No se muestra como imagen: `unpsjb.css` lo usa de máscara y le pone el color y la opacidad (17.E). | ~1KB |
 
 - **Los colores del óvalo no se modifican:** el azul (`#347EBB`), el gris de las puntas y el amarillo del pico se tomaron de la foto original. Son parte de la marca, no colores de interfaz: no se usan en botones ni textos.
 - **De dónde sale la gaviota plana:** en el EPS la gaviota es una foto (JPEG en CMYK). `herramientas/logo/vectorizar.sh` la separa por color, borra el detalle y la vectoriza; el resultado queda guardado en `herramientas/logo/gaviota-plana.svg`. Solo hay que volver a correrlo si cambia el EPS (instala sus librerías de Python en `~/.cache/unpsjb-logo/`). `herramientas/logo/generar.sh` usa esa gaviota guardada y no necesita nada extra. **No se edita a mano:** si hay que afinar la forma, se ajusta `herramientas/logo/vectorizar.py` o se reemplaza por un dibujo hecho por un diseñador.
@@ -1154,7 +1154,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.8), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.9), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1449,7 +1449,7 @@ Hay un prototipo: `muestra-portal.html`. Las reglas salen del estudio de los sit
   - **El naranja no se usa de relleno** (3.B). Texto blanco sobre celeste o naranja, como en los mosaicos de otros sitios, da 2:1.
   - Con más de cuatro destinos no se suman bloques: va una lista de accesos (7.Q).
 - **Avisos antes que noticias.** Lo que cambia el día de alguien ("El lunes no hay clases") va como aviso (8.A), arriba. Las novedades, como una lista corta de título y fecha o, en la portada, hasta tres con foto (`.novedades`, 17.E), con un enlace a "todas". Sin carrusel (7.P).
-- **Foto de apertura, si se quiere** (17.E): una sola, con la capa oscura, y sin tapar toda la ventana, así las entradas se ven sin bajar. Antes estaba prohibida; lo que el estudio había encontrado era el peso de las fotos y el carrusel, y eso ya lo resuelven los topes de 2.C. (Cambio sin número todavía.)
+- **Foto de apertura, si se quiere** (17.E): una sola, con la capa oscura, y sin tapar toda la ventana, así las entradas se ven sin bajar. Antes estaba prohibida; lo que el estudio había encontrado era el peso de las fotos y el carrusel, y eso ya lo resuelven los topes de 2.C. (Cambio de la 0.4.9.)
 - **El acceso a la cuenta va en la banda,** en todas las páginas (el botón "Mi cuenta"). Es el puente entre informarse y hacer un trámite.
 - **Navegación de un solo nivel:** la sub-barra (6.A), con hasta 6 secciones. En el estudio había páginas con tres filas de menú antes del título.
 - **Contacto a la vista:** oficina, dirección, horario, teléfono y correo, como lista de resumen (7.L) dentro de un panel. Los teléfonos y correos son enlaces (`tel:`, `mailto:`).
@@ -1467,7 +1467,7 @@ Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta 
 - **Avisos de seguridad** ("Nunca te vamos a pedir la contraseña") van como aviso, al lado del dato que protegen. No en letra chica ni en cursiva.
 - **No va:** una grilla de tarjetas con ícono (7.C), contadores o gráficos de relleno, ni un saludo con la hora del día.
 
-### E. Piezas de las páginas públicas (sin número todavía)
+### E. Piezas de las páginas públicas (nuevo en 0.4.9)
 
 Salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`): una portada que se recorre en franjas, con una foto arriba, un solo llamado fuerte y un pie oscuro. Se toma el orden y las piezas; los colores, las letras y las reglas de texto siguen siendo los del sistema. Hay un ejemplo armado en la portada de `muestra-portal.html`.
 
@@ -1479,7 +1479,7 @@ Sirven para dos clases de página: la **portada** del portal (17.C) y las **pág
 
 | Pieza | Clase | Reglas |
 |---|---|---|
-| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto, como mucho un botón (`.boton--secundario`) y, si hay, el plazo. La capa negra al 55% (`--color-velo-foto`) es fija detrás del texto: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. **Desde 1024px, después del texto la capa se aclara hasta el 15%** (sin número todavía): la foto respira donde no hay nada que leer. Si hay fecha límite, va al lado del botón (`.apertura__accion`, `.apertura__plazo`, con el ícono `calendar`): "Inscripción hasta el 18 de diciembre", sin el año si se sobreentiende. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. **Si lo que sigue también lleva foto, la apertura ocupa la primera pantalla** (`.apertura--pantalla`, con el texto al medio; sin número todavía): nunca se ven dos fotos a la vez, ni una cortada debajo de la otra. Es el caso de la página de difusión. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
+| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto, como mucho un botón (`.boton--secundario`) y, si hay, el plazo. La capa negra al 55% (`--color-velo-foto`) es fija detrás del texto: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. **Desde 1024px, después del texto la capa se aclara hasta el 15%** (nuevo en 0.4.9): la foto respira donde no hay nada que leer. Si hay fecha límite, va al lado del botón (`.apertura__accion`, `.apertura__plazo`, con el ícono `calendar`): "Inscripción hasta el 18 de diciembre", sin el año si se sobreentiende. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. **Si lo que sigue también lleva foto, la apertura ocupa la primera pantalla** (`.apertura--pantalla`, con el texto al medio; nuevo en 0.4.9): nunca se ven dos fotos a la vez, ni una cortada debajo de la otra. Es el caso de la página de difusión. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
 | **Franjas** | `.franja`, `--panel`, `--capa`, `--oscura` | Secciones a todo el ancho que separan con el cambio de fondo, sin bordes ni tarjetas. Alternan `fondo`, `panel` y `capa`; dos seguidas no llevan el mismo. La **oscura** (`--color-oscuro`), **una por página**, para el llamado más importante ("Inscripciones 2027"): un título, una o dos líneas y un botón. Adentro valen los tokens del modo oscuro. |
 | **Título con filete** | `.titulo-filete` | Una línea de 2px del ancho del título, en `primario-texto`, nunca en naranja. Para los títulos de las franjas. Alineado a la izquierda, como todo (5.F), y con mayúscula solo inicial (4.C). |
 | **Marca de agua** | `.marca-agua` | El escudo de un solo color (`marca-agua-unpsjb.svg`, 10.A) detrás del contenido, del lado derecho en escritorio. Toma el color del texto y la opacidad de `--marca-agua-opacidad`: 6%, con un tope de 8%. Solo en una franja con poco texto (la oscura) o en el pie oscuro. Medido en la muestra: el texto encima da 6,7:1 en claro y 5:1 en oscuro. No se imprime ni aparece en alto contraste. |
