@@ -1185,3 +1185,30 @@ Sin número de sesión. Al mirar `muestra-difusion.html`, al usuario la frase "L
 - axe sin fallas en las dos muestras (claro, oscuro, 1366 y 390 px). El detector no marca nada nuevo.
 - **Falta una foto real** para juzgar la apertura: el usuario todavía no tiene. Con la de ejemplo cualquier capa la deja opaca.
 
+## 2026-11-06 — Planos: la interfaz nueva queda (PR #3)
+
+Sin número de sesión. Se retomó el PR #3 (`planos-interfaz-nueva`), frenado desde el 9/10.
+
+- **Conflicto con `main`:** en `sistema/unpsjb-planos.js` quedó la interfaz nueva. De los dos arreglos de axe de la 0.4.6, el `<aside>` ya no existe y los títulos de la lista pasan a `<h2>`.
+- **Comparación con los datos reales:** dos copias temporales de `planos-universidad` (el repositorio no se tocó), una con el sistema de `main` y otra con el de la rama, en claro, oscuro, 1366 y 390 px, con y sin un aula elegida. **El usuario aprobó la interfaz nueva.** Apareció un texto confuso en el resumen ("0 antenas · 17 sin ubicar"), corregido.
+- **Pruebas sobre la muestra** (Chrome sin ventana): recorrido con `Tab`, buscar, elegir con `Enter` (el foco va a "Volver a la lista"), `Esc` vuelve a la lista con el foco en lo que estaba elegido, flechas, `+` y `0` en el plano; modo edición a 1366 y 390 px; celular en modo Plano con un aula elegida. axe sin violaciones en todos los casos y sin errores en la consola.
+- **Impresión:** el plano salía recortado y sin los rótulos, y con el ancho de una hoja las reglas del celular escondían la lista. Ahora, al imprimir, el lienzo toma un ancho fijo (17 cm, `.plano--imprimiendo`) y se muestra entero antes de armar la página; las reglas de pantallas angostas valen solo en pantalla. Probado con el PDF: el plano entero en la primera hoja y la lista en la segunda. No se probó con una impresora ni con el diálogo de impresión de cada navegador.
+- **Con el plano entero, los controles tapaban los bordes del edificio:** en un lienzo de 600px o más se deja lugar a los costados. En el celular, no: el plano quedaría muy chico.
+- `DESIGN.md` 21.B reescrita para la interfaz nueva (estaba la barra vieja), con los tamaños del módulo al día.
+
+Pendientes:
+- [x] Revisarla con el usuario y decidir si queda.
+- [x] `DESIGN.md` 21.B, la bitácora, celular, teclado e impresión.
+- [ ] Lector de pantalla: necesita una persona.
+- [ ] Número de versión al unir (0.4.8 o 0.4.9, según se una antes este PR o el #6).
+- [ ] Que `planos-universidad` traiga el sistema nuevo (`herramientas/traer-sistema.sh`) después de unir.
+
+## 2026-11-06 — Se arma la 0.4.8 (PR #3, planos)
+
+Sin número de sesión. El usuario aprobó la interfaz nueva y no pidió otro orden: planos se une primero y es la 0.4.8; el PR #6 (`portada-publica`) va a ser la 0.4.9.
+
+- `DESIGN.md` (línea 3, la portada y 14.C), `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.8. La 21.B dice "cambiado en 0.4.8".
+- **Los tres archivos del módulo de planos** (`unpsjb-planos.css`, `unpsjb-planos.js`, `unpsjb-planos-editor.js`) decían v0.4.4 en el encabezado, también después de la 0.4.6. Pasan a 0.4.8: es el número que muestra `traer-sistema.sh` al copiar el sistema a `planos-universidad`.
+- En `CHANGELOG.md` la entrada "En curso" pasa a ser la 0.4.8, la 0.4.7 queda como anterior, y la tabla suma la fila.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
+

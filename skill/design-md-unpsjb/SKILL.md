@@ -5,7 +5,7 @@ description: "Design.md para generar páginas para la universidad"
 
 ---
 name: UNPSJB · Señalética
-version: 0.4.7
+version: 0.4.8
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -158,7 +158,7 @@ motion:
 
 # Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.4.7 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.8 "Señalética"**
 
 > **Versión oficial desde el 1 de octubre de 2026.** Reemplaza a la 0.2.1 (el borrador "v2"), que quedó en `archivo/` (`DESIGN-v2.md`, `unpsjb-v2.css` y `muestra-v2.html`; fuera de git, la etiqueta es `v0.2.1`). Qué cambió en cada versión y cómo migrar: `CHANGELOG.md`. Para comparar: `archivo/comparar-v3.html` (0.2.1 y la actual) y `archivo/comparar-v3.1.html` (antes y después de las correcciones de la 0.3.1). Lo nuevo de la 0.4 está marcado "(nuevo en 0.4)" y listado al principio de `muestra.html`. El primer número es 0 porque todavía no se publicó en el servidor (sección 14.C).
 
@@ -1159,7 +1159,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.7), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0** (esta es la 0.4.8), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
 - **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
@@ -1484,7 +1484,7 @@ Sirven para dos clases de página: la **portada** del portal (17.C) y las **pág
 
 | Pieza | Clase | Reglas |
 |---|---|---|
-| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto y como mucho un botón (`.boton--secundario`). La capa negra al 55% (`--color-velo-foto`) es fija: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
+| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto, como mucho un botón (`.boton--secundario`) y, si hay, el plazo. La capa negra al 55% (`--color-velo-foto`) es fija detrás del texto: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. **Desde 1024px, después del texto la capa se aclara hasta el 15%** (sin número todavía): la foto respira donde no hay nada que leer. Si hay fecha límite, va al lado del botón (`.apertura__accion`, `.apertura__plazo`, con el ícono `calendar`): "Inscripción hasta el 18 de diciembre", sin el año si se sobreentiende. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
 | **Franjas** | `.franja`, `--panel`, `--capa`, `--oscura` | Secciones a todo el ancho que separan con el cambio de fondo, sin bordes ni tarjetas. Alternan `fondo`, `panel` y `capa`; dos seguidas no llevan el mismo. La **oscura** (`--color-oscuro`), **una por página**, para el llamado más importante ("Inscripciones 2027"): un título, una o dos líneas y un botón. Adentro valen los tokens del modo oscuro. |
 | **Título con filete** | `.titulo-filete` | Una línea de 2px del ancho del título, en `primario-texto`, nunca en naranja. Para los títulos de las franjas. Alineado a la izquierda, como todo (5.F), y con mayúscula solo inicial (4.C). |
 | **Marca de agua** | `.marca-agua` | El escudo de un solo color (`marca-agua-unpsjb.svg`, 10.A) detrás del contenido, del lado derecho en escritorio. Toma el color del texto y la opacidad de `--marca-agua-opacidad`: 6%, con un tope de 8%. Solo en una franja con poco texto (la oscura) o en el pie oscuro. Medido en la muestra: el texto encima da 6,7:1 en claro y 5:1 en oscuro. No se imprime ni aparece en alto contraste. |
@@ -1710,7 +1710,7 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 
 ## 21. Planos (nuevo en 0.4.4)
 
-Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (17 KB) y `unpsjb-planos.js` (31 KB; 10 KB comprimido), más el modo edición, opcional (21.G). Ejemplo: `muestra-planos.html`.
+Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (32 KB) y `unpsjb-planos.js` (51 KB; 16 KB comprimido), más el modo edición, opcional (21.G). Ejemplo: `muestra-planos.html`.
 
 El plano muestra **el estado de ahora**. Para elegir un aula y un horario está la agenda (16.A): desde el aula elegida se llega a su agenda con un enlace (`data-agenda`).
 
@@ -1726,20 +1726,32 @@ El plano muestra **el estado de ahora**. Para elegir un aula y un horario está 
 - **Cómo se obtiene:** de un PDF de AutoCAD, con `pdftocairo -svg` y un paso de limpieza que cambia los colores por las tres clases, junta los trazos y recorta la hoja. Cada herramienta guarda su conversor junto a sus planos (el de Trelew: `herramientas/limpiar_svg.py`). Un plano de 9.000 trazos queda en menos de 500 KB (130 KB comprimido), y se trae solo la planta que se mira.
 - El rótulo de la hoja ("PLANTA BAJA") se quita del dibujo: el nombre de la planta lo dice la pantalla.
 
-### B. La pantalla
+### B. La pantalla (cambiado en 0.4.8)
+
+**Un panel a la izquierda para buscar y elegir, y el plano a la derecha con sus controles encima,** como en los mapas de interiores. Desde 1024px van lado a lado y ocupan el alto de la ventana; el panel mide 320px.
 
 | Pieza | Clase | Regla |
 |---|---|---|
-| Barra | `.plano__barra` | Las plantas (segmentado) a la izquierda; "Plano \| Lista" último, contra el borde derecho. En el medio, lo que aparece y desaparece: las capas (casillas "Antenas", "Aulas") y acercar. |
-| Lienzo | `.plano__lienzo` | Fondo `--plano-suelo` (`capa` en claro, `fondo` en oscuro), borde `linea`. El alto sale de la proporción del plano, sin pasar del 70 % de la ventana: la página se puede seguir moviendo por fuera. |
-| Detalle | `.plano__detalle` | Un panel fijo al costado (280px; debajo, con menos de 1024px) con la ficha de lo elegido, en una lista de resumen (7.L). **Sin cartel flotante** (7.P). |
-| Referencias | `.plano__referencias` | Debajo del plano: el ícono de cada estado con su nombre. Solo los que hay en esa planta. |
-| Lista | `.plano__lista` | Una tabla de antenas y otra de aulas de la planta, con los mismos datos. |
+| Panel | `.plano__panel` | Arriba, el buscador (`.plano__buscar`) y qué se muestra (`.plano__capas`: "Aulas y espacios" y "Antenas", dos filtros que se prenden y se apagan). Debajo, el resumen de la planta y la lista. **Nunca queda vacío.** |
+| Resumen | `.plano__resumen` | Una línea con la planta y lo que hay: "Planta baja · 15 espacios · 3 libres · 3 ocupadas · 17 antenas sin ubicar". Mientras se busca, cuántos resultados hay. Es `role="status"`. |
+| Lista | `.plano__lista` | Grupos con su título y cuántos son (`.plano__subtitulo`, un `h2` que queda fijo al bajar): aulas y espacios, antenas, puntos de referencia y, aparte, las antenas sin ubicar. Cada fila es un botón (`.plano__item`) con el nombre, un dato (tipo, modelo) y la insignia de estado si dice algo. |
+| Detalle | `.plano__detalle` | La ficha de lo elegido **reemplaza a la lista en el panel**, con "Volver a la lista" arriba, en una lista de resumen (7.L). `Esc` también vuelve. **Sin cartel flotante** (7.P). |
+| Lienzo | `.plano__lienzo` | Fondo `--plano-suelo` (`capa` en claro, `fondo` en oscuro), borde `linea`. Desde 1024px toma el alto del panel; más angosto, el alto sale de la proporción del plano, sin pasar del 65 % de la ventana. |
+| Planta | `.plano__plantas` | Arriba a la izquierda, sobre el plano: una columna con las plantas de arriba hacia abajo ("2", "1", "PB"), como los botones de un ascensor. |
+| Acercar | `.plano__zoom` | Abajo a la derecha: "Acercar" y "Alejar" juntos, y "Ver todo" debajo. |
+| Ayuda | `.plano__ayuda` | Arriba a la derecha: un botón "?" que abre cómo se mueve el plano (`details`). |
+| Referencias | `.plano__referencias` | En una tira debajo del plano, no encima: el ícono de cada estado y tipo con su nombre. Solo los que hay en esa planta. |
+
+- **Los controles van sobre el plano, pero fuera del lienzo:** tocarlos no lo mueve. Todos tienen la misma superficie: fondo `panel`, borde y la sombra de lo que flota.
+- **Con el plano entero, los controles no tapan nada:** en un lienzo de 600px o más se deja lugar a los costados. Más angosto el plano se agranda y los controles quedan encima; se puede mover.
+- **El buscador busca en todo el edificio,** no solo en la planta que se ve: cada resultado dice en qué planta está, y elegirlo lleva a esa planta. `Esc` borra la búsqueda.
+- **Por debajo de 1024px se ve la lista o el plano** ("Lista \| Plano", `.plano__modo`). Con menos de 768px se abre en la lista. Con el plano a la vista, del panel queda solo la ficha de lo elegido, debajo del plano.
+- **En papel** van el plano entero, en una hoja, y después la lista; sin buscador, filtros ni controles.
 
 - **Mover y acercar no dependen de arrastrar** (WCAG 2.2, 2.5.7). Se puede arrastrar y pellizcar, pero están siempre los botones "Acercar", "Alejar" y "Ver todo", y el teclado: con `Tab` se llega al plano, las flechas lo mueven, `+` y `−` acercan y alejan, y `0` muestra todo.
-- **La rueda del mouse sola mueve la página,** no el plano: si no, al bajar por la pantalla el plano atrapa el scroll. Para acercar con la rueda, `Ctrl` + rueda. Debajo del plano hay una nota fija que lo dice.
+- **La rueda del mouse sola mueve la página,** no el plano: si no, al bajar por la pantalla el plano atrapa el scroll. Para acercar con la rueda, `Ctrl` + rueda. Lo explica la ayuda ("?") sobre el plano.
 - **"Ver todo" es un botón con texto,** no el ícono `maximize`: ese ícono ya significa "pantalla completa" en el visor de cámaras (16.B).
-- **Todo plano tiene su lista,** igual que todo gráfico tiene su tabla (15.D). Es la forma de usarlo con lector de pantalla y **en celular, donde se abre primero la lista**. El nombre de cada fila es un botón con aspecto de enlace que la elige.
+- **Todo plano tiene su lista,** igual que todo gráfico tiene su tabla (15.D). Es la forma de usarlo con lector de pantalla y **en celular, donde se abre primero la lista**. Cada fila es un botón que la elige.
 - **La planta y lo elegido van en la dirección** (`#planta=pb&antena=ap-03`), para poder mandarle a alguien el enlace a una antena.
 - El dibujo lleva `aria-hidden`: para el lector de pantalla, lo que informa son los botones y la lista.
 
@@ -1806,7 +1818,7 @@ Escaleras, ascensores, baños y entradas: lo que se busca con la vista para ubic
 - **Siempre se ven:** no son una capa que se apaga.
 - Tipos: `escalera`, `ascensor`, `sanitario` y `entrada`. Los dibujos de la escalera y del ascensor son propios del módulo. Sin tipo conocido, un marcador genérico.
 - El nombre es opcional: "Escalera" alcanza; "Entrada principal" o "Escalera norte" cuando hay más de una.
-- Figuran en las referencias (los tipos que hay en esa planta) y en la lista, en su propia tabla. Se pueden enlazar: `#planta=pb&lugar=pb-lugar-01`.
+- Figuran en las referencias (los tipos que hay en esa planta) y en la lista, en su propio grupo. Se pueden enlazar: `#planta=pb&lugar=pb-lugar-01`.
 
 ### E. Los datos
 

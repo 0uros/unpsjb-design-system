@@ -19,6 +19,7 @@
 | Visor de cámaras rehecho, piezas del estudio de referencia y carpetas reordenadas | — | **0.4.5** |
 | Rediseño del módulo de planos y modo edición en el módulo | — | **0.4.6** |
 | Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
+| Interfaz nueva del módulo de planos: panel para buscar y elegir, controles sobre el plano | — | **0.4.8** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
@@ -54,7 +55,24 @@ Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`
 - **Portal de la Delegación** (17.C): la foto de apertura pasa de prohibida a opcional, y las entradas y las novedades pueden llevar foto.
 - **Portada de `muestra-portal.html`:** rehecha en franjas, con todas las piezas nuevas. Las demás pantallas no cambian. `<main>` ya no lleva `.contenedor`: lo lleva cada pantalla.
 
-## 0.4.7 · 2026-11-03 · oficial
+## 0.4.8 · 2026-11-06 · oficial
+
+La interfaz nueva del módulo de planos (PR #3). El usuario la comparó con la de antes, con los datos reales de la sede, y la aprobó el 6/11. Una herramienta que use el módulo no tiene que cambiar nada: el módulo arma la pantalla solo.
+
+### Cambiado
+
+- **La pantalla de planos** (21.B): un panel a la izquierda (buscador, filtros "Aulas y espacios" y "Antenas", resumen de la planta y lista) y el plano a la derecha con sus controles encima: las plantas arriba a la izquierda, acercar y "Ver todo" abajo a la derecha, y la ayuda ("?") arriba a la derecha. Se va la barra de arriba (`.plano__barra`) y la nota fija de debajo del plano.
+- **La ficha de lo elegido reemplaza a la lista en el panel,** con "Volver a la lista" (o `Esc`). Ya no es un panel fijo a la derecha.
+- **La lista son grupos de botones,** no tablas: aulas y espacios, antenas, puntos de referencia y antenas sin ubicar, cada grupo con cuántos son.
+- **El buscador busca en todo el edificio** y dice en qué planta está cada resultado.
+- **Con el plano entero, los controles no tapan el edificio:** en un lienzo de 600px o más se deja lugar a los costados.
+
+### Corregido
+
+- **En papel, el plano salía recortado y sin los rótulos de las aulas** (guardaba el recorte de la pantalla), y con una hoja angosta la lista no salía. Ahora va el plano entero, primero, y después la lista.
+- Con los datos reales, el resumen decía "0 antenas · 17 sin ubicar": ahora dice "17 antenas sin ubicar".
+
+## 0.4.7 · 2026-11-03 · anterior
 
 Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.
 
