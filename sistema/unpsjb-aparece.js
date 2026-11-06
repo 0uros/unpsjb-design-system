@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-aparece.js — Aparecer al entrar en pantalla · sin número todavía
+   unpsjb-aparece.js — Aparecer al entrar en pantalla · v0.4.9
    Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, 5.E y 17.E.
 
    Solo en páginas públicas. Cada franja con .aparece aparece una vez al llegar a
