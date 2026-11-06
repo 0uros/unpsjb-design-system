@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-planos.js — Módulo de planos · v0.4.4
+   unpsjb-planos.js — Módulo de planos · v0.4.8
    Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 21.
 
    Muestra las plantas de un edificio con lo que se marca encima: antenas de

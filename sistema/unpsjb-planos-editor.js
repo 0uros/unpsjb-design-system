@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-planos-editor.js — Modo edición del módulo de planos · v0.4.4
+   unpsjb-planos-editor.js — Modo edición del módulo de planos · v0.4.8
    Sistema de Diseño Digital UNPSJB (MII 2.0). Reglas: DESIGN.md, sección 21.G.
 
    Para marcar antenas y aulas sobre el plano sin tocar el archivo de datos a

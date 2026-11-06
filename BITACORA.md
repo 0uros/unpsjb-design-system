@@ -1140,3 +1140,12 @@ Pendientes:
 - [ ] Número de versión al unir (0.4.8 o 0.4.9, según se una antes este PR o el #6).
 - [ ] Que `planos-universidad` traiga el sistema nuevo (`herramientas/traer-sistema.sh`) después de unir.
 
+## 2026-11-06 — Se arma la 0.4.8 (PR #3, planos)
+
+Sin número de sesión. El usuario aprobó la interfaz nueva y no pidió otro orden: planos se une primero y es la 0.4.8; el PR #6 (`portada-publica`) va a ser la 0.4.9.
+
+- `DESIGN.md` (línea 3, la portada y 14.C), `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.8. La 21.B dice "cambiado en 0.4.8".
+- **Los tres archivos del módulo de planos** (`unpsjb-planos.css`, `unpsjb-planos.js`, `unpsjb-planos-editor.js`) decían v0.4.4 en el encabezado, también después de la 0.4.6. Pasan a 0.4.8: es el número que muestra `traer-sistema.sh` al copiar el sistema a `planos-universidad`.
+- En `CHANGELOG.md` la entrada "En curso" pasa a ser la 0.4.8, la 0.4.7 queda como anterior, y la tabla suma la fila.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
+
