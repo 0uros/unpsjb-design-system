@@ -1577,6 +1577,11 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   }
 }
 .apertura__texto { padding-block: var(--espacio-12); }
+/* A pantalla completa: la apertura ocupa la primera pantalla, debajo de la banda, y el texto
+   va al medio. Para una página de difusión, donde la franja que sigue también lleva foto:
+   así nunca se ven dos fotos a la vez ni una cortada. Si hay más arriba (la franja de fase),
+   la apertura se pasa un poco del borde, y con el texto al medio no se corta nada. */
+.apertura--pantalla { align-items: center; min-height: calc(100svh - var(--alto-banda-min)); }
 /* El botón y el plazo van juntos en una fila: "inscribite" y "hasta cuándo".
    <div class="apertura__accion"><a class="boton boton--secundario">…</a>
    <p class="apertura__plazo"><svg class="icono">…calendar…</svg>Inscripción hasta el <time>…</time></p></div> */

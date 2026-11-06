@@ -44,6 +44,7 @@ Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`
 - **Etapas con fecha** (`.etapas`, `.etapas__fecha`, 17.E): "cómo se entra", de dos a seis pasos numerados con su fecha. No es `.pasos` (8.F).
 - **Aparecer al entrar** (`.aparece`, `unpsjb-aparece.js`, 17.E): una franja aparece una vez al llegar a la pantalla, en 240ms. Solo en páginas públicas; la apertura nunca. Sin script, sin `IntersectionObserver` o con "reducir movimiento", todo se ve quieto.
 - **Orden de una página de difusión** (17.E): apertura, qué vas a hacer, en números, cómo se entra, franja oscura y preguntas frecuentes. Muestra nueva: `muestra-difusion.html` (una carrera), enlazada desde `muestra.html`.
+- **Apertura a pantalla completa** (`.apertura--pantalla`, 17.E): ocupa la primera pantalla, con el texto al medio, cuando la franja que sigue también lleva foto. La usa la página de difusión.
 - **Plazo junto al botón de la apertura** (`.apertura__accion`, `.apertura__plazo`, 17.E): "Inscripción hasta el 18 de diciembre", con el ícono `calendar`, en la misma fila que el botón.
 - **Fotos de ejemplo** para las muestras (`muestras/fotos-ejemplo/`), dibujadas por `herramientas/fotos-ejemplo/generar.py`.
 

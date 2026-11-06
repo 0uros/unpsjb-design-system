@@ -1212,3 +1212,13 @@ Sin número de sesión. El usuario aprobó la interfaz nueva y no pidió otro or
 - En `CHANGELOG.md` la entrada "En curso" pasa a ser la 0.4.8, la 0.4.7 queda como anterior, y la tabla suma la fila.
 - `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
 
+## 2026-11-06 — Difusión: una sola foto en la primera pantalla
+
+Sin número de sesión. Al mirar `muestra-difusion.html`, el usuario: "falla en que se vea una imagen y otra de manera cortada. Debería estar en primer plano SOLO una imagen, y después al hacer scroll la siguiente". Debajo de la apertura arrancaba la foto de "Qué vas a hacer" (mitades), cortada.
+
+- **Probado primero: cambiar de lugar "En números" (sin foto) y "Qué vas a hacer".** No alcanza: en celular sí, pero en pantallas de compu la segunda foto se seguía asomando (7px a 1366×768, 223px a 1920×1080, 583px a 2560×1440), porque la apertura mide como mucho 480px. No se hizo.
+- **Lo que se hizo: `.apertura--pantalla`.** La apertura ocupa la primera pantalla debajo de la banda (`100svh` menos `--alto-banda-min`), con el texto al medio. Si hay algo más arriba (la franja de fase de la muestra), se pasa un poco del borde y, con el texto al medio, no se corta. El orden de la página no cambia.
+- **Medido** (la foto de "Qué vas a hacer" debajo del borde y el texto de la apertura entero): 1366×768, 1440×900, 1920×1080, 2560×1440, 768×1024 y 390×844, bien. A 360×640 la línea del plazo queda 34px debajo del borde, por la franja de fase de la muestra (116px en celular), que una página real no tiene.
+- **Cambia una regla de 17.E:** la apertura "nunca toda la ventana, así lo que sigue se ve sin bajar" sigue valiendo para el portal (ahí después viene el aviso y las entradas, sin foto grande). Para la difusión, la primera pantalla entera. También en la tabla de la sección 13.
+- Ahora "Qué vas a hacer" está fuera de la pantalla al cargar, así que también aparece al bajar (`.aparece`).
+
