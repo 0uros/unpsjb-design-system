@@ -249,8 +249,15 @@
     // --- Vista: qué parte del plano se ve ---------------------------------
     const escala = () => (lienzo.clientWidth || 1) / vista.w;
     const proporcion = () => (lienzo.clientHeight || 1) / (lienzo.clientWidth || 1);
-    // El ancho de vista con el que el plano entra entero
-    const anchoTodo = () => Math.max(tam.ancho, tam.alto / proporcion());
+    // El ancho de vista con el que el plano entra entero. En un lienzo ancho se deja lugar a
+    // los costados para los controles (la planta a la izquierda, acercar a la derecha): con el
+    // plano entero no tapan nada. En papel no hay controles.
+    let imprimiendo = false;
+    const anchoTodo = () => {
+      const W = lienzo.clientWidth || 1;
+      const costado = W >= 600 && !imprimiendo ? 56 : 0;
+      return Math.max(tam.ancho * W / (W - 2 * costado), tam.alto / proporcion());
+    };
     function ajustar() {
       // La vista siempre tiene la proporción del lienzo; el centro no se sale del plano
       const cx = entre(vista.x + vista.w / 2, tam.x, tam.x + tam.ancho);
@@ -710,6 +717,11 @@
         principal.scrollIntoView({ block: 'nearest' });
       }
     });
+    // Esc en la ficha hace lo mismo que "Volver a la lista". En edición no: ahí Esc es del editor
+    detalle.addEventListener('keydown', e => {
+      const volver = detalle.querySelector('.plano__volver');
+      if (e.key === 'Escape' && volver && !raiz.classList.contains('plano--editando')) { e.preventDefault(); volver.click(); }
+    });
 
     // Arrastrar, pellizcar y clic
     const dedos = new Map();
@@ -773,7 +785,24 @@
       };
       if (teclas[e.key]) { e.preventDefault(); teclas[e.key](); }
     });
-    new ResizeObserver(() => { if (lienzo.clientWidth) ajustar(); }).observe(lienzo);
+    new ResizeObserver(() => { if (lienzo.clientWidth) (imprimiendo ? verTodo : ajustar)(); }).observe(lienzo);
+
+    // En papel va el plano entero. El lienzo toma en pantalla el mismo ancho que va a tener en la
+    // hoja (.plano--imprimiendo), así los rótulos quedan ubicados antes de armar la página.
+    // Después vuelve a la vista que había.
+    let vistaAntes = null;
+    function aPapel(si) {
+      if (si === imprimiendo) return;
+      imprimiendo = si;
+      if (si) vistaAntes = { ...vista };
+      raiz.classList.toggle('plano--imprimiendo', si);
+      if (si) verTodo();
+      else if (vistaAntes) { vista = vistaAntes; ajustar(); }
+    }
+    window.addEventListener('beforeprint', () => aPapel(true));
+    window.addEventListener('afterprint', () => aPapel(false));
+    const papel = window.matchMedia('print');
+    if (papel.addEventListener) papel.addEventListener('change', e => aPapel(e.matches));
 
     // --- Arranque ----------------------------------------------------------
     function fallo(error) {

@@ -54,7 +54,7 @@
 .plano__modo { display: flex; width: fit-content; margin-bottom: var(--espacio-3); }
 .plano__mapa { min-width: 0; }
 .plano__marco { position: relative; }
-@media (max-width: 1023px) {
+@media screen and (max-width: 1023px) {   /* solo en pantalla: en papel van el plano y la lista */
   .plano--lista .plano__mapa { display: none; }
   /* Con el plano a la vista, del panel queda solo la ficha de lo elegido, debajo */
   .plano--plano .plano__panel > :not(.plano__detalle) { display: none; }
@@ -71,6 +71,13 @@
   .plano .plano__ver-plano { display: none; }
   /* En edición la barra del editor va arriba: el plano se achica para seguir entrando */
   .plano--editando .plano__cuerpo { height: clamp(480px, calc(100vh - 23rem), 1000px); }
+}
+
+/* En papel: un ancho fijo con la proporción del plano. Mientras se imprime, la pantalla toma
+   el mismo ancho (.plano--imprimiendo, lo pone el script) para ubicar los rótulos. */
+.plano.plano--imprimiendo .plano__lienzo { width: 17cm; max-width: 100%; height: auto; max-height: none; aspect-ratio: var(--plano-proporcion, 16 / 9); }
+@media print {
+  .plano .plano__lienzo { width: 17cm; max-width: 100%; height: auto; max-height: none; aspect-ratio: var(--plano-proporcion, 16 / 9); }
 }
 
 /* 2. Lienzo y dibujo ------------------------------------------------------- */
@@ -467,7 +474,7 @@
 .plano--tenue { opacity: 0.35; }
 
 /* 6. Celular, impresión y alto contraste ----------------------------------- */
-@media (max-width: 1023px) {
+@media screen and (max-width: 1023px) {
   .plano__lienzo { max-height: 65vh; }
   .plano--plano .plano__panel { border: 0; background: none; }
   .plano--plano .plano__detalle { border: 1px solid var(--color-linea); border-radius: var(--radio-contenedor); background: var(--color-panel); }
@@ -477,10 +484,12 @@
   .plano { --plano-suelo: transparent; }
   .plano-trazo--rotulo, .plano-trazo--suave { opacity: 1; }      /* en papel va el dibujo entero */
   .plano__modo, .plano__buscar, .plano__capas, .plano__plantas, .plano__zoom, .plano__nota, .plano__volver, .plano__ver-plano { display: none; }
-  .plano__cuerpo { display: block; height: auto; }
+  /* El plano primero y entero; la lista, después */
+  .plano__cuerpo { display: flex; flex-direction: column; gap: var(--espacio-4); height: auto; }
+  .plano .plano__mapa { order: -1; }
   .plano .plano__mapa, .plano .plano__panel, .plano .plano__lista { display: block; overflow: visible; }
   .plano__ayuda { display: none; }
-  .plano__lienzo { max-height: none; border-color: var(--color-linea-control); break-inside: avoid; }
+  .plano__lienzo { border-color: var(--color-linea-control); break-inside: avoid; }
   .plano-zona, .plano-marca, .plano-rotulo, .plano-lugar { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
 @media (forced-colors: active) {

@@ -24,6 +24,23 @@ Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamab
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
+## En curso (rama `planos-interfaz-nueva`) · sin número todavía
+
+La interfaz nueva del módulo de planos (PR #3). El usuario la comparó con la de antes, con los datos reales de la sede, y la aprobó el 6/11. Una herramienta que use el módulo no tiene que cambiar nada: el módulo arma la pantalla solo.
+
+### Cambiado
+
+- **La pantalla de planos** (21.B): un panel a la izquierda (buscador, filtros "Aulas y espacios" y "Antenas", resumen de la planta y lista) y el plano a la derecha con sus controles encima: las plantas arriba a la izquierda, acercar y "Ver todo" abajo a la derecha, y la ayuda ("?") arriba a la derecha. Se va la barra de arriba (`.plano__barra`) y la nota fija de debajo del plano.
+- **La ficha de lo elegido reemplaza a la lista en el panel,** con "Volver a la lista" (o `Esc`). Ya no es un panel fijo a la derecha.
+- **La lista son grupos de botones,** no tablas: aulas y espacios, antenas, puntos de referencia y antenas sin ubicar, cada grupo con cuántos son.
+- **El buscador busca en todo el edificio** y dice en qué planta está cada resultado.
+- **Con el plano entero, los controles no tapan el edificio:** en un lienzo de 600px o más se deja lugar a los costados.
+
+### Corregido
+
+- **En papel, el plano salía recortado y sin los rótulos de las aulas** (guardaba el recorte de la pantalla), y con una hoja angosta la lista no salía. Ahora va el plano entero, primero, y después la lista.
+- Con los datos reales, el resumen decía "0 antenas · 17 sin ubicar": ahora dice "17 antenas sin ubicar".
+
 ## 0.4.7 · 2026-11-03 · oficial
 
 Sale de mirar las skills de diseño para agentes de IA que circulaban en un top de diez repositorios: se tomaron tres ideas de una de ellas (design-taste), solo como texto. No cambia el CSS ni ninguna pieza.
