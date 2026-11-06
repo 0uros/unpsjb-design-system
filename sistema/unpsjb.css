@@ -182,7 +182,7 @@
 
   --color-velo: rgb(15 36 56 / 0.6);
 
-  /* Páginas públicas (nuevo, sin número todavía; DESIGN.md, 17.E).
+  /* Páginas públicas (nuevo en 0.4.9; DESIGN.md, 17.E).
      La franja oscura y el pie oscuro van sobre --color-oscuro y, adentro, usan
      los tokens del modo oscuro (ver "Páginas públicas", en la sección 5). */
   --color-oscuro: #0f2438;
@@ -1517,7 +1517,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
 @media (max-width: 639px) { .entradas a { min-height: 96px; padding: var(--espacio-4); } }
 @media (forced-colors: active) { .entradas a { border: 1px solid LinkText; } }
 
-/* Páginas públicas (nuevo, sin número todavía; DESIGN.md, 17.E): foto de
+/* Páginas públicas (nuevo en 0.4.9; DESIGN.md, 17.E): foto de
    apertura, franjas, título con filete, marca de agua, presentación, mitad foto
    y mitad texto, entradas y novedades con foto, y pie oscuro. Solo en páginas
    públicas: nunca en una herramienta de trabajo.
