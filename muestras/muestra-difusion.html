@@ -19,7 +19,6 @@
     .ext-difusion-lista li + li { margin-top: var(--espacio-3); }
     .ext-difusion-preguntas { max-width: 880px; }
     .ext-difusion-despues { margin: var(--espacio-8) 0 0; }
-    .ext-difusion-plazo { margin: var(--espacio-4) 0 0; font: var(--texto-detalle); }
     /* El pie oscuro va pegado a la última franja */
     main > .pie--oscuro { margin-top: 0; }
   </style>
@@ -28,6 +27,7 @@
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="i-graduation-cap" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
     <symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
   </svg>
 
@@ -64,8 +64,10 @@
       <div class="contenedor apertura__texto">
         <h1 id="t-carrera">Licenciatura en Gestión Ambiental, en Trelew</h1>
         <p>Cinco años, presencial y gratuita. Para entender el ambiente de la Patagonia y saber qué hacer con él: el agua, la costa, la meseta y las ciudades.</p>
-        <a class="boton boton--secundario" href="#ingreso">Inscribite al ingreso 2027</a>
-        <p class="ext-difusion-plazo">La inscripción cierra el <time datetime="2026-12-18">18 de diciembre de 2026</time>.</p>
+        <div class="apertura__accion">
+          <a class="boton boton--secundario" href="#ingreso">Inscribite al ingreso 2027</a>
+          <p class="apertura__plazo"><svg class="icono" aria-hidden="true"><use href="#i-calendar"/></svg>Inscripción hasta el <time datetime="2026-12-18">18 de diciembre</time></p>
+        </div>
       </div>
     </div>
 

@@ -1172,3 +1172,16 @@ Verificado en Chrome sin ventana, después de recorrer la página: `muestra-difu
 Pendiente:
 - [ ] Que el usuario mire `muestra-difusion.html` (claro, oscuro y celular) y la animación.
 - [ ] Borrar la rama `difusion` cuando se una esta: ya está toda acá.
+
+## 2026-11-06 — Difusión: la fecha junto al botón y la capa en degradé
+
+Sin número de sesión. Al mirar `muestra-difusion.html`, al usuario la frase "La inscripción cierra el 18 de diciembre de 2026" debajo del botón le gustaba y no: no sabía si era por la foto de ejemplo o por forzar los colores del sistema.
+
+- **Lo que pasaba:** la foto de ejemplo es un dibujo borroso y casi sin color, y la capa pareja al 55% la apaga entera; y la fecha, que es el dato urgente, iba como una nota al pie debajo del botón (en celular se cortaba en "de / 2026", y el año chocaba con "ingreso 2027").
+- **Se armaron tres variantes** sobre la página, sin tocar el archivo: A, como estaba; B, la fecha como etiqueta arriba del título; C, la fecha al lado del botón con el ícono `calendar`. B y C con la capa en degradé. **El usuario eligió C.**
+- **Capa en degradé, solo desde 1024px:** al 55% hasta el final del texto (relleno del contenedor + 60ch + un margen) y al 15% en el borde derecho. Medido con la foto cambiada por una toda blanca y el texto escondido, en 390, 768, 1024, 1280, 1366 y 1920 px, en las dos muestras: **todo el texto queda sobre la capa al 55%, 4,74:1 en el peor caso.** La primera versión del corte daba 4,35:1 en el borde del párrafo (había sumado el relleno del contenedor de celular); se corrigió.
+- En pantallas angostas la capa queda pareja: el texto ocupa todo el ancho.
+- La fecha va sin el año: "Inscripción hasta el 18 de diciembre".
+- axe sin fallas en las dos muestras (claro, oscuro, 1366 y 390 px). El detector no marca nada nuevo.
+- **Falta una foto real** para juzgar la apertura: el usuario todavía no tiene. Con la de ejemplo cualquier capa la deja opaca.
+

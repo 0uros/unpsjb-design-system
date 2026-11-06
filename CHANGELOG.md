@@ -43,11 +43,13 @@ Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`
 - **Etapas con fecha** (`.etapas`, `.etapas__fecha`, 17.E): "cómo se entra", de dos a seis pasos numerados con su fecha. No es `.pasos` (8.F).
 - **Aparecer al entrar** (`.aparece`, `unpsjb-aparece.js`, 17.E): una franja aparece una vez al llegar a la pantalla, en 240ms. Solo en páginas públicas; la apertura nunca. Sin script, sin `IntersectionObserver` o con "reducir movimiento", todo se ve quieto.
 - **Orden de una página de difusión** (17.E): apertura, qué vas a hacer, en números, cómo se entra, franja oscura y preguntas frecuentes. Muestra nueva: `muestra-difusion.html` (una carrera), enlazada desde `muestra.html`.
+- **Plazo junto al botón de la apertura** (`.apertura__accion`, `.apertura__plazo`, 17.E): "Inscripción hasta el 18 de diciembre", con el ícono `calendar`, en la misma fila que el botón.
 - **Fotos de ejemplo** para las muestras (`muestras/fotos-ejemplo/`), dibujadas por `herramientas/fotos-ejemplo/generar.py`.
 
 ### Cambiado
 
 - **Movimiento** (5.E): la única animación de entrada permitida es `.aparece`, y solo en páginas públicas.
+- **La capa de la foto de apertura se aclara a la derecha** desde 1024px (17.E): al 55% hasta donde llega el texto y al 15% en el otro extremo. El texto sigue en 4,7:1 sobre una foto toda blanca. En pantallas más angostas, pareja como antes.
 - **Fondos limpios** (3.G): en las páginas públicas se permiten la foto de apertura con capa y la marca de agua, con condiciones. En las herramientas sigue todo igual.
 - **Portal de la Delegación** (17.C): la foto de apertura pasa de prohibida a opcional, y las entradas y las novedades pueden llevar foto.
 - **Portada de `muestra-portal.html`:** rehecha en franjas, con todas las piezas nuevas. Las demás pantallas no cambian. `<main>` ya no lleva `.contenedor`: lo lleva cada pantalla.

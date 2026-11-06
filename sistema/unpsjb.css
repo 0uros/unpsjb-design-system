@@ -1563,7 +1563,26 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   z-index: -1;
   background: var(--color-velo-foto);
 }
+/* Desde 1024px la capa se aclara a la derecha, después del texto: la foto respira donde no
+   hay nada que leer. Hasta donde llega el texto (60ch del párrafo) sigue al 55%, así el
+   contraste es el mismo que con la capa pareja. En pantallas más angostas el texto ocupa
+   todo el ancho y la capa queda pareja. */
+@media (min-width: 1024px) {
+  .apertura::before {
+    --apertura-fin: calc(max(0px, (100% - 1280px) / 2) + 2 * var(--espacio-8) + 60ch);   /* relleno del contenedor, el texto y un margen */
+    font: var(--texto-grande);              /* para que 60ch mida lo mismo que en el párrafo */
+    background: linear-gradient(to right,
+      var(--color-velo-foto) 0, var(--color-velo-foto) var(--apertura-fin),
+      rgb(0 0 0 / 0.15) calc(var(--apertura-fin) + 25%));
+  }
+}
 .apertura__texto { padding-block: var(--espacio-12); }
+/* El botón y el plazo van juntos en una fila: "inscribite" y "hasta cuándo".
+   <div class="apertura__accion"><a class="boton boton--secundario">…</a>
+   <p class="apertura__plazo"><svg class="icono">…calendar…</svg>Inscripción hasta el <time>…</time></p></div> */
+.apertura__accion { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-3) var(--espacio-4); }
+.apertura p.apertura__plazo { margin: 0; font: var(--texto-base); font-weight: 700; }
+.apertura__plazo .icono { margin-right: var(--espacio-2); vertical-align: -0.2em; }
 .apertura h1 { max-width: 22ch; margin-bottom: var(--espacio-4); font: var(--texto-apertura); letter-spacing: -0.02em; color: #ffffff; }
 .apertura p { max-width: 60ch; margin: 0 0 var(--espacio-6); font: var(--texto-grande); }
 .apertura > .contenedor > :last-child { margin-bottom: 0; }
