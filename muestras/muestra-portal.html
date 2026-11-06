@@ -14,14 +14,16 @@
   <!-- Estilos propios de esta página, con el prefijo .ext-<herramienta> (DESIGN.md, 14.E) -->
   <style>
     .ext-portal-bajada { font: var(--texto-grande); color: var(--color-tinta-2); margin-bottom: var(--espacio-6); }
-    .ext-portal-entradas { margin-block: var(--espacio-6) 0; }
     .ext-portal-barra { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-3) var(--espacio-4); margin-bottom: var(--espacio-4); }
     .ext-portal-barra .buscador { flex: 1 1 280px; max-width: 420px; }
     .ext-portal-barra p { margin: 0; }
-    .ext-portal-contacto { max-width: 880px; }
     .ext-portal-mas { margin-top: var(--espacio-4); }
+    .ext-portal-separado { margin-top: var(--espacio-8); }
+    /* En la portada, el pie oscuro va pegado a la última franja */
+    main:has(> [data-vista="inicio"]:not([hidden])) > .pie--oscuro { margin-top: 0; }
     /* Las notas del estudio: solo en el prototipo */
     .ext-portal-estudio { margin-top: var(--espacio-12); }
+    [data-vista="inicio"] .ext-portal-estudio { margin-block: var(--espacio-12); }
     .ext-portal-estudio .acordeon__cuerpo { padding-left: 0; }
     .ext-portal-estudio .tabla :is(th, td) { white-space: normal; vertical-align: top; }
     @media (min-width: 640px) { .ext-portal-estudio .tabla td:nth-child(2) { white-space: nowrap; } }
@@ -44,7 +46,7 @@
 
   <a class="saltar" href="#contenido">Ir al contenido</a>
 
-  <header class="cabecera">
+  <header class="cabecera" id="arriba">
     <div class="banda">
       <div class="contenedor">
         <div class="banda__fila">
@@ -70,78 +72,127 @@
   <aside class="fase" aria-label="Estado de la página">
     <div class="contenedor fase__fila">
       <strong class="fase__nombre">Prototipo</strong>
-      <p>Portal de la Delegación, con datos de ejemplo. Aplica lo que salió del estudio de los sitios de la UNC y la UBA (<code>REFERENCIAS-UNC-UBA.md</code>): al final de cada pantalla dice qué se tomó y de dónde. <a href="muestra.html">Volver a la muestra general</a>.</p>
+      <p>Portal de la Delegación, con datos de ejemplo. Las fotos son dibujos de ejemplo (<code>herramientas/fotos-ejemplo/</code>). Aplica lo que salió de los estudios de los sitios de la UNC, la UBA y la SIDE (<code>REFERENCIAS-UNC-UBA.md</code>, <code>REFERENCIAS-SIDE.md</code>): al final de cada pantalla dice qué se tomó y de dónde. <a href="muestra.html">Volver a la muestra general</a>.</p>
     </div>
   </aside>
 
-  <main class="contenedor" id="contenido">
+  <main id="contenido">
 
-    <!-- 1. Portada del portal (DESIGN.md, 17.C) -->
+    <!-- 1. Portada del portal (DESIGN.md, 17.C y 17.E). Va a todo el ancho, en franjas:
+         cada una lleva su .contenedor adentro. -->
     <section data-vista="inicio" aria-labelledby="t-inicio">
-      <div class="encabezado">
-        <h1 id="t-inicio" tabindex="-1">Delegación Trelew</h1>
-      </div>
-      <p class="ext-portal-bajada">Universidad Nacional de la Patagonia San Juan Bosco. Acá encontrás por dónde se hace cada trámite, las herramientas de la Sede y a quién escribirle.</p>
 
-      <!-- Lo que cambia el día de alguien va como aviso, arriba. No como ventana ni carrusel. -->
-      <div class="aviso" role="status">
-        <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg></div>
-        <div class="aviso__cuerpo">
-          <p class="aviso__titulo">El lunes 12 de octubre la Sede está cerrada</p>
-          <p>Es feriado. Las clases y la atención al público vuelven el martes 13.</p>
+      <!-- Foto de apertura: una sola, sin carrusel, con la capa oscura que deja leer el texto -->
+      <div class="apertura">
+        <img class="apertura__foto" src="fotos-ejemplo/apertura-960.webp"
+             srcset="fotos-ejemplo/apertura-960.webp 960w, fotos-ejemplo/apertura-1600.webp 1600w"
+             sizes="100vw" width="1600" height="720" alt="" fetchpriority="high">
+        <div class="contenedor apertura__texto">
+          <h1 id="t-inicio" tabindex="-1">La universidad pública, en Trelew</h1>
+          <p>Sede de la Universidad Nacional de la Patagonia San Juan Bosco. Acá encontrás las carreras, por dónde se hace cada trámite y a quién escribirle.</p>
+          <a class="boton boton--secundario" href="#inicio">Conocé las carreras</a>
         </div>
       </div>
 
-      <!-- Entradas: de dos a cuatro, por lo que la persona viene a hacer -->
-      <ul class="entradas ext-portal-entradas">
-        <li><a class="entradas__principal" href="#inicio"><span class="entradas__titulo">Estudiar en Trelew</span><span>Carreras, ingreso y calendario académico</span></a></li>
-        <li><a href="#tramites"><span class="entradas__titulo">Trámites</span><span>Certificados, reservas y pedidos</span></a></li>
-        <li><a href="#herramientas"><span class="entradas__titulo">Herramientas</span><span>Campus, correo, agenda de aulas y más</span></a></li>
-      </ul>
+      <!-- Entradas: de dos a cuatro, por lo que la persona viene a hacer. Lo urgente, antes, como aviso. -->
+      <section class="franja" aria-labelledby="t-empezar">
+        <div class="contenedor">
+          <div class="aviso" role="status">
+            <div class="aviso__placa"><svg class="icono" aria-hidden="true"><use href="#i-info"/></svg></div>
+            <div class="aviso__cuerpo">
+              <p class="aviso__titulo">El lunes 12 de octubre la Sede está cerrada</p>
+              <p>Es feriado. Las clases y la atención al público vuelven el martes 13.</p>
+            </div>
+          </div>
+          <h2 id="t-empezar" class="titulo-filete ext-portal-separado">Por dónde empezar</h2>
+          <ul class="entradas entradas--foto">
+            <li><a class="entradas__principal" href="#inicio"><img src="fotos-ejemplo/entrada-estudiar.webp" width="640" height="427" alt="" loading="lazy"><span class="entradas__titulo">Estudiar en Trelew</span><span>Carreras, ingreso y calendario académico</span></a></li>
+            <li><a href="#tramites"><img src="fotos-ejemplo/entrada-tramites.webp" width="640" height="427" alt="" loading="lazy"><span class="entradas__titulo">Trámites</span><span>Certificados, reservas y pedidos</span></a></li>
+            <li><a href="#herramientas"><img src="fotos-ejemplo/entrada-herramientas.webp" width="640" height="427" alt="" loading="lazy"><span class="entradas__titulo">Herramientas</span><span>Campus, correo, agenda de aulas y más</span></a></li>
+            <li><a href="#inicio"><img src="fotos-ejemplo/entrada-sede.webp" width="640" height="427" alt="" loading="lazy"><span class="entradas__titulo">La Sede</span><span>Cómo llegar, oficinas y horarios</span></a></li>
+          </ul>
+        </div>
+      </section>
 
-      <h2 id="t-novedades">Novedades</h2>
-      <ul class="accesos" aria-labelledby="t-novedades">
-        <li><a class="accesos__nombre" href="#inicio">Abre la inscripción a las mesas de examen de noviembre</a><p><time datetime="2026-10-06">6 de octubre de 2026</time></p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
-        <li><a class="accesos__nombre" href="#inicio">Nuevo horario de la biblioteca</a><p><time datetime="2026-10-01">1 de octubre de 2026</time></p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-chevron-right"/></svg></li>
-        <li><a class="accesos__nombre" href="#inicio">Jornada de puertas abiertas para ingresantes<span class="solo-lector"> (abre otro sitio)</span></a><p><time datetime="2026-09-24">24 de septiembre de 2026</time> · En el portal de la universidad</p><svg class="icono accesos__marca" aria-hidden="true"><use href="#i-external-link"/></svg></li>
-      </ul>
-      <p class="ext-portal-mas"><a href="#inicio">Todas las novedades, en el portal de la universidad</a></p>
+      <!-- Presentación: quién es la Sede, con el escudo grande -->
+      <section class="franja franja--panel" aria-labelledby="t-sede">
+        <div class="contenedor presentacion">
+          <img src="../sistema/assets/escudo-unpsjb-blanco.svg" width="160" height="200" alt="">
+          <div>
+            <h2 id="t-sede" class="titulo-filete">La Sede Trelew</h2>
+            <p class="presentacion__destacado">Una sede de la Universidad Nacional de la Patagonia San Juan Bosco, pública y gratuita.</p>
+            <p>Texto de ejemplo: acá va en dos o tres oraciones qué se estudia en la Sede, desde cuándo está y a quiénes recibe. Lo que sea historia larga o estructura de la universidad se enlaza al portal de la universidad.</p>
+          </div>
+        </div>
+      </section>
 
-      <h2 id="t-contacto">Contacto</h2>
-      <div class="panel ext-portal-contacto">
-        <dl class="resumen" aria-labelledby="t-contacto">
-          <div><dt>Mesa de entradas</dt><dd>Lunes a viernes, de 8 a 14 h</dd></div>
-          <div><dt>Dirección</dt><dd>Dirección de la Sede, Trelew, Chubut</dd></div>
-          <div><dt>Teléfono</dt><dd><a href="tel:+542804421234">(0280) 442-1234</a></dd></div>
-          <div><dt>Correo</dt><dd><a href="mailto:ejemplo@tw.unp.edu.ar">ejemplo@tw.unp.edu.ar</a></dd></div>
-          <div><dt>Soporte informático</dt><dd><a href="muestra-mesa-ayuda.html">Abrir una solicitud en la mesa de ayuda</a></dd></div>
-        </dl>
-      </div>
+      <!-- Novedades: tres, con foto; cada tarjeta es un solo enlace -->
+      <section class="franja franja--capa" aria-labelledby="t-novedades">
+        <div class="contenedor">
+          <h2 id="t-novedades" class="titulo-filete">Novedades</h2>
+          <ul class="novedades">
+            <li><a href="#inicio"><img src="fotos-ejemplo/novedad-1.webp" width="640" height="360" alt="" loading="lazy"><span class="novedades__titulo">Abre la inscripción a las mesas de examen de noviembre</span><time datetime="2026-10-06">6 de octubre de 2026</time></a></li>
+            <li><a href="#inicio"><img src="fotos-ejemplo/novedad-2.webp" width="640" height="360" alt="" loading="lazy"><span class="novedades__titulo">Nuevo horario de la biblioteca</span><time datetime="2026-10-01">1 de octubre de 2026</time></a></li>
+            <li><a href="#inicio"><img src="fotos-ejemplo/novedad-3.webp" width="640" height="360" alt="" loading="lazy"><span class="novedades__titulo">Jornada de puertas abiertas para ingresantes<span class="solo-lector"> (abre otro sitio)</span></span><time datetime="2026-09-24">24 de septiembre de 2026 · En el portal de la universidad</time></a></li>
+          </ul>
+          <p class="ext-portal-mas"><a class="boton boton--secundario" href="#inicio">Todas las novedades</a></p>
+        </div>
+      </section>
+
+      <!-- Franja oscura: el llamado más importante, uno solo, con la marca de agua detrás -->
+      <section class="franja franja--oscura marca-agua" aria-labelledby="t-inscripciones">
+        <div class="contenedor">
+          <h2 id="t-inscripciones" class="titulo-filete">Inscripciones 2027</h2>
+          <p>Del 1 de noviembre al 15 de diciembre te podés inscribir a las carreras de la Sede. Se hace en línea y lleva unos veinte minutos.</p>
+          <p class="ext-portal-mas"><a class="boton boton--secundario" href="#inicio">Cómo inscribirte</a></p>
+        </div>
+      </section>
+
+      <!-- Mitad foto, mitad texto: el contacto, a la vista -->
+      <section class="mitades" aria-labelledby="t-contacto">
+        <img class="mitades__foto" src="fotos-ejemplo/mitad-sede.webp" width="960" height="640" alt="" loading="lazy">
+        <div class="mitades__texto">
+          <h2 id="t-contacto" class="titulo-filete">Contacto</h2>
+          <dl class="resumen" aria-labelledby="t-contacto">
+            <div><dt>Mesa de entradas</dt><dd>Lunes a viernes, de 8 a 14 h</dd></div>
+            <div><dt>Dirección</dt><dd>Dirección de la Sede, Trelew, Chubut</dd></div>
+            <div><dt>Teléfono</dt><dd><a href="tel:+542804421234">(0280) 442-1234</a></dd></div>
+            <div><dt>Correo</dt><dd><a href="mailto:ejemplo@tw.unp.edu.ar">ejemplo@tw.unp.edu.ar</a></dd></div>
+            <div><dt>Soporte informático</dt><dd><a href="muestra-mesa-ayuda.html">Abrir una solicitud en la mesa de ayuda</a></dd></div>
+          </dl>
+        </div>
+      </section>
 
       <!-- Nota del prototipo: no va en la página real -->
+      <div class="contenedor">
       <details class="acordeon ext-portal-estudio" open>
-        <summary>Qué sale del estudio en esta pantalla</summary>
+        <summary>Qué sale de los estudios en esta pantalla</summary>
         <div class="acordeon__cuerpo">
-          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale del estudio en esta pantalla">
+          <div class="tabla-marco" tabindex="0" role="region" aria-label="Qué sale de los estudios en esta pantalla">
             <table class="tabla tabla--tarjetas">
               <thead><tr><th scope="col">Qué vimos</th><th scope="col">Dónde</th><th scope="col">Qué hicimos acá</th></tr></thead>
               <tbody>
-            <tr><td>Tres entradas arriba de todo, por lo que la persona viene a hacer</td><td data-columna="Dónde">UNC, portada</td><td data-columna="Qué hicimos acá">Las entradas: tres bloques con el nombre de la tarea y una línea que dice qué hay adentro.</td></tr>
-            <tr><td>Mosaico de bloques planos de color, con texto blanco sobre celeste y naranja (2:1)</td><td data-columna="Dónde">UBA, facultades</td><td data-columna="Qué hicimos acá">Los mismos bloques planos, con contraste: el principal en azul con blanco, los demás en neutro con texto oscuro.</td></tr>
-            <tr><td>Carrusel de fotos y una ventana que se abre sola al entrar</td><td data-columna="Dónde">UNC y UBA, portada</td><td data-columna="Qué hicimos acá">No van. Lo urgente está arriba como aviso y las novedades son una lista de tres.</td></tr>
-            <tr><td>Portadas de 22 MB y de 14,5 MB, por las fotos y un video</td><td data-columna="Dónde">UNC y UBA, portada</td><td data-columna="Qué hicimos acá">Sin foto de apertura ni video. Si se suman fotos, hasta 200 KB cada una.</td></tr>
-            <tr><td>El acceso a la cuenta, en la cabecera de todas las páginas</td><td data-columna="Dónde">UNC</td><td data-columna="Qué hicimos acá">El botón “Mi cuenta” de la banda.</td></tr>
-            <tr><td>Tres filas de menú antes del título</td><td data-columna="Dónde">UNC, becas</td><td data-columna="Qué hicimos acá">Un solo nivel: la sub-barra, con cuatro secciones.</td></tr>
-            <tr><td>Recuadro con oficina, horario, teléfono y correo</td><td data-columna="Dónde">UNC, becas</td><td data-columna="Qué hicimos acá">“Contacto”, como lista de resumen. El teléfono y el correo son enlaces.</td></tr>
+            <tr><td>El orden de la portada: frase sobre una foto, quiénes son, cuatro entradas con foto, tres novedades, una franja oscura con un solo llamado, mitad foto y mitad texto, pie oscuro</td><td data-columna="Dónde">SIDE, portada</td><td data-columna="Qué hicimos acá">El mismo orden, con las entradas antes que la presentación: la persona viene a hacer algo.</td></tr>
+            <tr><td>Foto de apertura con capa negra al 40%: sobre una zona clara, el texto blanco da 2,9:1</td><td data-columna="Dónde">SIDE, portada y carreras</td><td data-columna="Qué hicimos acá">Capa al 55% (4,7:1 aun sobre blanco). La foto no ocupa toda la ventana: las entradas se ven sin bajar.</td></tr>
+            <tr><td>Secciones a todo el ancho que alternan el fondo, y un filete bajo cada título</td><td data-columna="Dónde">SIDE, carreras</td><td data-columna="Qué hicimos acá">Franjas en fondo, panel y capa. El filete va en azul, nunca naranja. Los títulos, a la izquierda y con mayúscula solo inicial.</td></tr>
+            <tr><td>El escudo como marca de agua detrás de una sección</td><td data-columna="Dónde">SIDE, portada y carreras</td><td data-columna="Qué hicimos acá">Solo en la franja oscura, al 6%, del lado derecho. El texto sigue en 5,9:1 o más.</td></tr>
+            <tr><td>Tres entradas arriba de todo, por lo que la persona viene a hacer</td><td data-columna="Dónde">UNC, portada</td><td data-columna="Qué hicimos acá">Cuatro entradas con foto, nombradas por la tarea. La principal, en azul.</td></tr>
+            <tr><td>Mosaico de bloques planos de color, con texto blanco sobre celeste y naranja (2:1)</td><td data-columna="Dónde">UBA, facultades</td><td data-columna="Qué hicimos acá">El principal en azul con blanco (8,9:1); los demás, en blanco con texto oscuro.</td></tr>
+            <tr><td>Carrusel de fotos y una ventana que se abre sola al entrar</td><td data-columna="Dónde">UNC y UBA, portada</td><td data-columna="Qué hicimos acá">No van. Lo urgente está arriba como aviso y las novedades son tres, con un enlace a todas.</td></tr>
+            <tr><td>Portadas de 22 MB y de 14,5 MB, por las fotos y un video. La de la SIDE, 1,7 MB, sobre todo por un logo de 260 KB</td><td data-columna="Dónde">UNC, UBA y SIDE</td><td data-columna="Qué hicimos acá">Fotos de hasta 200 KB, con dos anchos para la de apertura y carga diferida para las demás. Sin video.</td></tr>
+            <tr><td>En la tarjeta de noticia, la foto y el título son dos enlaces</td><td data-columna="Dónde">UNC, noticias</td><td data-columna="Qué hicimos acá">Toda la tarjeta es un solo enlace; la foto va con <code>alt=""</code>.</td></tr>
+            <tr><td>Recuadro con oficina, horario, teléfono y correo</td><td data-columna="Dónde">UNC, becas</td><td data-columna="Qué hicimos acá">“Contacto”, como lista de resumen al lado de una foto. El teléfono y el correo son enlaces.</td></tr>
+            <tr><td>Texto justificado, títulos en mayúsculas y enlaces del pie a 11px</td><td data-columna="Dónde">SIDE</td><td data-columna="Qué hicimos acá">No van: texto alineado a la izquierda, mayúscula solo inicial y nada por debajo de 13px.</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </details>
+      </div>
     </section>
 
     <!-- 2. Lista de trámites, en dos grupos (DESIGN.md, 7.Q) -->
-    <section data-vista="tramites" aria-labelledby="t-tramites">
+    <section class="contenedor" data-vista="tramites" aria-labelledby="t-tramites">
       <div class="encabezado">
         <h1 id="t-tramites" tabindex="-1">Trámites</h1>
       </div>
@@ -181,7 +232,7 @@
     </section>
 
     <!-- 3. Listado de herramientas con buscador (DESIGN.md, 7.Q y 7.I) -->
-    <section data-vista="herramientas" aria-labelledby="t-herramientas">
+    <section class="contenedor" data-vista="herramientas" aria-labelledby="t-herramientas">
       <div class="encabezado">
         <h1 id="t-herramientas" tabindex="-1">Herramientas</h1>
       </div>
@@ -231,7 +282,7 @@
     </section>
 
     <!-- 4. Página de inicio de una cuenta (DESIGN.md, 17.D) -->
-    <section data-vista="cuenta" aria-labelledby="t-cuenta">
+    <section class="contenedor" data-vista="cuenta" aria-labelledby="t-cuenta">
       <div class="encabezado">
         <h1 id="t-cuenta" tabindex="-1">Hola, Rocío</h1>
       </div>
@@ -274,7 +325,7 @@
     </section>
 
     <!-- 5. Datos de la cuenta: menú lateral + lista de resumen (DESIGN.md, 17.D) -->
-    <section data-vista="datos" data-seccion="cuenta" aria-labelledby="t-datos">
+    <section class="contenedor" data-vista="datos" data-seccion="cuenta" aria-labelledby="t-datos">
       <nav class="migas" aria-label="Ruta">
         <ol><li><a href="#cuenta">Mi cuenta</a></li><li aria-current="page">Mis datos</li></ol>
       </nav>
@@ -330,31 +381,43 @@
       </details>
     </section>
 
-    <footer class="pie pie--publico">
-      <div class="pie__bloques">
-        <div>
-          <h2 class="pie__titulo">UNPSJB · Sede Trelew</h2>
-          <address>Dirección de la Sede<br>Trelew, Chubut</address>
+    <footer class="pie pie--publico pie--oscuro">
+      <div class="contenedor pie__interior">
+        <p class="pie__frase">Universidad pública y gratuita, en el valle del Chubut</p>
+        <div class="pie__bloques">
+          <div>
+            <h2 class="pie__titulo">UNPSJB · Sede Trelew</h2>
+            <address>Dirección de la Sede<br>Trelew, Chubut</address>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Secciones</h2>
+            <ul><li><a href="#inicio">Inicio</a></li><li><a href="#tramites">Trámites</a></li><li><a href="#herramientas">Herramientas</a></li><li><a href="#cuenta">Mi cuenta</a></li></ul>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Contacto</h2>
+            <ul><li>Teléfono: <a href="tel:+542804421234">(0280) 442-1234</a></li><li><a href="#inicio">Escribir a la Sede</a></li></ul>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Redes</h2>
+            <ul><li><a href="#inicio">Instagram<span class="solo-lector"> (abre otro sitio)</span></a></li><li><a href="#inicio">YouTube<span class="solo-lector"> (abre otro sitio)</span></a></li></ul>
+          </div>
+          <div>
+            <h2 class="pie__titulo">Sobre este sitio</h2>
+            <ul><li><a href="#inicio">Accesibilidad</a></li><li><a href="#inicio">Privacidad y datos personales</a></li><li><a href="#inicio">Reportar un problema</a></li></ul>
+          </div>
         </div>
-        <div>
-          <h2 class="pie__titulo">Contacto</h2>
-          <ul><li>Teléfono: <a href="tel:+542804421234">(0280) 442-1234</a></li><li><a href="#inicio">Escribir a la Sede</a></li></ul>
-        </div>
-        <div>
-          <h2 class="pie__titulo">Sobre este sitio</h2>
-          <ul><li><a href="#inicio">Accesibilidad</a></li><li><a href="#inicio">Privacidad y datos personales</a></li><li><a href="#inicio">Reportar un problema</a></li></ul>
-        </div>
-      </div>
-      <p>© 2026 Universidad Nacional de la Patagonia San Juan Bosco</p>
-      <div class="pie__derecha">
-        <div class="selector-tema">
-          <span aria-hidden="true">Tema</span>
-          <fieldset class="segmentado segmentado--compacto">
-            <legend class="solo-lector">Tema</legend>
-            <label><input type="radio" name="tema" value="auto" checked> Automático</label>
-            <label><input type="radio" name="tema" value="claro"> Claro</label>
-            <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
-          </fieldset>
+        <p>© 2026 Universidad Nacional de la Patagonia San Juan Bosco</p>
+        <div class="pie__derecha">
+          <div class="selector-tema">
+            <span aria-hidden="true">Tema</span>
+            <fieldset class="segmentado segmentado--compacto">
+              <legend class="solo-lector">Tema</legend>
+              <label><input type="radio" name="tema" value="auto" checked> Automático</label>
+              <label><input type="radio" name="tema" value="claro"> Claro</label>
+              <label><input type="radio" name="tema" value="oscuro"> Oscuro</label>
+            </fieldset>
+          </div>
+          <a href="#arriba">Subir</a>
         </div>
       </div>
     </footer>
@@ -420,7 +483,12 @@
         vista.style.minHeight = (caja.height + borde - arriba) + 'px';
       }
     }
-    window.addEventListener('hashchange', () => { mostrar(true); acomodarPie(); });
+    // Un enlace a algo que no es una pantalla ("Subir", que va a #arriba) no cambia de pantalla
+    window.addEventListener('hashchange', () => {
+      if (!vistas.some(v => v.dataset.vista === location.hash.slice(1))) return;
+      mostrar(true);
+      acomodarPie();
+    });
     window.addEventListener('resize', acomodarPie);
     document.querySelectorAll('.ext-portal-estudio').forEach(d => d.addEventListener('toggle', acomodarPie));
     if (document.fonts) document.fonts.ready.then(acomodarPie);

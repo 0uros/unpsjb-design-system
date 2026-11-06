@@ -20,12 +20,46 @@
 | Rediseño del módulo de planos y modo edición en el módulo | — | **0.4.6** |
 | Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
 | Interfaz nueva del módulo de planos: panel para buscar y elegir, controles sobre el plano | — | **0.4.8** |
+| Piezas de páginas públicas (SIDE) y página de difusión de una carrera | — | **0.4.9** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.4.8 · 2026-11-06 · oficial
+## 0.4.9 · 2026-11-06 · oficial
+
+Las piezas de las páginas públicas, a partir del sitio de la SIDE, y la página de difusión de una carrera (PR #6). La muestra de difusión es un concepto: la carrera, las fechas y las fotos son de ejemplo, y falta juzgarla con fotos reales.
+
+Piezas para las páginas públicas que salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`), y la propuesta de páginas de difusión del 14/10 (rama `difusion`) armada con esas piezas. No cambia nada de las herramientas.
+
+### Nuevo
+
+- **Foto de apertura** (`.apertura`, `.apertura__foto`, `.apertura__texto`, 17.E): una sola foto con el título encima y una capa negra al 55% (`--color-velo-foto`).
+- **Rol de texto `apertura`** (`--texto-apertura`, 4.B): 40px / 800 / 1.25; 32px en celular. Solo para el título de la foto de apertura.
+- **Franjas** (`.franja`, `--panel`, `--capa`, `--oscura`): secciones a todo el ancho que alternan el fondo. La oscura usa `--color-oscuro` y, adentro, los tokens del modo oscuro.
+- **Título con filete** (`.titulo-filete`): una línea azul de 2px debajo del título.
+- **Marca de agua** (`.marca-agua`, `--marca-agua-opacidad`): el escudo de un solo color detrás de una franja, al 6% (tope: 8%). Asset nuevo `marca-agua-unpsjb.svg`, que genera `herramientas/logo/generar.sh`.
+- **Presentación** (`.presentacion`, `.presentacion__destacado`): quién es la Sede, con el escudo grande al lado.
+- **Mitad foto, mitad texto** (`.mitades`, `.mitades--invertida`, `.mitades__foto`, `.mitades__texto`).
+- **Entradas con foto** (`.entradas--foto`) y **novedades con foto** (`ul.novedades`, `.novedades__titulo`). Cada tarjeta es un solo enlace.
+- **Pie oscuro** (`.pie--oscuro`, `.pie__interior`, `.pie__frase`, 6.C): el pie público a todo el ancho, con una frase, el menú repetido, las redes con su nombre y "Subir".
+- Tokens `--color-oscuro`, `--color-borde-oscuro`, `--color-velo-foto` y `--marca-agua-opacidad`.
+- **Etapas con fecha** (`.etapas`, `.etapas__fecha`, 17.E): "cómo se entra", de dos a seis pasos numerados con su fecha. No es `.pasos` (8.F).
+- **Aparecer al entrar** (`.aparece`, `unpsjb-aparece.js`, 17.E): una franja aparece una vez al llegar a la pantalla, en 240ms. Solo en páginas públicas; la apertura nunca. Sin script, sin `IntersectionObserver` o con "reducir movimiento", todo se ve quieto.
+- **Orden de una página de difusión** (17.E): apertura, qué vas a hacer, en números, cómo se entra, franja oscura y preguntas frecuentes. Muestra nueva: `muestra-difusion.html` (una carrera), enlazada desde `muestra.html`.
+- **Apertura a pantalla completa** (`.apertura--pantalla`, 17.E): ocupa la primera pantalla, con el texto al medio, cuando la franja que sigue también lleva foto. La usa la página de difusión.
+- **Plazo junto al botón de la apertura** (`.apertura__accion`, `.apertura__plazo`, 17.E): "Inscripción hasta el 18 de diciembre", con el ícono `calendar`, en la misma fila que el botón.
+- **Fotos de ejemplo** para las muestras (`muestras/fotos-ejemplo/`), dibujadas por `herramientas/fotos-ejemplo/generar.py`.
+
+### Cambiado
+
+- **Movimiento** (5.E): la única animación de entrada permitida es `.aparece`, y solo en páginas públicas.
+- **La capa de la foto de apertura se aclara a la derecha** desde 1024px (17.E): al 55% hasta donde llega el texto y al 15% en el otro extremo. El texto sigue en 4,7:1 sobre una foto toda blanca. En pantallas más angostas, pareja como antes.
+- **Fondos limpios** (3.G): en las páginas públicas se permiten la foto de apertura con capa y la marca de agua, con condiciones. En las herramientas sigue todo igual.
+- **Portal de la Delegación** (17.C): la foto de apertura pasa de prohibida a opcional, y las entradas y las novedades pueden llevar foto.
+- **Portada de `muestra-portal.html`:** rehecha en franjas, con todas las piezas nuevas. Las demás pantallas no cambian. `<main>` ya no lleva `.contenedor`: lo lleva cada pantalla.
+
+## 0.4.8 · 2026-11-06 · anterior
 
 La interfaz nueva del módulo de planos (PR #3). El usuario la comparó con la de antes, con los datos reales de la sede, y la aprobó el 6/11. Una herramienta que use el módulo no tiene que cambiar nada: el módulo arma la pantalla solo.
 

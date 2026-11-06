@@ -62,6 +62,13 @@ def armar(nombre, titulo, jpg, color_texto, color_curvo=None, forma='compacto', 
         b = (ovalo_plano(tinta) + f'<g transform="translate({DX:.2f} {DY:.2f})">\n' + marca() + '\n</g>\n')
         defs = ''
         vb = f'0 0 {TEXTO_FIN + DX + 0.8:.2f} {OVALO_ALTO}'
+    elif forma == 'marca-agua':   # el óvalo en negro con la gaviota calada
+        calado = [re.sub(r'fill="#[0-9a-f]{6}"', 'fill="#000000"', p) for p in gaviota]
+        b = (f'<defs>\n<mask id="calado"><rect width="{OVALO_ANCHO}" height="{OVALO_ALTO}" fill="#ffffff"/>\n'
+             + '\n'.join(calado) + '\n</mask>\n</defs>\n'
+             f'<path fill="#000000" mask="url(#calado)" d="{oval_d}"/>\n')
+        defs = ''
+        vb = f'0 0 {OVALO_ANCHO} {OVALO_ALTO}'
     else:   # escudo: solo el óvalo
         b = ovalo_plano(tinta)
         defs = ''
@@ -84,3 +91,6 @@ armar('sistema/assets/escudo-unpsjb-blanco.svg', 'Universidad Nacional de la Pat
 armar('sistema/assets/logo-unpsjb-trelew-completo.svg', t, T + '/oval-800.jpg', '#3b3a36', '#231f20', forma='completo')
 # A una tinta (documentos impresos en negro, sellos): óvalo, barra y "Sede Trelew" en negro
 armar('sistema/assets/logo-unpsjb-trelew-una-tinta.svg', t, None, '#000000', tinta='#000000')
+# Marca de agua (nuevo, sin número todavía): el óvalo con la gaviota calada, en negro. No se muestra como imagen:
+# unpsjb.css lo usa de máscara (mask-image) y le pone el color y la opacidad del tema.
+armar('sistema/assets/marca-agua-unpsjb.svg', 'Universidad Nacional de la Patagonia San Juan Bosco', None, '#000000', forma='marca-agua')

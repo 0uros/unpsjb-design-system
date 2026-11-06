@@ -1122,6 +1122,69 @@ Sin número de sesión. Al preparar el PR #2 (`textos-y-revision`) apareció que
 - `DESIGN.md`, `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.7; lo que decía "sin número todavía" dice 0.4.7. La skill se regeneró desde `DESIGN.md`.
 - No se tocó CSS ni muestras más allá del número.
 
+## 2026-11-03 — Piezas de páginas públicas a partir del sitio de la SIDE
+
+A pedido del usuario. Le gustaron la portada y la página de carreras de side.gob.ar para el diseño de una universidad. Se estudiaron (`notas/REFERENCIAS-SIDE.md`) y se pasaron al sistema en la rama `portada-publica`, que sale de `main` (0.4.5). Sin número de versión.
+
+### Decisiones del usuario
+- **Levantar "sin foto de apertura" y "sin marcas de agua".** Al buscar de dónde venían, ninguna tenía una medición detrás: la primera salió del estudio de la UNC y la UBA, que había medido el peso y el carrusel, no una sola foto; la segunda venía del primer borrador. Quedan permitidas con condiciones y solo en páginas públicas.
+- **Sumar el pie oscuro.**
+- **Rehacer la portada de `muestra-portal.html`** con la estructura de la SIDE. Entran también las entradas y las novedades con foto. El usuario no dijo que no, y van con los mismos topes de peso.
+
+### Qué se hizo
+- `unpsjb.css`: apertura, franjas, título con filete, marca de agua, presentación, mitades, entradas y novedades con foto, pie oscuro, y cuatro tokens. Unas 260 líneas.
+- **La franja oscura y el pie oscuro usan adentro los tokens del modo oscuro.** Así los botones, los enlaces, el foco y el selector de tema funcionan sin reglas aparte.
+- **La marca de agua es una máscara** (`mask-image`) con el color del texto, no una imagen. Toma el tema sola. El asset sale de `herramientas/logo/armar.py`, al que se le sumó la forma `marca-agua`: el óvalo con la gaviota calada. Se volvió a correr `generar.sh`, y los otros cinco logos salieron iguales byte por byte.
+- **No hay fotos propias para las muestras.** Las únicas de la Sede son de las cámaras, que son datos reales. Se dibujan paisajes de meseta con `herramientas/fotos-ejemplo/generar.py` (Pillow), de 1 a 6 KB. La de apertura tiene el cielo casi blanco a propósito, para probar el peor caso.
+- `DESIGN.md`: 2.C, 3.G, 4.B, 6.C, 7.C, 10.A, 13, 17.B, 17.C y la sección nueva 17.E. La skill se regeneró desde `DESIGN.md`.
+
+### Cómo se verificó
+- **axe 4.10.2** (WCAG 2.0, 2.1 y 2.2 A/AA y buenas prácticas): sin fallas en las cinco pantallas de `muestra-portal.html`, a 1366×768, 390×844 y 320×640, en claro y en oscuro (30 casos). Sin scroll horizontal en ninguno.
+- **axe no puede medir el texto sobre la foto ni sobre la marca de agua** (6 elementos "sin decidir"). Se midió aparte: se sacó una captura sin el texto y se buscó el píxel más claro. Blanco sobre la foto de apertura: 5,31:1 (en teoría, 4,74:1 sobre una foto toda blanca). `tinta-2` sobre la franja oscura con la marca: 6,66:1 en claro y 5,03:1 en oscuro.
+- **Capturas** revisadas en Chrome a 1568 px y a 390 px, en claro y en oscuro.
+- Sin probar: lector de pantalla, celular real, Firefox y Safari, impresión.
+
+### Lo que apareció
+- En el celular, la línea del pie oscuro quedaba corta: con el pie en columna, el bloque no ocupaba todo el ancho. Se corrigió con `align-self: stretch`. El pie público de antes tiene lo mismo y no se tocó.
+- El logo completo no sirve para la presentación en modo oscuro: tiene el texto en gris oscuro. Va el óvalo solo.
+- `.pie p { margin: 0 }` le ganaba al margen de la frase del pie. La regla pasó a `.pie .pie__frase`.
+
+### Pendientes
+- [ ] Que el usuario mire la portada nueva y diga si queda.
+- [ ] Una página de carrera con los pasos numerados y los perfiles de la SIDE, cuando haya una carrera de verdad.
+- [ ] Probar la impresión de la portada.
+- [ ] Unir `portada-publica` a `main` y darle número.
+
+
+## 2026-11-03 — La propuesta de difusión se junta con las piezas de la SIDE (17.E)
+
+Sin número de sesión. Rama `portada-publica`, con `main` (0.4.7) traído antes; al traerlo chocaron `BITACORA.md` y `CHANGELOG.md` y quedaron todas las entradas.
+
+La propuesta de páginas de difusión del 14/10 (rama `difusion`) y las piezas de la SIDE de hoy eran las dos una 17.E. Decisión del usuario: cuando chocan, gana lo de hoy. Y para lo demás: "hasta ahora me gusta el estilo de la SIDE, usaremos principalmente a este de referencia, con taste de páginas de universidades"; avisó que es probable que más adelante se sumen otras universidades como referencia, así que la 17.E dice que la SIDE es el punto de partida.
+
+- **Se perdieron solas** (chocaban con lo de hoy): la foto al lado del título y nunca detrás, el título de 40 a 56px (`titulo-portada`), la franja de cierre en `primario` y las secciones separadas con una línea. Quedan la foto de apertura con la capa, `apertura` (40px; 32px en celular), la franja oscura y las franjas que alternan el fondo.
+- **Eligió quedarse con:** el orden de una página de difusión, los pasos con fecha (pasan a `.etapas`, porque `.pasos` ya es el indicador de los formularios, 8.F) y la animación al entrar (`.aparece` y `unpsjb-aparece.js`). La animación contradecía 5.E: entra como su única excepción, solo en páginas públicas. **Afuera:** la cita de estudiantes.
+- **El orden cambió al armar la muestra:** la franja oscura iba al final, pero pegada al pie oscuro las dos se ven como un solo bloque (y 17.E pide que dos franjas seguidas no repitan fondo). Va justo después de "cómo se entra", y las preguntas cierran la página.
+- **`muestra-difusion.html` rehecha** con las piezas de la 17.E; ya no existe `unpsjb-difusion.css`. Las 5 excepciones del detector que tenía la versión vieja no se trajeron: el detector no encontró nada en la nueva.
+
+Verificado en Chrome sin ventana, después de recorrer la página: `muestra-difusion.html` y `muestra-portal.html`, claro y oscuro, 1366 y 390 px, 0 fallas de axe y sin errores en la consola. Queda el aviso de contraste en el texto sobre la foto y sobre la marca de agua, que axe no puede medir por el seudoelemento (la capa al 55 % ya se midió al armar la apertura). La animación: 4 de 5 franjas escondidas al cargar y las 5 visibles después de recorrer; con "reducir movimiento" o sin JavaScript, ninguna escondida.
+
+Pendiente:
+- [ ] Que el usuario mire `muestra-difusion.html` (claro, oscuro y celular) y la animación.
+- [ ] Borrar la rama `difusion` cuando se una esta: ya está toda acá.
+
+## 2026-11-06 — Difusión: la fecha junto al botón y la capa en degradé
+
+Sin número de sesión. Al mirar `muestra-difusion.html`, al usuario la frase "La inscripción cierra el 18 de diciembre de 2026" debajo del botón le gustaba y no: no sabía si era por la foto de ejemplo o por forzar los colores del sistema.
+
+- **Lo que pasaba:** la foto de ejemplo es un dibujo borroso y casi sin color, y la capa pareja al 55% la apaga entera; y la fecha, que es el dato urgente, iba como una nota al pie debajo del botón (en celular se cortaba en "de / 2026", y el año chocaba con "ingreso 2027").
+- **Se armaron tres variantes** sobre la página, sin tocar el archivo: A, como estaba; B, la fecha como etiqueta arriba del título; C, la fecha al lado del botón con el ícono `calendar`. B y C con la capa en degradé. **El usuario eligió C.**
+- **Capa en degradé, solo desde 1024px:** al 55% hasta el final del texto (relleno del contenedor + 60ch + un margen) y al 15% en el borde derecho. Medido con la foto cambiada por una toda blanca y el texto escondido, en 390, 768, 1024, 1280, 1366 y 1920 px, en las dos muestras: **todo el texto queda sobre la capa al 55%, 4,74:1 en el peor caso.** La primera versión del corte daba 4,35:1 en el borde del párrafo (había sumado el relleno del contenedor de celular); se corrigió.
+- En pantallas angostas la capa queda pareja: el texto ocupa todo el ancho.
+- La fecha va sin el año: "Inscripción hasta el 18 de diciembre".
+- axe sin fallas en las dos muestras (claro, oscuro, 1366 y 390 px). El detector no marca nada nuevo.
+- **Falta una foto real** para juzgar la apertura: el usuario todavía no tiene. Con la de ejemplo cualquier capa la deja opaca.
+
 ## 2026-11-06 — Planos: la interfaz nueva queda (PR #3)
 
 Sin número de sesión. Se retomó el PR #3 (`planos-interfaz-nueva`), frenado desde el 9/10.
@@ -1148,4 +1211,23 @@ Sin número de sesión. El usuario aprobó la interfaz nueva y no pidió otro or
 - **Los tres archivos del módulo de planos** (`unpsjb-planos.css`, `unpsjb-planos.js`, `unpsjb-planos-editor.js`) decían v0.4.4 en el encabezado, también después de la 0.4.6. Pasan a 0.4.8: es el número que muestra `traer-sistema.sh` al copiar el sistema a `planos-universidad`.
 - En `CHANGELOG.md` la entrada "En curso" pasa a ser la 0.4.8, la 0.4.7 queda como anterior, y la tabla suma la fila.
 - `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
+
+## 2026-11-06 — Difusión: una sola foto en la primera pantalla
+
+Sin número de sesión. Al mirar `muestra-difusion.html`, el usuario: "falla en que se vea una imagen y otra de manera cortada. Debería estar en primer plano SOLO una imagen, y después al hacer scroll la siguiente". Debajo de la apertura arrancaba la foto de "Qué vas a hacer" (mitades), cortada.
+
+- **Probado primero: cambiar de lugar "En números" (sin foto) y "Qué vas a hacer".** No alcanza: en celular sí, pero en pantallas de compu la segunda foto se seguía asomando (7px a 1366×768, 223px a 1920×1080, 583px a 2560×1440), porque la apertura mide como mucho 480px. No se hizo.
+- **Lo que se hizo: `.apertura--pantalla`.** La apertura ocupa la primera pantalla debajo de la banda (`100svh` menos `--alto-banda-min`), con el texto al medio. Si hay algo más arriba (la franja de fase de la muestra), se pasa un poco del borde y, con el texto al medio, no se corta. El orden de la página no cambia.
+- **Medido** (la foto de "Qué vas a hacer" debajo del borde y el texto de la apertura entero): 1366×768, 1440×900, 1920×1080, 2560×1440, 768×1024 y 390×844, bien. A 360×640 la línea del plazo queda 34px debajo del borde, por la franja de fase de la muestra (116px en celular), que una página real no tiene.
+- **Cambia una regla de 17.E:** la apertura "nunca toda la ventana, así lo que sigue se ve sin bajar" sigue valiendo para el portal (ahí después viene el aviso y las entradas, sin foto grande). Para la difusión, la primera pantalla entera. También en la tabla de la sección 13.
+- Ahora "Qué vas a hacer" está fuera de la pantalla al cargar, así que también aparece al bajar (`.aparece`).
+
+## 2026-11-06 — Se arma la 0.4.9 (PR #6, páginas públicas y difusión)
+
+Sin número de sesión. El usuario aprobó la página de difusión: "dale, pasalo a 0.4.9, igualmente es más un concepto que otra cosa". Queda como concepto: la carrera, las fechas y las fotos son de ejemplo, y la apertura se juzga de nuevo con una foto real.
+
+- `DESIGN.md` (línea 3, la portada y 14.C), `unpsjb.css`, `unpsjb-video.css`, `unpsjb-graficos.js` y las cuatro muestras con el número dicen 0.4.9. Lo que decía "sin número todavía" dice "nuevo en 0.4.9" (o "cambio de la 0.4.9"). Los archivos del módulo de planos quedan en 0.4.8: no cambiaron.
+- En `CHANGELOG.md` la entrada "En curso" pasa a ser la 0.4.9, la 0.4.8 queda como anterior, y la tabla suma la fila.
+- `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
+- Al unir: borrar la rama `difusion` (ya está toda acá) y el worktree de `portada-publica`.
 

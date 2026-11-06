@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.4.8
+   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.4.9
    Dirección "Señalética". Delegación Trelew · 2026
    Versión oficial. Fuente de verdad: DESIGN.md. Cambios: CHANGELOG.md.
    Los nombres del código van en español (regla y excepciones: DESIGN.md, 2.A).
@@ -182,6 +182,16 @@
 
   --color-velo: rgb(15 36 56 / 0.6);
 
+  /* Páginas públicas (nuevo en 0.4.9; DESIGN.md, 17.E).
+     La franja oscura y el pie oscuro van sobre --color-oscuro y, adentro, usan
+     los tokens del modo oscuro (ver "Páginas públicas", en la sección 5). */
+  --color-oscuro: #0f2438;
+  --color-borde-oscuro: transparent;   /* en oscuro, un borde separa la franja del fondo */
+  /* Capa sobre la foto de apertura, igual en claro y en oscuro: con 55% de negro,
+     el texto blanco da 4.7:1 aun sobre la parte más blanca de la foto (con 40%, 2.9:1) */
+  --color-velo-foto: rgb(0 0 0 / 0.55);
+  --marca-agua-opacidad: 0.06;   /* tope: 0.08. Con 0.08, tinta-2 sobre capa da 4.98:1 */
+
   /* Tipografía */
   /* "Twemoji UNPSJB" va después de las fuentes de texto: solo dibuja emojis */
   --fuente-titulo: "Montserrat", "Twemoji UNPSJB", "Montserrat respaldo", system-ui, sans-serif;
@@ -190,6 +200,7 @@
   --fuente-academica: "Times New Roman", "Liberation Serif", Georgia, serif;
   /* 0.3: interlineado de títulos 1.25 como mínimo, por las tildes de las mayúsculas */
   --texto-titulo-1: 800 2rem/1.25 var(--fuente-titulo);        /* 32px */
+  --texto-apertura: 800 2.5rem/1.25 var(--fuente-titulo);      /* 40px: solo el título de la foto de apertura (17.E) */
   --texto-titulo-2: 700 1.5rem/1.25 var(--fuente-titulo);     /* 24px */
   --texto-titulo-3: 700 1.1875rem/1.3 var(--fuente-titulo);      /* 19px */
   --texto-grande: 400 1.125rem/1.6 var(--fuente-texto);      /* 18px */
@@ -274,6 +285,8 @@
     --color-toast-advertencia: #b45309;
     --color-toast-error: #be123c;
     --color-velo: rgb(2 8 16 / 0.7);
+    --color-oscuro: #050c15;
+    --color-borde-oscuro: #2a4058;
     --sombra-flotante: 0 8px 24px rgb(0 0 0 / 0.4);
     --anillo-foco: 0 0 0 2px var(--color-acento);
   }
@@ -312,6 +325,8 @@
   --color-toast-advertencia: #b45309;
   --color-toast-error: #be123c;
   --color-velo: rgb(2 8 16 / 0.7);
+  --color-oscuro: #050c15;
+  --color-borde-oscuro: #2a4058;
   --sombra-flotante: 0 8px 24px rgb(0 0 0 / 0.4);
   --anillo-foco: 0 0 0 2px var(--color-acento);
 }
@@ -1501,6 +1516,301 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
 .entradas__principal .entradas__titulo { color: #ffffff; }
 @media (max-width: 639px) { .entradas a { min-height: 96px; padding: var(--espacio-4); } }
 @media (forced-colors: active) { .entradas a { border: 1px solid LinkText; } }
+
+/* Páginas públicas (nuevo en 0.4.9; DESIGN.md, 17.E): foto de
+   apertura, franjas, título con filete, marca de agua, presentación, mitad foto
+   y mitad texto, entradas y novedades con foto, y pie oscuro. Solo en páginas
+   públicas: nunca en una herramienta de trabajo.
+   Las franjas van a todo el ancho, así que la página no usa
+   <main class="contenedor">: cada franja lleva su .contenedor adentro.
+   <main id="contenido">
+     <section class="apertura">…</section>
+     <section class="franja franja--panel"><div class="contenedor">…</div></section> …
+     <footer class="pie pie--publico pie--oscuro"><div class="contenedor pie__interior">…</div></footer>
+   </main> */
+
+/* Foto de apertura: una sola foto, sin carrusel, con el título encima.
+   <section class="apertura" aria-labelledby="t-portada">
+     <img class="apertura__foto" src="portada-960.webp"
+          srcset="portada-960.webp 960w, portada-1600.webp 1600w" sizes="100vw"
+          width="1600" height="720" alt="" fetchpriority="high">
+     <div class="contenedor apertura__texto">
+       <h1 id="t-portada">…</h1><p>…</p><a class="boton boton--secundario" href="…">…</a>
+     </div>
+   </section> */
+.apertura {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(280px, 50vh, 480px);   /* nunca toda la ventana: lo que sigue se ve sin bajar */
+  overflow: hidden;
+  color: #ffffff;
+  background: #000000;                     /* mientras carga la foto, o si no carga */
+}
+.apertura__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.apertura::before {                          /* la capa: el texto se lee sobre cualquier foto */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-velo-foto);
+}
+/* Desde 1024px la capa se aclara a la derecha, después del texto: la foto respira donde no
+   hay nada que leer. Hasta donde llega el texto (60ch del párrafo) sigue al 55%, así el
+   contraste es el mismo que con la capa pareja. En pantallas más angostas el texto ocupa
+   todo el ancho y la capa queda pareja. */
+@media (min-width: 1024px) {
+  .apertura::before {
+    --apertura-fin: calc(max(0px, (100% - 1280px) / 2) + 2 * var(--espacio-8) + 60ch);   /* relleno del contenedor, el texto y un margen */
+    font: var(--texto-grande);              /* para que 60ch mida lo mismo que en el párrafo */
+    background: linear-gradient(to right,
+      var(--color-velo-foto) 0, var(--color-velo-foto) var(--apertura-fin),
+      rgb(0 0 0 / 0.15) calc(var(--apertura-fin) + 25%));
+  }
+}
+.apertura__texto { padding-block: var(--espacio-12); }
+/* A pantalla completa: la apertura ocupa la primera pantalla, debajo de la banda, y el texto
+   va al medio. Para una página de difusión, donde la franja que sigue también lleva foto:
+   así nunca se ven dos fotos a la vez ni una cortada. Si hay más arriba (la franja de fase),
+   la apertura se pasa un poco del borde, y con el texto al medio no se corta nada. */
+.apertura--pantalla { align-items: center; min-height: calc(100svh - var(--alto-banda-min)); }
+/* El botón y el plazo van juntos en una fila: "inscribite" y "hasta cuándo".
+   <div class="apertura__accion"><a class="boton boton--secundario">…</a>
+   <p class="apertura__plazo"><svg class="icono">…calendar…</svg>Inscripción hasta el <time>…</time></p></div> */
+.apertura__accion { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espacio-3) var(--espacio-4); }
+.apertura p.apertura__plazo { margin: 0; font: var(--texto-base); font-weight: 700; }
+.apertura__plazo .icono { margin-right: var(--espacio-2); vertical-align: -0.2em; }
+.apertura h1 { max-width: 22ch; margin-bottom: var(--espacio-4); font: var(--texto-apertura); letter-spacing: -0.02em; color: #ffffff; }
+.apertura p { max-width: 60ch; margin: 0 0 var(--espacio-6); font: var(--texto-grande); }
+.apertura > .contenedor > :last-child { margin-bottom: 0; }
+@media (max-width: 639px) { .apertura h1 { font-size: 2rem; } .apertura__texto { padding-block: var(--espacio-8); } }
+
+/* Franjas: secciones a todo el ancho, con el fondo que alterna para separar
+   una de otra sin bordes ni tarjetas. La oscura, una sola por página, para el
+   llamado más importante.
+   <section class="franja franja--capa" aria-labelledby="t-x"><div class="contenedor">…</div></section> */
+.franja { padding-block: var(--espacio-16); background: var(--color-fondo); }
+.franja--panel { background: var(--color-panel); }
+.franja--capa { background: var(--color-capa); }
+.franja > .contenedor > :last-child { margin-bottom: 0; }
+@media (max-width: 639px) { .franja { padding-block: var(--espacio-12); } }
+
+/* Franja oscura y pie oscuro: adentro valen los tokens del modo oscuro, así los
+   botones, los enlaces, el foco y el selector de tema se ven bien sin reglas
+   aparte. Sobre --color-oscuro dan: tinta 14:1, tinta-2 7.5:1 (5.9:1 con la
+   marca de agua al 8%), primario-texto 7.2:1. */
+.franja--oscura,
+.pie--oscuro {
+  color-scheme: dark;
+  --color-fondo: #0b1826;
+  --color-panel: #122234;
+  --color-capa: #1a2d43;
+  --color-tinte: rgb(122 179 240 / 0.12);
+  --color-tinta: #e9eff6;
+  --color-tinta-2: #a3b4c8;
+  --color-linea: #2a4058;
+  --color-linea-control: #6f86a1;
+  --color-primario-texto: #7ab3f0;
+  --color-primario-relleno: #3874cb;
+  --color-primario-relleno-hover: #316bbf;
+  --anillo-foco: 0 0 0 2px var(--color-acento);
+  color: var(--color-tinta-2);
+  background: var(--color-oscuro);
+  border-block: 1px solid var(--color-borde-oscuro);
+}
+.franja--oscura :is(h2, h3) { color: var(--color-tinta); }
+.franja--oscura p { max-width: 70ch; }
+
+/* Título de sección con filete: una línea de 2px del ancho del título.
+   Siempre azul (o claro, en la franja oscura); nunca naranja, que es "estás acá". */
+.titulo-filete {
+  width: fit-content;
+  padding-bottom: var(--espacio-3);
+  margin-bottom: var(--espacio-6);
+  border-bottom: 2px solid var(--color-primario-texto);
+}
+
+/* Marca de agua: el escudo en un solo color, detrás del contenido. Solo en una
+   franja con poco texto o en el pie oscuro; nunca detrás de formularios,
+   tablas, herramientas ni documentos. Toma el color del texto de la franja y
+   la opacidad de --marca-agua-opacidad (tope: 0.08).
+   <section class="franja franja--oscura marca-agua">…</section> */
+.marca-agua { position: relative; isolation: isolate; overflow: hidden; }
+.marca-agua::before {
+  content: "";
+  position: absolute;
+  inset: var(--espacio-6) 0;
+  z-index: -1;
+  background: currentColor;
+  opacity: var(--marca-agua-opacidad);
+  -webkit-mask: url("assets/marca-agua-unpsjb.svg") center / auto min(100%, 360px) no-repeat;
+  mask: url("assets/marca-agua-unpsjb.svg") center / auto min(100%, 360px) no-repeat;
+  pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .marca-agua::before { -webkit-mask-position: right 10% center; mask-position: right 10% center; }
+}
+
+/* Presentación: quién es la Sede, con el escudo grande al lado. Va el óvalo
+   solo (escudo-unpsjb-blanco.svg): se ve igual en claro y en oscuro.
+   <div class="presentacion"><img src="escudo-unpsjb-blanco.svg" width="160" height="200" alt="">
+     <div><h2>…</h2><p class="presentacion__destacado">…</p><p>…</p></div></div> */
+.presentacion { display: grid; gap: var(--espacio-8); align-items: center; }
+.presentacion > img { width: auto; height: 160px; }
+.presentacion p { max-width: 70ch; }
+.presentacion__destacado { font: var(--texto-grande); font-weight: 700; color: var(--color-tinta); }
+@media (min-width: 768px) {
+  .presentacion { grid-template-columns: auto minmax(0, 1fr); gap: var(--espacio-12); }
+  .presentacion > img { height: 200px; }
+}
+
+/* Mitad foto, mitad texto: a todo el ancho, la foto hasta el borde de la ventana.
+   En celular, la foto arriba y más baja.
+   <section class="mitades"><img class="mitades__foto" … alt="" loading="lazy">
+     <div class="mitades__texto">…</div></section> */
+.mitades { display: grid; background: var(--color-capa); }
+.mitades__foto { display: block; width: 100%; height: 240px; object-fit: cover; }
+.mitades__texto { padding: var(--espacio-12) var(--espacio-4); }
+.mitades__texto > :last-child { margin-bottom: 0; }
+@media (min-width: 768px) {
+  .mitades { grid-template-columns: 1fr 1fr; }
+  .mitades__foto { height: 100%; min-height: 360px; }
+  .mitades__texto { max-width: 640px; padding: var(--espacio-16) var(--espacio-8); }
+  .mitades--invertida .mitades__foto { order: 2; }
+  .mitades--invertida .mitades__texto { justify-self: end; }
+}
+
+/* Entradas con foto: las mismas entradas (2 a 4), con una foto arriba. Todas
+   llevan foto, o ninguna. La principal sigue en azul.
+   <ul class="entradas entradas--foto"><li><a href="…"><img … alt="" loading="lazy">
+     <span class="entradas__titulo">…</span><span>…</span></a></li></ul> */
+.entradas.entradas--foto a {
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 0 0 var(--espacio-6);
+  overflow: hidden;
+  border: 1px solid var(--color-linea);
+}
+.entradas.entradas--foto a:not(.entradas__principal) { background: var(--color-panel); }
+.entradas.entradas--foto a:not(.entradas__principal):hover { background: var(--color-tinte); }
+.entradas.entradas--foto a.entradas__principal { border-color: transparent; }
+.entradas--foto img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; margin-bottom: var(--espacio-3); }
+.entradas--foto a > span { padding-inline: var(--espacio-6); }
+.entradas--foto .entradas__titulo { font: var(--texto-titulo-3); }
+@media (max-width: 639px) { .entradas--foto a > span { padding-inline: var(--espacio-4); } }
+
+/* Novedades con foto: de una a tres, con foto, título y fecha. Toda la
+   tarjeta es un solo enlace (en el estudio, la foto y el título eran dos).
+   Debajo, un enlace a todas. Sin carrusel (7.P).
+   <ul class="novedades"><li><a href="…"><img … alt="" loading="lazy">
+     <span class="novedades__titulo">…</span><time datetime="2026-10-06">6 de octubre</time></a></li></ul> */
+.novedades {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: var(--espacio-6);
+}
+.novedades > li { display: grid; }
+.novedades a {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  padding-bottom: var(--espacio-6);
+  color: var(--color-tinta-2);
+  text-decoration: none;
+  background: var(--color-panel);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-contenedor);
+  overflow: hidden;
+}
+.novedades img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: var(--espacio-3); }
+.novedades__titulo { padding-inline: var(--espacio-6); font: var(--texto-titulo-3); color: var(--color-tinta); }
+.novedades a:hover .novedades__titulo { text-decoration: underline; }
+.novedades time { padding-inline: var(--espacio-6); font: var(--texto-detalle); }
+@media (max-width: 639px) { .novedades__titulo, .novedades time { padding-inline: var(--espacio-4); } }
+@media (forced-colors: active) { .entradas--foto a, .novedades a { border-color: LinkText; } }
+
+/* Etapas con fecha: "cómo se entra", de dos a seis pasos numerados. El número
+   en Montserrat y en tinta-2, sin círculos de color. No es .pasos (8.F).
+   <ol class="etapas"><li><time class="etapas__fecha" datetime="2026-11-03">Del 3 de
+   noviembre al 20 de febrero</time><h3>Preinscripción</h3><p>…</p></li>…</ol> */
+.etapas { display: grid; gap: var(--espacio-6); margin: 0; padding: 0; list-style: none; counter-reset: etapa; }
+.etapas > li { counter-increment: etapa; padding-top: var(--espacio-4); border-top: 2px solid var(--color-tinta); }
+.etapas > li::before {
+  content: counter(etapa);
+  display: block;
+  margin-bottom: var(--espacio-2);
+  font: var(--texto-titulo-2);
+  color: var(--color-tinta-2);
+}
+.etapas h3 { margin-bottom: var(--espacio-1); }
+.etapas__fecha { display: block; margin-bottom: var(--espacio-2); font: var(--texto-label); color: var(--color-primario-texto); }
+.etapas p { margin: 0; color: var(--color-tinta-2); }
+@media (min-width: 768px) { .etapas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .etapas { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); } }
+
+/* Aparecer al entrar: la única animación de entrada (5.E, 17.E). Una franja
+   entera, una vez. Solo la esconde unpsjb-aparece.js, poniendo .aparece-js en
+   <html>, y solo si puede mostrarla: sin script, sin IntersectionObserver o con
+   "reducir movimiento", todo se ve quieto. La apertura nunca lleva .aparece.
+   <section class="franja aparece">…</section> */
+.aparece-js .aparece { transition: opacity 240ms var(--curva), transform 240ms var(--curva); }
+.aparece-js .aparece:not(.aparece--visible) { opacity: 0; transform: translateY(8px); }
+
+/* Pie oscuro: el pie de las páginas públicas (6.C) a todo el ancho, sobre
+   --color-oscuro. Suma una frase, el menú repetido, las redes (con su nombre
+   escrito, no solo el ícono) y "Subir". Va como último hijo de <main>.
+   <footer class="pie pie--publico pie--oscuro"><div class="contenedor pie__interior">
+     <p class="pie__frase">…</p><div class="pie__bloques">…</div>
+     <p>© 2026 …</p><div class="pie__derecha">… <a href="#arriba">Subir</a></div>
+   </div></footer> */
+.pie.pie--oscuro { display: block; margin-top: var(--espacio-16); padding-block: 0; }
+.pie__interior {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-4);
+  padding-block: var(--espacio-12) var(--espacio-6);
+}
+.pie--oscuro .pie__bloques { align-self: stretch; padding-bottom: var(--espacio-8); }
+.pie--oscuro .pie__bloques li + li { margin-top: var(--espacio-1); }
+.pie .pie__frase { flex-basis: 100%; max-width: 26ch; margin: 0 0 var(--espacio-8); font: var(--texto-titulo-2); letter-spacing: -0.01em; color: var(--color-tinta); text-wrap: balance; }
+@media (max-width: 639px) { .pie__interior { flex-direction: column; align-items: flex-start; } }
+
+@media (forced-colors: active) {
+  .marca-agua::before, .apertura::before { display: none; }
+}
+@media print {
+  .apertura { min-height: 0; color: var(--color-tinta); background: none; }
+  .apertura__foto, .apertura::before, .marca-agua::before, .mitades__foto { display: none; }
+  .apertura h1 { color: var(--color-tinta); }
+  .apertura__texto, .franja, .mitades__texto { padding-block: var(--espacio-4); }
+  .franja--oscura.franja--oscura, .pie--oscuro.pie--oscuro {
+    color-scheme: light;
+    --color-panel: #ffffff;
+    --color-tinta: #000000;
+    --color-tinta-2: #333d49;
+    --color-linea: #b9c6d6;
+    --color-primario-texto: #004992;
+    color: var(--color-tinta-2);
+    background: none;
+    border: 0;
+  }
+  .mitades { display: block; background: none; }
+  .novedades img, .entradas--foto img { display: none; }
+  .aparece-js .aparece:not(.aparece--visible) { opacity: 1; transform: none; }
+}
 
 /* 6. Estados --------------------------------------------------------------- */
 
