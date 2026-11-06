@@ -516,7 +516,7 @@
         `<span class="plano__item-texto"><span class="plano__item-nombre">${limpio(titulo)}</span>` +
         (dato ? `<span class="plano__item-dato">${limpio(dato)}</span>` : '') + '</span>' +
         (e && e.texto ? insignia(e) : '') + '</button></li>';
-      const grupo = (titulo, items) => items.length ? `<section><h3 class="plano__subtitulo">${limpio(titulo)} <span class="plano__cuenta">${items.length}</span></h3><ul class="plano__items">${items.join('')}</ul></section>` : '';
+      const grupo = (titulo, items) => items.length ? `<section><h2 class="plano__subtitulo">${limpio(titulo)} <span class="plano__cuenta">${items.length}</span></h2><ul class="plano__items">${items.join('')}</ul></section>` : '';
       const junto = (...partes) => partes.filter(Boolean).join(' · ');
       const todas = lista_ => (q ? (lista_ || []) : deLaPlanta(lista_));
       const lAulas = capas.aulas ? todas(plano.datos.aulas).filter(coincideAula).sort(porNombre) : [];
@@ -539,9 +539,10 @@
         resumen.textContent = junto(nombre,
           capas.aulas && `${lAulas.length} ${lAulas.length === 1 ? 'espacio' : 'espacios'}`,
           libres && `${libres} ${libres === 1 ? 'libre' : 'libres'}`, ocupadas && `${ocupadas} ${ocupadas === 1 ? 'ocupada' : 'ocupadas'}`,
-          capas.antenas && `${aca.length} ${aca.length === 1 ? 'antena' : 'antenas'}`,
+          // Sin antenas en la planta no se dice "0 antenas": las sin ubicar llevan la palabra
+          capas.antenas && aca.length && `${aca.length} ${aca.length === 1 ? 'antena' : 'antenas'}`,
           conProblema && `${conProblema} con problemas`,
-          sinLugar && `${sinLugar} sin ubicar`);
+          sinLugar && (aca.length ? `${sinLugar} sin ubicar` : `${sinLugar} ${sinLugar === 1 ? 'antena' : 'antenas'} sin ubicar`));
       }
 
       pintarDetalle();
