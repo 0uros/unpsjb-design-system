@@ -1,6 +1,6 @@
 # Registro de cambios · Sistema de Diseño UNPSJB
 
-`DESIGN.md` y `unpsjb.css` llevan el mismo número de versión (`MAYOR.MENOR.ARREGLO`). Cada versión se ordena en: **Nuevo**, **Cambiado**, **Obsoleto** (sigue funcionando, se quita en la próxima versión mayor), **Eliminado** y **Corregido**. Ver `DESIGN.md`, sección 14.
+`DESIGN.md` y `unpsjb.css` llevan el mismo número de versión (`MAYOR.MENOR.ARREGLO`). Cada versión se ordena en: **Nuevo**, **Cambiado**, **Obsoleto** (sigue funcionando, se quita en la próxima versión mayor), **Eliminado** y **Corregido**. Ver `diseno/14-gobernanza.md`, sección 14.C.
 
 **Sobre los números.** El primer número es **0** porque el sistema todavía no se publicó en el servidor ni lo usa ninguna herramienta: hasta ahora hubo borradores de diseño, no versiones publicadas. La **1.0.0** va a ser la primera que se publique. El 1 de octubre de 2026 se renumeró todo el registro para que diga eso:
 
@@ -480,6 +480,13 @@ Cambia el HTML del header (ver "Cómo migrar"): después de la 1.0.0, un cambio 
 ## 0.2.1 · 2026-09-29 · anterior
 
 Dirección "Señalética": banda azul como único bloque de color, naranja "estás acá", neutros teñidos del azul, Montserrat + Atkinson Hyperlegible Next, radios de 4 y 8px, avisos como placa de estado, logo de la Sede Trelew con gaviota plana y emojis Twemoji como fuente de color. Detalle en `BITACORA.md`, sesiones 3 y siguientes.
+
+### Cambiado
+
+- **Tipografía del texto:** Atkinson Hyperlegible Next reemplaza a Inter para texto y datos. Montserrat queda para los títulos.
+- **Borde de los controles:** los campos pasan a un borde de 3.4:1 (`linea-control`); antes usaban el de las tarjetas (1.2:1) y no cumplían WCAG 1.4.11. `linea` queda para separar.
+- **Radios:** 4px en controles y 8px en contenedores; se elimina el de 16px.
+- **Encabezado de las tablas:** fondo `capa` con una línea inferior azul de 2px, en lugar del relleno azul completo.
 
 ## 0.1.0 · 2026-09-29
 

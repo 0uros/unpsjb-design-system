@@ -1231,3 +1231,17 @@ Sin número de sesión. El usuario aprobó la página de difusión: "dale, pasal
 - `skill/design-md-unpsjb/SKILL.md` se regeneró desde `DESIGN.md`.
 - Al unir: borrar la rama `difusion` (ya está toda acá) y el worktree de `portada-publica`.
 
+
+## 2026-11-12 — `DESIGN.md` partido en núcleo y `diseno/`
+
+Sin número de sesión. Sale del análisis de la 0.4.9: el documento tenía 1.855 líneas y el skill era una copia entera, así que cada página que armaba un agente cargaba todo.
+
+- **Núcleo en `DESIGN.md`:** el encabezado con los tokens y las secciones 1 a 13. Arriba, una tabla dice dónde está cada sección y cuándo leerla.
+- **`diseno/14-gobernanza.md` a `diseno/21-planos.md`:** una sección por archivo. **Los números de sección no cambian**, así las referencias como "17.E" en `sistema/` y en las muestras siguen valiendo. La 14 sale del núcleo porque dice cómo se mantiene el sistema, no cómo se arma una pantalla.
+- **Primero se partió sin cambiar el texto** (comprobado comparando el original con la unión de los archivos), y después, en otro commit, se sacó la historia: las marcas "nuevo en", "cambio en", las notas de "antes era así", la migración desde la 0.2 y las referencias a los borradores. Cuando una nota explicaba el porqué de una regla, quedó el porqué en una frase. Cuatro cambios de la 0.2.1 que no estaban en `CHANGELOG.md` se agregaron ahí.
+- **El núcleo no bajó a 300–400 líneas** como se estimó en el análisis: las secciones 1 a 13 son casi todas reglas, y la historia estaba dentro de las mismas líneas. Para bajar más habría que sacar componentes y estados (7 y 8), que hacen falta en cualquier pantalla.
+- **Skill:** `herramientas/skill/armar.sh` arma `skill/design-md-unpsjb/` (`SKILL.md` con el núcleo y `diseno/` al lado, con las mismas rutas que el repo). Reemplaza al "regenerar a mano". La skill de claude.ai hay que volver a subirla.
+- Sin número de versión: no cambia `sistema/`.
+
+Pendientes:
+- [ ] Subir la carpeta `skill/design-md-unpsjb/` como skill en claude.ai (estaba en la 0.3.1).
