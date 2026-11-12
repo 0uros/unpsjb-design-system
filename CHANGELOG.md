@@ -1,6 +1,6 @@
 # Registro de cambios · Sistema de Diseño UNPSJB
 
-`DESIGN.md` y `unpsjb.css` llevan el mismo número de versión (`MAYOR.MENOR.ARREGLO`). Cada versión se ordena en: **Nuevo**, **Cambiado**, **Obsoleto** (sigue funcionando, se quita en la próxima versión mayor), **Eliminado** y **Corregido**. Ver `DESIGN.md`, sección 14.
+`DESIGN.md` y `unpsjb.css` llevan el mismo número de versión (`MAYOR.MENOR.ARREGLO`). Cada versión se ordena en: **Nuevo**, **Cambiado**, **Obsoleto** (sigue funcionando, se quita en la próxima versión mayor), **Eliminado** y **Corregido**. Ver `diseno/14-gobernanza.md`, sección 14.C.
 
 **Sobre los números.** El primer número es **0** porque el sistema todavía no se publicó en el servidor ni lo usa ninguna herramienta: hasta ahora hubo borradores de diseño, no versiones publicadas. La **1.0.0** va a ser la primera que se publique. El 1 de octubre de 2026 se renumeró todo el registro para que diga eso:
 
