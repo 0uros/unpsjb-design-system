@@ -1,8 +1,8 @@
-## 20. Cartelera (nuevo en 0.4.3)
+# 20. Cartelera
 
 Una tele en un pasillo que muestra las actividades del día. Es la señalética del sistema en sentido literal, y se diseña al revés que una herramienta: se mira **de lejos y de paso**, y **no se toca**. Módulo `unpsjb-cartelera.css`; ejemplos: `muestra-cartelera.html` (la tele) y `muestra-cartelera-celular.html` (la vista de solo lectura a la que lleva el QR).
 
-### A. Medidas para leer de lejos
+## A. Medidas para leer de lejos
 
 - **Todo se mide en "u":** una u es un píxel en una tele de 1920 × 1080. En otra resolución (720p, 4K) todo crece o se achica junto, y la pantalla se ve igual.
 - **Ninguna letra mide menos de 26 u:** el doble del mínimo de una pantalla de escritorio.
@@ -20,7 +20,7 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 - **Margen de 64 u** a los costados: algunas teles recortan los bordes de la imagen.
 - **Sin scroll, sin botones, sin links, sin foco.** A pantalla completa tampoco se ve la flecha del mouse.
 
-### B. Qué muestra
+## B. Qué muestra
 
 - **La banda,** más alta (120 u): el logo, el lugar ("Edificio de Aulas") y, a la derecha, la fecha y la hora. La hora es lo más grande de la pantalla: es lo que se busca primero.
 - **La tabla de actividades** (`.cartelera-tabla`), ordenada por hora: hora, actividad y lugar. Es una tabla de verdad.
@@ -31,16 +31,16 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
 - **Suspendida:** insignia de error. El nombre se apaga, pero **no se tacha:** se tiene que poder leer qué se suspendió.
 - **Avisos** (`.cartelera-aviso`): la misma placa de estado de las herramientas (8.A), con título y una o dos frases. Van arriba del QR.
 
-### C. Cuando no entra todo
+## C. Cuando no entra todo
 
 - **Las filas se reparten en páginas que rotan solas,** cada 12 segundos. El pie dice "Página 1 de 2".
 - Se mide lo que entra: seis filas en una tele horizontal, menos si un nombre ocupa dos renglones. Un nombre largo sigue en otro renglón; no se corta con puntos suspensivos.
 - El cambio de página es un corte, sin animación (5.E).
 - Los avisos hacen lo mismo: si no entran todos arriba del QR, van por tandas.
 
-### D. El QR y la vista de solo lectura
+## D. El QR y la vista de solo lectura
 
-- **El QR lleva a las mismas actividades en el celular** (`.cartelera-qr`), para quien quiere mirar con calma, buscar su materia o ver otro día. Esa vista (`muestra-cartelera-celular.html`) es una página pública común que usa las piezas de la agenda (`.solo-lectura`): se mira, no se toca. Desde la 0.4.5 se adapta a la pantalla:
+- **El QR lleva a las mismas actividades en el celular** (`.cartelera-qr`), para quien quiere mirar con calma, buscar su materia o ver otro día. Esa vista (`muestra-cartelera-celular.html`) es una página pública común que usa las piezas de la agenda (`.solo-lectura`): se mira, no se toca. Se adapta a la pantalla:
   - **En el celular,** el día elegido en lista, con la fila de días arriba.
   - **Desde 768px** (tablet, notebook), el día en grilla con las aulas en columnas, o en lista, y la semana vigente con un día por columna.
   - **Al buscar,** los resultados salen en lista y abarcan toda la semana.
@@ -54,18 +54,18 @@ Una tele en un pasillo que muestra las actividades del día. Es la señalética 
   - Muestra el día completo, con las mismas palabras de la tele: "En curso", "Empieza en 15 min", "Cambio de aula", "Suspendida", y además "Terminó".
   - Abajo dice de cuándo son los datos y dónde se reserva.
 
-### E. Cuando algo falla
+## E. Cuando algo falla
 
 - **Sin actividades:** lo dice en grande ("No hay más actividades por hoy") y avisa cuál es la próxima. Nunca una tabla vacía.
 - **Sin conexión:** la tele sigue mostrando lo último que recibió y **lo dice en el pie,** con ícono y palabras: "Sin conexión. Se muestran los datos de las 9:40 h". Una cartelera con datos viejos y sin aviso es peor que una apagada.
 - El pie dice siempre a qué hora se actualizó.
 
-### F. Tema y orientación
+## F. Tema y orientación
 
 - **Claro u oscuro, fijo por pantalla.** La tele no tiene dónde elegirlo: se pone en la dirección (`?tema=oscuro`). Claro para pasillos con luz de día; oscuro para lugares con poca luz. La banda no cambia.
 - **Tele en vertical:** la u pasa a medirse sobre 1080 de ancho; la tabla ocupa todo el ancho y los avisos y el QR van abajo.
 
-### G. Lo que no va
+## G. Lo que no va
 
 | No va | Por qué |
 |---|---|

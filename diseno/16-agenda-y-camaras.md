@@ -1,24 +1,24 @@
-## 16. Módulos: agenda de aulas y visor de cámaras (nuevo en 0.4)
+# 16. Módulos: agenda de aulas y visor de cámaras
 
 Son piezas grandes que no van en `unpsjb.css` sino en hojas aparte, para que no las cargue quien no las usa. Cada una se enlaza **después** de `unpsjb.css` y usa sus tokens. Esta sección documenta las dos primeras; las demás tienen la suya.
 
 | Módulo | Hoja | Ejemplo | Peso | Reglas |
 |---|---|---|---|---|
 | Agenda de aulas | `unpsjb-agenda.css` | `muestra-agenda.html` | 19 KB | 16.A |
-| Visor de cámaras (rehecho en 0.4.5) | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
-| Gráficos: líneas (0.4.3); barras, columnas y torta (0.4.5) | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 8 KB + 29 KB | 15.E a 15.G |
-| Documentos e impresión (0.4.3) | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
-| Mesa de ayuda (0.4.3) | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
-| Cartelera (0.4.3) | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
-| Planos (0.4.4) | `unpsjb-planos.css` + `unpsjb-planos.js` (+ `unpsjb-planos-editor.js`, opcional) | `muestra-planos.html` | 17 KB + 31 KB (+ 23 KB) | 21 |
+| Visor de cámaras | `unpsjb-video.css` | `muestra-video.html` | 28 KB | 16.B |
+| Gráficos: líneas; barras, columnas y torta | `unpsjb-graficos.css` + `unpsjb-graficos.js` | `muestra-graficos.html` | 8 KB + 29 KB | 15.E a 15.G |
+| Documentos e impresión | `unpsjb-documentos.css` | `muestra-documentos.html` | 16 KB | 18 |
+| Mesa de ayuda | `unpsjb-mesa-ayuda.css` | `muestra-mesa-ayuda.html` | 8 KB | 19 |
+| Cartelera | `unpsjb-cartelera.css` | `muestra-cartelera.html` y `muestra-cartelera-celular.html` | 16 KB | 20 |
+| Planos | `unpsjb-planos.css` + `unpsjb-planos.js` (+ `unpsjb-planos-editor.js`, opcional) | `muestra-planos.html` | 17 KB + 31 KB (+ 23 KB) | 21 |
 
 Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (React), los arma el código a partir de los datos del servidor, con estas mismas clases. En el ejemplo de la agenda los eventos son siempre los mismos: al cambiar de fecha o de aula cambian los títulos y los días.
 
-### A. Agenda de aulas
+## A. Agenda de aulas
 
 - **Dos formas, siempre:** la grilla (`.agenda-grilla`) y una **lista** ordenada por hora (`.agenda-lista`), donde cada evento va con su título y todos sus datos. Se cambia con un segmentado "Grilla | Lista". La lista no es un extra: es la forma de usar la agenda con lector de pantalla y en celular.
 - **Tres períodos:** Día (aulas en columnas), Semana (los días de un aula en columnas) y Mes (`.agenda-mes`), con otro segmentado. En Mes, cada día muestra hasta 2 eventos y "+3 más".
-- **De una vista a la otra, tocando lo que se quiere ver** (0.4.2). No hace falta volver al segmentado:
+- **De una vista a la otra, tocando lo que se quiere ver**. No hace falta volver al segmentado:
 
 | Estás en | Tocás | Se abre |
 |---|---|---|
@@ -28,8 +28,8 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 | Día | El nombre del aula, en el encabezado (`.agenda-grilla__ir`) | La semana de esa aula |
 
   Esos encabezados son botones con aspecto de enlace, y toda la celda responde al clic. Llevan `aria-describedby` hacia un texto que dice qué abren, así el nombre de la columna sigue siendo solo "Lunes 12". En Mes, al pasar por la semana se tiñe la fila entera. Al cambiar de vista, el foco queda en el título de la vista nueva.
-- **En la barra nada se corre al cambiar de vista** (0.4.2). Las dos flechas van juntas, **antes** del título: con el título en el medio, "Siguiente" se movía cada vez que el título cambiaba de largo. "Día | Semana | Mes" va **último, contra el borde derecho**; lo que aparece y desaparece según la vista ("Grilla | Lista") queda a su izquierda. Las flechas dicen qué mueven: "Día anterior", "Semana siguiente".
-- **En Semana, el aula va en su propia placa** (`.agenda-aula`, 0.4.2), justo arriba de la grilla o de la lista: el ícono, la etiqueta "Aula" **a la vista**, el selector, los datos del aula ("60 lugares · Planta baja") y la frase "La semana muestra un aula por vez". Antes era un selector sin etiqueta entre los controles de vista, y no se entendía qué era.
+- **En la barra nada se corre al cambiar de vista**. Las dos flechas van juntas, **antes** del título: con el título en el medio, "Siguiente" se movía cada vez que el título cambiaba de largo. "Día | Semana | Mes" va **último, contra el borde derecho**; lo que aparece y desaparece según la vista ("Grilla | Lista") queda a su izquierda. Las flechas dicen qué mueven: "Día anterior", "Semana siguiente".
+- **En Semana, el aula va en su propia placa** (`.agenda-aula`), justo arriba de la grilla o de la lista: el ícono, la etiqueta "Aula" **a la vista**, el selector, los datos del aula ("60 lugares · Planta baja") y la frase "La semana muestra un aula por vez". Un selector sin etiqueta entre los controles de vista no dice qué es.
 - **En celular** solo hay Día, en lista: arriba, una fila con los días para elegir (`.agenda-dias`); la grilla y el mes no se muestran.
 - **La grilla es una tabla** (`<table>`): encabezados de columna y de fila, y un evento de dos horas ocupa dos filas (`rowspan`). Va dentro de un marco con scroll, como toda tabla (7.D). Una grilla con flechas en las cuatro direcciones (`role="grid"`) queda para más adelante: es cara de hacer bien.
 - **Cada renglón de una hora mide 48px**, como una fila de tabla.
@@ -39,9 +39,9 @@ Los ejemplos tienen los datos escritos en el HTML. En las herramientas reales (R
 - **Reservar:** con el botón "Reservar aula" de la pantalla. Las celdas libres también reservan, pero son un **atajo para el mouse** (`tabindex="-1"`): si cada hora libre fuera una parada de `Tab`, habría que pasar por decenas para llegar a un evento.
 - Arriba de la grilla, la lista de categorías con su color y su nombre.
 
-### B. Visor de cámaras
+## B. Visor de cámaras
 
-Rehecho el 6 de octubre de 2026 (0.4.5), a partir de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
+Parte de un visor comercial que se tomó de referencia. De ahí salen el panel lateral, el nombre encima de la imagen y las vistas con cámaras de distinto tamaño. Los colores, la tipografía y los componentes siguen siendo los del sistema.
 
 - **Lo primero es el tamaño de las cámaras.** Todo lo demás se acomoda a eso: nada le saca alto al muro. No hay encabezado de pantalla ni barra de herramientas arriba, y el nombre de cada cámara va encima de la imagen, no debajo.
 - **El video va siempre sobre negro** (`#000`), en claro y en oscuro. El resto de la pantalla respeta el tema elegido: el visor **no** fuerza el modo oscuro. Los únicos colores propios del módulo son los del video: el negro, y lo que se escribe encima de la imagen.

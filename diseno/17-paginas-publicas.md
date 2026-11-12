@@ -1,6 +1,6 @@
-## 17. Páginas de entrada y públicas (nuevo en 0.4)
+# 17. Páginas de entrada y públicas
 
-### A. Portal del wifi
+## A. Portal del wifi
 
 Es la pantalla que aparece al conectarse a la red. Antes de aceptar, la red suele bloquear todo lo demás, y se abre en un navegador mínimo del celular. Hay una plantilla lista: `portal-wifi.html`.
 
@@ -16,7 +16,7 @@ Es la pantalla que aparece al conectarse a la red. Antes de aceptar, la red suel
 - Los valores (colores, radios, tamaños) son los de `unpsjb.css`, copiados a mano: si cambian allá, se actualizan en la plantilla.
 - Falta completar, según el equipo que maneje la red: la dirección a la que envía el formulario y sus campos ocultos.
 
-### B. Páginas públicas
+## B. Páginas públicas
 
 Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripción abierta.
 
@@ -28,7 +28,7 @@ Las que ve gente de afuera de la universidad: la agenda de eventos, una inscripc
 - **El logo completo** (nivel L, 10.A) solo donde hay lugar para mostrarlo a 96px o más: una portada, no la banda.
 - **Sin siglas internas** sin explicar (sección 12): quien llega de afuera no sabe qué es SIU ni SUDOCU.
 
-### C. Portal de la Delegación (nuevo en 0.4.5)
+## C. Portal de la Delegación
 
 El portal institucional de la universidad lo maneja Comodoro. El de la Delegación es otra cosa: **chico, informativo y de consulta rápida**. Sirve para encontrar en un minuto dónde queda algo, a quién escribirle y por dónde se hace un trámite. No es un diario ni repite lo que ya está en el portal de la universidad: lo enlaza.
 
@@ -41,13 +41,13 @@ Hay un prototipo: `muestra-portal.html`. Las reglas salen del estudio de los sit
   - **El naranja no se usa de relleno** (3.B). Texto blanco sobre celeste o naranja, como en los mosaicos de otros sitios, da 2:1.
   - Con más de cuatro destinos no se suman bloques: va una lista de accesos (7.Q).
 - **Avisos antes que noticias.** Lo que cambia el día de alguien ("El lunes no hay clases") va como aviso (8.A), arriba. Las novedades, como una lista corta de título y fecha o, en la portada, hasta tres con foto (`.novedades`, 17.E), con un enlace a "todas". Sin carrusel (7.P).
-- **Foto de apertura, si se quiere** (17.E): una sola, con la capa oscura, y sin tapar toda la ventana, así las entradas se ven sin bajar. Antes estaba prohibida; lo que el estudio había encontrado era el peso de las fotos y el carrusel, y eso ya lo resuelven los topes de 2.C. (Cambio de la 0.4.9.)
+- **Foto de apertura, si se quiere** (17.E): una sola, con la capa oscura, y sin tapar toda la ventana, así las entradas se ven sin bajar. El peso de las fotos y el carrusel ya lo resuelven los topes de 2.C.
 - **El acceso a la cuenta va en la banda,** en todas las páginas (el botón "Mi cuenta"). Es el puente entre informarse y hacer un trámite.
 - **Navegación de un solo nivel:** la sub-barra (6.A), con hasta 6 secciones. En el estudio había páginas con tres filas de menú antes del título.
 - **Contacto a la vista:** oficina, dirección, horario, teléfono y correo, como lista de resumen (7.L) dentro de un panel. Los teléfonos y correos son enlaces (`tel:`, `mailto:`).
 - **Pesa poco:** una página del portal no pasa de 1 MB (2.C).
 
-### D. Página de inicio de una cuenta (nuevo en 0.4.5)
+## D. Página de inicio de una cuenta
 
 Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta con varias partes. Responde tres preguntas, en este orden. Es el orden de la página de inicio de MiUNC, con nuestras piezas:
 
@@ -59,7 +59,7 @@ Lo primero que ve alguien al ingresar a un portal de cuenta o a una herramienta 
 - **Avisos de seguridad** ("Nunca te vamos a pedir la contraseña") van como aviso, al lado del dato que protegen. No en letra chica ni en cursiva.
 - **No va:** una grilla de tarjetas con ícono (7.C), contadores o gráficos de relleno, ni un saludo con la hora del día.
 
-### E. Piezas de las páginas públicas (nuevo en 0.4.9)
+## E. Piezas de las páginas públicas
 
 Salen del estudio del sitio de la SIDE (`notas/REFERENCIAS-SIDE.md`): una portada que se recorre en franjas, con una foto arriba, un solo llamado fuerte y un pie oscuro. Se toma el orden y las piezas; los colores, las letras y las reglas de texto siguen siendo los del sistema. Hay un ejemplo armado en la portada de `muestra-portal.html`.
 
@@ -71,7 +71,7 @@ Sirven para dos clases de página: la **portada** del portal (17.C) y las **pág
 
 | Pieza | Clase | Reglas |
 |---|---|---|
-| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto, como mucho un botón (`.boton--secundario`) y, si hay, el plazo. La capa negra al 55% (`--color-velo-foto`) es fija detrás del texto: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. **Desde 1024px, después del texto la capa se aclara hasta el 15%** (nuevo en 0.4.9): la foto respira donde no hay nada que leer. Si hay fecha límite, va al lado del botón (`.apertura__accion`, `.apertura__plazo`, con el ícono `calendar`): "Inscripción hasta el 18 de diciembre", sin el año si se sobreentiende. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. **Si lo que sigue también lleva foto, la apertura ocupa la primera pantalla** (`.apertura--pantalla`, con el texto al medio; nuevo en 0.4.9): nunca se ven dos fotos a la vez, ni una cortada debajo de la otra. Es el caso de la página de difusión. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
+| **Foto de apertura** | `.apertura`, `.apertura__foto`, `.apertura__texto` | Una sola foto, sin carrusel ni video. El título va encima, en `apertura` (40px; 32px en celular), con una línea de texto, como mucho un botón (`.boton--secundario`) y, si hay, el plazo. La capa negra al 55% (`--color-velo-foto`) es fija detrás del texto: con 40%, como en la SIDE, el texto blanco baja a 2,9:1 sobre una zona clara. **Desde 1024px, después del texto la capa se aclara hasta el 15%**: la foto respira donde no hay nada que leer. Si hay fecha límite, va al lado del botón (`.apertura__accion`, `.apertura__plazo`, con el ícono `calendar`): "Inscripción hasta el 18 de diciembre", sin el año si se sobreentiende. Mide la mitad del alto de la ventana, entre 280 y 480px (más, solo si el texto lo pide en un celular angosto), así lo que sigue se ve sin bajar. **Si lo que sigue también lleva foto, la apertura ocupa la primera pantalla** (`.apertura--pantalla`, con el texto al medio): nunca se ven dos fotos a la vez, ni una cortada debajo de la otra. Es el caso de la página de difusión. La foto lleva `alt=""` (el texto ya dice lo importante), `fetchpriority="high"` y dos anchos (2.C). Al imprimir se oculta la foto y el texto pasa a `tinta`. |
 | **Franjas** | `.franja`, `--panel`, `--capa`, `--oscura` | Secciones a todo el ancho que separan con el cambio de fondo, sin bordes ni tarjetas. Alternan `fondo`, `panel` y `capa`; dos seguidas no llevan el mismo. La **oscura** (`--color-oscuro`), **una por página**, para el llamado más importante ("Inscripciones 2027"): un título, una o dos líneas y un botón. Adentro valen los tokens del modo oscuro. |
 | **Título con filete** | `.titulo-filete` | Una línea de 2px del ancho del título, en `primario-texto`, nunca en naranja. Para los títulos de las franjas. Alineado a la izquierda, como todo (5.F), y con mayúscula solo inicial (4.C). |
 | **Marca de agua** | `.marca-agua` | El escudo de un solo color (`marca-agua-unpsjb.svg`, 10.A) detrás del contenido, del lado derecho en escritorio. Toma el color del texto y la opacidad de `--marca-agua-opacidad`: 6%, con un tope de 8%. Solo en una franja con poco texto (la oscura) o en el pie oscuro. Medido en la muestra: el texto encima da 6,7:1 en claro y 5:1 en oscuro. No se imprime ni aparece en alto contraste. |

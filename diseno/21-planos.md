@@ -1,10 +1,10 @@
-## 21. Planos (nuevo en 0.4.4)
+# 21. Planos
 
 Las plantas de un edificio con lo que se marca encima: **antenas de wifi** (puntos) y **aulas** (zonas). Sirve cuando lo que importa es **dónde** está algo. Módulo: `unpsjb-planos.css` (32 KB) y `unpsjb-planos.js` (51 KB; 16 KB comprimido), más el modo edición, opcional (21.G). Ejemplo: `muestra-planos.html`.
 
 El plano muestra **el estado de ahora**. Para elegir un aula y un horario está la agenda (16.A): desde el aula elegida se llega a su agenda con un enlace (`data-agenda`).
 
-### A. El dibujo
+## A. El dibujo
 
 - **Es un mapa, no un plano de obra.** El lienzo es el piso (pasillos, exterior) y va en un tono; los locales con nombre se rellenan en otro, más claro (21.D). Así el edificio tiene cuerpo y se ve de un vistazo qué es local y qué es paso. Un plano de arquitectura puesto tal cual sobre blanco no cumple ese trabajo: todo pesa lo mismo.
 - **El dibujo queda de fondo, apagado.** Muros en `linea-control`; el resto (escaleras, cotas, mobiliario, textos del original) en el mismo tono al 45 %. La forma del edificio la dan los locales rellenos, no los muros.
@@ -16,7 +16,7 @@ El plano muestra **el estado de ahora**. Para elegir un aula y un horario está 
 - **Cómo se obtiene:** de un PDF de AutoCAD, con `pdftocairo -svg` y un paso de limpieza que cambia los colores por las tres clases, junta los trazos y recorta la hoja. Cada herramienta guarda su conversor junto a sus planos (el de Trelew: `herramientas/limpiar_svg.py`). Un plano de 9.000 trazos queda en menos de 500 KB (130 KB comprimido), y se trae solo la planta que se mira.
 - El rótulo de la hoja ("PLANTA BAJA") se quita del dibujo: el nombre de la planta lo dice la pantalla.
 
-### B. La pantalla (cambiado en 0.4.8)
+## B. La pantalla
 
 **Un panel a la izquierda para buscar y elegir, y el plano a la derecha con sus controles encima,** como en los mapas de interiores. Desde 1024px van lado a lado y ocupan el alto de la ventana; el panel mide 320px.
 
@@ -45,7 +45,7 @@ El plano muestra **el estado de ahora**. Para elegir un aula y un horario está 
 - **La planta y lo elegido van en la dirección** (`#planta=pb&antena=ap-03`), para poder mandarle a alguien el enlace a una antena.
 - El dibujo lleva `aria-hidden`: para el lector de pantalla, lo que informa son los botones y la lista.
 
-### C. Antenas
+## C. Antenas
 
 Cada antena es un **botón** (`.plano-marca`): un círculo de 26px, fondo `panel`, con **el dibujo de su equipo** adentro y el borde del color de su estado. Mide lo mismo a cualquier distancia, y el área para el dedo es de 44px.
 
@@ -71,7 +71,7 @@ Los tres dibujos son propios del módulo (Lucide no los tiene), con su mismo tra
 - Sin puntos que laten ni círculos de alcance: el alcance real de una antena no es un círculo, y dibujarlo promete una cobertura que nadie midió.
 - **La IP (`"ip"`) es opcional** y se muestra en el panel y en la lista. Solo se carga si la herramienta se ve **únicamente desde la red interna**. Claves y contraseñas, nunca.
 
-### D. Aulas
+## D. Aulas
 
 Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.plano-rotulo`, un botón). **Toda zona se rellena con el tono de local** (`--plano-local`: `panel` en claro, `capa` en oscuro): tapa el dibujo que tiene debajo y se despega del piso. Encima de eso, **pesa según lo que tiene para decir:** lo que resalta es lo libre y lo elegido.
 
@@ -99,7 +99,7 @@ Cada aula es una **zona** (`.plano-zona`, un polígono) con su **rótulo** (`.pl
 - **Las referencias de abajo del plano** muestran un recorte de cada zona (`.plano__muestra`), con su ícono si lo lleva.
 - **El estado es un dato aparte** (`data-ocupacion`): el plano no sabe de reservas. Quien tenga las reservas arma `{ "id-del-aula": { "estado": "ocupada", "hasta": "16:00", "evento": "Álgebra I" } }` y se lo pasa (`plano.ocupacion(datos)`), sin volver a cargar la pantalla. Un aula que no figura queda "Sin dato".
 
-### H. Puntos de referencia
+## H. Puntos de referencia
 
 Escaleras, ascensores, baños y entradas: lo que se busca con la vista para ubicarse. Es lo que más ayuda a encontrar un lugar cuando no hay posicionamiento (hay estudios con usuarios que lo miden).
 
@@ -110,7 +110,7 @@ Escaleras, ascensores, baños y entradas: lo que se busca con la vista para ubic
 - El nombre es opcional: "Escalera" alcanza; "Entrada principal" o "Escalera norte" cuando hay más de una.
 - Figuran en las referencias (los tipos que hay en esa planta) y en la lista, en su propio grupo. Se pueden enlazar: `#planta=pb&lugar=pb-lugar-01`.
 
-### E. Los datos
+## E. Los datos
 
 Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con nombre); las posiciones van en las unidades del `viewBox` de cada dibujo. El formato completo está al principio de `unpsjb-planos.js`.
 
@@ -122,7 +122,7 @@ Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con
 - **Editar las posiciones es cosa de cada herramienta,** no del módulo: el módulo avisa dónde se hizo clic (`plano:clic`), deja sumar un formulario al panel (`plano:detalle`) y se vuelve a pintar (`plano.pintar()`). Un editor nunca depende solo de arrastrar: ofrece también "reubicar" con un clic y campos con la posición.
 - En React se puede usar el mismo script (`unpsjbPlanos.dibujar(elemento, datos)`) o armar un componente con estas clases.
 
-### F. Lo que no va
+## F. Lo que no va
 
 | No va | Por qué |
 |---|---|
@@ -134,7 +134,7 @@ Un solo archivo con las plantas, las antenas y las aulas (todos los espacios con
 | El estado solo con color | Siempre ícono y texto (3.E) |
 | Elegir horarios sobre el plano | Para eso está la agenda (16.A); el plano enlaza a ella |
 
-### G. Modo edición
+## G. Modo edición
 
 Para marcar antenas y aulas sobre el plano sin tocar el archivo de datos a mano. Es **opcional**: `unpsjb-planos-editor.js` (23 KB; 7 KB comprimido) se carga después de `unpsjb-planos.js` y solo hace algo cuando la dirección lleva `?editar`. Sus estilos están en `unpsjb-planos.css`. Ejemplo: `muestra-planos.html?editar`.
 

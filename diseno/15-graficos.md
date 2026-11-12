@@ -1,6 +1,6 @@
-## 15. Gráficos e indicadores (nuevo en 0.4)
+# 15. Gráficos e indicadores
 
-### A. Primero: ¿hace falta un gráfico?
+## A. Primero: ¿hace falta un gráfico?
 
 | Lo que hay | Va | No va |
 |---|---|---|
@@ -11,9 +11,9 @@
 | Algo que cambia en el tiempo | **Líneas** | Barras apretadas |
 | Más de 5 series o más de 7 clases | Una **tabla** | Más colores |
 
-No se usan: tortas de más de 6 partes (desde la 0.4.5; antes el tope era 3), donas, gráficos en 3D, áreas apiladas y **dos ejes en un mismo gráfico** (dos escalas inventan una relación que los datos no tienen; van dos gráficos).
+No se usan: tortas de más de 6 partes, donas, gráficos en 3D, áreas apiladas y **dos ejes en un mismo gráfico** (dos escalas inventan una relación que los datos no tienen; van dos gráficos).
 
-### B. Indicador
+## B. Indicador
 
 Nombre en `detalle`, el valor grande (32px, peso 700, en la misma fuente de texto: no en Montserrat) y, si hay, el cambio contra un período.
 
@@ -22,7 +22,7 @@ Nombre en `detalle`, el valor grande (32px, peso 700, en la misma fuente de text
 - Siempre se dice contra qué se compara.
 - Los indicadores van sueltos, en fila. No se encierran cada uno en un panel.
 
-### C. Cómo se dibuja
+## C. Cómo se dibuja
 
 | Pieza | Medida |
 |---|---|
@@ -37,7 +37,7 @@ Nombre en `detalle`, el valor grande (32px, peso 700, en la misma fuente de text
 - **Barras horizontales** cuando los nombres son largos, y siempre en celular.
 - Sin tramas de relleno: con el valor escrito y la tabla, no hacen falta.
 
-### D. Todo gráfico tiene su tabla
+## D. Todo gráfico tiene su tabla
 
 - El gráfico de barras (`.barras`) **es** una tabla: nombre y valor, dibujada como barras. El lector de pantalla la lee sin nada extra.
 - Un selector **"Gráfico | Tabla"** (segmentado) arriba a la derecha la muestra como tabla común.
@@ -48,9 +48,9 @@ Nombre en `detalle`, el valor grande (32px, peso 700, en la misma fuente de text
 
 Los colores están en la sección 3.I.
 
-### E. Gráficos de líneas (nuevo en 0.4.3)
+## E. Gráficos de líneas
 
-Lo que cambia en el tiempo. Necesita un dibujo (SVG), así que va en un módulo: `unpsjb-graficos.css` (8 KB) y `unpsjb-graficos.js` (29 KB; 9 KB comprimido), que desde la 0.4.5 dibujan también barras, columnas y torta (15.F y 15.G). Ejemplo: `muestra-graficos.html`; casos límite: `prueba-graficos.html`.
+Lo que cambia en el tiempo. Necesita un dibujo (SVG), así que va en un módulo: `unpsjb-graficos.css` (8 KB) y `unpsjb-graficos.js` (29 KB; 9 KB comprimido), que dibujan también barras, columnas y torta (15.F y 15.G). Ejemplo: `muestra-graficos.html`; casos límite: `prueba-graficos.html`.
 
 - **Los datos se escriben una sola vez, en una tabla.** La tabla lleva `data-grafico="lineas"`; el script arma el gráfico y el selector "Gráfico | Tabla". Sin JavaScript queda la tabla. La primera columna es el momento (mes, día, año) y cada una de las demás, una serie.
 - **`data-descripcion` es obligatorio:** una oración que dice lo importante ("Trelew sube de 310 a 412"). Es el nombre de la imagen: lo que escucha quien usa lector de pantalla.
@@ -70,7 +70,7 @@ Lo que cambia en el tiempo. Necesita un dibujo (SVG), así que va en un módulo:
 - **Lo que no hace:** áreas rellenas, líneas curvas (suavizar inventa valores entre dato y dato), dos ejes, más de cinco series.
 - En una herramienta hecha en React se puede usar el mismo script (después de cambiar los datos de la tabla, `unpsjbGraficos.dibujar(tabla)`) o armar un componente que produzca el mismo SVG con estas clases.
 
-### F. Barras y columnas con el módulo (nuevo en 0.4.5)
+## F. Barras y columnas con el módulo
 
 Para comparar cantidades de cosas. Se arman igual que las líneas, desde una tabla, con `data-grafico="barras"`. La tabla `.barras` de `unpsjb.css` (15.D) sigue sirviendo para una serie sola sin script; el módulo agrega varias series, columnas y el eje.
 
@@ -81,7 +81,7 @@ Para comparar cantidades de cosas. Se arman igual que las líneas, desde una tab
 - **Si falta un dato,** no hay barra; en la tabla dice "Sin dato". Un cero lleva una barra mínima y "0".
 - Opcionales: `data-unidad`, `data-alto` (solo columnas; 260px por defecto).
 
-### G. Torta (nuevo en 0.4.5)
+## G. Torta
 
 Para las partes de un total, cuando son pocas y lo que importa es cuánto del todo se lleva cada una. `data-grafico="torta"`, con una sola columna de valores.
 

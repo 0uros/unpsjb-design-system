@@ -1,13 +1,13 @@
-## 14. Gobernanza: quién decide y cómo se versiona (nuevo en 0.3)
+# 14. Gobernanza: quién decide y cómo se versiona
 
 Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un color más" y al año hay tres azules. Esta sección dice quién decide qué, sin volverlo un trámite.
 
-### A. Modelo
+## A. Modelo
 
 - **Hoy: centralizado.** Soporte Informático de la Delegación Trelew es el **núcleo**: mantiene `DESIGN.md`, `unpsjb.css`, `muestra.html` y los assets, y es el único que publica versiones.
 - **Si otras sedes lo adoptan** (Comodoro Rivadavia, Esquel, Puerto Madryn): **núcleo común + extensiones.** Todas usan el mismo `unpsjb.css`; si una sede necesita algo propio, lo agrega en un archivo aparte (`unpsjb-madryn.css`) que **solo** cambia tokens puntuales, nunca componentes. Lo que sirva para todas, se sube al núcleo.
 
-### B. Quién hace qué (matriz RACI)
+## B. Quién hace qué (matriz RACI)
 
 | Tarea | Núcleo (Soporte Trelew) | Quien hace una herramienta | Comunicación / marca | Autoridad de la sede |
 |---|---|---|---|---|
@@ -21,7 +21,7 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 - Quien hace una herramienta y necesita algo que no existe, **primero pregunta** (C). Si lo resuelve con estilos sueltos, es deuda: se anota y se lleva al núcleo en la próxima versión.
 - Pendiente: definir quién cumple el rol de "Comunicación / marca" en la UNPSJB.
 
-### C. Versiones
+## C. Versiones
 
 `unpsjb.css` y este documento llevan **el mismo número de versión**, con el formato `MAYOR.MENOR.ARREGLO`:
 
@@ -31,17 +31,17 @@ Un sistema de diseño sin dueño se desarma: cada herramienta agrega "solo un co
 | **MENOR** (1.**1**.0) | Se agrega algo; lo anterior sigue funcionando igual. | Un componente nuevo, un token nuevo. |
 | **MAYOR** (**2**.0.0) | Hay que tocar el HTML de las herramientas para actualizar. | Una clase que cambia de nombre o de estructura. |
 
-**Hoy el primer número es 0** (esta es la 0.4.9), y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
+**Hoy el primer número es 0**, y eso quiere decir "todavía no se publicó: puede cambiar sin aviso".
 
-- **Mientras sea 0:** el número del medio sube con cada borrador de diseño (0.1 el primero, 0.2 "Señalética", 0.3 el de dos niveles, 0.4 el que suma componentes, gráficos y páginas públicas), aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
+- **Mientras sea 0:** el número del medio sube con cada borrador de diseño, aunque obligue a tocar el HTML. El último sube con arreglos y agregados chicos.
 - **La 1.0.0** es la primera que se publique en el servidor de recursos y use una herramienta real. Desde ahí rige la tabla de arriba, porque recién entonces alguien depende de que nada se rompa.
 - Lo que haya que renombrar o eliminar (por ejemplo, unificar el idioma de los nombres de las clases) conviene hacerlo **antes** de la 1.0.0.
 
 - **Registro de cambios:** `CHANGELOG.md`, con las secciones Nuevo, Cambiado, Obsoleto, Eliminado y Corregido, y para cada cambio mayor, **cómo migrar**.
-- **Obsoleto antes que eliminado:** lo que se va a quitar se marca como **obsoleto** (en el CSS con un comentario `@deprecated` y en el registro), sigue funcionando al menos una versión y se elimina recién en la siguiente versión mayor. Ejemplo: `.banda__nav` se marcó obsoleta en la 0.3. (Se eliminó en la 0.3.2 sin esperar, porque todavía no había nada publicado.)
+- **Obsoleto antes que eliminado:** lo que se va a quitar se marca como **obsoleto** (en el CSS con un comentario `@deprecated` y en el registro), sigue funcionando al menos una versión y se elimina recién en la siguiente versión mayor. Ejemplo: `.banda__nav` se marcó obsoleta antes de quitarse.
 - **Dónde vive:** `unpsjb.css` en `https://recursos.tw.unp.edu.ar/css/unpsjb.css` (la versión actual) y `…/css/unpsjb-1.0.0.css` (fija, con el número de cada versión publicada, para herramientas que no pueden actualizar enseguida). `muestra.html` publicada en el mismo servidor, como referencia viva.
 
-### D. Cómo saber si se usa
+## D. Cómo saber si se usa
 
 Tres números, que se miran una vez por cuatrimestre:
 
@@ -49,7 +49,7 @@ Tres números, que se miran una vez por cuatrimestre:
 2. **Estilos sueltos:** colores hex o tamaños en px escritos a mano en el código de las herramientas (se buscan con `grep`). Cuantos menos, mejor.
 3. **Tiempo para armar una pantalla nueva** con el sistema, comparado con el de antes.
 
-### E. Estilos propios de una herramienta (nuevo en 0.4)
+## E. Estilos propios de una herramienta
 
 A veces una herramienta necesita algo que el sistema no tiene (un control de cámara, una grilla especial). Para que eso no se vuelva deuda escondida:
 
@@ -61,7 +61,7 @@ A veces una herramienta necesita algo que el sistema no tiene (un control de cá
 
 `muestra.html` hace lo mismo: sus fichas usan clases `.ext-muestra-…`.
 
-### F. Fichas de componentes y reportes (nuevo en 0.4)
+## F. Fichas de componentes y reportes
 
 - **Cada componente tiene su ficha** en `muestra.html`, al final de su sección, con cuatro partes: **cuándo usarlo**, **cuándo no** (y qué va en su lugar), **accesibilidad** y un **ejemplo de código**. Un componente nuevo no entra al sistema sin su ficha.
 - **Reportes** (los del botón "Reportar un problema", 6.C):
@@ -69,7 +69,7 @@ A veces una herramienta necesita algo que el sistema no tiene (un control de cá
   - Las sugerencias se anotan. Lo que piden dos o más herramientas entra en la próxima versión menor.
   - A quien reportó se le contesta, aunque sea para decir que no se va a hacer.
 
-### G. Revisión de diseño de una pantalla (nuevo en 0.4.7)
+## G. Revisión de diseño de una pantalla
 
 Antes de las pruebas con personas (9) y antes de publicar una pantalla nueva o un cambio grande. La lista "Antes de publicar" dice si una pantalla es accesible; esta dice si cumple este documento y si se entiende.
 

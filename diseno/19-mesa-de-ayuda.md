@@ -1,14 +1,14 @@
-## 19. Mesa de ayuda (nuevo en 0.4.3)
+# 19. Mesa de ayuda
 
 Una mesa de ayuda se arma casi entera con lo que ya hay: la bandeja es una tabla con filtros (7.D, 8.I), el pedido es un formulario (8.F) y su confirmación un comprobante (8.G). Lo único que faltaba es el **historial de una solicitud**: los mensajes que van y vienen, los cambios de estado y los adjuntos. Eso es el módulo `unpsjb-mesa-ayuda.css` (ejemplo: `muestra-mesa-ayuda.html`).
 
-### A. La pantalla de una solicitud
+## A. La pantalla de una solicitud
 
 - **El título es el asunto,** escrito por quien pidió ("No funciona el proyector del Aula 102"). Arriba, las migas con el número.
 - **Debajo del título, un renglón de estado** (`.solicitud__estado`): la insignia, el número, cuándo se abrió y quién la atiende. Es lo que hay que saber antes de leer.
 - **Dos columnas desde 1024px** (`.solicitud`): el historial y la respuesta a la izquierda; la ficha (`.solicitud__ficha`, una lista de resumen) a la derecha. En celular la ficha va al final: lo esencial ya está en el renglón de estado.
 
-### B. El historial
+## B. El historial
 
 - **De lo más viejo a lo más nuevo,** de arriba hacia abajo, y termina en el cuadro para responder. Lo nuevo aparece donde se está escribiendo.
 - **Un título por día** (`.hilo__dia`: "Jueves 1 de octubre") y, debajo, la lista de ese día (`ol.hilo`). Dentro del día va solo la hora.
@@ -19,7 +19,7 @@ Una mesa de ayuda se arma casi entera con lo que ya hay: la bandeja es una tabla
 - **Adjuntos:** la lista de archivos de siempre (`.archivos`, 8.J), con el nombre como link y el peso.
 - **Lo que escribe la persona entra como texto,** nunca como HTML. Los emojis que escriba se ven con Twemoji (10.D).
 
-### C. Estados de una solicitud
+## C. Estados de una solicitud
 
 Cinco, con las mismas palabras para quien pide y para quien atiende:
 
@@ -35,7 +35,7 @@ Cinco, con las mismas palabras para quien pide y para quien atiende:
 - **La prioridad no es un estado** y no lleva semáforo. Va escrita, con su motivo ("Alta: hay un parcial el 02/10 a las 14:00 h"), y la ve solo el equipo.
 - **El plazo** se muestra en la ficha con fecha y hora. Si se venció, una insignia de error "Vencida".
 
-### D. Responder
+## D. Responder
 
 - Al final del historial, en un panel (`form.respuesta`): el cuadro de texto con su label ("Tu respuesta"), los adjuntos y los botones.
 - **La ayuda dice a quién le llega:** "La recibe Camila Ñancufil por correo y queda en este historial".

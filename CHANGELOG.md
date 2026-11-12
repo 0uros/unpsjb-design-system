@@ -481,6 +481,13 @@ Cambia el HTML del header (ver "Cómo migrar"): después de la 1.0.0, un cambio 
 
 Dirección "Señalética": banda azul como único bloque de color, naranja "estás acá", neutros teñidos del azul, Montserrat + Atkinson Hyperlegible Next, radios de 4 y 8px, avisos como placa de estado, logo de la Sede Trelew con gaviota plana y emojis Twemoji como fuente de color. Detalle en `BITACORA.md`, sesiones 3 y siguientes.
 
+### Cambiado
+
+- **Tipografía del texto:** Atkinson Hyperlegible Next reemplaza a Inter para texto y datos. Montserrat queda para los títulos.
+- **Borde de los controles:** los campos pasan a un borde de 3.4:1 (`linea-control`); antes usaban el de las tarjetas (1.2:1) y no cumplían WCAG 1.4.11. `linea` queda para separar.
+- **Radios:** 4px en controles y 8px en contenedores; se elimina el de 16px.
+- **Encabezado de las tablas:** fondo `capa` con una línea inferior azul de 2px, en lugar del relleno azul completo.
+
 ## 0.1.0 · 2026-09-29
 
 Primera versión (`DESIGN-v1.md`, `unpsjb-v1.css`, `muestra-v1.html`).
