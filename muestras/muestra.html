@@ -245,7 +245,7 @@
     </details>
 
     <h2 id="tabla-total">Total en la cabecera de la tabla</h2>
-    <p>Cuando la tabla es una lista de importes o de cantidades, el total va arriba y no al pie: se ve antes de leer las filas. A la derecha del título, el total en <code>cifra</code> (28px) y los subtotales por concepto.</p>
+    <p>Cuando la tabla es una lista de importes o de cantidades, el total va arriba y no al pie: se ve antes de leer las filas. A la izquierda, el título, el total en <code>cifra</code> (28px) y los subtotales por concepto; a la derecha, las acciones.</p>
     <div class="tabla-cabecera">
       <div>
         <h3>Transferencias cargadas</h3>
@@ -1471,10 +1471,13 @@ Emoji 16: 🫩 🫆 🪾 🫜 🪉 · Emoji 17: 🫪 🫯 🫈 🧑‍🩰</text
       globo.addEventListener('pointerleave', () => { if (!fijo) gracia = setTimeout(ocultar, 150); });
       globo.addEventListener('pointerdown', e => e.preventDefault());
       boton.addEventListener('focus', () => { if (boton.matches(':focus-visible')) mostrar(); });
-      boton.addEventListener('blur', ocultar);
+      boton.addEventListener('blur', () => { if (!fijo) ocultar(); });
       boton.addEventListener('click', () => { if (fijo) { ocultar(); return; } mostrar(); fijo = true; });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') ocultar(); });
-      document.addEventListener('click', e => { if (!e.target.closest('.boton-ayuda, .globo')) ocultar(); });
+      // Afuera es todo lo que no sea este botón ni su globo: otro "(?)" también.
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.globo') && !boton.contains(e.target)) ocultar();
+      });
       addEventListener('resize', () => { if (!globo.hidden) ubicar(); });
       addEventListener('scroll', () => { if (!globo.hidden) ubicar(); }, { capture: true, passive: true });
     });

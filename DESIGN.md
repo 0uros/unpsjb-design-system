@@ -462,7 +462,7 @@ La escala es fija (no cambia con el ancho de pantalla) y con saltos claros, para
 - **Mayúscula solo inicial** en todo: títulos, botones, labels, pestañas. Nada de TEXTO EN MAYÚSCULAS ni etiquetas chiquitas en mayúsculas arriba de los títulos: el título se sostiene solo.
 - **Ancho de lectura:** los párrafos no pasan de 70 caracteres por línea (`max-width: 70ch`).
 - **Números en tablas:** cifras de ancho fijo (`font-variant-numeric: tabular-nums`) y alineadas a la derecha, para que se comparen en columna. (Verificado: los archivos actuales de las dos fuentes las traen.)
-- **Números identificadores largos:** un CBU, un CUIT, un legajo o un número de trámite se lee de a grupos y se compara con otro. Van con cifras tabulares y la letra del sistema, nunca monoespaciada, y los grupos que conviene retener van en 700 (`.numero-enfasis`, 7.D). Es la única excepción acotada a que el peso 700 sea solo para labels y títulos: no se usa para destacar cualquier número.
+- **Números identificadores largos:** un CBU, un CUIT, un legajo o un número de trámite se lee de a grupos y se compara con otro. Van con cifras tabulares y la letra del sistema, nunca monoespaciada, y los grupos que conviene retener van en 700 (`.numero-enfasis`, 7.D). Dentro de un dato o un texto corrido, el 700 no se usa para destacar cualquier número; esta es la excepción acotada para retener grupos de dígitos.
 - **Títulos equilibrados:** `text-wrap: balance` en títulos, para que no quede una palabra sola en la última línea.
 - **Más aire arriba que abajo:** un título tiene el doble de espacio arriba (con lo anterior) que abajo (con lo suyo).
 - **Interlineado de títulos: 1.25 como mínimo.** Montserrat es ancha y alta; en 700–800, las tildes de las mayúsculas (Á, É, Ó) tocaban la línea de arriba con 1.15. Si un título largo no entra en una línea, se acorta el texto antes que achicar la letra.
@@ -617,12 +617,12 @@ Debajo de la banda, cada pantalla abre con su título `titulo-1` alineado a la i
 - **Automática** (sin modificador): arma tantas columnas como entren de al menos `--grilla-min` (280px por defecto) y en celular deja una. Todas las celdas miden lo mismo aunque sobre lugar: es lo que se quiere en un muro de cámaras o una lista de aulas. Se ajusta en el HTML: `style="--grilla-min: 200px"`.
 - **Columnas fijas** (`--2`, `--3`, `--4`): para formularios y resúmenes con una cantidad conocida de piezas.
 - **Lateral** (`--lateral`): columna de 280px (filtros, lista de cámaras) + contenido, desde 1024px.
-- **Lateral fija** (`--lateral-fija`): columna de 300 a 380px que se queda quieta mientras el contenido de al lado se recorre (`position: sticky`). Sirve para un formulario largo junto a una tabla o un menú de secciones. Debajo de 1024px queda una sola columna, igual que `--lateral`.
+- **Lateral fija** (`--lateral-fija`): columna de 300 a 380px que se queda quieta mientras el contenido de al lado se recorre (`position: sticky`). Sirve para un formulario largo junto a una tabla o un menú de secciones. Debajo de 1024px queda una sola columna, igual que `--lateral`. Se pega debajo de lo que esté fijo arriba: la cabecera completa si la página trae sub-barra de secciones, o solo la banda si no; con 600px de alto o menos (6.A) deja de pegarse y se recorre con la página.
 - `.grilla__completa` hace que una pieza ocupe todo el ancho.
 
 La grilla ordena contenido; no habilita a armar la página como una grilla de tarjetas iguales con ícono + título + texto (sigue prohibido, 7.C).
 
-**Barra de desplazamiento estable:** `html` reserva siempre el lugar de la barra (`scrollbar-gutter: stable`). Al abrir un globo de ayuda o un acordeón la página se alarga; sin eso, todo el contenido salta a los costados cuando aparece la barra.
+**Barra de desplazamiento estable:** `html` reserva siempre el lugar de la barra (`scrollbar-gutter: stable`) y lleva el fondo de la página, para que en una página corta no se vea una franja de otro color en el canal reservado. Al abrir un globo de ayuda o un acordeón la página se alarga; sin eso, todo el contenido salta a los costados cuando aparece la barra.
 
 ### F. Migas de pan
 
@@ -697,7 +697,7 @@ Son la pieza más usada en gestión, así que se cuidan especialmente.
 - Filas de 48px (compacta: 40px), separadas por borde `linea`. Hover: fondo `fondo`. Seleccionada: fondo `tinte` y su casilla marcada.
 - Números alineados a la derecha, con cifras de ancho fijo. Fechas en formato `dd/mm/aaaa`.
 - **Números identificadores largos** (CBU, CUIT, legajo): con `.numero-enfasis`, cifras tabulares, la letra del sistema —nunca monoespaciada— y los grupos que conviene retener en 700 (4.C). Es lo que permite leerlos y compararlos sin equivocarse.
-- **Total en la cabecera:** si la tabla es una lista de importes o de cantidades, el total va arriba y no al pie. Una barra (`.tabla-cabecera`) con el título a la izquierda y, a la derecha, el total en `cifra` (`.cifra-destacada`, 28px) y los subtotales (`.subtotales`, en `detalle`). Así se ve antes de leer las filas. En pantallas angostas la barra se apila y los subtotales pasan a una columna.
+- **Total en la cabecera:** si la tabla es una lista de importes o de cantidades, el total va arriba y no al pie. Una barra (`.tabla-cabecera`) con el título, el total en `cifra` (`.cifra-destacada`, 28px) y los subtotales (`.subtotales`, en `detalle`) a la izquierda, y las acciones (`.tabla-cabecera__acciones`) a la derecha. Así se ve antes de leer las filas. En pantallas angostas la barra se apila y los subtotales pasan a una columna.
 - Columnas ordenables: la flecha de orden aparece siempre en la columna activa, con `aria-sort`.
 - **En celular, cada tabla elige una de dos formas:**
 
@@ -835,7 +835,7 @@ Sirve para tres cosas:
 
 La excepción a "el tooltip no va" (7.P). Sirve para **formularios densos**: muchos campos y poco lugar para un texto fijo debajo de cada uno (una carga masiva, una planilla de datos). Fuera de ese caso, la ayuda va fija debajo del campo (7.B).
 
-- **Cómo se abre:** desde un botón `(?)` al lado del label (`.boton-ayuda`), escrito en `primario-texto` como texto: nunca el acento naranja, que no llega a 3:1 sobre el panel, y sin borde ni círculo. El botón mide 24px, lleva nombre accesible ("Ayuda: CBU") y `aria-controls` con el `id` del globo.
+- **Cómo se abre:** desde un botón `(?)` al lado del label (`.boton-ayuda`), escrito en `primario-texto` como texto: nunca el acento naranja, que no llega a 3:1 sobre el panel, y sin borde ni círculo. El botón visible mide 24px —no agranda la fila del label— y su área táctil llega a 44px con un pseudo-elemento (`.boton-ayuda::after`; sección 9). Lleva nombre accesible ("Ayuda: CBU") y `aria-controls` con el `id` del globo.
 - **Cuándo aparece:** con mouse, después de una demora corta (unos 800ms) quieto sobre el botón; con teclado, apenas se enfoca. Un toque o un clic lo deja fijo y otro clic lo cierra; `Esc` y un clic afuera también lo cierran. Se coloca arriba del botón y, si no hay lugar, abajo: nunca tapa el campo que explica.
 - **Cómo se ve** (`.globo`): texto `nota` en los colores del toast, que se invierten solos en oscuro; ancho máximo de 32 caracteres, radio 4px y la sombra de lo que flota. Va en el `<body>` con `position: fixed`, así ningún contenedor con scroll lo recorta.
 - **Accesibilidad:** `role="tooltip"`, `aria-expanded` en el botón y el campo unido al globo con `aria-describedby` (`aria-describedby="globo-cbu cbu-error"`). Se puede leer con el mouse encima y se cierra con `Esc` (WCAG 1.4.13).
@@ -965,7 +965,7 @@ Nunca una página en blanco ni el mensaje técnico del servidor.
   - Sobre la banda azul y en modo oscuro: alcanza con el anillo naranja (4.1:1 sobre la banda, 7.5:1 sobre `oscuro-panel`).
 - **Enlace para saltar al contenido** ("Ir al contenido") como primer elemento de la página, visible al recibir foco.
 - **Navegación con teclado:** todo lo que se hace con el mouse se hace con el teclado, en un orden lógico.
-- **Objetivos táctiles:** 44×44px como mínimo, con al menos 8px entre uno y otro.
+- **Objetivos táctiles:** 44×44px como mínimo, con al menos 8px entre uno y otro. Cuando una pieza tiene que verse chica (el "(?)" del globo de ayuda, que mide 24px, 7.R), el área táctil se extiende igual a 44px con un pseudo-elemento: lo que se ve mide 24px y lo que se toca, 44px.
 - **El color no es el único mensaje:** los estados llevan ícono y texto.
 - **Imágenes:** todas con `alt`; las decorativas, con `alt=""`. Los íconos que acompañan texto llevan `aria-hidden="true"`; los botones de solo ícono llevan `aria-label`.
 - **Zoom:** la interfaz funciona al 200% de zoom sin perder contenido ni necesitar scroll horizontal (salvo tablas).
@@ -979,7 +979,7 @@ Nunca una página en blanco ni el mensaje técnico del servidor.
 |---|---|
 | 2.4.11 Foco no tapado | Margen de salto y cabecera que se suelta con poco alto (6.A). |
 | 2.5.7 Movimientos de arrastre | Todo lo que se arrastra tiene alternativa con un clic: la carga de archivos tiene botón (8.J). |
-| 2.5.8 Tamaño del objetivo | Pide 24×24px; los controles miden 44px (36px en la variante compacta). |
+| 2.5.8 Tamaño del objetivo | Pide 24×24px; los controles miden 44px (36px en la variante compacta) y el "(?)" del globo de ayuda, que se ve de 24px, tiene 44px de área táctil. |
 | 3.2.6 Ayuda consistente | "Ayuda" siempre en la banda. |
 | 3.3.7 Entrada redundante | Datos de la cuenta precargados y nada se pide dos veces (8.F). |
 | 3.3.8 Autenticación accesible | Ingreso único de la universidad; los campos de ingreso permiten el gestor de contraseñas. |

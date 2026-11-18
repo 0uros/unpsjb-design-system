@@ -370,8 +370,10 @@
 
 /* 0.5 · La barra de desplazamiento reserva siempre su lugar: al abrir un globo
    de ayuda o un acordeón la página se alarga y, sin esto, todo el contenido
-   salta a los costados cuando aparece la barra. */
-html { scrollbar-gutter: stable; }
+   salta a los costados cuando aparece la barra. El canal reservado lleva el
+   mismo fondo que el body: sin él, en una página corta quedaba una franja de
+   otro color. */
+html { scrollbar-gutter: stable; background: var(--color-fondo); }
 
 /* 0.3.1 · El foco no queda tapado (WCAG 2.2, 2.4.11). La cabecera fija y el
    menú inferior ocupan lugar: al saltar con Tab o a un ancla, el navegador
@@ -512,11 +514,19 @@ img, svg { max-width: 100%; }
    ventana, se desplaza adentro suyo. */
 .grilla--lateral-fija { grid-template-columns: 1fr; align-items: start; }
 @media (min-width: 1024px) {
-  .grilla--lateral-fija { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); }
+  .grilla--lateral-fija {
+    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+    /* Lo que queda fijo arriba de la columna: la cabecera entera si la página
+       trae sub-barra de secciones; si no, solo la banda, como el
+       scroll-padding-top de la base. Es una variable local de la grilla:
+       --alto-cabecera se usa en otros lados y no siempre hay .secciones. */
+    --lateral-fija-arriba: var(--alto-cabecera);
+  }
+  html:not(:has(.secciones)) .grilla--lateral-fija { --lateral-fija-arriba: var(--alto-banda); }
   .grilla--lateral-fija > :first-child {
     position: sticky;
-    top: calc(var(--alto-cabecera) + var(--espacio-3));
-    max-height: calc(100dvh - var(--alto-cabecera) - 2 * var(--espacio-3));
+    top: calc(var(--lateral-fija-arriba) + var(--espacio-3));
+    max-height: calc(100dvh - var(--lateral-fija-arriba) - 2 * var(--espacio-3));
     overflow-y: auto;
   }
 }
@@ -574,6 +584,9 @@ img, svg { max-width: 100%; }
 @media (max-height: 600px) {
   .cabecera, .banda { position: static; }
   html, html:not(:has(.secciones)) { scroll-padding-top: var(--espacio-4); }
+  /* Sin nada fijo arriba, la columna lateral deja de pegarse y se desplaza
+     con la página: así no queda recortada en una ventana baja (6.E). */
+  .grilla--lateral-fija > :first-child { position: static; max-height: none; overflow-y: visible; }
 }
 
 /* Sub-barra de secciones: la sección actual lleva el marcador naranja.
@@ -913,6 +926,7 @@ img, svg { max-width: 100%; }
    Con mouse aparece tras una demora corta (~800ms); con teclado, al enfocar el
    botón; un toque o un clic lo deja fijo; Esc o un clic afuera lo cierra. */
 .boton-ayuda {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -930,6 +944,9 @@ img, svg { max-width: 100%; }
 }
 .boton-ayuda:hover,
 .boton-ayuda[aria-expanded="true"] { text-decoration: underline; }
+/* El botón visible mide 24px (7.R); el área táctil llega a 44px con un
+   pseudo-elemento, sin agrandar la fila del label (DESIGN.md, 9). */
+.boton-ayuda::after { content: ""; position: absolute; inset: -10px; }
 .globo {
   position: fixed;
   z-index: var(--capa-globo);
@@ -1159,8 +1176,8 @@ img, svg { max-width: 100%; }
 
 /* Total en la cabecera de la tabla (nuevo en 0.5; DESIGN.md, 7.D): cuando la
    tabla es una lista de importes o de cantidades, el total se ve antes de leer
-   las filas. Barra sobre la tabla, con el título a la izquierda y el total y
-   los subtotales a la derecha.
+   las filas. Barra sobre la tabla, con el título, el total y los subtotales a
+   la izquierda, y las acciones a la derecha.
    <div class="tabla-cabecera">
      <div><h2>Transferencias cargadas</h2>
        <p class="cifra-destacada" aria-live="polite">18 transferencias · $ 1.482.500,00</p>
@@ -1210,8 +1227,9 @@ img, svg { max-width: 100%; }
 /* Número identificador con énfasis (nuevo en 0.5; DESIGN.md, 4.C): CBU, CUIT,
    legajos y números de trámite. Se leen y se comparan de a grupos: cifras
    tabulares y la letra del sistema (nunca monoespaciada), con los grupos que
-   conviene retener en 700. Esa negrita es la excepción acotada a "el 700 es
-   solo para labels y títulos": no se usa para destacar cualquier número.
+   conviene retener en 700. Dentro de un dato o un texto corrido, el 700 no se
+   usa para destacar cualquier número: esta es la excepción acotada para
+   retener grupos de dígitos.
    <p class="numero-enfasis"><b>2850</b> 5912 <b>4000</b> 1234 5678 9012</p>
    En dos líneas (un CBU de 8 y 14 dígitos), el primer tramo ocupa la línea
    entera y el segundo baja; al copiar salen los dígitos seguidos.
@@ -2310,7 +2328,10 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
 
   .banda__acciones, .secciones, .menu-lateral, .menu-inferior, .toasts, .saltar,
   .migas, .paginacion, .boton, .aviso__accion, .panel-ia__acciones, .filtros, .chips,
-  .selector-tema, .pasos, .revision__cabecera a, .no-imprimir { display: none !important; }
+  .selector-tema, .pasos, .revision__cabecera a, .no-imprimir,
+  .boton-ayuda, .globo { display: none !important; }
+  /* Lo que en pantalla se pega, en papel se imprime entero */
+  .grilla--lateral-fija > :first-child { position: static; max-height: none; overflow: visible; }
   .solo-impresion { display: block; }
 
   .contenedor, .contenedor--ancho { max-width: none; padding-inline: 0; }
