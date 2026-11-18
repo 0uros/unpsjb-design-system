@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-agenda.css — Módulo de agenda de aulas · v0.4.2
+   unpsjb-agenda.css — Módulo de agenda de aulas · v0.5.0
    Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 16.A.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens: no define colores propios.
@@ -253,8 +253,8 @@
   pointer-events: none;
 }
 .agenda-grilla__ahora::after { left: 100%; width: 300vw; height: 2px; margin-top: -1px; }
-.agenda-grilla__ahora::before { right: -4px; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; z-index: 1; }
-.agenda-grilla td > * { position: relative; z-index: 1; }
+.agenda-grilla__ahora::before { right: -4px; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; z-index: var(--capa-contenido); }
+.agenda-grilla td > * { position: relative; z-index: var(--capa-contenido); }
 @media (forced-colors: active) { .agenda-grilla__ahora::before, .agenda-grilla__ahora::after { background: Highlight; } }
 
 /* 4. Conflictos ------------------------------------------------------------ */
