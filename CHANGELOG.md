@@ -1,6 +1,6 @@
 # Registro de cambios · Sistema de Diseño UNPSJB
 
-`DESIGN.md` y `unpsjb.css` llevan el mismo número de versión (`MAYOR.MENOR.ARREGLO`). Cada versión se ordena en: **Nuevo**, **Cambiado**, **Obsoleto** (sigue funcionando, se quita en la próxima versión mayor), **Eliminado** y **Corregido**. Ver `DESIGN.md`, sección 14.
+`DESIGN.md` y `unpsjb.css` llevan el mismo número de versión (`MAYOR.MENOR.ARREGLO`). Cada versión se ordena en: **Nuevo**, **Cambiado**, **Obsoleto** (sigue funcionando, se quita en la próxima versión mayor), **Eliminado** y **Corregido**. Ver `diseno/14-gobernanza.md`, sección 14.C.
 
 **Sobre los números.** El primer número es **0** porque el sistema todavía no se publicó en el servidor ni lo usa ninguna herramienta: hasta ahora hubo borradores de diseño, no versiones publicadas. La **1.0.0** va a ser la primera que se publique. El 1 de octubre de 2026 se renumeró todo el registro para que diga eso:
 
@@ -21,12 +21,52 @@
 | Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
 | Interfaz nueva del módulo de planos: panel para buscar y elegir, controles sobre el plano | — | **0.4.8** |
 | Piezas de páginas públicas (SIDE) y página de difusión de una carrera | — | **0.4.9** |
+| Piezas de la carga masiva de transferencias | — | **0.4.10** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.4.9 · 2026-11-06 · oficial
+## 0.4.10 · 2026-11-18 · oficial
+
+Las piezas que nacieron en la herramienta de **carga masiva de transferencias** y pasan al sistema. Es una versión que agrega y ordena: ninguna herramienta tiene que cambiar su HTML, salvo la de transferencias, que puede borrar sus `.ext-` y usar estas clases (al final, cómo migrar).
+
+### Nuevo
+
+- **Globo de ayuda** (`.globo`, `.boton-ayuda`, 7.R): la excepción al tooltip, solo para **formularios densos** (muchos campos y poco lugar para un texto fijo). Se abre desde un "(?)" junto al label, escrito en `primario-texto` como texto: nunca el naranja de acento. Con mouse aparece tras una demora corta (~800ms); con teclado, al enfocar el botón; un toque o un clic lo deja fijo y `Esc` o un clic afuera lo cierran. El campo lo referencia con `aria-describedby` y nunca es el único lugar de un dato crítico: los errores van en `.campo-error`.
+- **Cifra destacada** (rol `cifra`, token `--texto-cifra`, 4.B): 28px / 700 / 1.25 en Atkinson, con cifras tabulares. Es el total de una tabla o el monto que se mira primero; no reemplaza a los títulos. `comprobante__numero` pasa a usar el mismo token.
+- **Total en la cabecera de la tabla** (`.tabla-cabecera`, `.tabla-cabecera__acciones`, `.cifra-destacada`, `.subtotales`, 7.D): barra sobre la tabla con el título, el total en `cifra` (28px) y los subtotales por concepto a la izquierda, y las acciones a la derecha. Reemplaza al total al pie, para verlo antes de leer las filas. En pantallas angostas la barra se apila y los subtotales pasan a una columna.
+- **Número identificador con énfasis** (`.numero-enfasis`, `.numero-enfasis--dos-lineas`, `.numero-enfasis__grupo`, 4.C y 7.D): para CBU, CUIT, legajos y números de trámite. Cifras tabulares y la letra del sistema, **nunca monoespaciada**, con los grupos que conviene retener en 700. Dentro de un dato o un texto corrido, el 700 no se usa para destacar cualquier número; esta es la excepción acotada para retener grupos de dígitos.
+- **Grilla lateral fija** (`.grilla--lateral-fija`, 6.E): como `.grilla--lateral`, con una columna de 300 a 380px que se queda quieta (`position: sticky`) mientras se recorre el contenido de al lado. Debajo de 1024px, una sola columna.
+- **Escala de capas** (`--capa-foto`, `--capa-detras`, `--capa-contenido`, `--capa-resalte`, `--capa-controles`, `--capa-fija`, `--capa-menu`, `--capa-globo`, `--capa-aviso`, `--capa-modal`, `--capa-saltar`, 5.D): los `z-index` del sistema en tokens, documentados de abajo hacia arriba. El globo va sobre los menús y debajo de avisos y modales; el "Ir al contenido" queda arriba de todo, como estaba.
+
+### Cambiado
+
+- **Los `z-index` numéricos pasan a tokens** en `unpsjb.css`, `unpsjb-agenda.css` y `unpsjb-planos.css`, **sin cambiar el orden de apilado**: se anotaron los valores actuales (−2, −1, 1, 2, 3, 20, 30, 50 y 100) y cada componente conserva el suyo. Dos componentes que compartían valor comparten token.
+- **La tabla de "lo que no se agrega"** (7.P) ya no dice que el tooltip no va sin excepción: remite al globo de ayuda (7.R), que sigue prohibido fuera de un formulario denso.
+- **Base:** `html` reserva siempre el lugar de la barra de desplazamiento (`scrollbar-gutter: stable`), para que el contenido no salte cuando un globo o un acordeón alargan la página (6.E).
+- **La ayuda de un campo** (7.B) puede ir en un globo cuando el formulario es denso; el resto de los casos sigue con el texto fijo debajo.
+
+### Corregido
+
+- **El canal de la barra de desplazamiento tiene el fondo de la página** (`html`, 6.E): con `scrollbar-gutter: stable`, una página corta dejaba una franja de otro color en el lugar reservado. `html` lleva `background: var(--color-fondo)`, el mismo token que el `body` (y su versión oscura).
+- **La columna de la grilla lateral fija se mide según la cabecera que hay** (`.grilla--lateral-fija`, 6.E): el `top` y el `max-height` usaban `--alto-cabecera`, que suma la sub-barra `.secciones`; en una página sin ella la columna quedaba 48px más abajo. Ahora usan una variable local que toma solo la banda cuando no hay `.secciones` (`--alto-cabecera` no cambia porque también lo usa el visor de video). Con 600px de alto o menos, cuando la cabecera y la banda dejan de ser fijas, la columna ya no se pega ni se recorta.
+- **Tamaño de toque del "(?)" del globo de ayuda** (`.boton-ayuda`, 7.R y 9): el botón visible sigue en 24px para no agrandar la fila del label, pero el área táctil llega a 44px con un pseudo-elemento.
+- **Al imprimir** (6.G): se ocultan `.boton-ayuda` y `.globo`, y la columna de `.grilla--lateral-fija` se imprime entera (`position: static`, sin `max-height` ni scroll).
+- **Un globo de ayuda fijado con un clic ya no se cierra al salir del botón** (7.R): el `blur` solo oculta cuando el globo no está fijo. Se sigue cerrando con otro clic, con `Esc` o con un clic afuera (otro "(?)" incluido).
+- **Una hoja apaisada y numerada a la vez** (`.hoja--apaisada.hoja--numerada`, 18): la numeración no salía porque la regla `@page` apaisada no la traía y una regla `@page` no hereda de otra. Ahora tiene su propia regla, apaisada, con márgenes de 15 mm y "Página x de y".
+- **Un `.campo-error` vacío ya no ocupa lugar** (`.campo-error:empty`, 7.B): el campo no deja un hueco debajo mientras no hay error.
+- **Redacción del total en la cabecera** (7.D) y del 700 en los identificadores (4.C): el total y los subtotales van a la izquierda y las acciones a la derecha; y el 700 no es "solo para labels y títulos", sino que dentro de un dato o un texto corrido no se usa para destacar cualquier número.
+
+### Cómo migra la carga masiva de transferencias
+
+- `.ext-globo` → `.globo`; `.ext-ayuda-boton` → `.boton-ayuda` (el resto del comportamiento queda igual).
+- `.ext-barra-tabla` → `.tabla-cabecera` (la columna izquierda, sin clase; la derecha, `.tabla-cabecera__acciones`), `.ext-total-principal` → `.cifra-destacada` y `.ext-subtotales` → `.subtotales` (la misma estructura de `dl` con `div`).
+- `.ext-cbu-visual` + `.ext-cbu-enfasis` → `.numero-enfasis` (con `<b>` o `.numero-enfasis__grupo` para los grupos) y `.numero-enfasis--dos-lineas` si va en dos líneas. Se puede borrar su fuente monoespaciada: el sistema no la usa.
+- `.ext-layout-principal` → `.grilla grilla--lateral-fija`.
+- Se borran de su hoja `.campo-error:empty`, `html { scrollbar-gutter: stable; }` y los `z-index` de `.ext-globo` y `.ext-variantes__panel`: ya están en el sistema.
+
+## 0.4.9 · 2026-11-06 · anterior
 
 Las piezas de las páginas públicas, a partir del sitio de la SIDE, y la página de difusión de una carrera (PR #6). La muestra de difusión es un concepto: la carrera, las fechas y las fotos son de ejemplo, y falta juzgarla con fotos reales.
 
@@ -480,6 +520,13 @@ Cambia el HTML del header (ver "Cómo migrar"): después de la 1.0.0, un cambio 
 ## 0.2.1 · 2026-09-29 · anterior
 
 Dirección "Señalética": banda azul como único bloque de color, naranja "estás acá", neutros teñidos del azul, Montserrat + Atkinson Hyperlegible Next, radios de 4 y 8px, avisos como placa de estado, logo de la Sede Trelew con gaviota plana y emojis Twemoji como fuente de color. Detalle en `BITACORA.md`, sesiones 3 y siguientes.
+
+### Cambiado
+
+- **Tipografía del texto:** Atkinson Hyperlegible Next reemplaza a Inter para texto y datos. Montserrat queda para los títulos.
+- **Borde de los controles:** los campos pasan a un borde de 3.4:1 (`linea-control`); antes usaban el de las tarjetas (1.2:1) y no cumplían WCAG 1.4.11. `linea` queda para separar.
+- **Radios:** 4px en controles y 8px en contenedores; se elimina el de 16px.
+- **Encabezado de las tablas:** fondo `capa` con una línea inferior azul de 2px, en lugar del relleno azul completo.
 
 ## 0.1.0 · 2026-09-29
 

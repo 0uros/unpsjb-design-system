@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb-documentos.css — Módulo de documentos e impresión · v0.4.4
+   unpsjb-documentos.css — Módulo de documentos e impresión · v0.4.10
    Sistema de Diseño Digital UNPSJB. Reglas: DESIGN.md, sección 18.
 
    Se carga DESPUÉS de unpsjb.css y usa sus tokens.
@@ -355,6 +355,17 @@
   }
 }
 @page hoja-a4-apaisada { size: A4 landscape; margin: 15mm; }
+/* 0.4.10: apaisada y numerada a la vez. Una regla @page no hereda de otra: sin
+   esta, la hoja apaisada quedaba sin número porque su @page no lo traía. */
+@page hoja-a4-apaisada-numerada {
+  size: A4 landscape;
+  margin: 15mm;
+  @bottom-right {
+    content: "Página " counter(page) " de " counter(pages);
+    font: 9pt/1 "Atkinson Hyperlegible Next", Arial, sans-serif;
+    color: #333d49;
+  }
+}
 
 /* Cortes de página, para cualquier página (no solo las que tienen una hoja) */
 .salto-pagina { break-before: page; }
@@ -387,6 +398,8 @@
   }
   .hoja--numerada { page: hoja-a4-numerada; }
   .hoja--apaisada { page: hoja-a4-apaisada; }
+  /* Las dos a la vez: van juntas en una hoja apaisada con numeración (0.4.10). */
+  .hoja--apaisada.hoja--numerada { page: hoja-a4-apaisada-numerada; }
   .hoja + .hoja { break-before: page; }
 
   .hoja :is(h2, h3, h4) { break-after: avoid; }

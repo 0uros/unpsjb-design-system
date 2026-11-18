@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.4.9
+   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.4.10
    Dirección "Señalética". Delegación Trelew · 2026
    Versión oficial. Fuente de verdad: DESIGN.md. Cambios: CHANGELOG.md.
    Los nombres del código van en español (regla y excepciones: DESIGN.md, 2.A).
@@ -20,9 +20,9 @@
       de fase, menú
       lateral, migas, encabezado de pantalla, menú inferior, pie, selector de tema
    5. Componentes: botones, campos, opciones, interruptor, segmentado, buscador,
-      paneles, tablas (con tarjetas en celular), insignias, categorías, pestañas,
-      paginación, carga, filtros y chips, archivos, pasos y revisión, lista de
-      accesos, entradas
+      paneles, tablas (con tarjetas en celular y total en la cabecera), insignias,
+      categorías, pestañas, paginación, carga, filtros y chips, archivos, pasos y
+      revisión, lista de accesos, entradas
    6. Estados: avisos, toasts, modales, vacíos, comprobante, páginas de error
    7. Inteligencia artificial
    8. Gráficos e indicadores
@@ -201,6 +201,7 @@
   /* 0.3: interlineado de títulos 1.25 como mínimo, por las tildes de las mayúsculas */
   --texto-titulo-1: 800 2rem/1.25 var(--fuente-titulo);        /* 32px */
   --texto-apertura: 800 2.5rem/1.25 var(--fuente-titulo);      /* 40px: solo el título de la foto de apertura (17.E) */
+  --texto-cifra: 700 1.75rem/1.25 var(--fuente-texto);         /* 28px: cifra destacada (0.4.10; DESIGN.md, 4.B) */
   --texto-titulo-2: 700 1.5rem/1.25 var(--fuente-titulo);     /* 24px */
   --texto-titulo-3: 700 1.1875rem/1.3 var(--fuente-titulo);      /* 19px */
   --texto-grande: 400 1.125rem/1.6 var(--fuente-texto);      /* 18px */
@@ -237,6 +238,21 @@
 
   /* Profundidad: solo para lo que flota */
   --sombra-flotante: 0 8px 24px rgb(0 0 0 / 0.14);
+
+  /* Capas de apilado (0.4.10; DESIGN.md, 5.D). Van de abajo hacia arriba y
+     conservan el orden que ya tenían los componentes: no se reordenan para
+     "acomodar" una pieza nueva. Dos que hoy comparten valor comparten token. */
+  --capa-foto: -2;         /* la foto de la apertura, dentro de su sección */
+  --capa-detras: -1;       /* el velo de la apertura y la marca de agua */
+  --capa-contenido: 1;     /* lo que se pega o se resalta dentro de su marco: columna fija de una tabla, marcas del plano y de la agenda */
+  --capa-resalte: 2;       /* lo elegido o enfocado por encima de sus vecinos: un rótulo del plano */
+  --capa-controles: 3;     /* controles que flotan sobre un plano o un lienzo */
+  --capa-fija: 20;         /* cabecera, banda y menú inferior: lo que queda fijo */
+  --capa-menu: 30;         /* lo que se despliega sobre el contenido: lista del combo y paneles de una herramienta */
+  --capa-globo: 40;        /* globo de ayuda: sobre los menús, debajo de avisos y modales */
+  --capa-aviso: 50;        /* toasts */
+  --capa-modal: 60;        /* modal de una herramienta que dibuja su propio velo; el <dialog> nativo va en la capa superior del navegador */
+  --capa-saltar: 100;      /* "Ir al contenido": arriba de todo, para que se vea al llegar con Tab */
 
   /* Movimiento */
   --duracion-rapida: 120ms;
@@ -352,6 +368,13 @@
   [data-densidad="compacta"] .campo { margin-bottom: var(--espacio-4); }
 }
 
+/* 0.4.10 · La barra de desplazamiento reserva siempre su lugar: al abrir un globo
+   de ayuda o un acordeón la página se alarga y, sin esto, todo el contenido
+   salta a los costados cuando aparece la barra. El canal reservado lleva el
+   mismo fondo que el body: sin él, en una página corta quedaba una franja de
+   otro color. */
+html { scrollbar-gutter: stable; background: var(--color-fondo); }
+
 /* 0.3.1 · El foco no queda tapado (WCAG 2.2, 2.4.11). La cabecera fija y el
    menú inferior ocupan lugar: al saltar con Tab o a un ancla, el navegador
    deja ese margen libre. Si la herramienta no tiene sub-barra, alcanza la banda. */
@@ -430,7 +453,7 @@ img, svg { max-width: 100%; }
   position: absolute;
   left: var(--espacio-4);
   top: -100px;
-  z-index: 100;
+  z-index: var(--capa-saltar);
   padding: var(--espacio-2) var(--espacio-4);
   font: var(--texto-label);
   color: var(--color-tinta);
@@ -482,6 +505,31 @@ img, svg { max-width: 100%; }
 /* Columna lateral (filtros, lista de cámaras) + contenido. Apilado hasta 1024px. */
 .grilla--lateral { grid-template-columns: 1fr; }
 @media (min-width: 1024px) { .grilla--lateral { grid-template-columns: 280px minmax(0, 1fr); } }
+/* Lateral fija (nuevo en 0.4.10; DESIGN.md, 6.E): la misma idea, con una columna de
+   300 a 380px que se queda quieta mientras el contenido de al lado se recorre.
+   Sirve para un formulario largo junto a una tabla, o para un menú de secciones.
+   Debajo de 1024px queda una sola columna, como .grilla--lateral.
+   <div class="grilla grilla--lateral-fija"><form class="panel">…</form><div>…</div></div>
+   La primera columna es la que se pega; si el contenido pasa el alto de la
+   ventana, se desplaza adentro suyo. */
+.grilla--lateral-fija { grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 1024px) {
+  .grilla--lateral-fija {
+    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+    /* Lo que queda fijo arriba de la columna: la cabecera entera si la página
+       trae sub-barra de secciones; si no, solo la banda, como el
+       scroll-padding-top de la base. Es una variable local de la grilla:
+       --alto-cabecera se usa en otros lados y no siempre hay .secciones. */
+    --lateral-fija-arriba: var(--alto-cabecera);
+  }
+  html:not(:has(.secciones)) .grilla--lateral-fija { --lateral-fija-arriba: var(--alto-banda); }
+  .grilla--lateral-fija > :first-child {
+    position: sticky;
+    top: calc(var(--lateral-fija-arriba) + var(--espacio-3));
+    max-height: calc(100dvh - var(--lateral-fija-arriba) - 2 * var(--espacio-3));
+    overflow-y: auto;
+  }
+}
 .grilla__completa { grid-column: 1 / -1; }
 .grilla > * { min-width: 0; }
 
@@ -496,14 +544,14 @@ img, svg { max-width: 100%; }
 .cabecera {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: var(--capa-fija);
 }
 
 /* La banda institucional */
 .banda {
   position: sticky;   /* si se usa sola, sin .cabecera */
   top: 0;
-  z-index: 20;
+  z-index: var(--capa-fija);
   background: var(--color-banda);
   color: var(--color-sobre-banda);
   --anillo-foco: 0 0 0 2px var(--color-acento);
@@ -536,6 +584,9 @@ img, svg { max-width: 100%; }
 @media (max-height: 600px) {
   .cabecera, .banda { position: static; }
   html, html:not(:has(.secciones)) { scroll-padding-top: var(--espacio-4); }
+  /* Sin nada fijo arriba, la columna lateral deja de pegarse y se desplaza
+     con la página: así no queda recortada en una ventana baja (6.E). */
+  .grilla--lateral-fija > :first-child { position: static; max-height: none; overflow-y: visible; }
 }
 
 /* Sub-barra de secciones: la sección actual lleva el marcador naranja.
@@ -663,7 +714,7 @@ img, svg { max-width: 100%; }
 .menu-inferior {
   position: fixed;
   inset: auto 0 0 0;
-  z-index: 20;
+  z-index: var(--capa-fija);
   display: flex;
   background: var(--color-panel);
   border-top: 1px solid var(--color-linea);
@@ -855,6 +906,59 @@ img, svg { max-width: 100%; }
   color: var(--color-error-texto);
 }
 .campo-error .icono { width: 16px; height: 16px; margin-top: 2px; }
+/* 0.4.10: un error vacío no ocupa lugar. Así el campo no deja un hueco debajo
+   mientras no hay nada que decir (DESIGN.md, 7.B). */
+.campo-error:empty { display: none; }
+
+/* Globo de ayuda (nuevo en 0.4.10; DESIGN.md, 7.R): la excepción al tooltip, solo
+   en formularios densos. Se abre desde un "(?)" al lado del label, en el color
+   del texto primario (el naranja de acento no llega a 3:1 sobre el panel), sin
+   borde ni círculo. El globo va en el <body> con position: fixed, y un script
+   calcula left y top: así ningún contenedor con scroll lo recorta.
+   <div class="campo">
+     <div class="fila"><label class="label" for="cbu">CBU</label>
+       <button type="button" class="boton-ayuda" aria-controls="globo-cbu"
+         aria-expanded="false" aria-label="Ayuda: CBU">(?)</button></div>
+     <input class="input" id="cbu" aria-describedby="globo-cbu cbu-error">
+     <span class="campo-error" id="cbu-error"></span>
+     <span class="globo" id="globo-cbu" role="tooltip" hidden>22 dígitos…</span>
+   </div>
+   Con mouse aparece tras una demora corta (~800ms); con teclado, al enfocar el
+   botón; un toque o un clic lo deja fijo; Esc o un clic afuera lo cierra. */
+.boton-ayuda {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 2px;
+  font: var(--texto-detalle);
+  font-weight: 700;
+  color: var(--color-primario-texto);
+  background: none;
+  border: 0;
+  border-radius: var(--radio-control);
+  cursor: pointer;
+}
+.boton-ayuda:hover,
+.boton-ayuda[aria-expanded="true"] { text-decoration: underline; }
+/* El botón visible mide 24px (7.R); el área táctil llega a 44px con un
+   pseudo-elemento, sin agrandar la fila del label (DESIGN.md, 9). */
+.boton-ayuda::after { content: ""; position: absolute; inset: -10px; }
+.globo {
+  position: fixed;
+  z-index: var(--capa-globo);
+  width: max-content;
+  max-width: min(32ch, calc(100vw - 16px));
+  padding: var(--espacio-1) var(--espacio-2);
+  font: var(--texto-nota);
+  color: var(--color-toast-texto);
+  background: var(--color-toast-fondo);
+  border-radius: var(--radio-control);
+  box-shadow: var(--sombra-flotante);
+}
 
 .casilla { display: flex; align-items: center; gap: var(--espacio-2); min-height: var(--alto-control); cursor: pointer; }
 .casilla input { width: 20px; height: 20px; margin: 0; accent-color: var(--color-primario-texto); }
@@ -1014,7 +1118,7 @@ img, svg { max-width: 100%; }
 .tabla--fija th:first-child, .tabla--fija td:first-child {
   position: sticky;
   left: 0;
-  z-index: 1;
+  z-index: var(--capa-contenido);
   border-right: 1px solid var(--color-linea);
 }
 .tabla--fija td:first-child { background: var(--color-panel); }
@@ -1069,6 +1173,75 @@ img, svg { max-width: 100%; }
   .tabla--tarjetas tbody tr[aria-selected="true"] { background: var(--color-tinte); }
   .tabla--tarjetas tbody tr[aria-selected="true"] td { background: none; }
 }
+
+/* Total en la cabecera de la tabla (nuevo en 0.4.10; DESIGN.md, 7.D): cuando la
+   tabla es una lista de importes o de cantidades, el total se ve antes de leer
+   las filas. Barra sobre la tabla, con el título, el total y los subtotales a
+   la izquierda, y las acciones a la derecha.
+   <div class="tabla-cabecera">
+     <div><h2>Transferencias cargadas</h2>
+       <p class="cifra-destacada" aria-live="polite">18 transferencias · $ 1.482.500,00</p>
+       <dl class="subtotales" aria-label="Subtotales por concepto">
+         <div><dt>Sueldos</dt><dd>$ 1.200.000,00</dd></div> … </dl></div>
+     <div class="tabla-cabecera__acciones">…botones…</div>
+   </div> */
+.tabla-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--espacio-3) var(--espacio-4);
+  margin-bottom: var(--espacio-3);
+}
+.tabla-cabecera > :first-child { min-width: 0; }
+.tabla-cabecera :is(h2, h3) { margin: 0; }
+.tabla-cabecera__acciones { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--espacio-2); }
+/* La cifra que se mira primero: el total. 28px, tabular, con la letra del sistema. */
+.cifra-destacada {
+  margin: var(--espacio-1) 0 0;
+  font: var(--texto-cifra);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-tinta);
+}
+/* Subtotales por concepto, en una fila debajo del total. */
+.subtotales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1) var(--espacio-4);
+  margin: var(--espacio-1) 0 0;
+  padding: 0;
+  list-style: none;
+  font: var(--texto-detalle);
+}
+.subtotales > div { display: flex; gap: var(--espacio-2); }
+.subtotales dt { color: var(--color-tinta-2); }
+.subtotales dd { margin: 0; font-variant-numeric: tabular-nums; color: var(--color-tinta); }
+@media (max-width: 1023px) {
+  .tabla-cabecera { flex-direction: column; }
+  .tabla-cabecera__acciones { justify-content: flex-start; width: 100%; }
+}
+@media (max-width: 639px) {
+  .subtotales { flex-direction: column; gap: var(--espacio-1); }
+}
+
+/* Número identificador con énfasis (nuevo en 0.4.10; DESIGN.md, 4.C): CBU, CUIT,
+   legajos y números de trámite. Se leen y se comparan de a grupos: cifras
+   tabulares y la letra del sistema (nunca monoespaciada), con los grupos que
+   conviene retener en 700. Dentro de un dato o un texto corrido, el 700 no se
+   usa para destacar cualquier número: esta es la excepción acotada para
+   retener grupos de dígitos.
+   <p class="numero-enfasis"><b>2850</b> 5912 <b>4000</b> 1234 5678 9012</p>
+   En dos líneas (un CBU de 8 y 14 dígitos), el primer tramo ocupa la línea
+   entera y el segundo baja; al copiar salen los dígitos seguidos.
+   <p class="numero-enfasis numero-enfasis--dos-lineas"><span>2850 …</span><span>4000 …</span></p> */
+.numero-enfasis {
+  font-family: var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.numero-enfasis :is(b, .numero-enfasis__grupo) { font-weight: 700; }
+.numero-enfasis--dos-lineas > :first-child { display: inline-block; width: 100%; }
 
 /* Insignias de estado: siempre ícono + palabra */
 .insignia {
@@ -1376,7 +1549,7 @@ progress::-moz-progress-bar { background: var(--color-primario-texto); }
 .combo { position: relative; }
 .combo__lista {
   position: absolute;
-  z-index: 30;
+  z-index: var(--capa-menu);
   top: calc(100% + var(--espacio-1));
   left: 0;
   right: 0;
@@ -1551,7 +1724,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
 .apertura__foto {
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: var(--capa-foto);
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1560,7 +1733,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: var(--capa-detras);
   background: var(--color-velo-foto);
 }
 /* Desde 1024px la capa se aclara a la derecha, después del texto: la foto respira donde no
@@ -1648,7 +1821,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   content: "";
   position: absolute;
   inset: var(--espacio-6) 0;
-  z-index: -1;
+  z-index: var(--capa-detras);
   background: currentColor;
   opacity: var(--marca-agua-opacidad);
   -webkit-mask: url("assets/marca-agua-unpsjb.svg") center / auto min(100%, 360px) no-repeat;
@@ -1853,7 +2026,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   position: fixed;
   right: var(--espacio-4);
   bottom: var(--espacio-4);
-  z-index: 50;
+  z-index: var(--capa-aviso);
   display: flex;
   flex-direction: column;
   gap: var(--espacio-2);
@@ -1956,7 +2129,7 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
   flex-direction: column;
   margin: var(--espacio-2) 0;
   padding: var(--espacio-3) var(--espacio-4);
-  font: 700 1.75rem/1.25 var(--fuente-texto);
+  font: var(--texto-cifra);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
   color: var(--color-tinta);
@@ -2155,7 +2328,10 @@ a.accesos__nombre:focus-visible { box-shadow: none; }
 
   .banda__acciones, .secciones, .menu-lateral, .menu-inferior, .toasts, .saltar,
   .migas, .paginacion, .boton, .aviso__accion, .panel-ia__acciones, .filtros, .chips,
-  .selector-tema, .pasos, .revision__cabecera a, .no-imprimir { display: none !important; }
+  .selector-tema, .pasos, .revision__cabecera a, .no-imprimir,
+  .boton-ayuda, .globo { display: none !important; }
+  /* Lo que en pantalla se pega, en papel se imprime entero */
+  .grilla--lateral-fija > :first-child { position: static; max-height: none; overflow: visible; }
   .solo-impresion { display: block; }
 
   .contenedor, .contenedor--ancho { max-width: none; padding-inline: 0; }
