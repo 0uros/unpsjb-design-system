@@ -1,11 +1,11 @@
 ---
 name: design-md-unpsjb
-description: "Design.md para generar páginas para la universidad (UNPSJB, Delegación Trelew), versión 0.5.0. El núcleo trae los tokens y las secciones 1 a 13; las secciones 14 a 21 (gobernanza, gráficos, agenda y cámaras, páginas públicas, documentos, mesa de ayuda, cartelera y planos) están en diseno/ y se leen solo cuando la pantalla las usa."
+description: "Design.md para generar páginas para la universidad (UNPSJB, Delegación Trelew), versión 0.4.10. El núcleo trae los tokens y las secciones 1 a 13; las secciones 14 a 21 (gobernanza, gráficos, agenda y cámaras, páginas públicas, documentos, mesa de ayuda, cartelera y planos) están en diseno/ y se leen solo cuando la pantalla las usa."
 ---
 
 ---
 name: UNPSJB · Señalética
-version: 0.5.0
+version: 0.4.10
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -175,7 +175,7 @@ layers:
 
 # Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.5.0 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.10 "Señalética"**
 
 Qué cambió en cada versión: `CHANGELOG.md`.
 

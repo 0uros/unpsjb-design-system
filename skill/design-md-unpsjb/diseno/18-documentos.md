@@ -60,7 +60,7 @@ Casi toda herramienta termina en un papel: una constancia, un certificado, un co
 
 - **Sale solo la hoja.** En una página que tiene una `.hoja`, al imprimir se esconde todo lo demás: banda, botones, pie. No hay que marcar nada con `.no-imprimir`.
 - **El tamaño y la orientación los pone la hoja** (reglas `@page` con nombre): quien imprime no tiene que elegir "apaisado". Chrome, Edge y Firefox lo respetan; en Safari hay que elegir la orientación a mano.
-- **Numeración** (`.hoja--numerada`): "Página 2 de 3", abajo a la derecha, para documentos de más de una hoja. Hoy lo dibujan Chrome y Edge; en los demás navegadores la hoja sale sin número. Funciona también en la hoja apaisada (`.hoja--apaisada.hoja--numerada`): desde la 0.5 tiene su propia regla `@page` apaisada con el número, porque una regla `@page` no hereda de otra.
+- **Numeración** (`.hoja--numerada`): "Página 2 de 3", abajo a la derecha, para documentos de más de una hoja. Hoy lo dibujan Chrome y Edge; en los demás navegadores la hoja sale sin número. Funciona también en la hoja apaisada (`.hoja--apaisada.hoja--numerada`): desde la 0.4.10 tiene su propia regla `@page` apaisada con el número, porque una regla `@page` no hereda de otra.
 - **A una tinta** (`.hoja--una-tinta`): el logo cambia por su versión en negro (10.A) y todo lo que era azul pasa a negro.
 - **Cortes:** `.salto-pagina` empieza una hoja nueva y `.sin-cortes` evita que un bloque se parta. Sirven en cualquier página, no solo dentro de una hoja.
 - **PDF:** el mismo camino. "Imprimir o guardar como PDF" abre la impresión del navegador. Si una herramienta necesita generar el PDF en el servidor, usa esta misma hoja con un navegador sin ventana.

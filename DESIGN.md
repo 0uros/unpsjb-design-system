@@ -1,6 +1,6 @@
 ---
 name: UNPSJB · Señalética
-version: 0.5.0
+version: 0.4.10
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -170,7 +170,7 @@ layers:
 
 # Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.5.0 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.4.10 "Señalética"**
 
 Qué cambió en cada versión: `CHANGELOG.md`.
 

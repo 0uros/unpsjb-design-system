@@ -1,5 +1,5 @@
 /* ==========================================================================
-   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.5.0
+   unpsjb.css — Sistema de Diseño Digital UNPSJB · v0.4.10
    Dirección "Señalética". Delegación Trelew · 2026
    Versión oficial. Fuente de verdad: DESIGN.md. Cambios: CHANGELOG.md.
    Los nombres del código van en español (regla y excepciones: DESIGN.md, 2.A).
@@ -201,7 +201,7 @@
   /* 0.3: interlineado de títulos 1.25 como mínimo, por las tildes de las mayúsculas */
   --texto-titulo-1: 800 2rem/1.25 var(--fuente-titulo);        /* 32px */
   --texto-apertura: 800 2.5rem/1.25 var(--fuente-titulo);      /* 40px: solo el título de la foto de apertura (17.E) */
-  --texto-cifra: 700 1.75rem/1.25 var(--fuente-texto);         /* 28px: cifra destacada (0.5; DESIGN.md, 4.B) */
+  --texto-cifra: 700 1.75rem/1.25 var(--fuente-texto);         /* 28px: cifra destacada (0.4.10; DESIGN.md, 4.B) */
   --texto-titulo-2: 700 1.5rem/1.25 var(--fuente-titulo);     /* 24px */
   --texto-titulo-3: 700 1.1875rem/1.3 var(--fuente-titulo);      /* 19px */
   --texto-grande: 400 1.125rem/1.6 var(--fuente-texto);      /* 18px */
@@ -239,7 +239,7 @@
   /* Profundidad: solo para lo que flota */
   --sombra-flotante: 0 8px 24px rgb(0 0 0 / 0.14);
 
-  /* Capas de apilado (0.5; DESIGN.md, 5.D). Van de abajo hacia arriba y
+  /* Capas de apilado (0.4.10; DESIGN.md, 5.D). Van de abajo hacia arriba y
      conservan el orden que ya tenían los componentes: no se reordenan para
      "acomodar" una pieza nueva. Dos que hoy comparten valor comparten token. */
   --capa-foto: -2;         /* la foto de la apertura, dentro de su sección */
@@ -368,7 +368,7 @@
   [data-densidad="compacta"] .campo { margin-bottom: var(--espacio-4); }
 }
 
-/* 0.5 · La barra de desplazamiento reserva siempre su lugar: al abrir un globo
+/* 0.4.10 · La barra de desplazamiento reserva siempre su lugar: al abrir un globo
    de ayuda o un acordeón la página se alarga y, sin esto, todo el contenido
    salta a los costados cuando aparece la barra. El canal reservado lleva el
    mismo fondo que el body: sin él, en una página corta quedaba una franja de
@@ -505,7 +505,7 @@ img, svg { max-width: 100%; }
 /* Columna lateral (filtros, lista de cámaras) + contenido. Apilado hasta 1024px. */
 .grilla--lateral { grid-template-columns: 1fr; }
 @media (min-width: 1024px) { .grilla--lateral { grid-template-columns: 280px minmax(0, 1fr); } }
-/* Lateral fija (nuevo en 0.5; DESIGN.md, 6.E): la misma idea, con una columna de
+/* Lateral fija (nuevo en 0.4.10; DESIGN.md, 6.E): la misma idea, con una columna de
    300 a 380px que se queda quieta mientras el contenido de al lado se recorre.
    Sirve para un formulario largo junto a una tabla, o para un menú de secciones.
    Debajo de 1024px queda una sola columna, como .grilla--lateral.
@@ -906,11 +906,11 @@ img, svg { max-width: 100%; }
   color: var(--color-error-texto);
 }
 .campo-error .icono { width: 16px; height: 16px; margin-top: 2px; }
-/* 0.5: un error vacío no ocupa lugar. Así el campo no deja un hueco debajo
+/* 0.4.10: un error vacío no ocupa lugar. Así el campo no deja un hueco debajo
    mientras no hay nada que decir (DESIGN.md, 7.B). */
 .campo-error:empty { display: none; }
 
-/* Globo de ayuda (nuevo en 0.5; DESIGN.md, 7.R): la excepción al tooltip, solo
+/* Globo de ayuda (nuevo en 0.4.10; DESIGN.md, 7.R): la excepción al tooltip, solo
    en formularios densos. Se abre desde un "(?)" al lado del label, en el color
    del texto primario (el naranja de acento no llega a 3:1 sobre el panel), sin
    borde ni círculo. El globo va en el <body> con position: fixed, y un script
@@ -1174,7 +1174,7 @@ img, svg { max-width: 100%; }
   .tabla--tarjetas tbody tr[aria-selected="true"] td { background: none; }
 }
 
-/* Total en la cabecera de la tabla (nuevo en 0.5; DESIGN.md, 7.D): cuando la
+/* Total en la cabecera de la tabla (nuevo en 0.4.10; DESIGN.md, 7.D): cuando la
    tabla es una lista de importes o de cantidades, el total se ve antes de leer
    las filas. Barra sobre la tabla, con el título, el total y los subtotales a
    la izquierda, y las acciones a la derecha.
@@ -1224,7 +1224,7 @@ img, svg { max-width: 100%; }
   .subtotales { flex-direction: column; gap: var(--espacio-1); }
 }
 
-/* Número identificador con énfasis (nuevo en 0.5; DESIGN.md, 4.C): CBU, CUIT,
+/* Número identificador con énfasis (nuevo en 0.4.10; DESIGN.md, 4.C): CBU, CUIT,
    legajos y números de trámite. Se leen y se comparan de a grupos: cifras
    tabulares y la letra del sistema (nunca monoespaciada), con los grupos que
    conviene retener en 700. Dentro de un dato o un texto corrido, el 700 no se

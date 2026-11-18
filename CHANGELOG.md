@@ -21,13 +21,13 @@
 | Revisión de diseño por niveles, errores en tres partes y nombre accesible | — | **0.4.7** |
 | Interfaz nueva del módulo de planos: panel para buscar y elegir, controles sobre el plano | — | **0.4.8** |
 | Piezas de páginas públicas (SIDE) y página de difusión de una carrera | — | **0.4.9** |
-| Piezas de la carga masiva de transferencias | — | **0.5.0** |
+| Piezas de la carga masiva de transferencias | — | **0.4.10** |
 
 Las entradas anteriores a la 0.3.2 nombran las clases y variables como se llamaban entonces (en inglés y español mezclados). La equivalencia está en `RENOMBRES.md`.
 
 Los nombres de archivo con `-v1`, `-v2` y `-v3.0` no cambiaron: nombran borradores. En `BITACORA.md` y `FEEDBACK-NOTEBOOK.md`, lo escrito antes de esa fecha conserva los números viejos.
 
-## 0.5.0 · 2026-11-18 · oficial
+## 0.4.10 · 2026-11-18 · oficial
 
 Las piezas que nacieron en la herramienta de **carga masiva de transferencias** y pasan al sistema. Es una versión que agrega y ordena: ninguna herramienta tiene que cambiar su HTML, salvo la de transferencias, que puede borrar sus `.ext-` y usar estas clases (al final, cómo migrar).
 
