@@ -1,11 +1,11 @@
 ---
 name: design-md-unpsjb
-description: "Design.md para generar páginas para la universidad (UNPSJB, Delegación Trelew), versión 0.4.9. El núcleo trae los tokens y las secciones 1 a 13; las secciones 14 a 21 (gobernanza, gráficos, agenda y cámaras, páginas públicas, documentos, mesa de ayuda, cartelera y planos) están en diseno/ y se leen solo cuando la pantalla las usa."
+description: "Design.md para generar páginas para la universidad (UNPSJB, Delegación Trelew), versión 0.5.0. El núcleo trae los tokens y las secciones 1 a 13; las secciones 14 a 21 (gobernanza, gráficos, agenda y cámaras, páginas públicas, documentos, mesa de ayuda, cartelera y planos) están en diseno/ y se leen solo cuando la pantalla las usa."
 ---
 
 ---
 name: UNPSJB · Señalética
-version: 0.4.9
+version: 0.5.0
 colors:
   # Institucionales (no se modifican)
   primario: "#004992"
@@ -89,6 +89,11 @@ typography:
     fontWeight: 800
     lineHeight: 1.25
     letterSpacing: -0.015em
+  cifra:
+    fontFamily: Atkinson Hyperlegible Next
+    fontSize: 28px
+    fontWeight: 700
+    lineHeight: 1.25
   titulo-2:
     fontFamily: Montserrat
     fontSize: 24px
@@ -154,11 +159,23 @@ motion:
   rapido: 120ms
   normal: 180ms
   curva: cubic-bezier(0.2, 0, 0, 1)
+layers:
+  foto: -2
+  detras: -1
+  contenido: 1
+  resalte: 2
+  controles: 3
+  fija: 20
+  menu: 30
+  globo: 40
+  aviso: 50
+  modal: 60
+  saltar: 100
 ---
 
 # Sistema de Diseño Digital UNPSJB
 
-**Delegación Trelew · 2026 · versión 0.4.9 "Señalética"**
+**Delegación Trelew · 2026 · versión 0.5.0 "Señalética"**
 
 Qué cambió en cada versión: `CHANGELOG.md`.
 
@@ -436,6 +453,7 @@ La escala es fija (no cambia con el ancho de pantalla) y con saltos claros, para
 |---|---|---|---|
 | `apertura` | Montserrat | 40px / 800 / 1.25, tracking −0.02em; 32px en celular | Solo el título de la foto de apertura (17.E), que hace de `titulo-1` en esa página. Es el único rol que cambia con el ancho. |
 | `titulo-1` | Montserrat | 32px / 800 / 1.25, tracking −0.015em | Título de la pantalla (uno por pantalla). Con `apertura`, los únicos roles en peso 800. |
+| `cifra` | Atkinson | 28px / 700 / 1.25, cifras tabulares | Cifra destacada: el total de una tabla o el monto que se mira primero. Nunca párrafos ni varios por pantalla. |
 | `titulo-2` | Montserrat | 24px / 700 / 1.25, tracking −0.01em | Secciones principales. |
 | `titulo-3` | Montserrat | 19px / 700 / 1.3 | Títulos de paneles, modales y avisos destacados. |
 | `texto-grande` | Atkinson | 18px / 400 / 1.6 | Textos de lectura larga (instructivos, reglamentos). |
@@ -449,6 +467,7 @@ La escala es fija (no cambia con el ancho de pantalla) y con saltos claros, para
 - **Mayúscula solo inicial** en todo: títulos, botones, labels, pestañas. Nada de TEXTO EN MAYÚSCULAS ni etiquetas chiquitas en mayúsculas arriba de los títulos: el título se sostiene solo.
 - **Ancho de lectura:** los párrafos no pasan de 70 caracteres por línea (`max-width: 70ch`).
 - **Números en tablas:** cifras de ancho fijo (`font-variant-numeric: tabular-nums`) y alineadas a la derecha, para que se comparen en columna. (Verificado: los archivos actuales de las dos fuentes las traen.)
+- **Números identificadores largos:** un CBU, un CUIT, un legajo o un número de trámite se lee de a grupos y se compara con otro. Van con cifras tabulares y la letra del sistema, nunca monoespaciada, y los grupos que conviene retener van en 700 (`.numero-enfasis`, 7.D). Es la única excepción acotada a que el peso 700 sea solo para labels y títulos: no se usa para destacar cualquier número.
 - **Títulos equilibrados:** `text-wrap: balance` en títulos, para que no quede una palabra sola en la última línea.
 - **Más aire arriba que abajo:** un título tiene el doble de espacio arriba (con lo anterior) que abajo (con lo suyo).
 - **Interlineado de títulos: 1.25 como mínimo.** Montserrat es ancha y alta; en 700–800, las tildes de las mayúsculas (Á, É, Ó) tocaban la línea de arriba con 1.15. Si un título largo no entra en una línea, se acorta el texto antes que achicar la letra.
@@ -480,6 +499,25 @@ Los radios grandes hacen que todo parezca una app de consumo. Radios chicos y pa
 ### D. Profundidad
 
 No hay sombras para crear jerarquía. **La única excepción es lo que flota sobre la página** (toasts, menús desplegables, modales): llevan una sombra suave con desplazamiento hacia abajo (`0 8px 24px rgb(15 36 56 / 0.16)`), porque ahí la sombra comunica "esto está encima".
+
+**Capas de apilado.** Lo que flota no compite de a uno: hay una escala fija de `z-index` en tokens (`--capa-*`), de abajo hacia arriba. Los valores conservan el orden que ya tenían los componentes, así que una pieza nueva elige su capa y no reordena el resto.
+
+| Token | `z-index` | Qué va ahí |
+|---|---|---|
+| `--capa-foto` | −2 | La foto de la apertura, dentro de su sección (17.E). |
+| `--capa-detras` | −1 | El velo de la apertura y la marca de agua. |
+| `--capa-contenido` | 1 | Lo que se pega o se resalta dentro de su marco: la primera columna de una tabla, las marcas del plano y de la agenda. |
+| `--capa-resalte` | 2 | Lo elegido o enfocado por encima de sus vecinos: un rótulo del plano. |
+| `--capa-controles` | 3 | Los controles que flotan sobre un plano o un lienzo. |
+| `--capa-fija` | 20 | La cabecera, la banda y el menú inferior. |
+| `--capa-menu` | 30 | Lo que se despliega sobre el contenido: la lista del combo y los paneles de una herramienta. |
+| `--capa-globo` | 40 | El globo de ayuda (7.R). |
+| `--capa-aviso` | 50 | Los toasts. |
+| `--capa-modal` | 60 | El velo de un modal dibujado por una herramienta; un `<dialog>` abierto va en la capa superior del navegador. |
+| `--capa-saltar` | 100 | "Ir al contenido", para que se vea al llegar con `Tab`. |
+
+- **El globo de ayuda va sobre los menús y debajo de avisos y modales.** Un toast puede taparlo: es breve y no se puede perder; el globo se vuelve a abrir.
+- **Ni una herramienta ni un módulo escriben un `z-index` numérico.** Usan el token de la capa que les toca; si no hay una, se propone una nueva antes que un número suelto (14.B).
 
 ### E. Movimiento
 
@@ -584,9 +622,12 @@ Debajo de la banda, cada pantalla abre con su título `titulo-1` alineado a la i
 - **Automática** (sin modificador): arma tantas columnas como entren de al menos `--grilla-min` (280px por defecto) y en celular deja una. Todas las celdas miden lo mismo aunque sobre lugar: es lo que se quiere en un muro de cámaras o una lista de aulas. Se ajusta en el HTML: `style="--grilla-min: 200px"`.
 - **Columnas fijas** (`--2`, `--3`, `--4`): para formularios y resúmenes con una cantidad conocida de piezas.
 - **Lateral** (`--lateral`): columna de 280px (filtros, lista de cámaras) + contenido, desde 1024px.
+- **Lateral fija** (`--lateral-fija`): columna de 300 a 380px que se queda quieta mientras el contenido de al lado se recorre (`position: sticky`). Sirve para un formulario largo junto a una tabla o un menú de secciones. Debajo de 1024px queda una sola columna, igual que `--lateral`.
 - `.grilla__completa` hace que una pieza ocupe todo el ancho.
 
 La grilla ordena contenido; no habilita a armar la página como una grilla de tarjetas iguales con ícono + título + texto (sigue prohibido, 7.C).
+
+**Barra de desplazamiento estable:** `html` reserva siempre el lugar de la barra (`scrollbar-gutter: stable`). Al abrir un globo de ayuda o un acordeón la página se alarga; sin eso, todo el contenido salta a los costados cuando aparece la barra.
 
 ### F. Migas de pan
 
@@ -635,9 +676,10 @@ Todos los componentes definen estos estados: normal, hover, foco, presionado, de
 
 - **Label siempre visible arriba**, en `label` (15px/700, `tinta`). El placeholder solo muestra un ejemplo, nunca reemplaza al label.
 - **Input:** 44px de alto, fondo `panel`, borde 1px `linea-control`, radio 4px, texto `texto-base`.
-- **Ayuda** debajo en `detalle` (`tinta-2`), conectada con `aria-describedby`.
+- **Ayuda** debajo en `detalle` (`tinta-2`), conectada con `aria-describedby`. En un formulario denso, la ayuda puede ir en un globo de ayuda (7.R).
 - **Obligatorios:** se marca lo opcional ("(opcional)" junto al label), no lo obligatorio. En trámites, casi todo es obligatorio.
 - **Error:** borde `error` engrosado a 2px con una sombra interna (`inset`), para que el campo no cambie de tamaño, `aria-invalid="true"` y mensaje debajo con ícono `circle-alert`, en `error-texto`, que diga **qué pasó y cómo se arregla** ("Falta el dominio. Ejemplo: nombre@unp.edu.ar"). Se valida al salir del campo, no mientras se escribe.
+- **Error vacío:** el lugar del error se reserva solo cuando hay algo que decir (`.campo-error:empty` se oculta); el campo no deja un hueco debajo mientras no hay error.
 - **Formularios largos:** si al enviar hay errores, se muestra arriba un aviso de error con la lista de campos (cada uno es un link al campo) y se mueve el foco a ese aviso.
 - **Casillas y radios:** 20px, `accent-color` en `primario-texto` (`#004992` en claro, `#7ab3f0` en oscuro, para que la marca se vea sobre el fondo oscuro), label clickeable a la derecha. Varias opciones de una misma pregunta van en un `fieldset.grupo-campos` con su `legend` (ver 7.H).
 - **Fecha y hora:** `.input` con `type="date"` o `type="time"`: el calendario y el reloj los pone el navegador (y en celular, el teclado del sistema). Cifras de ancho fijo. Para rangos, "Desde" y "Hasta" van uno al lado del otro en una grilla.
@@ -659,6 +701,8 @@ Son la pieza más usada en gestión, así que se cuidan especialmente.
 - **Encabezado:** fondo `capa`, texto `label` en `tinta`, y una **línea inferior de 2px en `primario`** que lo separa de los datos. (Así la banda del header es el único bloque azul de la pantalla y la tabla no compite con ella.)
 - Filas de 48px (compacta: 40px), separadas por borde `linea`. Hover: fondo `fondo`. Seleccionada: fondo `tinte` y su casilla marcada.
 - Números alineados a la derecha, con cifras de ancho fijo. Fechas en formato `dd/mm/aaaa`.
+- **Números identificadores largos** (CBU, CUIT, legajo): con `.numero-enfasis`, cifras tabulares, la letra del sistema —nunca monoespaciada— y los grupos que conviene retener en 700 (4.C). Es lo que permite leerlos y compararlos sin equivocarse.
+- **Total en la cabecera:** si la tabla es una lista de importes o de cantidades, el total va arriba y no al pie. Una barra (`.tabla-cabecera`) con el título a la izquierda y, a la derecha, el total en `cifra` (`.cifra-destacada`, 28px) y los subtotales (`.subtotales`, en `detalle`). Así se ve antes de leer las filas. En pantallas angostas la barra se apila y los subtotales pasan a una columna.
 - Columnas ordenables: la flecha de orden aparece siempre en la columna activa, con `aria-sort`.
 - **En celular, cada tabla elige una de dos formas:**
 
@@ -765,7 +809,7 @@ Para no volver a discutirlo cada vez:
 | Selector de fecha propio | El del navegador es más accesible, más liviano y no hay que mantenerlo. | `input type="date"` |
 | Línea de tiempo de un trámite | Ya lo cubren otras piezas. | Indicador de pasos y lista de resumen. (El historial de mensajes de una solicitud es otra cosa: sección 19) |
 | Centro de notificaciones | Necesita servidor y base de datos: no es un tema de la hoja de estilos. | Avisos y toasts |
-| Tooltip | En celular no existe "pasar el mouse", y tapa contenido. | Texto de ayuda fijo debajo del campo. En los gráficos, la lectura fija de arriba (15.E) |
+| Tooltip | En celular no existe "pasar el mouse", y tapa contenido. La excepción es el globo de ayuda (7.R), solo en formularios densos. | Texto de ayuda fijo debajo del campo; en un formulario denso, globo de ayuda (7.R). En los gráficos, la lectura fija de arriba (15.E) |
 | Torta con más de 3 partes, gráficos 3D, dos ejes | Se leen mal (sección 15). | Barras, o una tabla |
 | Carrusel de fotos o de noticias | Pesa mucho y lo que importa queda en una de varias vueltas que casi nadie espera. | Una sola noticia destacada y, debajo, una lista |
 | Ventana que se abre sola al entrar | Tapa todo en el celular y atrapa el foco antes de que la persona haya visto la página. | Un aviso (8.A) arriba del contenido |
@@ -791,6 +835,17 @@ Sirve para tres cosas:
 - **Sin logo ni color por renglón.** Cuando cada trámite trae su logo, la página parece un collage. Si hace falta decir de qué área es, va una categoría (3.H) al lado del nombre.
 - **Sin resultados** al filtrar: el estado vacío (8.D), con el botón "Borrar búsqueda".
 - **No reemplaza** al menú de la herramienta (6.A) ni a una tabla: si de cada cosa hay que comparar varios datos, es una tabla (7.D).
+
+### R. Globo de ayuda
+
+La excepción a "el tooltip no va" (7.P). Sirve para **formularios densos**: muchos campos y poco lugar para un texto fijo debajo de cada uno (una carga masiva, una planilla de datos). Fuera de ese caso, la ayuda va fija debajo del campo (7.B).
+
+- **Cómo se abre:** desde un botón `(?)` al lado del label (`.boton-ayuda`), escrito en `primario-texto` como texto: nunca el acento naranja, que no llega a 3:1 sobre el panel, y sin borde ni círculo. El botón mide 24px, lleva nombre accesible ("Ayuda: CBU") y `aria-controls` con el `id` del globo.
+- **Cuándo aparece:** con mouse, después de una demora corta (unos 800ms) quieto sobre el botón; con teclado, apenas se enfoca. Un toque o un clic lo deja fijo y otro clic lo cierra; `Esc` y un clic afuera también lo cierran. Se coloca arriba del botón y, si no hay lugar, abajo: nunca tapa el campo que explica.
+- **Cómo se ve** (`.globo`): texto `nota` en los colores del toast, que se invierten solos en oscuro; ancho máximo de 32 caracteres, radio 4px y la sombra de lo que flota. Va en el `<body>` con `position: fixed`, así ningún contenedor con scroll lo recorta.
+- **Accesibilidad:** `role="tooltip"`, `aria-expanded` en el botón y el campo unido al globo con `aria-describedby` (`aria-describedby="globo-cbu cbu-error"`). Se puede leer con el mouse encima y se cierra con `Esc` (WCAG 1.4.13).
+- **Nunca es el único lugar de una información crítica.** Los errores van en `.campo-error`; lo que hace falta para completar el campo, en el label o en una ayuda fija. Si la explicación es larga o hay que consultarla mientras se completa, va un texto visible o un acordeón (7.M), no un globo.
+- **No va:** en una pantalla con lugar para el texto fijo, en la ayuda general de la herramienta (va un acordeón o un panel) ni para explicar una acción que el botón ya dice.
 
 ## 8. Estados del sistema
 
@@ -1130,6 +1185,7 @@ Las palabras son parte del diseño.
 | Una sola foto de apertura, con la capa al 55%. En el portal, sin tapar toda la ventana; en una página de difusión, la primera pantalla entera (17.E). | Texto blanco sobre una foto sin capa, o dos fotos a la vista a la vez (una cortada debajo de la otra). |
 | Marca de agua solo en una franja pública o en el pie oscuro, al 8% como máximo. | Marca de agua detrás de formularios, tablas, herramientas o documentos. |
 | Fotos de hasta 200 KB y páginas de hasta 1 MB. | Subir la foto como sale de la cámara, o un video que arranca solo. |
+| Globo de ayuda solo en formularios densos, desde un `(?)` junto al label. | Tooltips en el resto de las pantallas, o un globo como único lugar de un dato crítico. |
 | Usar el acordeón para lo secundario. | Esconder campos obligatorios o avisos importantes. |
 | En gráficos, los colores de serie, en orden, y el valor escrito. | Pintar series con el semáforo o con las categorías. |
 | Dar siempre la tabla de un gráfico. | Tortas de muchas partes, 3D o dos ejes. |
